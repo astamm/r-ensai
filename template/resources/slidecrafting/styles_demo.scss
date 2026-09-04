@@ -1,0 +1,538 @@
+/*-- scss:defaults --*/
+/* =====================================================================
+   styles_demo.scss — deck-local theme for the "RevealJS Slidecrafting"
+   RevealJS demonstration deck.
+
+   This file pairs with styles_template.scss (see the co-shipping list at the
+   top of that file) and supplies the concrete brand palette and every class
+   that is specific to THIS deck. Listed after the template in the format's
+   `theme:` list so its `--scss:defaults` override the template's.
+
+       theme: [default, styles_template.scss, styles_demo.scss]
+   ===================================================================== */
+
+/* Workflow palette: draft / review / release, with its two inks. */
+$draft:   #2E7D6B;
+$review:  #E8A33D;
+$release: #4A5899;
+$ink-light: #F1EEE6;
+$ink-dark:  #17251F;
+
+/* Feed the template's brand accents from this workflow. Template rules compiled
+   after these defaults therefore pick up the concrete draft/review/release
+   colors automatically. */
+$brand-1: $draft;
+$brand-2: $review;
+$brand-3: $release;
+
+/* Accent aliases for the deck's colored inline spans. */
+$colors: (
+  "red":   #E2746B,
+  "blue":  lighten($draft, 18%),
+  "darkblue": $ink-dark,
+  "yellow":   $review,
+  "white":    $ink-light
+);
+
+@function theme-color($color) {
+  @return map-get($colors, $color);
+}
+
+/*-- scss:rules --*/
+
+/* ------------------------------------------------ */
+/* Title page: full-bleed image masthead            */
+/* The mountains image sits behind the whole slide. */
+/* ------------------------------------------------ */
+.reveal #title-slide {
+  // center the masthead text both ways within the 700px section; reveal's
+  // own centering is disabled by `center: false`, so flex does it here.
+  // The left/right padding clears the lateral banner on the left.
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  position: relative;
+  padding: 0 5em !important;
+}
+
+/* Bottom gradient scrim: darkens the lower half of the background image
+   so the centered masthead text stays strongly legible. */
+.reveal #title-slide::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    rgba($ink-dark, 0.82) 0%,
+    rgba($ink-dark, 0.45) 42%,
+    rgba($ink-dark, 0) 72%
+  );
+}
+
+/* Lift the masthead text above the scrim. */
+.reveal #title-slide .title,
+.reveal #title-slide .quarto-title-authors,
+.reveal #title-slide .date {
+  position: relative;
+  z-index: 1;
+}
+
+
+.reveal #title-slide .title,
+.reveal .title-slide h1 {
+  color: $ink-light;
+  font-size: 74px;
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.5em;
+  text-transform: none;
+}
+
+.reveal #title-slide .quarto-title-author-name {
+  color: lighten($draft, 22%);
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+.reveal #title-slide .date {
+  color: rgba($ink-light, 0.7);
+  font-size: 20px;
+  letter-spacing: 0.04em;
+  margin-top: 1.6em;
+}
+
+
+.blue {
+  color: theme-color("blue");
+  font-weight: bold;
+}
+
+.yellow {
+  color: theme-color("yellow");
+  font-weight: bold;
+}
+
+.reveal .slide-menu-button .fa-bars::before {
+background-image: url('https://cdn-icons-png.flaticon.com/512/2163/2163350.png') !important;
+}
+
+/* Mountains divider slide ("Slide Title"): the cream heading must stay
+   legible over the photo, so give it a soft ink shadow. */
+.reveal #slide-title h2 {
+  text-shadow:
+    0 1px 2px rgba($ink-dark, 0.9),
+    0 2px 14px rgba($ink-dark, 0.85);
+}
+
+/* ---------------------------------------------------------------- */
+/* Lateral banner: ink-dark strip echoing the footer accent.        */
+/* ---------------------------------------------------------------- */
+.reveal::before {
+  content: "Bootcamp Finist'R 2026";
+
+  // placement, this is what makes the strip and turns the text
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  width: 2em;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+
+  // looks
+  padding-bottom: 1.5em;
+  background-color: $ink-dark;
+  color: $ink-light;
+  font-size: 16px;
+  font-style: normal;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  border: 0;
+  border-right: 4px solid transparent;
+  border-image: linear-gradient(
+      $draft 0%, $draft 33.4%,
+      $review 33.4%, $review 66.7%,
+      $release 66.7%, $release 100%
+    ) 1;
+}
+
+/* ---------------------------------------------------------------- */
+/* Slide canvas                                                        */
+/* The custom dark/light/finale slides position their panels with     */
+/* explicit coordinates in a 1280×700 space, so they keep padding 0.  */
+/* Plain content slides get real padding so they clear the left       */
+/* banner, the absolute title and the footer margin:0 would collide  */
+/* with.                                                              */
+/* ---------------------------------------------------------------- */
+.reveal .slides section {
+  box-sizing: border-box;
+  // NB: no forced `height` here. Forcing `height: 700px` on every section
+  // makes reveal stack slides at cumulative vertical offsets (top: 0,
+  // 700px, 1400px, ...) with no container offset, so every slide after the
+  // first ends up below the viewport and renders blank. Reveal centers each
+  // section when we leave height auto. The fixed 700px box is applied only
+  // to the coordinate-space slides below.
+  padding: 0 !important;
+  color: $ink-light;
+}
+
+/* Every non-stack section must be pinned to the top of the 700px canvas.
+   With center:false reveal leaves `top:auto` on these absolute sections, so
+   the browser stacks them below the in-flow title slide (~271px) and their
+   700px-tall boxes spill past the bottom of the viewport. Pinning them to
+   top:0 keeps each slide exactly filling the visible canvas. (.center and
+   .paper slides position themselves, so they are left alone.) */
+.reveal .slides > section:not(.stack):not(.center):not(.paper) {
+  top: 0 !important;
+}
+/* Pin vertical .stack sections (produced when content slides are nested
+   under a (#) section) to the slide origin too. Without this they fall to
+   top:auto and are pushed below the section title card by its in-flow
+   height, translating the whole slide off the bottom of the canvas. */
+.reveal .slides > section.stack {
+  top: 0 !important;
+}
+/* Content (##) sub-slides inside a stack inherit the same top:0 pin so they
+   fill the canvas like flat slides. (.center section-title cards and .paper
+   slides keep their own positioning.) */
+.reveal .slides > section.stack > section:not(.center):not(.paper) {
+  top: 0 !important;
+}
+/* Sub-slides are ALSO shifted +96px to the RIGHT: reveal lays each nested
+   section out at full 1280px width but with a 96px left inset, so it overhangs
+   the canvas's right edge and pushes every slide (and the code-pop trigger in
+   the bottom-right corner) off-centre and off-screen. Pin ALL stack children
+   to the canvas origin horizontally so they fill it edge-to-edge like flat
+   slides — this also re-centers the (#) section-title cards (.center), which
+   reveal left-anchors at the same 96px inset. */
+.reveal .slides > section.stack > section {
+  left: 0 !important;
+}
+
+/* Coordinate-space slides draw their panels in a fixed 1280×700 box, so they
+   keep an explicit height of 700px. Generic content slides already get
+   min-height:700px from reveal's base section rule. */
+.reveal .slides section.dark,
+.reveal .slides section.light,
+.reveal .slides section.finale {
+  height: 700px;
+}
+
+.reveal .slides section:not(.dark):not(.light):not(.finale):not(.paper) {
+  padding: 88px 80px 64px 96px !important;
+}
+
+.reveal .slide-menu-button {
+  left: 2.5em !important;
+}
+
+.spread {
+  --spread-padding: 0.5em;
+  padding-top: var(--spread-padding);
+  /* Clear the footer bar: the section bottom padding is overridden by the
+     spread-script height fill, so reserve this space here. */
+  padding-bottom: 56px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.spread-evenly { justify-content: space-evenly; }
+.spread-around { justify-content: space-around; }
+
+/* Spread illustration: coloured bars flexed apart by the .spread container's
+   own justify-content, so the gaps between them render the spacing live —
+   showing what space-between / space-evenly actually do. */
+.spread-bar {
+  box-sizing: border-box;
+  width: 100%;
+  height: 78px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $ink-dark;
+  font-family: monospace;
+  font-size: 0.42em;
+  letter-spacing: 0.03em;
+  text-align: center;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
+}
+.spread-bar.sb-draft   { background: $draft; }
+.spread-bar.sb-review  { background: $review; }
+.spread-bar.sb-release { background: $release; }
+
+/* Small leading caption above the bars inside the .spread container. When it
+   is lifted out of the flex box (.cap-above), give it a little breathing room
+   so the first bar can genuinely hug the top of the remaining space. */
+.spread-cap {
+  color: $ink-light;
+  font-size: 0.45em;
+  opacity: 0.9;
+}
+.spread-cap.cap-above {
+  margin-bottom: 0.75em;
+}
+/* Dense content slides that pair a .spread with a trailing .callout-desc /
+   .highlight-last (common on {.inv} slides under a (#) section): the .spread
+   flexes to fill the 700px canvas and pushes the trailing note below the fold.
+   Make the section a flex column so the spread and the note share the canvas
+   (same layout mechanism the template uses for its masthead/panels), and cap
+   the spread so the note always stays on-screen. */
+.reveal .slides section:has(.spread):has(.callout-desc),
+.reveal .slides section:has(.spread):has(.highlight-last) {
+  display: flex;
+  flex-direction: column;
+}
+.reveal .slides section:has(.spread):has(.callout-desc) > .spread,
+.reveal .slides section:has(.spread):has(.highlight-last) > .spread {
+  flex: 0 1 auto;
+  max-height: 56%;
+}
+
+/* Paper slides: the section spans the full ink-dark canvas so the slide
+   title stays visible and legible (light text on dark) at the top. The
+   floating light "card" is the inner .paper-card div. */
+.reveal .slides section.paper {
+  position: absolute !important;
+  inset: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  padding: 0 !important;
+  background: transparent;
+  color: $ink-light;
+}
+
+/* The light paper card floating over the dark canvas. Positioned with insets
+   that leave the slide title (top) and the code-pane activation button
+   (bottom-right corner) clear and clickable. */
+.reveal .slides section.paper .paper-card {
+  position: absolute;
+  top: 112px;
+  right: 6%;
+  bottom: 15%;
+  left: 6%;
+  /* !important is required: the base section rule sets padding:0 !important. */
+  padding: 52px 56px !important;
+  box-sizing: border-box;
+  overflow: hidden;
+  border-radius: 18px;
+  background-color: #FDFBF4;
+  color: $ink-dark;
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.25),
+    0 8px 24px rgba(0, 0, 0, 0.28),
+    0 16px 48px rgba(0, 0, 0, 0.18);
+}
+
+.mono {
+  font-family: monospace;
+  font-size: 0.5em;
+  line-height: 1.25;
+}
+
+/* Theme-tinted tokens for the "styling code" demos: reuse the draft/review/
+   release palette instead of Reveal's default purple/red/blue. */
+.hl-draft   { color: lighten($draft, 25%); }
+.hl-review  { color: $review; }
+.hl-release { color: lighten($release, 25%); }
+
+/* Arrow demo nodes: the labels the arrows connect on the arrows slide.
+   Position is set inline (absolute, left/top in the 1280×700 canvas); this
+   rule gives them their card-like appearance on the dark canvas. */
+.arrow-node {
+  padding: 0.25em 0.7em;
+  border: 1px solid rgba($ink-light, 0.4);
+  border-radius: 10px;
+  background: rgba($ink-dark, 0.72);
+  color: $ink-light;
+  font-size: 0.5em;
+  letter-spacing: 0.05em;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Compact, readable code snippets used to show shortcode syntax on demo
+   slides (e.g. the arrows demos): the 40px root font makes a full-size
+   code block too tall to pair with its visual, so shrink this block. */
+.demo-code {
+  font-size: 0.55em;
+  margin: 0.4em 0;
+}
+.demo-code pre {
+  margin: 0.15em 0;
+  line-height: 1.35;
+}
+
+/* r-fit-text: reveal's fit-text sizes the text to the section's full width
+   (ignoring inner padding), so giving this centered demo slide zero padding
+   lets the big text span the slide edge-to-edge instead of spilling past the
+   right edge. */
+.reveal .slides section#r-fit-text {
+  padding: 0 !important;
+}
+
+.highlight-last {
+  color: grey;
+  .current-fragment {
+    color: $review;
+  }
+}
+
+/* Rough-notation showcase: each annotation SVG adds extra height around its
+   line. The base 0.74em kept all five on-slide when they were tight; the deck
+   now leaves vertical room, so a larger 0.9em fills the canvas again. */
+.reveal section#rough-notations {
+  font-size: 0.9em;
+}
+.reveal section#rough-notations p {
+  margin: 0.22em 0;
+}
+.reveal section#rough-notations .rn-fragment {
+  display: inline-block;
+  line-height: 1.35;
+}
+
+/* Zoom-vp demo: two theme-coloured boxes the camera pans between, and the
+   reset span that returns to the full-slide view. The boxes sit below the
+   description callout (which fills the top band) so they never overlap it. */
+.reveal section#zoom-viewport .zoom-tgt {
+  padding: 24px 28px;
+  border-radius: 12px;
+  color: $ink-dark;
+  font-size: 0.56em;
+  font-weight: 600;
+  line-height: 1.45;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+}
+.reveal section#zoom-viewport .zt-left  {
+  position: absolute; left: 8%;  top: 58%;
+  width: 36%; background: $draft;
+}
+.reveal section#zoom-viewport .zt-right {
+  position: absolute; right: 8%; top: 58%;
+  width: 36%; background: $review;
+}
+
+/* Dense taxonomy/inventory slides ("Slidecrafting", "Conception", ...):
+   shrink the catalogue text and spacing so the full list fits the fixed
+   canvas (width:1280 height:700, margin:0) instead of spilling past it. */
+.reveal section.inv {
+  font-size: 0.62em;
+  line-height: 1.22;
+}
+.reveal section.inv p {
+  margin: 0.25em 0;
+}
+.reveal section.inv ul {
+  margin: 0.2em 0;
+}
+.reveal section.inv li {
+  margin: 0.2em 0;
+}
+/* Code-pop reader on dense {.inv} slides: the .inv section shrinks to 0.62em
+   and the code-pop trigger/card are em-sized, so on .inv slides the reader
+   shrank to 62% (trigger 26px vs 40px, tiny icons). Anchor the code-pop
+   element to the reveal base font (40px) so its reader is always full-size,
+   whatever the slide's own font-size. Content density is unaffected. */
+.reveal .code-pop {
+  font-size: 40px;
+}
+
+/*-- scss:rules --*/
+
+/* Coordinate-space panels on the dark/light/finale slides: absolutely placed
+   rounded boxes. Positions are set inline per-panel in the 1280×700 canvas. */
+.panel {
+  position: absolute;
+  border-radius: 18px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+[data-id="draft"]   { background: $draft; }
+[data-id="review"]  { background: $review; }
+[data-id="release"] { background: $release; }
+
+.dark  h2, .dark  .big-title { color: $ink-light; }
+.light h2, .light .big-title { color: $ink-dark; }
+
+/* Slide titles: absolutely placed in the same coordinate space as the
+   panels, clear of the lateral banner. */
+.reveal h2 {
+  position: absolute;
+  left: 96px;
+  top: 54px;
+  margin: 0;
+  font-size: 18px;
+  letter-spacing: .18em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.big-title {
+  position: absolute;
+  font-weight: 700;
+  line-height: 1.04;
+}
+
+.card { padding: 26px 28px; color: $ink-light; }
+.card .h { font-size: 32px; font-weight: 700; }
+.card .p { font-size: 19px; line-height: 1.45; margin-top: 12px; opacity: .92; }
+
+.marker { width: 40px; height: 40px; border-radius: 10px; }
+
+/* Reusable "description" callout for demo slides (replaces .callout-note).
+   A translucent panel with a colored left accent but NO Quarto title banner —
+   the bold "Description." opening serves as the label. Re-use anywhere the
+   deck introduces a class or extension. */
+.reveal .callout-desc {
+  background-color: rgba($ink-light, 0.07);
+  border: 1px solid rgba($ink-light, 0.25);
+  border-left-width: 6px;
+  border-left-color: lighten($draft, 18%);
+  border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  color: $ink-light;
+  padding: 0.55em 1em;
+}
+.reveal .callout-desc > :first-child {
+  margin-top: 0;
+}
+.reveal .callout-desc > :last-child {
+  margin-bottom: 0;
+}
+.reveal .callout-desc > p {
+  margin: 0.25em 0;
+}
+.reveal .callout-desc strong {
+  color: lighten($draft, 25%);
+}
+
+/* Hands-on {.paper} slides: the .paper-card is absolute (out of flow), so a
+   trailing .callout-desc collapses to the top and overlaps the card. Pin it
+   into the free strip below the card (card bottom = 15% ≈ 595px on the
+   700px canvas), clear of the code-pop trigger (bottom-right, bottom:2.2em). */
+.reveal section.paper .paper-card ~ .callout-desc {
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  bottom: 8px;
+  font-size: 0.56em;
+  margin: 0;
+}

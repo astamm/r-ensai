@@ -1,0 +1,131 @@
+---
+title: "Setup your machine for data science with R & Python"
+subtitle: "A short guide to getting a fresh machine ready for the courses"
+format: html
+---
+
+These guidelines are meant to be
+followed during the live setup block at the start of the term, but also works
+standalone if you come to class with an already-configured machine (skip ahead). 
+We target **latest stable** versions of everything.
+
+## 1. Install R
+
+R is the language itself. Download the installer for your OS and follow the
+instructions:
+
+- macOS / Windows: <https://cran.r-project.org>
+- Linux: use your package manager (`apt`, `dnf`…); see
+  <https://cran.r-project.org/bin/linux/>
+
+Check it works:
+
+```r
+R.version.string   # e.g. "R version 4.6.1"
+```
+
+## 2. Install Quarto
+
+Quarto is our open-source scientific and technical publishing system. It turns
+`.qmd` documents (and RevealJS slides!) into polished HTML, PDF, and more.
+
+- Download: <https://quarto.org/docs/get-started/>
+
+Check it works:
+
+```bash
+quarto --version   # e.g. 1.10.x
+```
+
+## 3. Install Positron (the IDE)
+
+Positron is a next-generation data science IDE (a data-science-flavoured fork
+of VS Code) that runs both R and Python.
+
+- Download: <https://positron.posit.co/download.html>
+- Choose the arm64 / x86_64 build that matches your machine.
+
+Open Positron. On first launch it will offer to install the R extensions and
+detect your R installation. Confirm both.
+
+Positron will use this Quarto automatically for the Quarto preview/render.
+
+## 4. Install R packages
+
+Open the R console in Positron and run:
+
+```r
+install.packages("tidyverse")   # the core data-science collection
+```
+
+Verify with:
+
+```r
+library(tidyverse)
+```
+
+You should see the package startup message listing dplyr, tidyr, ggplot2,
+readr, purrr, tibble, stringr, forcats.
+
+By the time of the Reproducible Workflows course you will additionally want:
+
+```r
+install.packages(c("janitor", "naniar", "skimr", "renv", "knitr", "rmarkdown", "pins"))
+```
+
+(`renv` is used for dependency pinning; `pins` for data pinning; `janitor`/`naniar`/`skimr` feed the
+data-cleaning and EDA labs.)
+
+## 5. Some worthy Positron extensions (optional)
+
+- **Air**: A Visual Studio Code extension for [Air](https://posit-dev.github.io/air/), an R formatter and language server, written in Rust.
+- **Jarl**: A Visual Studio Code extension for [Jarl](https://jarl.etiennebacher.com), a fast R linter.
+- **Posit Assistant**: An AI assistant for Positron. It uses functionality that is available only in Positron, so it will not work with other VS Code forks, like Cursor or Windsurf.
+- **Pyrefly**: The Pyrefly extension uses Pyrefly to provide language server features for Python in VS Code. Please see <https://pyrefly.org> for more information.
+- **Quarto**: A Visual Studio Code extension for the [Quarto](https://quarto.org) scientific and technical publishing system.
+- **Quarto Wizard**: A Visual Studio Code extension that helps you manage your Quarto projects. It allows you to easily install Quarto extensions from the Quarto Extensions registry, GitHub repositories, URLs, or local paths.
+- **Shiny**: This is an extension to help launch [Shiny](https://shiny.posit.co) applications. Shiny is a package for Python and R that is designed to make it easy to build interactive web applications with the powerful data and scientific features of Python and R.
+
+Some of them are pre-installed with Positron; other require opt-in installs via the *Extensions* panel.
+
+## 6. Setup Python (optional)
+
+In Positron:
+
+- Open the palette with the keyboard shortcut `CMD + SHIFT + P`;
+- Search for `Python: install Python via uv` and proceed.
+
+More at <https://opensource.posit.co/blog/2026-07-08_positron-uv/>
+
+## 7. Install Python packages (optional)
+
+[uv](https://docs.astral.sh/uv/) is an extremely fast Python package and project manager, written in Rust.
+
+You can easily install Python packages in dedicated virtual environments with `uv`. For example, to install the `pandas` and `numpy` packages, run in the Positron-integrated terminal:
+
+```bash
+uv init example
+# Initialized project `example` at `/home/user/example`
+uv add pandas numpy
+```
+
+More details can be found on the website.
+
+## 8. Version checks, all together
+
+For these courses, we will use R and Quarto.
+
+Run in the R console:
+
+```r
+R.version.string
+```
+
+and in a terminal:
+
+```bash
+quarto --version
+```
+
+If both report a version, you are ready. Ask the instructor for help if any
+step errors; resolve these at the start so the labs run smoothly.

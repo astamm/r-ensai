@@ -1,0 +1,20 @@
+# Quarto build output (website project emits all docs here)
+_site/
+
+# Per-document rendered artifacts (knitr intermediary + in-place HTML/files from
+# the pre-website `type: default` project; not published, safe to remove)
+*.knit.md
+*.html
+*_files/
+
+# R / renv
+.Rhistory
+.RData
+renv/library/
+
+/.quarto/
+**/*.quarto_ipynb
+.Rproj.user
+.httr-oauth
+.DS_Store
+.quarto

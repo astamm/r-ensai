@@ -1,0 +1,487 @@
+---
+title: "*RevealJS* Slidecrafting"
+author: Aymeric Stamm
+date: today
+date-format: long
+format:
+  revealjs:
+    logo: resources/logo/logo-cnrs.png
+    footer: "*RevealJS* Slidecrafting"
+    include-after-body:
+      - resources/slidecrafting/spread-script.html
+      - resources/slidecrafting/mono-whitespace.html
+    width: 1280
+    height: 700
+    margin: 0
+    center: false
+    auto-animate-duration: 0.9
+    number-sections: true
+    code-overflow: wrap
+theme: [default, resources/slidecrafting/styles_template.scss, resources/slidecrafting/styles_demo.scss]
+revealjs-plugins:
+  - codewindow
+  - tabset
+filters:
+  - arrows
+  - roughnotation
+  - zoom-vp
+  - resources/slidecrafting/code-pop.lua
+knitr:
+  opts_chunk:
+    dev.args: { bg: "transparent" }
+---
+
+```{r}
+#| label: setup
+#| include: false
+asciicast::init_knitr_engine(same_process = FALSE)
+options(asciicast_theme = "github-light")
+```
+
+## Slide Title {background-image="images/slidecrafting/IMG_8186.jpeg"}
+
+## Code Window
+
+L'extension **codewindow** (`emilhvitfeldt/quarto-revealjs-codewindow`) enveloppe chaque bloc de code dans une fenêtre avec un onglet nommé. La première ligne du `div` donne le nom affiché du fichier, et `.sass` / `.r` choisissent l'icône de langage.
+
+::: {.codewindow .sass width="80%"}
+styles_demo.scss / styles_template.scss
+```scss
+.pink {
+  color: pink;
+}
+```
+:::
+
+::: {.codewindow .r width="80%"}
+analysis.R
+```r
+library(ggplot2)
+mtcars |>
+  ggplot(aes(disp, mpg)) +
+  geom_point()
+```
+:::
+
+## Arrows
+
+L'extension **arrows** (`emilhvitfeldt/quarto-arrows`) trace une flèche de Bézier entre deux points. `curve` règle la courbure, `color` la couleur, `label` ajoute une étiquette (LaTeX compris) et `dash` une ligne pointillée. Voici trois flèches reliant deux étiquettes : droite, courbée et pointillée.
+
+::: {.arrow-node style="position:absolute; left:120px; top:440px;"}
+départ
+:::
+
+::: {.arrow-node style="position:absolute; left:960px; top:440px;"}
+arrivée
+:::
+
+{{< arrow from="285,515" to="925,515" curve="0" color="#2E7D6B" label="droite" position="absolute" >}}
+
+{{< arrow from="285,566" to="925,566" curve="0.1" color="#4A5899" label="courbée, $\beta$" position="absolute" >}}
+
+{{< arrow from="285,618" to="925,618" curve="0.07" color="#E8A33D" dash="8,6" label="pointillée" position="absolute" >}}
+
+## Color text
+
+Les classes **`.blue`** et **`.yellow`** sont définies dans `styles_demo.scss` à partir des couleurs de la palette (draft/review/release). Un *span* `[Texte]{.blue}` colore juste une portion de phrase.
+
+[Cette portion]{.blue} est colorée par un *span*, [tandis que le reste]{.yellow} de la phrase reste inchangé : plutôt que d'appliquer la couleur à un bloc entier, on cible [un fragment]{.blue} en pleine phrase. Comme `.blue`/`.yellow` dérivent de la palette draft/review/release, [l'accent]{.yellow} reste cohérent avec le reste de la présentation.
+
+## Changing plot background
+
+Le fond **transparent** est réglé côté R (`dev.args: { bg: "transparent" }`) ; les textes adoptent alors l'encre claire du thème pour s'accorder au canevas sombre.
+
+```{r}
+#| fig-cap: "Transparent Plot"
+library(ggplot2)
+mtcars |>
+  ggplot(aes(disp, mpg, color = factor(am))) +
+  geom_point(size = 2.5) +
+  scale_color_manual(values = c("#2E7D6B", "#E8A33D"), name = NULL) +
+  theme_minimal() +
+  theme(
+    plot.background = element_rect(fill = "transparent", color = NA),
+    panel.background = element_rect(fill = "transparent", color = NA),
+    text = element_text(color = "#F1EEE6"),
+    axis.text = element_text(color = "#F1EEE6"),
+    panel.grid = element_line(color = alpha("#F1EEE6", 0.18)),
+    legend.text = element_text(color = "#F1EEE6")
+  )
+```
+
+## r-fit-text
+
+::: {style="margin: 104px 96px 0;"}
+La classe **`r-fit-text`** fait grossir automatiquement le texte pour remplir toute la largeur de la diapositive — idéal pour un titre choc ou un chiffre clé.
+:::
+
+::: r-fit-text
+Une idée par diapositive
+:::
+
+## spread
+
+::: {.callout-desc}
+**Description.** Un `div` **`.spread`** répartit ses blocs sur toute la hauteur : **`space-between`** colle le premier en haut, le dernier en bas, les autres à égale distance.
+:::
+
+<div class="spread-cap cap-above">`justify-content: space-between` — les bords restent libres</div>
+
+::: {.spread}
+<div class="spread-bar sb-draft">1ᵉʳ bloc · colle le haut</div>
+<div class="spread-bar sb-review">2ᵉ bloc · se cale au milieu</div>
+<div class="spread-bar sb-release">3ᵉ bloc · colle le bas</div>
+:::
+
+## spread
+
+::: {.callout-desc}
+**Description.** La variante **`.spread-evenly`** ajoute le même espace en haut et en bas du bloc ; **`.spread-md`** resserre l'ensemble quand le contenu se fait dense.
+:::
+
+<div class="spread-cap cap-above">`justify-content: space-evenly` — espace identique partout</div>
+
+::: {.spread .spread-md .spread-evenly}
+<div class="spread-bar sb-draft">1ᵉʳ bloc · même espace au-dessus</div>
+<div class="spread-bar sb-review">2ᵉ bloc · mêmes espaces entre</div>
+<div class="spread-bar sb-release">3ᵉ bloc · même espace en dessous</div>
+:::
+
+## My Slide {.paper}
+
+::: {.paper-card}
+La classe **`.paper`** transforme la diapositive en une carte claire qui flotte sur le canevas sombre (`inset` + ombres portées), appliquée via `## My Slide {.paper}`.
+
+Une carte **`.paper`** isole un exemple qui doit se détacher du fond sombre ; le texte y repasse en encre sombre (`$ink-dark`).
+:::
+
+## Styling code
+
+::: {.callout-desc}
+**Description.** Le `div` **`.mono`** met le contenu en police **monospace** pour afficher du « code brut » sans coloration syntaxique. Chaque ligne se termine par **2 espaces** (invisibles) qui forcent le retour à la ligne — ils ressortent en pointillés dans le panneau « code » (`</>`) et sur la diapositive.
+:::
+
+::: mono
+[library]{.hl-draft}([ggplot2]{.hl-release})  
+
+mtcars |>  
+\ \ [ggplot]{.hl-draft}([aes(mpg, disp)]{.hl-release}) +  
+\ \ [geom_point]{.hl-draft}() +  
+\ \ [geom_smooth]{.hl-draft}(  
+\ \ \ \ [method = "lm"]{.hl-review},  
+\ \ \ \ [formula = "y ~ x"]{.hl-review}  
+\ \ )
+:::
+
+## Styling code
+
+::: {.callout-desc}
+**Description.** Avec `.mono`, on cible les classes **fragment** de Reveal : `[Texte]{.fragment .hl-review}` révèle les lignes clés une à une, dans les couleurs du thème. Ici encore, chaque ligne se termine par **2 espaces** qui forcent le retour à la ligne (visible dans le panneau « code »).
+:::
+
+::: mono
+[library]{.hl-draft}([ggplot2]{.hl-release})  
+
+mtcars |>  
+\ \ [ggplot]{.hl-draft}([aes(mpg, disp)]{.hl-release}) +  
+\ \ [geom_point]{.hl-draft}() +  
+\ \ [geom_smooth]{.hl-draft}(  
+\ \ \ \ [method = "lm"]{.fragment .hl-review},  
+\ \ \ \ [formula = "y ~ x"]{.fragment .hl-release}  
+\ \ )
+:::
+
+
+## Incremental highlighting
+
+Le `div` **`.incremental`** transforme chaque puce en fragment apparu un à un au clic. **`.highlight-last`** (SCSS maison) grise les puces et colore celle qui est actuellement révélée (`.current-fragment`).
+
+::: {.incremental .highlight-last}
+- élément 1
+- élément 2
+- élément 3
+:::
+
+## Loading tidymodels
+
+Ici **codewindow** encapsule un *vrai* bloc R, et `width="100%"` étend la fenêtre sur toute la largeur.
+
+::: {.codewindow .r width="100%"}
+```{r}
+#| echo: true
+#| message: true
+library(tidymodels)
+```
+:::
+
+## Loading tidymodels
+
+Le moteur **asciicast** (initialisé dans le `setup` avec `asciicast::init_knitr_engine`) ré-exécute le code et colle dans la diapositive la sortie *exacte* du terminal — conservant couleurs et progression.
+
+```{asciicast}
+library(tidymodels)
+```
+
+## Rough notations
+
+::: {.callout-desc}
+**Description.** L'extension **roughnotation** (`emilhvitfeldt/quarto-roughnotation`) ajoute des annotations « fait main » à un *span* via la classe `.rn-fragment` et l'attribut `rn-type` : `circle`, `highlight`, `underline`, `box`…
+:::
+
+[Un cercle souligne]{.rn-fragment rn-type=circle} une idée clé.
+
+[Le surlignage attire]{.rn-fragment rn-type=highlight} l'œil sur une phrase.
+
+[Sous l'accent]{.rn-fragment rn-type=underline}, on place une insistance.
+
+[Un encadré]{.rn-fragment rn-type=box} détache un résultat.
+
+[Une croix]{.rn-fragment rn-type=crossed-off} signale ce qui est écarté.
+
+
+## Code popover
+
+::: {.callout-desc}
+**Description.** Le filtre `code-pop.lua` ajoute **automatiquement** à chaque diapositive une icône (en bas à droite) qui ouvre une carte flottante : elle montre le **code source brut** de la diapositive — lu directement dans le `.qmd` — avec un bouton de copie et une coloration syntaxique. L'opt-out se fait par la classe `{.no-code-pop}`.
+:::
+
+Comme le filtre s'occupe de tout, cette diapositive-ci n'a **aucun bloc manuel** : le bouton en bas à droite est déjà là, et le bouton **`c`** au clavier suffit à ouvrir/fermer la carte.
+
+## Slide with Tabset
+
+::: {.callout-desc}
+**Description.** L'extension **tabset** (`mcanouil/quarto-tabset`) change les sous-titres `###` en onglets cliquables dans un `div` **`.panel-tabset`**, recolorés par `styles_template.scss` pour rester lisibles sur le canevas sombre.
+:::
+
+::: {.panel-tabset}
+
+### Onglet 1
+
+Une seule diapositive peut ainsi **emporter plusieurs contenus** que l'on consulte à la demande.
+
+### Onglet 2
+
+- Le premier onglet tient une **observation** ;
+- celui-ci, une **liste** — le format change sans changer de slide.
+
+### Onglet 3
+
+```{r}
+#| echo: false
+#| fig-width: 4
+#| fig-height: 2.5
+plot(sin(seq(0, 2*pi, 0.1)), type = "l", col = "#4A5899",
+     axes = FALSE, xlab = "", ylab = "")
+```
+
+:::
+
+## Showing Quarto code chunks
+
+::: {.callout-desc}
+**Description.** Pour afficher un bloc de code Quarto *brut* — avec ses triple backticks — on l'enveloppe dans une clôture à **4 backticks** (\`\`\`\`). Les **doubles accolades** `{{python}}` échappent le guillemet de langage : le rendu montre littéralement ` ```python ``` ` au lieu de l'interpréter comme un vrai bloc exécutable.
+:::
+
+````markdown
+```{{python}}
+# Ce bloc est affiché tel quel, sans être exécuté.
+1 + 1
+```
+````
+
+## Une façon de travailler {.dark auto-animate=true background-color="#17251F"}
+
+::: {.big-title data-id="title" style="left:88px; top:150px; width:720px; font-size:72px;"}
+Livrez en trois
+étapes.
+:::
+
+::: {.panel data-id="draft"   style="left:840px; top:150px; width:150px; height:360px;"}
+:::
+::: {.panel data-id="review"  style="left:1006px; top:150px; width:150px; height:170px;"}
+:::
+::: {.panel data-id="release" style="left:1006px; top:340px; width:150px; height:170px;"}
+:::
+
+::: {style="position:absolute; left:96px; top:540px; width:760px; font-size:17px; line-height:1.4; color:rgba(241,238,230,0.62);"}
+Ces quatre diapositives sont dessinées en coordonnées 1280×700 par le **SCSS** (classes `.panel`, `[data-id]`, `.dark`/`.light`/`.finale`). **auto-animate** fait glisser les `.panel` qui partagent un même `data-id` d'une diapositive à l'autre.
+:::
+
+## Les étapes {.light auto-animate=true background-color="#F1EEE6"}
+
+::: {.big-title data-id="title" style="left:92px; top:104px; width:1100px; font-size:44px;"}
+Brouillon, revue, publication.
+:::
+
+::: {.panel .card data-id="draft" style="left:96px; top:220px; width:340px; height:360px;"}
+[Brouillon]{.h}
+
+[Obtenez vite une première version sous les yeux. La perfection viendra ensuite.]{.p}
+:::
+::: {.panel .card data-id="review" style="left:470px; top:220px; width:340px; height:360px;"}
+[Revue]{.h}
+
+[Un second regard repère ce que vous ne voyez plus.]{.p}
+:::
+::: {.panel .card data-id="release" style="left:844px; top:220px; width:340px; height:360px;"}
+[Publication]{.h}
+
+[Diffusez, puis observez le comportement en conditions réelles.]{.p}
+:::
+
+::: {style="position:absolute; left:96px; top:596px; width:1100px; font-size:17px; color:rgba(23,37,31,0.65);"}
+`[Titre]{.h}` et `[Texte]{.p}` typographient le contenu des cartes ; les mêmes `data-id` que la diapositive précédente permettent la transition animée.
+:::
+
+## En revue {.light auto-animate=true background-color="#F1EEE6"}
+
+::: {.big-title data-id="title" style="left:92px; top:104px; width:1100px; font-size:44px;"}
+La revue, c'est là que se joue la qualité.
+:::
+
+::: {.panel .card data-id="review" style="left:96px; top:200px; width:800px; height:400px;"}
+[Revue]{.h}
+
+[Lisez comme si vous n'aviez pas écrit. Demandez-vous ce qui pourrait dérouter un novice, ce qui n'est pas testé, et ce que vous espérez discrètement que personne ne remarque.]{.p style="font-size:24px; line-height:1.6;"}
+:::
+
+::: {.panel .marker data-id="draft"   style="left:944px; top:230px;"}
+:::
+::: {.panel .marker data-id="release" style="left:944px; top:290px;"}
+:::
+
+::: {style="position:absolute; left:96px; top:614px; width:800px; font-size:17px; color:rgba(23,37,31,0.65);"}
+Une seule carte (`.card`) s'agrandit au centre ; `.marker` rappelle les étapes voisines de la séquence animée.
+:::
+
+## Et c'est parti {.dark .finale auto-animate=true background-color="#17251F"}
+
+::: {.big-title data-id="title" style="left:240px; top:300px; width:800px; font-size:66px; text-align:center;"}
+Brouillon. Revue. Publication.
+:::
+
+::: {.panel data-id="draft"   style="left:470px; top:150px; width:110px; height:110px;"}
+:::
+::: {.panel data-id="review"  style="left:590px; top:150px; width:110px; height:110px;"}
+:::
+::: {.panel data-id="release" style="left:710px; top:150px; width:110px; height:110px;"}
+:::
+
+::: {style="position:absolute; left:96px; top:600px; width:700px; font-size:17px; color:rgba(241,238,230,0.62);"}
+`.finale` recentre la séquence : les `.panel` rejoignent leur position finale et les `data-id` résument le tout en un coup d'œil.
+:::
+
+## Zoom viewport
+
+::: {.callout-desc}
+**Description.** L'extension **zoom-vp** (`emilhvitfeldt/quarto-revealjs-zoom`) déplace la *caméra* plutôt que le contenu. Chaque fragment **`.zoom-vp`** zoom sur un élément ; la balise vide **`.zoom-reset`** ramène à la vue complète. Avancez avec `→` et reculez avec `←`.
+:::
+
+::: {.zoom-tgt .zt-left #zt-left}
+Les deux blocs sont `position: absolute` dans le canevas 1280×700. Ici, la caméra zoome sur ce bloc-ci.
+:::
+
+[]{.zoom-vp zoom-to="#zt-left"}
+
+::: {.zoom-tgt .zt-right #zt-right}
+Puis elle glisse vers ce second bloc, au lieu de déplacer le contenu de la diapositive.
+:::
+
+[]{.zoom-vp zoom-to="#zt-right"}
+
+[]{.zoom-vp .zoom-reset}
+
+## Taxonomie des outils {.inv}
+
+Voici une **taxonomie** (non-exhaustive) des outils et extensions utile pour réaliser une présentation au format *RrevealJS*. Seules **arrows**, **codewindow**, **roughnotation**, **tabset** et **zoom-vp** sont installées et démontrées dans ce dépôt ; les autres sont cataloguées pour mémoire.
+
+::: {.spread .spread-md .spread-evenly}
+[**Slidecrafting.**]{.hl-draft} Construction et design de présentations *RevealJS*.
+
+[**Conception de documents.**]{.hl-draft} Mise en forme et rendu HTML/PDF.
+
+[**Réutilisation & intégration.**]{.hl-draft} Lier et réutiliser du contenu.
+
+[**Outillage.**]{.hl-draft} Expérience développeur (éditeur, CLI, maintenance).
+:::
+
+## Slidecrafting {.inv}
+
+Outils dédiés à la construction et au design de présentations *RevealJS* avec Quarto, catalogués par famille d'usage ci-dessous.
+
+::: {.panel-tabset}
+
+### Guides
+
+- **slidecrafting-book.com.** Guide et atelier en ligne pour de belles diapositives (thèmes, polices, SCSS, code, animation).
+- **Agent AI skills.** <https://github.com/EmilHvitfeldt/slidecrafting-book.com/tree/main/skills>.
+
+### Disposition
+
+- **rows.** `emilhvitfeldt/quarto-revealjs-rows` — grilles par lignes (`.rows`/`.row`), complément vertical des colonnes.
+- **editable.** `emilhvitfeldt/quarto-revealjs-editable` — déplacer/redimensionner images et texte, puis sauvegarder.
+- **cascade.** `mcanouil/quarto-revealjs-cascade` — répète la chaîne de titres sur chaque nouvelle diapositive (DRY).
+
+### Contenu
+
+- **roughnotation.** `emilhvitfeldt/quarto-roughnotation` — annotations « fait main » (cercle, surlignage, soulignement, encadré). *(installée & démontrée)*
+- **tabset.** `mcanouil/quarto-tabset` — transforme les sous-titres `###` en onglets cliquables. *(installée & démontrée)*
+- **codewindow.** `emilhvitfeldt/quarto-revealjs-codewindow` — code en fenêtre avec onglet de langage. *(installée & démontrée)*
+
+### Animation
+
+- **arrows.** `emilhvitfeldt/quarto-arrows` — flèches de Bézier entre points, avec étiquettes (LaTeX inclus). *(installée & démontrée)*
+- **zoom-vp.** `emilhvitfeldt/quarto-revealjs-zoom` — déplace la *caméra* entre éléments via des fragments `{.zoom-vp}`, plutôt que le contenu. *(installée & démontrée)*
+
+### Accessibilité
+
+- **a11y.** `mcanouil/quarto-revealjs-a11y` — accessibilité RevealJS conforme WCAG 2.2.
+- **social.** `mcanouil/quarto-revealjs-social` — injecte les cartes sociales Open Graph / Twitter dans l'en-tête.
+
+:::
+
+## Conception de documents {.inv}
+
+Extensions orientées HTML (et autres formats) pour la mise en forme et le rendu des documents.
+
+::: {.spread .spread-md .spread-evenly}
+**preview-colour.** `mcanouil/quarto-preview-colour` — pastille de couleur à côté de chaque code couleur du document.
+
+**highlight-text.** `mcanouil/quarto-highlight-text` — colore texte, fond et bordures via des *spans* ou des *divs*.
+
+**modal.** `mcanouil/quarto-modal` — fenêtres modales Bootstrap à partir d'un `div` et d'un shortcode.
+
+**offcanvas.** `mcanouil/quarto-offcanvas` — panneaux coulissants (*offcanvas* Bootstrap 5) déclenchés par un bouton.
+
+**remember.** `mcanouil/quarto-remember` — mémorise/restaure la position de navigation (page, chapitre ou diapositive).
+
+**Typst.** — moteur de composition intégré à Quarto (alternative à LaTeX) produisant des PDF, et images pour RevealJS.
+
+**Diagrammes (Mermaid).** — rendu natif de diagrammes en texte brut (organigrammes, séquences, gantt…) sans extension.
+
+**gt 1.2.0.** — paquet R « Great Tables » pour construire des tableaux de présentation programmatiquement.
+:::
+
+## Réutilisation & intégration {.inv}
+
+Outils pour réutiliser du contenu existant ou relier vos documents à d'autres systèmes.
+
+::: {.spread .spread-md .spread-evenly}
+**external.** — `mcanouil/quarto-external` — shortcode pour inclure du markdown d'un autre fichier ou d'une URL, en entier, par section/div ou par plage de lignes.
+
+**gitlink.** — `mcanouil/quarto-gitlink` — transforme les références Git (commits, issues, PR, mentions) en liens cliquables et peut afficher un widget du dépôt (étoiles/forks).
+:::
+
+## Outillage {.inv}
+
+Outils autour de Quarto pour améliorer l'expérience de développement.
+
+::: {.spread .spread-md .spread-evenly}
+**quarto-completions.** — `mcanouil/quarto-completions` — complétions shell pour la CLI Quarto (bash, zsh, fish, PowerShell).
+
+**quarto-extensions-updater.** — `mcanouil/quarto-extensions-updater` — action GitHub qui met à jour les extensions Quarto d'un dépôt (à la façon de Dependabot).
+
+**Quarto Wizard.** — extension Visual Studio Code pour gérer les extensions Quarto (installation, mise à jour, recherche).
+
+**Extension Quarto pour VS Code / Positron.** — `quarto-dev/quarto-vscode` — extension officielle : coloration des `.qmd`, aperçu/rendu intégré, exécution des blocs via les noyaux de l'IDE.
+:::

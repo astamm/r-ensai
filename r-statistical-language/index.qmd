@@ -1,0 +1,59 @@
+---
+title: "The R Statistical Language"
+subtitle: "From the base-R console to tidyverse & ggplot2"
+format: html
+---
+
+This **introductory / comprehensive** course on R is taught from the base-R
+console in Positron, progressively moving into the tidyverse and ggplot2. It
+runs over three 3-hour sessions, each pairing slide decks with hands-on labs
+and live-coding.
+
+## Synopsis
+
+|                          |  |
+| ------------------------ | - |
+| Professor                | Aymeric STAMM (CNRS & ENSAI) |
+| ECTS Credits             | 0 (preliminary course) |
+| Lectures and Tutorials   | 9 hrs (ENSAI) |
+| Estimated personal workload (beyond lecture and tutorial time) | ~1–2 hrs per session: working through the un-solved lab scripts and the cheeky "Your turn" tasks scattered through the decks. |
+| Teaching language        | English |
+| Software & Packages      | R, Positron (edition/render), base R + the **tidyverse** (dplyr, tidyr, stringr) and **ggplot2**. |
+| Teaching materials       | Per-session slide decks, matching `lab-*.R` scripts, and the shared `penguins.csv` data, all in this course folder. |
+
+## Learning Outcomes
+
+By the end of this course you will be able to:
+
+- Work comfortably from the base-R console in Positron: use R as a calculator, know the core data types and special values, and read/write data.
+- Build and subset **vectors**, **lists** and **data frames / tibbles**, and choose the right structure for a task.
+- Transform data with the **tidyverse**, the `|>` pipe, `filter()`/`select()`/`mutate()`/`arrange()`/`group_by()`/`summarise()`, and tidying with `pivot_longer()`/`pivot_wider()`.
+- Repeat work with **loops**, the `*apply()` family, and your own **functions**, using base-R grouped summaries (`tapply()`, `aggregate()`).
+- Explore data with base-R plotting and produce polished figures with **ggplot2** (layers, facets, histograms, scatter plots, boxplots).
+
+## Prerequisites
+
+Nothing beyond R itself and the Positron IDE. Beginners and experts alike can
+start at Session 1; advanced students can skim the foundations and pick up at
+the tidyverse in Session 2.
+
+## Subjects Covered
+
+| Session | Deck | Subjects |
+| ------- | ---- | -------- |
+| 1 · [Foundations: vectors to tables](session-1/session-1.qmd) | What is R and why use it; setting up your environment; the console, scripts and R as a calculator; **vectors** and subsetting; **lists**; **data frames / tibbles**; reading and writing data. |
+| 2 · [Explore your data: the tidyverse](session-2/session-2.qmd) | The `|>` pipe; **dplyr** transforms (`filter`, `select`, `mutate`, `arrange`, `group_by`, `summarise`); **tidyr** (pivot longer/wider); **stringr**; base-R plotting; **ggplot2** (layers, facets, hists/scatters/boxplots, `fct_reorder`). |
+| 3 · [Repeat & package: loops, matrices, functions](session-3/session-3.qmd) | `for`/`while`/`if`/`else` (preallocation, vectorization); the `*apply()` family; base-R grouped summaries; **matrices** (arithmetic, `%*%`, `solve()`, `apply()`, `sweep()`); custom **functions**. |
+
+## Bibliography
+
+- Grolemund, H. & Wickham, H., *R for Data Science*, 2nd ed.: <https://r4ds.hadley.nz>
+- Wickham, H., *Advanced R*, 2nd ed.: <https://adv-r.hadley.nz>
+- Chang, W., *R Graphics Cookbook*, 2nd ed.: <https://r-graphics.org>
+- The tidyverse: <https://tidyverse.org> · ggplot2: <https://ggplot2.tidyverse.org>
+
+## Also in this site
+
+The companion [**Reproducible Workflows**](../reproducible-workflows/index.qmd)
+course builds on these decks, teaching Quarto documents, reproducible data
+sourcing and versioning, and picking up where this base-R course leaves off.

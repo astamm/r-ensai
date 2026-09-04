@@ -1,0 +1,51 @@
+---
+title: "ENSAI R Teaching Material"
+subtitle: "Two master courses, six slide decks, all written in Quarto"
+format: html
+---
+
+::: {.callout-tip}
+**Everything on this site (this homepage included) is built with Quarto.**
+This website is itself a Quarto artefact: the *pages you browse* are Quarto
+documents rendered to HTML, and **every one of the six slide decks is also a
+Quarto document**, written in the same plain-markdown-plus-code syntax and
+rendered to reveal.js slides. Quarto is one tool that produces websites, slide
+decks and books from a single source; the *Reproducible Workflows* course below
+teaches exactly that.
+:::
+
+This repository collects teaching material for two graduate courses (ENSAI /
+Nantes Université, taught by A. Stamm). Each course is three 3-hour sessions;
+the slide decks point to hands-on labs and live-coding, which fill out the
+time.
+
+## The R Statistical Language {#course-base-r}
+
+An **introductory / comprehensive** course on R, taught from the base-R console
+in Positron and progressively moving into the tidyverse and ggplot2.
+
+| Session | Deck |
+| ------- | ---- |
+| Session 1 · [Foundations: vectors to tables](r-statistical-language/session-1/session-1.qmd) | setup, data types, vectors, lists, data frames, read/write |
+| Session 2 · [Explore your data: the tidyverse](r-statistical-language/session-2/session-2.qmd) | pipe, dplyr, tidyr, stringr, ggplot2, EDA |
+| Session 3 · [Repeat & package: loops, matrices, functions](r-statistical-language/session-3/session-3.qmd) | control flow, `*apply`, matrices, custom functions |
+
+## Reproducible Workflows {#course-rr}
+
+A course on **reproducible workflows**: writing Quarto documents and books,
+sourcing data reproducibly (including *data.gouv.fr*), and versioning /
+pinning / publishing analyses.
+
+| Session | Deck |
+| ------- | ---- |
+| Session 1 · [What does reproducible mean?](reproducible-workflows/session-1/session-1.qmd) | the spectrum of reproducibility, Quarto documents |
+| Session 2 · [Accessing data & building the book](reproducible-workflows/session-2/session-2.qmd) | EDA & cleaning, data.gouv.fr, Quarto books |
+| Session 3 · [Version it, pin it, publish it](reproducible-workflows/session-3/session-3.qmd) | git, renv/uv, publishing to Posit Connect |
+
+## Why a website? {#why-a-website}
+
+Quarto can render one source into many output shapes. The same project that
+produces these six **revealjs slide decks** and (in the RR course) a **Quarto
+book** also renders this **website**, an ordinary Quarto site whose pages link
+straight to the decks. In other words: **yes, all the slides were also made
+with Quarto**, and so was the site that hosts them.
