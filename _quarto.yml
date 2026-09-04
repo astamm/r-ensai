@@ -11,6 +11,20 @@ project:
     - reproducible-workflows/session-1/session-1.qmd
     - reproducible-workflows/session-2/session-2.qmd
     - reproducible-workflows/session-3/session-3.qmd
+  # Copy the base-R lab scripts (and the data files they read) into the site
+  # so students can grab them without cloning the GitHub repo. Copied verbatim,
+  # not rendered. Paths are project-root-relative.
+  resources:
+    - r-statistical-language/session-1/lab-1-vectors.R
+    - r-statistical-language/session-1/lab-2-dataframes.R
+    - r-statistical-language/session-1/penguins_messy.txt
+    - r-statistical-language/session-2/lab-1-tidyverse.R
+    - r-statistical-language/session-2/lab-2-plotting.R
+    - r-statistical-language/session-2/penguins.csv
+    - r-statistical-language/session-3/lab-1-loops.R
+    - r-statistical-language/session-3/lab-2-matrices.R
+    - r-statistical-language/session-3/lab-3-functions.R
+    - r-statistical-language/session-3/penguins.csv
 
 website:
   title: "R Teaching Material"
@@ -93,17 +107,19 @@ format:
       - resources/slidecrafting/logo-link.html
       - resources/slidecrafting/paper-adv-popup.html
     theme: [default, resources/slidecrafting/styles_template.scss, theme/scss/ensai-theme.scss]
-
-revealjs-plugins:
-  - codewindow
-  - tabset
-
-filters:
-  - arrows
-  - roughnotation
-  - zoom-vp
-  - resources/slidecrafting/code-pop.lua
-
-knitr:
-  opts_chunk:
-    dev.args: { bg: "transparent" }
+    # These three are revealjs-deck concerns only. Scoping them under
+    # format.revealjs keeps their filters/plugins from leaking into the plain
+    # HTML site pages (e.g. code-pop.lua was injecting source-popup blocks
+    # after every site-page heading). Named extensions (codewindow, tabset,
+    # arrows, roughnotation, zoom-vp) still resolve from root _extensions/.
+    revealjs-plugins:
+      - codewindow
+      - tabset
+    filters:
+      - arrows
+      - roughnotation
+      - zoom-vp
+      - resources/slidecrafting/code-pop.lua
+    knitr:
+      opts_chunk:
+        dev.args: { bg: "transparent" }

@@ -18,3 +18,5 @@ renv/library/
 .httr-oauth
 .DS_Store
 .quarto
+
+/.luarc.json
