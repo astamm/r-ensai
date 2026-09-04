@@ -1,0 +1,61 @@
+---
+title: "Reproducible Workflows"
+subtitle: "Quarto documents, reproducible data, versioned & published"
+format: html
+---
+
+A course on **reproducible workflows**: writing Quarto documents and books,
+sourcing data reproducibly (including *data.gouv.fr*), and versioning /
+pinning / publishing analyses. It runs over three 3-hour sessions, each pairing
+slide decks with hands-on labs in Quarto (`.qmd`).
+
+## Synopsis
+
+|                          |  |
+| ------------------------ | - |
+| Professor                | Aymeric STAMM (CNRS & ENSAI) |
+| ECTS Credits             | 0 (preliminary course) |
+| Lectures and Tutorials   | 9 hrs (ENSAI) |
+| Estimated personal workload (beyond lecture and tutorial time) | ~2–3 hrs per session: completing the `lab-*.qmd` documents and growing your personal **portfolio book** across the term. |
+| Teaching language        | English |
+| Software & Packages      | Quarto, R + Python (via uv / uvr), and the packages `{janitor}`, `{naniar}`, `{skimr}`, `{pins}`, `{vetiver}`, `{rdatagouv}` (optional); plus git / GitHub, `renv`, Posit Connect and the *data.gouv.fr* open-data portal. |
+| Teaching materials       | Per-session slide decks, matching `lab-*.qmd` documents, the shared `penguins.csv` data, and a starter **portfolio-book** scaffold, all in this course folder. |
+
+## Learning Outcomes
+
+By the end of this course you will be able to:
+
+- Explain what reproducibility is (and is not) along the reproducibility spectrum, and set up the full toolchain, R, Quarto and Positron, with Python via uv.
+- Write structured **Quarto documents** (YAML front matter, code cells, inline code, captions and cross-references) that a reader can follow.
+- Run an **EDA loop**: summarise and clean a dataset with `{skimr}`, `{janitor}` and `{naniar}`, and source open data from *data.gouv.fr* (or any portal) by code.
+- **Version your data and models** with `{pins}` and sees how R and Python tooling map onto each other (renv↔uv, pins↔pins-python, vetiver↔vetiver-python).
+- Build your own **Quarto book** and grow it into a personal portfolio.
+- Version your work with **git**, pin dependencies with `renv`/`uv`, and **publish** to Posit Connect so others can open and reproduce it.
+
+## Prerequisites
+
+The companion [**The R Statistical Language**](../r-statistical-language/index.qmd)
+course (or equivalent base-R fluency) is assumed. No prior Quarto, git or
+versioning experience is required.
+
+## Subjects Covered
+
+| Session | Deck | Subjects |
+| ------- | ---- | -------- |
+| 1 · [What does reproducible mean?](session-1/session-1.qmd) | The reproducibility spectrum and what breaks it; setting up R, Quarto, Positron (and Python via uv); **Quarto documents** (YAML, code cells, `qmd` vs `rmd`); structured reporting: literate programming, captions, cross-references; the portfolio-book end goal. |
+| 2 · [Accessing data & building the book](session-2/session-2.qmd) | **EDA & cleaning** with `{skimr}`, `{janitor}`, `{naniar}`; **sourcing open data** from *data.gouv.fr* (and any portal, by code); **versioning data** with `{pins}` (and briefly models, with `{vetiver}`); **Quarto books**; writing for an audience. |
+| 3 · [Version it, pin it, publish it](session-3/session-3.qmd) | **git & GitHub** (commit loop, `.gitignore`, branches); **dependency management** with `renv` and `uv`/`uvr` (lockfiles); **publishing to Posit Connect**; reproducible habit, the portfolio rubric and peer review. |
+
+## Bibliography
+
+- Quarto documentation: <https://quarto.org>
+- Bryan, J., *Happy Git and GitHub for the useR*: <https://happygitwithr.com>
+- `renv`: <https://rstudio.github.io/renv> · `uv`: <https://docs.astral.sh/uv/> · `uvr`, the uv wrapper for R: <https://nbafrank.github.io/uvr/>
+- `{pins}`: <https://pins.rstudio.com> · `{vetiver}`: <https://rstudio.github.io/vetiver-r> (and the pins / vetiver Python ports)
+- `{rdatagouv}`: <https://github.com/astamm/rdatagouv> · the French open-data portal: <https://www.data.gouv.fr>
+
+## Also in this site
+
+This course builds directly on the companion
+[**The R Statistical Language**](../r-statistical-language/index.qmd) course:
+its base-R decks give the R fluency this course assumes.
