@@ -1,16 +1,20 @@
 project:
   type: website
+  # TEMPORARY (2026-09): only setup + the base-R course are published for now.
+  # The reproducible-workflows course is whitelisted but not yet public; restore
+  # its index.qmd + three session-N.qmd entries here (and the navbar/homepage
+  # sections, see below) when it is ready to go live.
   render:
     - index.qmd
     - setup.qmd
     - r-statistical-language/index.qmd
-    - reproducible-workflows/index.qmd
     - r-statistical-language/session-1/session-1.qmd
     - r-statistical-language/session-2/session-2.qmd
     - r-statistical-language/session-3/session-3.qmd
-    - reproducible-workflows/session-1/session-1.qmd
-    - reproducible-workflows/session-2/session-2.qmd
-    - reproducible-workflows/session-3/session-3.qmd
+    # - reproducible-workflows/index.qmd
+    # - reproducible-workflows/session-1/session-1.qmd
+    # - reproducible-workflows/session-2/session-2.qmd
+    # - reproducible-workflows/session-3/session-3.qmd
   # Copy the base-R lab scripts (and the data files they read) into the site
   # so students can grab them without cloning the GitHub repo. Copied verbatim,
   # not rendered. Paths are project-root-relative.
@@ -25,6 +29,13 @@ project:
     - r-statistical-language/session-3/lab-2-matrices.R
     - r-statistical-language/session-3/lab-3-functions.R
     - r-statistical-language/session-3/penguins.csv
+
+# Freeze computed output: R code runs locally and the results are committed to
+# _freeze/. The GitHub Pages publish action then renders from frozen output with
+# no R/package install on the CI runner. Re-render locally whenever deck code
+# changes and commit the updated _freeze/.
+execute:
+  freeze: auto
 
 website:
   title: "R Teaching Material"
@@ -49,16 +60,17 @@ website:
             text: "Session 2 · Tidyverse & EDA"
           - href: r-statistical-language/session-3/session-3.qmd
             text: "Session 3 · Loops & functions"
-      - text: "Reproducible Workflows"
-        menu:
-          - href: reproducible-workflows/index.qmd
-            text: "Course home"
-          - href: reproducible-workflows/session-1/session-1.qmd
-            text: "Session 1 · What is reproducibility?"
-          - href: reproducible-workflows/session-2/session-2.qmd
-            text: "Session 2 · Data & the book"
-          - href: reproducible-workflows/session-3/session-3.qmd
-            text: "Session 3 · Version, pin, publish"
+      # TEMPORARY (2026-09): RR course hidden from navbar until it goes live.
+      # - text: "Reproducible Workflows"
+      #   menu:
+      #     - href: reproducible-workflows/index.qmd
+      #       text: "Course home"
+      #     - href: reproducible-workflows/session-1/session-1.qmd
+      #       text: "Session 1 · What is reproducibility?"
+      #     - href: reproducible-workflows/session-2/session-2.qmd
+      #       text: "Session 2 · Data & the book"
+      #     - href: reproducible-workflows/session-3/session-3.qmd
+      #       text: "Session 3 · Version, pin, publish"
 
 # ---- Factorized common metadata + format (2026-09) ----------------------------
 # The six decks share author, affiliation, and every revealjs option except the

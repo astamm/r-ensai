@@ -32,15 +32,8 @@ in Positron and progressively moving into the tidyverse and ggplot2.
 
 ## Reproducible Workflows {#course-rr}
 
-A course on **reproducible workflows**: writing Quarto documents and books,
-sourcing data reproducibly (including *data.gouv.fr*), and versioning /
-pinning / publishing analyses.
-
-| Session | Deck |
-| ------- | ---- |
-| Session 1 · [What does reproducible mean?](reproducible-workflows/session-1/session-1.qmd) | the spectrum of reproducibility, Quarto documents |
-| Session 2 · [Accessing data & building the book](reproducible-workflows/session-2/session-2.qmd) | EDA & cleaning, data.gouv.fr, Quarto books |
-| Session 3 · [Version it, pin it, publish it](reproducible-workflows/session-3/session-3.qmd) | git, renv/uv, publishing to Posit Connect |
+<!-- TEMPORARY (2026-09): RR course not yet published; hidden from the homepage
+     until it goes live. The deck files remain in the repo. -->
 
 ## Why a website? {#why-a-website}
 
