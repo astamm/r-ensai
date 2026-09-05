@@ -46,7 +46,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-b7a5c34fd302b273fca496bbc60d9239.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-4ffa53eb8aaec28d035f3f0cf33601ec.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -192,34 +192,25 @@ Tip
 <p>This repository collects teaching material for two graduate courses (ENSAI / Nantes Université, taught by A. Stamm). Each course is three 3-hour sessions; the slide decks point to hands-on labs and live-coding, which fill out the time.</p>
 <section id="course-base-r" class="level2">
 <h2 class="anchored" data-anchor-id="course-base-r">The R Statistical Language</h2>
-<p>An <strong>introductory / comprehensive</strong> course on R, taught from the base-R console in Positron and progressively moving into the tidyverse and ggplot2.</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Session</th>
-<th>Deck</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Session 1 · <a href="./r-statistical-language/session-1/session-1.html">Foundations: vectors to tables</a></td>
-<td>setup, data types, vectors, lists, data frames, read/write</td>
-</tr>
-<tr class="even">
-<td>Session 2 · <a href="./r-statistical-language/session-2/session-2.html">Explore your data: the tidyverse</a></td>
-<td>pipe, dplyr, tidyr, stringr, ggplot2, EDA</td>
-</tr>
-<tr class="odd">
-<td>Session 3 · <a href="./r-statistical-language/session-3/session-3.html">Repeat &amp; package: loops, matrices, functions</a></td>
-<td>control flow, <code>*apply</code>, matrices, custom functions</td>
-</tr>
-</tbody>
-</table>
+<p>An <strong>introductory / comprehensive</strong> course on R, taught from the base-R console in Positron and progressively moving into the tidyverse and ggplot2. The <a href="./r-statistical-language/index.html">course home page</a> gathers the synopsis, the slides per session, the hands-on labs and the learning outcomes.</p>
 </section>
 <section id="course-rr" class="level2">
 <h2 class="anchored" data-anchor-id="course-rr">Reproducible Workflows</h2>
 <!-- TEMPORARY (2026-09): RR course not yet published; hidden from the homepage
      until it goes live. The deck files remain in the repo. -->
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Going back to a course page from a slide deck.</strong> While you are following a deck, you can return to its course home page at any time by clicking the logo in the top-left corner of any slide.</p>
+</div>
+</div>
 </section>
 <section id="why-a-website" class="level2">
 <h2 class="anchored" data-anchor-id="why-a-website">Why a website?</h2>
@@ -302,7 +293,7 @@ Tip
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/astamm\.github\.io\/r-ensai\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

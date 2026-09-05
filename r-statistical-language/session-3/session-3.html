@@ -106,7 +106,7 @@
     code span.vs { color: #abe338; } /* VerbatimString */
     code span.wa { color: #dcc6e0; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-f5a45aff94bbc6890eafd658c4f8ca87.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-77f9ced954ebe6ee244dd5eb6767bf6c.css">
   <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -241,7 +241,7 @@ A. Stamm <a href="https://orcid.org/0000-0002-8725-3654" class="quarto-title-aut
 <p><strong>The move today.</strong> Your EDA loop is full of moves you repeat: grouped summaries, reshapes, simulations. This session looks <em>underneath</em> them: we leave the tidyverse and work in base R, replacing copy-paste with loops, reaching into two dimensions with matrices, and turning the moves you repeat into reusable functions you keep.</p>
 </div>
 <div class="code-pop">
-<details><summary class="code-pop-btn" aria-expanded="false" aria-label="Afficher le code source de cette diapositive"><svg viewbox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 7 3 12l5 5M16 7l5 5-5 5"></path></svg></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Where we left off {.inv}
+<details><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Where we left off {.inv}
 
 You can already *explore* a dataset: shape it with the pipe and `dplyr`/`tidyr`, and read it back with ggplot2's grammar.
 
@@ -288,7 +288,7 @@ You can already *explore* a dataset: shape it with the pipe and `dplyr`/`tidyr`,
 <p><strong>The thread.</strong> The Monte-Carlo experiment ties the session together: we <em>loop</em> over thousands of samples, and we <em>package</em> that loop into one reusable, tested function. Matrices give us the two-dimensional structures the algebra often lives in.</p>
 </div>
 <div class="code-pop">
-<details><summary class="code-pop-btn" aria-expanded="false" aria-label="Afficher le code source de cette diapositive"><svg viewbox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 7 3 12l5 5M16 7l5 5-5 5"></path></svg></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Today's map {.inv}
+<details><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Today's map {.inv}
 
 ::: {.session-arc}
 &lt;div class="step s1"&gt;&lt;span class="n"&gt;1&lt;/span&gt;Foundations&lt;/div&gt;&lt;div class="connector"&gt;&lt;/div&gt;&lt;div class="step s2"&gt;&lt;span class="n"&gt;2&lt;/span&gt;Explore your data&lt;/div&gt;&lt;div class="connector"&gt;&lt;/div&gt;&lt;div class="step s3 current"&gt;&lt;span class="n"&gt;3&lt;/span&gt;Repeat &amp;amp; package&lt;/div&gt;
@@ -318,7 +318,7 @@ Session 3 is the **"repeat &amp; package"** move of the course: stop doing by ha
 <p>Often you want to repeat the same step on many things: - your function models ten species; - you average over 1000 simulations; - you transform every column of a table.</p>
 <p>You could copy-paste… or you let <strong>R repeat for you</strong>.</p>
 <div class="code-pop">
-<details><summary class="code-pop-btn" aria-expanded="false" aria-label="Afficher le code source de cette diapositive"><svg viewbox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 7 3 12l5 5M16 7l5 5-5 5"></path></svg></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## The problem loops solve {.inv}
+<details><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## The problem loops solve {.inv}
 
 Often you want to repeat the same step on many things:
 - your function models ten species;
@@ -343,7 +343,7 @@ You could copy-paste... or you let **R repeat for you**.
 <p>Afterwards <code>i</code> is a normal variable: it still holds the loop’s last value.</p>
 </div>
 <div class="code-pop">
-<details><summary class="code-pop-btn" aria-expanded="false" aria-label="Afficher le code source de cette diapositive"><svg viewbox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 7 3 12l5 5M16 7l5 5-5 5"></path></svg></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## `for` loops {.inv}
+<details><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## `for` loops {.inv}
 
 Repeat a block a fixed number of times: the body runs once per value:
 
@@ -378,7 +378,7 @@ Afterwards `i` is a normal variable: it still holds the loop's last value.
 <p><strong>Rule of thumb.</strong> Decide the output’s length <em>before</em> the loop, create the container, then fill slots by index (<code>out[i] &lt;- ...</code>). This is much faster than <code>out &lt;- c(out, ...)</code> inside the loop, a habit that matters once your data grows.</p>
 </div>
 <div class="code-pop">
-<details><summary class="code-pop-btn" aria-expanded="false" aria-label="Afficher le code source de cette diapositive"><svg viewbox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 7 3 12l5 5M16 7l5 5-5 5"></path></svg></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Pre-allocate for speed {.inv}
+<details><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Pre-allocate for speed {.inv}
 
 Growing a vector inside a loop is slow. **Pre-allocate** the result first:
 
@@ -426,7 +426,7 @@ for (i in 1:n) {
 </div>
 </div>
 <div class="code-pop">
-<details><summary class="code-pop-btn" aria-expanded="false" aria-label="Afficher le code source de cette diapositive"><svg viewbox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 7 3 12l5 5M16 7l5 5-5 5"></path></svg></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## `while` loops {.inv}
+<details><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## `while` loops {.inv}
 
 Repeat *while a condition holds*: useful when you don't know the number of steps in advance:
 
@@ -473,7 +473,7 @@ If the condition never becomes `FALSE`, the loop runs forever. Always make sure 
 </div>
 </div>
 <div class="code-pop">
-<details><summary class="code-pop-btn" aria-expanded="false" aria-label="Afficher le code source de cette diapositive"><svg viewbox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 7 3 12l5 5M16 7l5 5-5 5"></path></svg></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Conditionals: `if` / `else if` / `else` {.inv}
+<details><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Conditionals: `if` / `else if` / `else` {.inv}
 
 Branch on a condition: only **one** branch runs:
 
@@ -506,7 +506,7 @@ grade &lt;- if (score &gt;= 90) "A"
 <p><strong><code>if</code> vs <code>ifelse</code>.</strong> Use <code>if/else</code> to choose <em>which block of code</em> runs once; use <code>ifelse</code> to map a <em>vector</em> to one of two values. Mixing them up is a classic beginner bug.</p>
 </div>
 <div class="code-pop">
-<details><summary class="code-pop-btn" aria-expanded="false" aria-label="Afficher le code source de cette diapositive"><svg viewbox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 7 3 12l5 5M16 7l5 5-5 5"></path></svg></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Element-wise choice: `ifelse` {.inv}
+<details><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Element-wise choice: `ifelse` {.inv}
 
 For **vectorised** decisions, use `ifelse(condition, when_true, when_false)`:
 
@@ -539,7 +539,7 @@ It applies the branch *element-wise* to a whole vector: no loop needed. This is 
 <p>Often the <em>cleanest</em> loop is no loop at all: vectorization, <code>ifelse</code>, or <code>lapply</code>/<code>vapply</code> are simpler than an explicit <code>for</code>.</p>
 </div>
 <div class="code-pop">
-<details><summary class="code-pop-btn" aria-expanded="false" aria-label="Afficher le code source de cette diapositive"><svg viewbox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 7 3 12l5 5M16 7l5 5-5 5"></path></svg></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Which tool when? {.inv}
+<details><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Which tool when? {.inv}
 
 ::: {.spread .spread-md .spread-evenly}
 **`for`**: repeat a block a *known* number of times (fill a pre-allocated vector, iterate over columns).
@@ -573,7 +573,7 @@ Often the *cleanest* loop is no loop at all: vectorization, `ifelse`, or `lapply
 <p>The family you first met on lists in <strong>Session 1</strong> (and will meet again on matrices as <code>apply</code>, <code>MARGIN = …</code>): <code>lapply</code> always, <code>sapply</code> when simple, <code>vapply</code> when you want the guarantee. It’s “loop, <em>then</em> apply” collapsed into one verb.</p>
 </div>
 <div class="code-pop">
-<details><summary class="code-pop-btn" aria-expanded="false" aria-label="Afficher le code source de cette diapositive"><svg viewbox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 7 3 12l5 5M16 7l5 5-5 5"></path></svg></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## The `*apply` family: loop &amp; apply {.inv}
+<details><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## The `*apply` family: loop &amp; apply {.inv}
 
 Say "**apply this function to every element**" instead of writing the loop by hand:
 
@@ -608,7 +608,7 @@ The family you first met on lists in **Session 1** (and will meet again on matri
 <p><code>tapply(vector, group, fun)</code> summarises by group; <code>aggregate(formula, data, fun)</code> returns a tidy <code>data.frame</code>. When your pipeline gets more steps, reach for the <code>dplyr</code> verbs; when it’s one grouped summary, these one-liners are hard to beat.</p>
 </div>
 <div class="code-pop">
-<details><summary class="code-pop-btn" aria-expanded="false" aria-label="Afficher le code source de cette diapositive"><svg viewbox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 7 3 12l5 5M16 7l5 5-5 5"></path></svg></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Grouped summaries in base R {.inv}
+<details><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Grouped summaries in base R {.inv}
 
 `group_by |&gt; summarise` (Session 2) has a base-R cousin that returns the split-by-group result directly:
 
@@ -643,7 +643,7 @@ aggregate(body_mass_g ~ species, data = penguins, FUN = mean)
 <p><strong>Lab 1: loops (≈25 min).</strong> Continue in <code>lab-1-loops.R</code>. The Monte-Carlo in Q4 is our Central Limit Theorem <em>by simulation</em>: no theorem needed, just loops and histograms.</p>
 </div>
 <div class="code-pop">
-<details><summary class="code-pop-btn" aria-expanded="false" aria-label="Afficher le code source de cette diapositive"><svg viewbox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 7 3 12l5 5M16 7l5 5-5 5"></path></svg></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Your turn: loops &amp; conditionals {.paper}
+<details><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Your turn: loops &amp; conditionals {.paper}
 
 ::: {.paper-card}
 1. `for` loop printing squares of `1:10`.
@@ -677,7 +677,7 @@ aggregate(body_mass_g ~ species, data = penguins, FUN = mean)
 <p><strong>Key distinction.</strong> A data frame is a <em>list of columns</em> (columns may differ in type); a matrix is <em>one vector in 2D</em> (single type). For tabular <em>data</em> with mixed types, prefer a data frame/tibble; reach for a matrix when you need <strong>linear algebra</strong>.</p>
 </div>
 <div class="code-pop">
-<details><summary class="code-pop-btn" aria-expanded="false" aria-label="Afficher le code source de cette diapositive"><svg viewbox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 7 3 12l5 5M16 7l5 5-5 5"></path></svg></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## What is a matrix? {.inv}
+<details><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## What is a matrix? {.inv}
 
 A **matrix** is a *two-dimensional rectangular array* of **one type** (usually numeric): a vector folded into rows and columns. It's the **2D cousin of the vector**.
 
@@ -723,7 +723,7 @@ nrow(m); ncol(m)   # 3 4
 </div>
 </div>
 <div class="code-pop">
-<details><summary class="code-pop-btn" aria-expanded="false" aria-label="Afficher le code source de cette diapositive"><svg viewbox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 7 3 12l5 5M16 7l5 5-5 5"></path></svg></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Building &amp; reshaping {.inv}
+<details><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Building &amp; reshaping {.inv}
 
 A matrix is just a vector with a `dim` (dimension) attribute, so you can build or reshape them freely:
 
@@ -757,7 +757,7 @@ dim(A) &lt;- NULL                                # strip the dim -&gt; back to a
 <p><strong>Watch the recycling axis.</strong> A length-2 vector recycles along columns (down), not across: get this wrong and your standardisation silently miscalculates each column.</p>
 </div>
 <div class="code-pop">
-<details><summary class="code-pop-btn" aria-expanded="false" aria-label="Afficher le code source de cette diapositive"><svg viewbox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 7 3 12l5 5M16 7l5 5-5 5"></path></svg></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Arithmetic &amp; recycling {.inv}
+<details><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Arithmetic &amp; recycling {.inv}
 
 Element-wise arithmetic works like it does on vectors, and **recycling** applies:
 
@@ -803,7 +803,7 @@ M * matrix(c(1, 10), 2, 1)   # column vector scales each column
 </div>
 </div>
 <div class="code-pop">
-<details><summary class="code-pop-btn" aria-expanded="false" aria-label="Afficher le code source de cette diapositive"><svg viewbox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 7 3 12l5 5M16 7l5 5-5 5"></path></svg></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Linear algebra {.inv}
+<details><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Linear algebra {.inv}
 
 Matrices exist to do **algebra**: matrix product, transpose, inverse, determinant:
 
@@ -837,7 +837,7 @@ diag(4)        # 4x4 identity
 <p><code>as.matrix()</code> forces everything to <strong>one type</strong>: if any column is character, the whole matrix becomes character. Check <code>str()</code> before you coerce, and keep a real data frame for mixed-type data.</p>
 </div>
 <div class="code-pop">
-<details><summary class="code-pop-btn" aria-expanded="false" aria-label="Afficher le code source de cette diapositive"><svg viewbox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 7 3 12l5 5M16 7l5 5-5 5"></path></svg></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Fold a data frame into a matrix {.inv}
+<details><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Fold a data frame into a matrix {.inv}
 
 Any rectangular **numeric** block can be coerced to a matrix when algebra needs it:
 
@@ -872,7 +872,7 @@ class(M)                       # "matrix" "array"
 <p><code>apply(M, MARGIN, fun)</code>: <code>MARGIN = 1</code> goes down rows, <code>MARGIN = 2</code> across columns. It’s <code>lapply</code>’s 2D sibling: a loop over one axis hidden inside a one-liner.</p>
 </div>
 <div class="code-pop">
-<details><summary class="code-pop-btn" aria-expanded="false" aria-label="Afficher le code source de cette diapositive"><svg viewbox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 7 3 12l5 5M16 7l5 5-5 5"></path></svg></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Row/column summaries &amp; `apply` {.inv}
+<details><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Row/column summaries &amp; `apply` {.inv}
 
 Summarise along one axis with the `row*`/`col*` helpers, or generalise with `apply`:
 
@@ -910,7 +910,7 @@ apply(M, 2, function(x) max(x) - min(x))   # range of each column
 <p><code>sweep(M, MARGIN, vector, FUN)</code> applies a function across one axis, here subtracting a column mean. This is the pattern <code>scale(M)</code> automates; you now see what’s underneath.</p>
 </div>
 <div class="code-pop">
-<details><summary class="code-pop-btn" aria-expanded="false" aria-label="Afficher le code source de cette diapositive"><svg viewbox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 7 3 12l5 5M16 7l5 5-5 5"></path></svg></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Standardise a matrix (full example) {.inv}
+<details><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Standardise a matrix (full example) {.inv}
 
 Let's **z-score** every column of a matrix, the machinery behind a real analysis:
 
@@ -947,7 +947,7 @@ apply(Z, 2, sd)               # ~ 1
 <p><strong>Lab 2: matrices (≈20 min).</strong> In <code>lab-2-matrices.R</code>. Standardising by hand is the kind of thing you’ll later hand to a <em>function</em>, which is exactly the next section.</p>
 </div>
 <div class="code-pop">
-<details><summary class="code-pop-btn" aria-expanded="false" aria-label="Afficher le code source de cette diapositive"><svg viewbox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 7 3 12l5 5M16 7l5 5-5 5"></path></svg></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Your turn: matrices {.paper}
+<details><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Your turn: matrices {.paper}
 
 ::: {.paper-card}
 1. Build `matrix(1:20, 4, 5)`; report `dim`, `rowSums`, `colMeans`.
@@ -972,7 +972,7 @@ apply(Z, 2, sd)               # ~ 1
 <p>Copy-pasting code is how bugs multiply. A <strong>function</strong> lets you: - name a block of logic so its <em>intent</em> is readable; - reuse it with different inputs; - fix a bug <strong>once</strong> instead of in every copy.</p>
 <p>Any analysis you do more than twice deserves a function.</p>
 <div class="code-pop">
-<details><summary class="code-pop-btn" aria-expanded="false" aria-label="Afficher le code source de cette diapositive"><svg viewbox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 7 3 12l5 5M16 7l5 5-5 5"></path></svg></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Why functions? {.inv}
+<details><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Why functions? {.inv}
 
 Copy-pasting code is how bugs multiply. A **function** lets you:
 - name a block of logic so its *intent* is readable;
@@ -1000,7 +1000,7 @@ Any analysis you do more than twice deserves a function.
 </ul>
 </div>
 <div class="code-pop">
-<details><summary class="code-pop-btn" aria-expanded="false" aria-label="Afficher le code source de cette diapositive"><svg viewbox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 7 3 12l5 5M16 7l5 5-5 5"></path></svg></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Anatomy of a function {.inv}
+<details><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Anatomy of a function {.inv}
 
 ::: {.codewindow .r width="100%"}
 The anatomy of a function
@@ -1047,7 +1047,7 @@ function_name &lt;- function(arg1, arg2 = default) {
 </div>
 </div>
 <div class="code-pop">
-<details><summary class="code-pop-btn" aria-expanded="false" aria-label="Afficher le code source de cette diapositive"><svg viewbox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 7 3 12l5 5M16 7l5 5-5 5"></path></svg></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Scope: what the body sees {.inv}
+<details><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Scope: what the body sees {.inv}
 
 Variables created *inside* a function live **only there**: they don't leak out:
 
@@ -1084,7 +1084,7 @@ A function *can* see variables from the outside, but relying on that is fragile:
 <p><strong>The payoff.</strong> The loop from “Your turn: loops” is now a <em>named, reusable, parameterisable</em> tool: <code>clt_sim(n = 100)</code> measures the same CLT with bigger samples, no copy-paste.</p>
 </div>
 <div class="code-pop">
-<details><summary class="code-pop-btn" aria-expanded="false" aria-label="Afficher le code source de cette diapositive"><svg viewbox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 7 3 12l5 5M16 7l5 5-5 5"></path></svg></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Functions wrap loops {.inv}
+<details><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Functions wrap loops {.inv}
 
 The Monte-Carlo from the loops section is a loop crying out to be a function:
 
@@ -1120,7 +1120,7 @@ hist(clt_sim())
 <p><code>ifelse</code> in the body: the element-wise tool from earlier, and the vectorised <code>clamp</code> needs no loop at all.</p>
 </div>
 <div class="code-pop">
-<details><summary class="code-pop-btn" aria-expanded="false" aria-label="Afficher le code source de cette diapositive"><svg viewbox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 7 3 12l5 5M16 7l5 5-5 5"></path></svg></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Vectorised functions &amp; defaults {.inv}
+<details><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Vectorised functions &amp; defaults {.inv}
 
 Functions are **vectorised**: they work element-wise on vectors:
 
@@ -1159,7 +1159,7 @@ clamp(c(-1, 0.5, 2))       # 0.0 0.5 1.0
 <p><strong>Loops without loops.</strong> <code>Vectorize()</code> turns a scalar-only function into a vector one; <code>replicate(R, expr)</code> re-runs an expression <code>R</code> times and collects results, the function-flavoured cousin of <code>for</code>/<code>sapply</code>. Works with any expression, not just a named function.</p>
 </div>
 <div class="code-pop">
-<details><summary class="code-pop-btn" aria-expanded="false" aria-label="Afficher le code source de cette diapositive"><svg viewbox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 7 3 12l5 5M16 7l5 5-5 5"></path></svg></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## When functions aren't vectorised: `Vectorize()` &amp; `replicate()` {.inv}
+<details><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## When functions aren't vectorised: `Vectorize()` &amp; `replicate()` {.inv}
 
 Built-in functions are usually vectorised, but your own (or a third-party) function may only accept **one scalar at a time**. Two loop-free helpers:
 
@@ -1205,7 +1205,7 @@ replicate(4, mean(rexp(10)))              # repeat an expression R times
 <p><strong><code>{ var }</code></strong> is the tidyverse “embrace” shortcut that passes a bare column name into a function cleanly. We’ll rely on it, and on writing tidy functions, throughout the Reproducible Workflows course.</p>
 </div>
 <div class="code-pop">
-<details><summary class="code-pop-btn" aria-expanded="false" aria-label="Afficher le code source de cette diapositive"><svg viewbox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 7 3 12l5 5M16 7l5 5-5 5"></path></svg></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Functions compose into pipelines {.inv}
+<details><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Functions compose into pipelines {.inv}
 
 The tidyverse pipes data through functions with `|&gt;`:
 
@@ -1245,7 +1245,7 @@ avg_mass_by &lt;- function(df, group) {
 <p><strong>Why it matters.</strong> Writing one-line <em>assertions</em> (<code>stopifnot</code>) turns “trust me” into “checked automatically”. You’ll build on this with a proper testing framework in the Reproducible Workflows course.</p>
 </div>
 <div class="code-pop">
-<details><summary class="code-pop-btn" aria-expanded="false" aria-label="Afficher le code source de cette diapositive"><svg viewbox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 7 3 12l5 5M16 7l5 5-5 5"></path></svg></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Test your functions {.inv}
+<details><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Test your functions {.inv}
 
 A good habit: check a function against a case you *already know the answer to*:
 
@@ -1278,7 +1278,7 @@ stopifnot(all(clamp(c(-1, 0.5, 2)) == c(0, 0.5, 1)))
 <p><strong>Lab 3: functions (≈25 min).</strong> Continue in <code>lab-3-functions.R</code>; the matrices standardisation in Q4 hands your <code>sweep</code> work a reusable home.</p>
 </div>
 <div class="code-pop">
-<details><summary class="code-pop-btn" aria-expanded="false" aria-label="Afficher le code source de cette diapositive"><svg viewbox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 7 3 12l5 5M16 7l5 5-5 5"></path></svg></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Your turn: functions {.paper}
+<details><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Your turn: functions {.paper}
 
 ::: {.paper-card}
 1. `zscore(x)` = `(x - mean(x)) / sd(x)`, tested on `c(1,2,3,4,5)`.
@@ -1313,7 +1313,7 @@ stopifnot(all(clamp(c(-1, 0.5, 2)) == c(0, 0.5, 1)))
 
 </div>
 <div class="code-pop">
-<details><summary class="code-pop-btn" aria-expanded="false" aria-label="Afficher le code source de cette diapositive"><svg viewbox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 7 3 12l5 5M16 7l5 5-5 5"></path></svg></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Three moves, one toolbox {.dark auto-animate=true background-color="#17251F"}
+<details><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Three moves, one toolbox {.dark auto-animate=true background-color="#17251F"}
 
 ::: {.big-title data-id="title" style="left:88px; top:150px; width:720px; font-size:72px;"}
 Repeat,
@@ -1348,7 +1348,7 @@ package.
 <p><span class="p">Turn repeated work into named, vectorised, tested functions: scope-aware, pipe-friendly, reusable.</span></p>
 </div>
 <div class="code-pop">
-<details><summary class="code-pop-btn" aria-expanded="false" aria-label="Afficher le code source de cette diapositive"><svg viewbox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 7 3 12l5 5M16 7l5 5-5 5"></path></svg></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Repeat, reach, package {.light auto-animate=true background-color="#F1EEE6"}
+<details><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Repeat, reach, package {.light auto-animate=true background-color="#F1EEE6"}
 
 ::: {.big-title data-id="title" style="left:92px; top:104px; width:1100px; font-size:44px;"}
 One toolbox for repetition &amp; structure.
@@ -1388,7 +1388,7 @@ One toolbox for repetition &amp; structure.
 
 </div>
 <div class="code-pop">
-<details><summary class="code-pop-btn" aria-expanded="false" aria-label="Afficher le code source de cette diapositive"><svg viewbox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 7 3 12l5 5M16 7l5 5-5 5"></path></svg></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Your toolbox: `source()` your own `.R` {.light auto-animate=true background-color="#F1EEE6"}
+<details><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Your toolbox: `source()` your own `.R` {.light auto-animate=true background-color="#F1EEE6"}
 
 ::: {.big-title data-id="title" style="left:92px; top:104px; width:1100px; font-size:44px;"}
 From one-off script to a toolbox you keep.
@@ -1427,7 +1427,7 @@ From one-off script to a toolbox you keep.
 
 
 <div class="code-pop">
-<details><summary class="code-pop-btn" aria-expanded="false" aria-label="Afficher le code source de cette diapositive"><svg viewbox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 7 3 12l5 5M16 7l5 5-5 5"></path></svg></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Next time {.dark .finale auto-animate=true background-color="#17251F"}
+<details><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Next time {.dark .finale auto-animate=true background-color="#17251F"}
 
 ::: {.big-title data-id="title" style="left:240px; top:300px; width:800px; font-size:66px; text-align:center;"}
 Reproducible Workflows: Quarto, reports, git, and publishing.
@@ -1496,18 +1496,67 @@ Between sessions: finish any outstanding labs and collect your best functions in
     document.body.removeChild(ta);
     done(ok);
   }
-  // Take explicit control of the trigger click: toggle details.open via the
-  // property and suppress the native summary default. Chromium's internal
-  // summary toggle state falls out of sync when the card is closed (e.g. via
-  // Esc or reveal), which silently swallows the next native click; owning the
-  // toggle keeps the open attribute authoritative and click/reopen reliable.
-  document.querySelectorAll(".code-pop summary.code-pop-btn").forEach(function (sum) {
+  // The single trigger button is hoisted out of the transformed `.slides`
+  // wrapper into a root `.code-pop-trigger` wrapper (a sibling of `.slides`
+  // inside `.reveal`, mirroring the logo/footer). Because `.slides` carries a
+  // CSS `transform`, any `position: fixed` trigger nested inside it would
+  // scale and drift with reveal's zoom; hoisting it to `.reveal` root lets its
+  // `position: fixed; right: .5em; bottom: 46px` sit in true screen space and
+  // stay a constant distance above the footer at every zoom level. Each slide
+  // keeps its own in-slide `<details>` (holding the card + open state) but no
+  // longer a `<summary>`; the one root trigger drives whichever slide is
+  // current. The hoisted trigger uses the same code-brackets SVG as the old
+  // in-slide summary.
+  function codepopSvg() {
+    return '<svg viewBox="0 0 24 24" aria-hidden="true">'
+      + '<path fill="none" stroke="currentColor" stroke-width="2" '
+      + 'stroke-linecap="round" stroke-linejoin="round" '
+      + 'd="M8 7 3 12l5 5M16 7l5 5-5 5"/></svg>';
+  }
+  var codepopBtn = null;
+  // The CURRENT (visible) slide's code-pop <details>. For a vertical stack,
+  // reveal keeps several sections present/hidden at once and querySelector
+  // returns the first in document order — often a hidden section-title card —
+  // so "c" opened an invisible pane. Reveal.getCurrentSlide() is the one the
+  // viewer is actually looking at.
+  function currentDetails() {
+    var cur = (window.Reveal && Reveal.getCurrentSlide) ? Reveal.getCurrentSlide() : null;
+    var det = cur ? cur.querySelector(":scope > .code-pop details") : null;
+    if (!det) det = document.querySelector(".reveal section.present > .code-pop details");
+    return det;
+  }
+  // Reflect the current slide's details open/closed state onto the hoisted
+  // trigger's aria-expanded.
+  function syncExpand() {
+    if (!codepopBtn) return;
+    var det = currentDetails();
+    codepopBtn.setAttribute("aria-expanded", det && det.open ? "true" : "false");
+  }
+  // Build the root trigger once and append it to .reveal (which exists in the
+  // static HTML, sibling to .slides). Take explicit control of its click:
+  // toggle details.open via the property and suppress the native summary
+  // default. Chromium's internal summary toggle state falls out of sync when
+  // the card is closed (e.g. via Esc or reveal), which silently swallows the
+  // next native click; owning the toggle keeps the open attribute authoritative
+  // and click/reopen reliable.
+  (function ensureRootTrigger() {
+    var reveal = document.querySelector(".reveal");
+    if (!reveal) return;
+    var wrap = document.createElement("div");
+    wrap.className = "code-pop-trigger";
+    var sum = document.createElement("summary");
+    sum.className = "code-pop-btn";
+    sum.setAttribute("aria-expanded", "false");
+    sum.innerHTML = codepopSvg();
     sum.addEventListener("click", function (e) {
-      var det = sum.closest("details");
-      det.open = !det.open;
+      var det = currentDetails();
+      if (det) det.open = !det.open;
       e.preventDefault();
     });
-  });
+    wrap.appendChild(sum);
+    reveal.appendChild(wrap);
+    codepopBtn = sum;
+  })();
   // Keep the trigger's aria-expanded in sync, move focus into the card on
   // open, and (re)highlight the code the first time it is shown.
   // Capture phase: something on the page (Quarto/reveal) calls
@@ -1516,8 +1565,7 @@ Between sessions: finish any outstanding labs and collect your best functions in
   document.addEventListener("toggle", function (e) {
     var t = e.target;
     if (!t || t.tagName !== "DETAILS") return;
-    var sum = t.querySelector("summary.code-pop-btn");
-    if (sum) sum.setAttribute("aria-expanded", t.open ? "true" : "false");
+    syncExpand(); // keep the hoisted root trigger's aria-expanded in step
     if (t.open) {
       // Start each open with a fresh scroll target so a leftover accumulator
       // from a previous visit cannot pin the pane to an old offset.
@@ -1562,17 +1610,10 @@ Between sessions: finish any outstanding labs and collect your best functions in
   // editable field or with a modifier held, so it never eats real input.
   function toggleCodePop() {
     // Target the CURRENT (visible) slide's code-pop, not just any
-    // `section.present`: for a vertical stack, reveal keeps several sections
-    // present/hidden at once and `querySelector` returns the first in document
-    // order — often a hidden section-title card, so "c" opened an invisible
-    // pane and appeared to do nothing. Reveal.getCurrentSlide() is the one the
-    // viewer is actually looking at.
-    var cur = (window.Reveal && Reveal.getCurrentSlide) ? Reveal.getCurrentSlide() : null;
-    var sum = cur
-      ? cur.querySelector(":scope > .code-pop summary.code-pop-btn")
-      : document.querySelector(".reveal section.present .code-pop summary.code-pop-btn");
-    if (!sum) return;
-    var det = sum.closest("details");
+    // `section.present`: see currentDetails() above for why
+    // Reveal.getCurrentSlide() is the one the viewer is actually looking at.
+    var det = currentDetails();
+    if (!det) return;
     det.open = !det.open; // the toggle event moves focus into the card
   }
   // Clicking anywhere on the slide outside the pane closes it. Clicks inside
@@ -1582,8 +1623,13 @@ Between sessions: finish any outstanding labs and collect your best functions in
   document.addEventListener("click", function (e) {
     var open = document.querySelector(".code-pop details[open]");
     if (!open) return;
-    if (open.contains(e.target)) return; // inside the pane/trigger: let those handle it
-    open.open = false; // close via the property so the summary stays in sync
+    // Clicks on the hoisted root trigger are handled by its own listener (which
+    // toggles the current slide's details) and land outside the pane's <details>
+    // subtree, so exclude them here or this outside-click would immediately
+    // re-close a card the trigger just opened.
+    if (e.target.closest && e.target.closest(".code-pop-trigger")) return;
+    if (open.contains(e.target)) return; // inside the pane: let it handle clicks
+    open.open = false; // close via the property so the trigger stays in sync
   });
   document.addEventListener("keydown", function (e) {
     var t = e.target;
@@ -1727,6 +1773,7 @@ Between sessions: finish any outstanding labs and collect your best functions in
         for (var i = 0; i < open.length; i++) {
           open[i].removeAttribute("open");
         }
+        syncExpand(); // reflect the now-closed state on the hoisted trigger
       });
       // Document the "c" toggle in reveal's help overlay (the "?" / F1
       // shortcut table). Reveal.registerKeyboardShortcut() only adds a row to
@@ -1998,236 +2045,6 @@ Between sessions: finish any outstanding labs and collect your best functions in
         ]
       });
     </script>
-    <script type="text/javascript">
-    function updateSpreads() {
-      document.querySelectorAll('.spread').forEach(el => {
-        const section = el.closest('section');
-        // border-box so the fixed padding (incl. the footer clearance) is counted
-        // inside the computed height and the spread never spills past the canvas.
-        el.style.boxSizing = 'border-box';
-        el.style.height = (section.offsetHeight - el.offsetTop) + 'px';
-      });
-    }
-
-    Reveal.on('ready', updateSpreads);
-    Reveal.on('slidechanged', updateSpreads);
-    </script>
-    <script type="text/javascript">
-    // Make the "spaces at the end of code lines" visible in the code-pop popup
-    // card (code-pop.lua), which shows the raw markdown source. There the trailing
-    // spaces sit at the end of each raw source line, and this script injects a
-    // middle-dot marker so the "soft break" spaces are visible in the source view.
-    //
-    // These trailing spaces must NOT be marked in the .mono blocks on the slide
-    // itself: on the rendered slide they are markdown syntax (two spaces = forced
-    // line break) that <br> has already replaced, so showing dots there would be
-    // misleading. Only the raw source pane gets the markers.
-    //
-    // Idempotent: each pane is marked only once (guarded by a data attribute), so
-    // whichever hook runs first never doubles the markers up.
-
-    /// Wrap every run of trailing spaces at the end of a line inside `root` in a
-    /// .mono-tt span. Works on any pre-formatted element (the code-pop panes)
-    /// regardless of how highlight.js has nested its spans. Each pass rebuilds a
-    /// fresh flat-text + text-node snapshot, finds the FIRST end-of-line whitespace
-    /// run by offset, and wraps it — then loops. The snapshot MUST be rebuilt after
-    /// every wrap: wrapping removes the owning text node and inserts new ones, so
-    /// scanning against a stale node list would target detached nodes and silently
-    /// drop every match after the first (which shows up as only the first code line
-    /// getting a dot). Runs after highlight.js so the freshly generated spans are
-    /// never rebuilt over.
-    function markTrailingSpaces(root) {
-      if (root.dataset.ttMarked) return;
-      root.dataset.ttMarked = '1';
-
-      function wrapSegment(textNode, a, b) {
-        var parent = textNode.parentNode;
-        var before = document.createTextNode(textNode.nodeValue.slice(0, a));
-        // Replace each trailing space with a literal middle dot (one dot per
-        // space) rather than keeping the spaces and rendering them via CSS: a `·`
-        // glyph is guaranteed to render in a <pre>, independent of font metrics or
-        // background-image tricks. 1 space -> 1 dot. The copy-to-clipboard handler
-        // in code-pop.lua maps these dots back to spaces.
-        var count = b - a;
-        var mid = document.createTextNode(new Array(count + 1).join('\u00B7'));
-        var after = document.createTextNode(textNode.nodeValue.slice(b));
-        var mark = document.createElement('span');
-        mark.className = 'mono-tt';
-        mark.appendChild(mid);
-        parent.insertBefore(before, textNode);
-        parent.insertBefore(mark, textNode);
-        parent.insertBefore(after, textNode);
-        parent.removeChild(textNode);
-      }
-
-      // Wrap one match per loop iteration, recalculating the snapshot afterwards so
-      // offsets always describe the CURRENT, attached text nodes.
-      var re = / +(?=\n)| +$/g; // trailing spaces before each newline, or at block end
-      for (;;) {
-        // Fresh flat-text concatenation + ordered text-node table.
-        var nodes = [];
-        var full = '';
-        var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-        while (walker.nextNode()) {
-          var n = walker.currentNode;
-          if (n.nodeValue.length === 0) continue;
-          nodes.push({ node: n, start: full.length, len: n.nodeValue.length });
-          full += n.nodeValue;
-        }
-        re.lastIndex = 0;
-        var m = re.exec(full);
-        if (!m) break; // no trailing spaces left (wrapped ones became "·", not spaces)
-        var start = m.index;
-        var end = m.index + m[0].length;
-        var wrapped = false;
-        // Split the offset range across the text nodes containing it and mark each
-        // segment. If a run straddles two nodes, wrapping the first segment leaves
-        // the rest of the run intact; the next iteration picks it up. The character
-        // content is preserved by the split (before + dot + after === original).
-        for (var i = 0; i < nodes.length; i++) {
-          var seg = nodes[i];
-          var segEnd = seg.start + seg.len;
-          if (segEnd <= start) continue;
-          if (seg.start >= end) break;
-          var a = Math.max(start, seg.start) - seg.start;
-          var b = Math.min(end, segEnd) - seg.start;
-          if (b > a) { wrapSegment(seg.node, a, b); wrapped = true; }
-        }
-        if (!wrapped) break; // safety: nothing actionable remains
-      }
-    }
-
-    /// Mark trailing spaces inside every code-pop source pane (case 2 above).
-    function markPanesWhitespace() {
-      document.querySelectorAll('.code-pop-card pre code').forEach(markTrailingSpaces);
-    }
-
-    function hookReveal() {
-      if (!window.Reveal) return; // not ready yet; retried on 'ready'
-      Reveal.on('ready', function () { markPanesWhitespace(); });
-      Reveal.on('slidechanged', function () { markPanesWhitespace(); });
-    }
-
-    // Register in the CAPTURE phase (third arg true): something on the page calls
-    // stopPropagation() on the bubble-phase `toggle` event, so a bubble listener
-    // here never fires — the same reason code-pop.lua registers in capture phase.
-    // We defer with a short timeout so our markers are injected AFTER code-pop has
-    // synchronously run highlight.js (and after the whole event dispatch settles);
-    // the ttMarked guard keeps it idempotent across repeated opens.
-    document.addEventListener('toggle', function (e) {
-      if (e.target && e.target.tagName === 'DETAILS' && e.target.open) {
-        setTimeout(markPanesWhitespace, 30);
-      }
-    }, true);
-
-    document.addEventListener('DOMContentLoaded', function () {
-      markPanesWhitespace();
-      hookReveal();
-    });
-    document.addEventListener('load', hookReveal);
-    </script>
-    <script type="text/javascript">
-    // Make the CNRS logo (the top-left masthead on every slide) link back to the
-    // course website homepage, so a viewer on any slide can return to the site in
-    // one click.
-    //
-    // Every deck is rendered at _site/<course>/session-N/session-N.html, so the
-    // relative link ../../index.html always reaches the site landing page.
-    //
-    // reveal.js clones the logo configured via format.revealjs.logo into a visible
-    // header at runtime, while a hidden copy lingers in
-    // .quarto-auto-generated-content (display:none). Only a visible instance is
-    // wrapped, and only once (guarded by its parent being an <a>).
-    (function () {
-      function wrapVisible() {
-        var imgs = document.querySelectorAll('.slide-logo');
-        var pending = false;
-        for (var i = 0; i < imgs.length; i++) {
-          var img = imgs[i];
-          if (img.closest && img.closest('.quarto-auto-generated-content')) continue;
-          if (img.parentElement && img.parentElement.tagName === 'A') continue;
-          if (!(img.offsetWidth || img.offsetHeight)) { pending = true; continue; }
-          var a = document.createElement('a');
-          a.href = '../../index.html';
-          a.setAttribute('aria-label', 'Back to course website homepage');
-          img.parentNode.insertBefore(a, img);
-          a.appendChild(img);
-        }
-        return pending;
-      }
-      // reveal's logo can land after 'ready'; poll briefly until every visible
-      // logo is wrapped, and re-run on navigation in case a slide re-injects one.
-      Reveal.on('ready', wrapVisible);
-      Reveal.on('slidechanged', wrapVisible);
-      var tries = 0;
-      var timer = setInterval(function () {
-        var pending = wrapVisible();
-        if (tries++ > 20 && !pending) { clearInterval(timer); }
-      }, 200);
-    })();
-    </script>
-    <script type="text/javascript">
-    /* Hands-on "advanced note" popup.
-     *
-     * Each {.paper} slide may carry a `.paper-adv` block: a trigger button in the
-     * free strip below the task card plus a dimmed backdrop and a hidden modal
-     * holding the lab-finder / expert-stretch content. Clicking the trigger shows
-     * the backdrop + modal as a fixed overlay centred on the viewport (where reveal
-     * centres the slide too), so it is scale-independent of the slide transform and
-     * can never overflow the 700px canvas regardless of content length. Closed on
-     * the close button, a backdrop-click, or Esc; navigating away closes it too.
-     */
-    (function () {
-      function setOpen(block, open) {
-        var modal = block.querySelector('.paper-adv-modal');
-        var backdrop = block.querySelector('.paper-adv-backdrop');
-        if (modal) modal.hidden = !open;
-        if (backdrop) backdrop.hidden = !open;
-        document.body.classList.toggle('paper-adv-open', open);
-      }
-      function closeAll() {
-        document.querySelectorAll('.paper-adv').forEach(function (b) {
-          setOpen(b, false);
-        });
-      }
-      function wire(block) {
-        var btn = block.querySelector('.paper-adv-btn');
-        var close = block.querySelector('.paper-adv-close');
-        if (btn && !btn.dataset.pa) {
-          btn.addEventListener('click', function () {
-            closeAll();
-            setOpen(block, true);
-          });
-          btn.dataset.pa = '1';
-        }
-        if (close && !close.dataset.pa) {
-          close.addEventListener('click', function () {
-            setOpen(block, false);
-          });
-          close.dataset.pa = '1';
-        }
-        // click on the dimmed backdrop (not the modal) closes it
-        if (!block.dataset.pb) {
-          block.addEventListener('click', function (e) {
-            if (e.target.classList.contains('paper-adv-backdrop')) {
-              setOpen(block, false);
-            }
-          });
-          block.dataset.pb = '1';
-        }
-      }
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') closeAll();
-      });
-      function wireAll() {
-        document.querySelectorAll('.paper-adv').forEach(wire);
-      }
-      Reveal.on('ready', wireAll);
-      Reveal.on('ready', closeAll);
-      Reveal.on('slidechanged', wireAll);
-      Reveal.on('slidechanged', closeAll);
-    })();
-    </script>
     
     <script>
       // htmlwidgets need to know to resize themselves when slides are shown/hidden.
@@ -2336,7 +2153,7 @@ Between sessions: finish any outstanding labs and collect your best functions in
         }
           var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
           var mailtoRegex = new RegExp(/^mailto:/);
-            var filterRegex = new RegExp('/' + window.location.host + '/');
+            var filterRegex = new RegExp("https:\/\/astamm\.github\.io\/r-ensai\/");
           var isInternal = (href) => {
               return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
           }

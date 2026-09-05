@@ -81,7 +81,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-b7a5c34fd302b273fca496bbc60d9239.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-4ffa53eb8aaec28d035f3f0cf33601ec.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -211,13 +211,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>These guidelines are meant to be followed during the live setup block at the start of the term, but also works standalone if you come to class with an already-configured machine (skip ahead). We target <strong>latest stable</strong> versions of everything.</p>
+<p>These guidelines are meant to be followed during the live setup block at the start of the term, but also works standalone if you come to class with an already-configured machine (skip ahead). We target <strong>latest stable</strong> versions of everything. If you are on Linux, see the dedicated <a href="#linux-ubuntu">Ubuntu section</a> first: it slightly reshapes the steps below.</p>
 <section id="install-r" class="level2">
 <h2 class="anchored" data-anchor-id="install-r">1. Install R</h2>
 <p>R is the language itself. Download the installer for your OS and follow the instructions:</p>
 <ul>
 <li>macOS / Windows: <a href="https://cran.r-project.org" class="uri">https://cran.r-project.org</a></li>
-<li>Linux: use your package manager (<code>apt</code>, <code>dnf</code>…); see <a href="https://cran.r-project.org/bin/linux/" class="uri">https://cran.r-project.org/bin/linux/</a></li>
+<li>Linux (Ubuntu): follow the <a href="#linux-ubuntu">Ubuntu section</a> below rather than using the generic link.</li>
 </ul>
 <p>Check it works:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>R.version.string   <span class="co"># e.g. "R version 4.6.1"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -241,19 +241,86 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Open Positron. On first launch it will offer to install the R extensions and detect your R installation. Confirm both.</p>
 <p>Positron will use this Quarto automatically for the Quarto preview/render.</p>
 </section>
+<section id="linux-ubuntu" class="level2">
+<h2 class="anchored" data-anchor-id="linux-ubuntu">4. Linux (Ubuntu)</h2>
+<p>If you run Ubuntu, install the three applications above from their <code>.deb</code> binaries, then set up R packages. Two routes are available for packages: the fast, recommended <strong>r2u</strong> binaries, or a manual compile-from-source fallback. Both are detailed below.</p>
+<section id="install-r-quarto-and-positron-from-.deb-files" class="level3">
+<h3 class="anchored" data-anchor-id="install-r-quarto-and-positron-from-.deb-files">4.1 Install R, Quarto and Positron from <code>.deb</code> files</h3>
+<p>Download the <code>.deb</code> installer for each of R, Quarto and Positron from their respective sites (choose the arm64 build on an ARM, Apple-Silicon-style machine, or x86_64 otherwise). Then install them together and let <code>apt</code> pull in any missing dependencies:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dpkg <span class="at">-i</span> ~/Downloads/<span class="pp">*</span>.deb     <span class="co"># adjust the path to where you saved the files</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt <span class="at">--fix-broken</span> install</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The second command is the important clean-up step: <code>dpkg -i</code> itself does not install dependency packages, so it will often report missing dependencies, which <code>apt --fix-broken install</code> then resolves. If you prefer, a plain <code>sudo apt install -f</code> works the same.</p>
+<p>For <strong>R alone</strong> you do not have to use the CRAN <code>.deb</code> at all. If you prefer your package manager, install <code>r-base</code> (and <code>r-base-dev</code>) from the Ubuntu or CRAN apt repository afterwards with <code>sudo apt install r-base r-base-dev</code> instead. Either way you do not need RStudio: Positron is the IDE, and it talks to whatever <code>R</code> binary sits on your <code>PATH</code>.</p>
+</section>
+<section id="recommended-install-r-packages-via-r2u-ubuntu-binaries" class="level3">
+<h3 class="anchored" data-anchor-id="recommended-install-r-packages-via-r2u-ubuntu-binaries">4.2 Recommended: install R packages via r2u (Ubuntu binaries)</h3>
+<p><a href="https://github.com/eddelbuettel/r2u">r2u</a> is a project that builds almost all of CRAN (currently about 31,000 packages) into Ubuntu binary <code>.deb</code> packages and serves them as an <code>apt</code> repository. With a small companion called <a href="https://cloud.r-project.org/package=bspm"><code>bspm</code></a>, your ordinary <code>install.packages("tidyverse")</code> transparently installs prebuilt Ubuntu binaries in seconds, with no compilation and no manual wiring of system libraries. This removes precisely the <code>libcurl</code>/<code>fontconfig</code>/<code>harfbuzz</code>… laundry list that makes a source install painful.</p>
+<p>Scope and caveats:</p>
+<ul>
+<li>It targets Ubuntu LTS releases (22.04 “jammy”, 24.04 “noble”, 26.04 “resolute”) on amd64, with arm64 supported on 24.04 and 26.04. It is not for other distributions.</li>
+<li>Installing via <code>bspm</code> needs <code>sudo</code>: it writes into the system R library.</li>
+<li><code>renv</code>-based projects (used later in the Reproducible Workflows course) do <em>not</em> go through <code>bspm</code>; they compile from source. So keep the build tools from the fallback below even if you use r2u.</li>
+</ul>
+<p>Set it up (condensed from the <a href="https://eddelbuettel.github.io/r2u/">official guide</a>):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. fetch the signing key</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install <span class="at">--yes</span> <span class="at">--no-install-recommends</span> wget ca-certificates gnupg</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ex">gpg</span> <span class="at">--homedir</span> /tmp <span class="at">--no-default-keyring</span> <span class="dt">\</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">--keyring</span> /usr/share/keyrings/r2u.gpg <span class="dt">\</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">--keyserver</span> keyserver.ubuntu.com <span class="dt">\</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">--recv-keys</span> A1489FE2AB99A21A 67C2D66C4B1D4339 51716619E084DAB9</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. register the r2u apt repository (adjust 'noble' to your Ubuntu release:</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#    jammy, noble or resolute; use `lsb_release -cs` to print it)</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"deb [signed-by=/usr/share/keyrings/r2u.gpg] https://r2u.stat.illinois.edu/ubuntu noble main"</span> <span class="dt">\</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">|</span> <span class="fu">sudo</span> tee /etc/apt/sources.list.d/r2u.list</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. python pieces bspm needs, then bspm itself</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install <span class="at">--yes</span> <span class="at">--no-install-recommends</span> python3-<span class="dt">{dbus</span><span class="op">,</span><span class="dt">gi</span><span class="op">,</span><span class="dt">apt}</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> Rscript <span class="at">-e</span> <span class="st">'install.packages("bspm")'</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. enable bspm for every R session</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> bash <span class="at">-c</span> <span class="st">'echo "suppressMessages(bspm::enable())" &gt;&gt; "$(R RHOME)/etc/Rprofile.site"'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>From then on, inside Positron’s R console, the normal command just works and pulls binaries:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="fallback-compile-from-source" class="level3">
+<h3 class="anchored" data-anchor-id="fallback-compile-from-source">4.3 Fallback: compile from source</h3>
+<p>Use this route if your Ubuntu release is not covered by r2u, you do not want a system-wide (sudo) install, or a package you need is not in r2u. Compiling the tidyverse from source needs both a C/C++ toolchain and the header files of the system libraries several of its packages link against. Install them all at once:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt install <span class="at">-y</span> <span class="dt">\</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  r-base r-base-dev cmake <span class="dt">\</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  libcurl4-openssl-dev libssl-dev libxml2-dev libfontconfig1-dev <span class="dt">\</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev <span class="dt">\</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  libjpeg-dev</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>(on 24.04 “noble” the JPEG/TIFF library is <code>libtiff6-dev</code>; on 22.04 “jammy” and older it is <code>libtiff5-dev</code>, so append the one matching your release).</p>
+<p>Then, still in the terminal, install <strong>pak</strong> (a modern, fast package manager that also helps resolve these build issues) and use it from the R console:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> Rscript <span class="at">-e</span> <span class="st">'install.packages("pak")'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pak</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Unlike the r2u path (4.2) where plain <code>install.packages()</code> pulls prebuilt binaries, here pak actually compiles from source, but it does the dependency bookkeeping for you and caches the compiled result, so a later reinstallation is quick.</p>
+</section>
+</section>
 <section id="install-r-packages" class="level2">
-<h2 class="anchored" data-anchor-id="install-r-packages">4. Install R packages</h2>
+<h2 class="anchored" data-anchor-id="install-r-packages">5. Install R packages</h2>
 <p>Open the R console in Positron and run:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)   <span class="co"># the core data-science collection</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)   <span class="co"># the core data-science collection</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>On Ubuntu with r2u set up (section 4.2), this command automatically installs Ubuntu binaries, so you do not need <code>pak</code> or the manual toolchain. On macOS/Windows the installer handles everything for you.</p>
+<p>A note on the two commands you will meet in this guide:</p>
+<ul>
+<li><code>install.packages()</code> is the R-basics installer. With r2u (<code>+bspm</code>) running it installs Ubuntu binaries, which is why it is the default here.</li>
+<li><code>pak::pak()</code> is an optional third-party package manager with better dependency resolution and caching, and can also install straight from GitHub or a local folder. It does <strong>not</strong> go through r2u, so on the r2u path it offers no speed advantage. Reach for it when a package is not (yet) on CRAN, or to compile from source as in the fallback (section 4.3).</li>
+</ul>
 <p>Verify with:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You should see the package startup message listing dplyr, tidyr, ggplot2, readr, purrr, tibble, stringr, forcats.</p>
 <p>By the time of the Reproducible Workflows course you will additionally want:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"janitor"</span>, <span class="st">"naniar"</span>, <span class="st">"skimr"</span>, <span class="st">"renv"</span>, <span class="st">"knitr"</span>, <span class="st">"rmarkdown"</span>, <span class="st">"pins"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>(<code>renv</code> is used for dependency pinning; <code>pins</code> for data pinning; <code>janitor</code>/<code>naniar</code>/<code>skimr</code> feed the data-cleaning and EDA labs.)</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"janitor"</span>, <span class="st">"naniar"</span>, <span class="st">"skimr"</span>, <span class="st">"renv"</span>, <span class="st">"knitr"</span>, <span class="st">"rmarkdown"</span>, <span class="st">"pins"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>(<code>renv</code> is used for dependency pinning; <code>pins</code> for data pinning; <code>janitor</code>/<code>naniar</code>/<code>skimr</code> feed the data-cleaning and EDA labs. All of these are available as r2u binaries too, so the same plain <code>install.packages()</code> call above works unchanged on the r2u path.)</p>
 </section>
 <section id="some-worthy-positron-extensions-optional" class="level2">
-<h2 class="anchored" data-anchor-id="some-worthy-positron-extensions-optional">5. Some worthy Positron extensions (optional)</h2>
+<h2 class="anchored" data-anchor-id="some-worthy-positron-extensions-optional">6. Some worthy Positron extensions (optional)</h2>
 <ul>
 <li><strong>Air</strong>: A Visual Studio Code extension for <a href="https://posit-dev.github.io/air/">Air</a>, an R formatter and language server, written in Rust.</li>
 <li><strong>Jarl</strong>: A Visual Studio Code extension for <a href="https://jarl.etiennebacher.com">Jarl</a>, a fast R linter.</li>
@@ -266,7 +333,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Some of them are pre-installed with Positron; other require opt-in installs via the <em>Extensions</em> panel.</p>
 </section>
 <section id="setup-python-optional" class="level2">
-<h2 class="anchored" data-anchor-id="setup-python-optional">6. Setup Python (optional)</h2>
+<h2 class="anchored" data-anchor-id="setup-python-optional">7. Setup Python (optional)</h2>
 <p>In Positron:</p>
 <ul>
 <li>Open the palette with the keyboard shortcut <code>CMD + SHIFT + P</code>;</li>
@@ -275,21 +342,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>More at <a href="https://opensource.posit.co/blog/2026-07-08_positron-uv/" class="uri">https://opensource.posit.co/blog/2026-07-08_positron-uv/</a></p>
 </section>
 <section id="install-python-packages-optional" class="level2">
-<h2 class="anchored" data-anchor-id="install-python-packages-optional">7. Install Python packages (optional)</h2>
+<h2 class="anchored" data-anchor-id="install-python-packages-optional">8. Install Python packages (optional)</h2>
 <p><a href="https://docs.astral.sh/uv/">uv</a> is an extremely fast Python package and project manager, written in Rust.</p>
 <p>You can easily install Python packages in dedicated virtual environments with <code>uv</code>. For example, to install the <code>pandas</code> and <code>numpy</code> packages, run in the Positron-integrated terminal:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> init example</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialized project `example` at `/home/user/example`</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> add pandas numpy</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> init example</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialized project `example` at `/home/user/example`</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> add pandas numpy</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>More details can be found on the website.</p>
 </section>
 <section id="version-checks-all-together" class="level2">
-<h2 class="anchored" data-anchor-id="version-checks-all-together">8. Version checks, all together</h2>
+<h2 class="anchored" data-anchor-id="version-checks-all-together">9. Version checks, all together</h2>
 <p>For these courses, we will use R and Quarto.</p>
 <p>Run in the R console:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>R.version.string</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>R.version.string</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>and in a terminal:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> <span class="at">--version</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> <span class="at">--version</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If both report a version, you are ready. Ask the instructor for help if any step errors; resolve these at the start so the labs run smoothly.</p>
 
 
@@ -369,7 +436,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/astamm\.github\.io\/r-ensai\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
