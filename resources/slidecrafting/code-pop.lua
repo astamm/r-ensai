@@ -126,10 +126,15 @@ local COPY_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true">'
   .. '<path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" '
   .. 'stroke-width="2" stroke-linecap="round"/></svg>'
 
--- Build the per-slide card: a click-toggle (<details>/<summary>) whose card
--- nearly fills the slide, with a toolbar (language label + icon-only copy
--- button) and a scrollable, syntax-highlighted <pre>. A native Div keeps the
--- "code-pop" class through to the HTML (a lone raw <aside> lost its classes).
+-- Build the per-slide card: a <details> whose card nearly fills the slide, with
+-- a toolbar (language label + icon-only copy button) and a scrollable,
+-- syntax-highlighted <pre>. The opening <summary> trigger is NOT emitted here:
+-- it is hoisted into a single screen-fixed trigger at the .reveal root (see
+-- the SCRIPT below), because a trigger nested inside the transformed `.slides`
+-- wrapper would scale and drift with reveal's zoom. Keeping the <details> per
+-- slide lets the toggle/open state and the card live where they always did. A
+-- native Div keeps the "code-pop" class through to the HTML (a lone raw
+-- <aside> lost its classes).
 local function make_code_pop(source)
   local card = '<div class="code-pop-card" role="dialog" '
     .. 'aria-label="Source markdown de cette diapositive" aria-live="polite">'
@@ -141,11 +146,7 @@ local function make_code_pop(source)
     .. '<pre><code class="language-markdown">' .. escape_html(source)
     .. "</code></pre></div>"
 
-  local details = "<details>"
-    .. '<summary class="code-pop-btn" aria-expanded="false" aria-label="'
-    .. 'Afficher le code source de cette diapositive">' .. CODE_ICON .. "</summary>"
-    .. card
-    .. "</details>"
+  local details = "<details>" .. card .. "</details>"
 
   return pandoc.Div(
     { pandoc.RawBlock("html", details) },
@@ -219,18 +220,67 @@ local SCRIPT = [[
     document.body.removeChild(ta);
     done(ok);
   }
-  // Take explicit control of the trigger click: toggle details.open via the
-  // property and suppress the native summary default. Chromium's internal
-  // summary toggle state falls out of sync when the card is closed (e.g. via
-  // Esc or reveal), which silently swallows the next native click; owning the
-  // toggle keeps the open attribute authoritative and click/reopen reliable.
-  document.querySelectorAll(".code-pop summary.code-pop-btn").forEach(function (sum) {
+  // The single trigger button is hoisted out of the transformed `.slides`
+  // wrapper into a root `.code-pop-trigger` wrapper (a sibling of `.slides`
+  // inside `.reveal`, mirroring the logo/footer). Because `.slides` carries a
+  // CSS `transform`, any `position: fixed` trigger nested inside it would
+  // scale and drift with reveal's zoom; hoisting it to `.reveal` root lets its
+  // `position: fixed; right: .5em; bottom: 46px` sit in true screen space and
+  // stay a constant distance above the footer at every zoom level. Each slide
+  // keeps its own in-slide `<details>` (holding the card + open state) but no
+  // longer a `<summary>`; the one root trigger drives whichever slide is
+  // current. The hoisted trigger uses the same code-brackets SVG as the old
+  // in-slide summary.
+  function codepopSvg() {
+    return '<svg viewBox="0 0 24 24" aria-hidden="true">'
+      + '<path fill="none" stroke="currentColor" stroke-width="2" '
+      + 'stroke-linecap="round" stroke-linejoin="round" '
+      + 'd="M8 7 3 12l5 5M16 7l5 5-5 5"/></svg>';
+  }
+  var codepopBtn = null;
+  // The CURRENT (visible) slide's code-pop <details>. For a vertical stack,
+  // reveal keeps several sections present/hidden at once and querySelector
+  // returns the first in document order — often a hidden section-title card —
+  // so "c" opened an invisible pane. Reveal.getCurrentSlide() is the one the
+  // viewer is actually looking at.
+  function currentDetails() {
+    var cur = (window.Reveal && Reveal.getCurrentSlide) ? Reveal.getCurrentSlide() : null;
+    var det = cur ? cur.querySelector(":scope > .code-pop details") : null;
+    if (!det) det = document.querySelector(".reveal section.present > .code-pop details");
+    return det;
+  }
+  // Reflect the current slide's details open/closed state onto the hoisted
+  // trigger's aria-expanded.
+  function syncExpand() {
+    if (!codepopBtn) return;
+    var det = currentDetails();
+    codepopBtn.setAttribute("aria-expanded", det && det.open ? "true" : "false");
+  }
+  // Build the root trigger once and append it to .reveal (which exists in the
+  // static HTML, sibling to .slides). Take explicit control of its click:
+  // toggle details.open via the property and suppress the native summary
+  // default. Chromium's internal summary toggle state falls out of sync when
+  // the card is closed (e.g. via Esc or reveal), which silently swallows the
+  // next native click; owning the toggle keeps the open attribute authoritative
+  // and click/reopen reliable.
+  (function ensureRootTrigger() {
+    var reveal = document.querySelector(".reveal");
+    if (!reveal) return;
+    var wrap = document.createElement("div");
+    wrap.className = "code-pop-trigger";
+    var sum = document.createElement("summary");
+    sum.className = "code-pop-btn";
+    sum.setAttribute("aria-expanded", "false");
+    sum.innerHTML = codepopSvg();
     sum.addEventListener("click", function (e) {
-      var det = sum.closest("details");
-      det.open = !det.open;
+      var det = currentDetails();
+      if (det) det.open = !det.open;
       e.preventDefault();
     });
-  });
+    wrap.appendChild(sum);
+    reveal.appendChild(wrap);
+    codepopBtn = sum;
+  })();
   // Keep the trigger's aria-expanded in sync, move focus into the card on
   // open, and (re)highlight the code the first time it is shown.
   // Capture phase: something on the page (Quarto/reveal) calls
@@ -239,8 +289,7 @@ local SCRIPT = [[
   document.addEventListener("toggle", function (e) {
     var t = e.target;
     if (!t || t.tagName !== "DETAILS") return;
-    var sum = t.querySelector("summary.code-pop-btn");
-    if (sum) sum.setAttribute("aria-expanded", t.open ? "true" : "false");
+    syncExpand(); // keep the hoisted root trigger's aria-expanded in step
     if (t.open) {
       // Start each open with a fresh scroll target so a leftover accumulator
       // from a previous visit cannot pin the pane to an old offset.
@@ -285,17 +334,10 @@ local SCRIPT = [[
   // editable field or with a modifier held, so it never eats real input.
   function toggleCodePop() {
     // Target the CURRENT (visible) slide's code-pop, not just any
-    // `section.present`: for a vertical stack, reveal keeps several sections
-    // present/hidden at once and `querySelector` returns the first in document
-    // order — often a hidden section-title card, so "c" opened an invisible
-    // pane and appeared to do nothing. Reveal.getCurrentSlide() is the one the
-    // viewer is actually looking at.
-    var cur = (window.Reveal && Reveal.getCurrentSlide) ? Reveal.getCurrentSlide() : null;
-    var sum = cur
-      ? cur.querySelector(":scope > .code-pop summary.code-pop-btn")
-      : document.querySelector(".reveal section.present .code-pop summary.code-pop-btn");
-    if (!sum) return;
-    var det = sum.closest("details");
+    // `section.present`: see currentDetails() above for why
+    // Reveal.getCurrentSlide() is the one the viewer is actually looking at.
+    var det = currentDetails();
+    if (!det) return;
     det.open = !det.open; // the toggle event moves focus into the card
   }
   // Clicking anywhere on the slide outside the pane closes it. Clicks inside
@@ -305,8 +347,13 @@ local SCRIPT = [[
   document.addEventListener("click", function (e) {
     var open = document.querySelector(".code-pop details[open]");
     if (!open) return;
-    if (open.contains(e.target)) return; // inside the pane/trigger: let those handle it
-    open.open = false; // close via the property so the summary stays in sync
+    // Clicks on the hoisted root trigger are handled by its own listener (which
+    // toggles the current slide's details) and land outside the pane's <details>
+    // subtree, so exclude them here or this outside-click would immediately
+    // re-close a card the trigger just opened.
+    if (e.target.closest && e.target.closest(".code-pop-trigger")) return;
+    if (open.contains(e.target)) return; // inside the pane: let it handle clicks
+    open.open = false; // close via the property so the trigger stays in sync
   });
   document.addEventListener("keydown", function (e) {
     var t = e.target;
@@ -450,6 +497,7 @@ local SCRIPT = [[
         for (var i = 0; i < open.length; i++) {
           open[i].removeAttribute("open");
         }
+        syncExpand(); // reflect the now-closed state on the hoisted trigger
       });
       // Document the "c" toggle in reveal's help overlay (the "?" / F1
       // shortcut table). Reveal.registerKeyboardShortcut() only adds a row to

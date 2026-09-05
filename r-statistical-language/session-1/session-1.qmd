@@ -28,7 +28,7 @@ library(tidyverse)
 - A **high-level** language: it shields you from low-level technicalities so you can focus on the analysis.
 
 ::: {.callout-desc}
-**Press `c` any time.** A *code popover* (the `</>` button bottom-right) reveals the source behind any slide: read ahead, or ignore it for now.
+**Press <kbd>C</kbd> any time.** A *code popover* (the `</>` button bottom-right) reveals the source behind any slide: read ahead, or ignore it for now.
 :::
 
 ## The R ecosystem {.paper}
@@ -121,7 +121,7 @@ Four installations get you a full data-science environment:
 
 Follow the step-by-step guide now, then verify your install runs:
 
-<https://astamm.github.io/r-ensai> → **Setup Tab**
+<https://astamm.github.io/r-ensai> → [**Setup Tab**](https://astamm.github.io/r-ensai/setup.html)
 
 ::: {.split-2}
 ::: {.codewindow .r width="100%"}
@@ -187,7 +187,7 @@ Type 'contributors()' for more information and
 :::
 
 ::: {.callout-desc}
-**Note.** If you don't see `>` (e.g. a `+` continuation), R is mid-expression (finish it or press <kbd>Esc</kbd> to cancel).
+**Note.** If you don't see `>` (e.g. a `+` continuation), R is mid-expression (finish it or press <kbd>CTRL</kbd> + <kbd>C</kbd> to cancel).
 :::
 
 ## R as a calculator {.inv}
@@ -218,7 +218,8 @@ Find the right function
 
 A **function** takes *arguments* and returns a value (just like a mathematical function):
 
-::: {.codewindow .r width="62%"}
+::: {.split-2}
+::: {.codewindow .r width="100%"}
 Positional vs named
 ```{r}
 sqrt(4)        # positional
@@ -226,8 +227,13 @@ sqrt(x = 4)    # named
 ```
 :::
 
+::: {.callout-tip title="Prefer pkg::function(parameter = argument)"}
+The shortcut `function(argument)` is risky: two loaded packages can export a same-named function, and dropping parameter names fills arguments by **position**, so a reordered or missing one fails deep inside the call with a cryptic error. Spelling out package and names keeps calls unambiguous and self-documenting.
+:::
+:::
+
 ::: {.callout-desc}
-**Arguments vs parameters.** `x` is the *parameter* (the name inside the function's definition); `4` is the *argument* (the value you supply). Arguments can be **mandatory** or **optional** (optional ones have a default value). To keep calls readable, name the non-obvious ones.
+**Arguments vs parameters.** `x` is the *parameter* (the name in the function's definition); `4` is the *argument* (the value you supply). Some arguments are **mandatory**, others **optional** (they have a default value); name the non-obvious ones.
 :::
 
 ## Using functions (2/2) {.inv}
@@ -258,7 +264,11 @@ Find a function
 
 ## Storing values: assignment {.inv}
 
-::: {.codewindow .r width="64%"}
+::: {.columns}
+
+::: {.column width="64%"}
+
+::: {.codewindow .r width="100%"}
 assignment.R
 ```{r}
 x <- 2         # assign 2 to the name x
@@ -267,6 +277,24 @@ x
 x <- "Hello"   # now x holds a character string
 x
 ```
+:::
+
+:::
+
+::: {.column width="6%"}
+:::
+
+::: {.column width="30%"}
+
+::: {.callout-tip title="Keyboard shortcut"}
+You can insert `<-` with:
+
+- <kbd>Alt</kbd> + <kbd>-</kbd> (Windows),
+- <kbd>Option</kbd> + <kbd>-</kbd> (Mac).
+:::
+
+:::
+
 :::
 
 Use the *assignment operator* `<-` to bind a value to an object so you can reuse it later.
@@ -412,17 +440,17 @@ z <- c(TRUE, FALSE, TRUE); class(z)
 ::: {.codewindow .r width="100%"}
 Colon & `seq()`
 ```{r}
-seq <- 1:10          # colon: 1 to 10
+seq <- 1:10          # colon: 1 to 10 with step 1
 seq
-seq(1, 5, by = 2)    # seq(): by a step
+seq(1, 5, by = 2)    # seq(): custom step
 ```
 :::
 
 ::: {.codewindow .r width="100%"}
 Shortcuts
 ```{r}
-seq_len(5)           # 1..n, handy in loops
-seq_along(letters)   # 1..length(x), matches a vector
+seq_len(5)           # 1:n, handy in loops
+seq_along(letters)   # 1:length(x), matches a vector
 ```
 :::
 ::::
@@ -517,7 +545,8 @@ x[c(3, 2, 5)]   # keep by position
 Negative
 ```{r}
 x <- c("one", "two", "three", "four", "five")
-x[c(-1, -3, -5)]   # drop by position
+x[c(-1, -3, -5)]   # drop by position, equivalent to
+x[-c(1, 3, 5)]
 ```
 :::
 

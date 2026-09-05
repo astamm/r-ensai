@@ -84,11 +84,18 @@ $code-block-font-size: 0.9em !default;
 
 /* Logo: sits top-left on every slide (including the title slide), sized down
    from a native 600×592 asset. Clear the left edge so it never overlaps any
-   lateral banner the demo may add. */
+   lateral banner the demo may add. The logo is `position: fixed` (screen
+   space), so it does NOT scale with reveal's zoom: keep it high and sized so
+   its bottom edge stays above the absolutely-positioned slide title (h2 at
+   top:54px on the canvas). At reveal scale ~1.0 (a small / non-fullscreen
+   window) the title renders back at screen y=54, so the logo bottom must stay
+   above it; at larger scales the title only rises further, so this bottom
+   bound is the binding constraint and lets the logo be as large as ~40px. */
 .reveal .slide-logo {
-  max-height: 3.25rem !important;
+  max-height: 2.5rem !important;
   width: auto !important;
-  top: 18px !important;
+  margin-top: 0 !important;
+  top: 12px !important;
   left: 72px !important;
   bottom: auto !important;
   right: auto !important;
@@ -189,9 +196,39 @@ $code-block-font-size: 0.9em !default;
   pointer-events: none;
 }
 /* The trigger is the <summary>: a small square icon button pinned to the
-   bottom-right corner of the slide, re-enabling clicks over the transparent
-   layer. bottom clears Quarto's deck footer bar so the trigger is not half
-   hidden by it. */
+   bottom-right corner, re-enabling clicks over the transparent layer.
+   Positioning is `position: fixed` (screen space), mirroring the slide-logo:
+   it does NOT scale with reveal's zoom. The alternative (absolute within the
+   scaled slide) makes the button ride the transform, so the gap between it and
+   the fixed screen-space footer bar doubles when going to full screen; fixing
+   it to the viewport keeps it a constant 46px above the footer at every zoom.
+   bottom clears Quarto's deck footer bar so the trigger is not half hidden by
+   it. */
+/* The trigger is normally the in-slide <summary> (selector kept for the
+   hover/toggle context), but the code-pop.lua filter hoists a single trigger
+   out of the transformed `.slides` wrapper into a root `.code-pop-trigger`
+   wrapper — a sibling of `.slides` inside `.reveal` — so it stays screen-fixed
+   (like the logo/footer) and does not scale with reveal's zoom. Both selectors
+   share the exact same visual, so the root and any residual in-slide summary
+   look identical. */
+/* The root wrapper is a sibling of .slides inside .reveal: take it out of
+   flow so it never nudges reveal's layout; the fixed summary inside pins to
+   the viewport corner. pointer-events are re-enabled on the summary itself. */
+.code-pop-trigger {
+  position: fixed;
+  inset: 0;
+  width: 0;
+  height: 0;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 10;
+  /* The trigger now lives at the .reveal root, where reveal's base font-size is
+     much larger than inside a slide, so a bare `em` would balloon the button.
+     Pin a concrete font-size so `1.9em` below resolves to the same ~40px square
+     the in-slide summary had (which the deck already sized for). */
+  font-size: 21px;
+}
+.code-pop-trigger summary.code-pop-btn,
 .code-pop summary.code-pop-btn {
   display: inline-flex;
   align-items: center;
@@ -206,20 +243,24 @@ $code-block-font-size: 0.9em !default;
   background: rgba($ink-dark, 0.85);
   user-select: none;
   list-style: none; /* hide the default disclosure triangle */
-  position: absolute;
-  right: 0.4em;
-  bottom: 2.2em;
+  position: fixed;
+  right: 0.5em;
+  bottom: 46px;
   pointer-events: auto;
   transition: border-color 0.15s ease, color 0.15s ease;
 }
+.code-pop-trigger summary.code-pop-btn::-webkit-details-marker,
 .code-pop summary.code-pop-btn::-webkit-details-marker {
   display: none;
 }
+.code-pop-trigger summary.code-pop-btn svg,
 .code-pop summary.code-pop-btn svg {
   width: 1.1em;
   height: 1.1em;
   display: block;
 }
+.code-pop-trigger summary.code-pop-btn:hover,
+.code-pop-trigger summary.code-pop-btn:focus-visible,
 .code-pop summary.code-pop-btn:hover,
 .code-pop details[open] summary.code-pop-btn,
 .code-pop summary.code-pop-btn:focus-visible {

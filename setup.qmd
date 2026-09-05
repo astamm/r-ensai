@@ -7,7 +7,9 @@ format: html
 These guidelines are meant to be
 followed during the live setup block at the start of the term, but also works
 standalone if you come to class with an already-configured machine (skip ahead). 
-We target **latest stable** versions of everything.
+We target **latest stable** versions of everything. If you are on Linux, see
+the dedicated [Ubuntu section](#linux-ubuntu) first: it slightly reshapes the
+steps below.
 
 ## 1. Install R
 
@@ -15,8 +17,8 @@ R is the language itself. Download the installer for your OS and follow the
 instructions:
 
 - macOS / Windows: <https://cran.r-project.org>
-- Linux: use your package manager (`apt`, `dnf`…); see
-  <https://cran.r-project.org/bin/linux/>
+- Linux (Ubuntu): follow the [Ubuntu section](#linux-ubuntu) below rather than
+  using the generic link.
 
 Check it works:
 
@@ -50,13 +52,147 @@ detect your R installation. Confirm both.
 
 Positron will use this Quarto automatically for the Quarto preview/render.
 
-## 4. Install R packages
+## 4. Linux (Ubuntu)
+
+If you run Ubuntu, install the three applications above from their `.deb`
+binaries, then set up R packages. Two routes are available for packages: the
+fast, recommended **r2u** binaries, or a manual compile-from-source fallback.
+Both are detailed below.
+
+### 4.1 Install R, Quarto and Positron from `.deb` files
+
+Download the `.deb` installer for each of R, Quarto and Positron from their
+respective sites (choose the arm64 build on an ARM, Apple-Silicon-style
+machine, or x86_64 otherwise). Then install them together and let `apt` pull in
+any missing dependencies:
+
+```bash
+sudo dpkg -i ~/Downloads/*.deb     # adjust the path to where you saved the files
+sudo apt --fix-broken install
+```
+
+The second command is the important clean-up step: `dpkg -i` itself does not
+install dependency packages, so it will often report missing dependencies,
+which `apt --fix-broken install` then resolves. If you prefer, a plain `sudo
+apt install -f` works the same.
+
+For **R alone** you do not have to use the CRAN `.deb` at all. If you prefer
+your package manager, install `r-base` (and `r-base-dev`) from the Ubuntu or
+CRAN apt repository afterwards with `sudo apt install r-base r-base-dev`
+instead. Either way you do not need RStudio: Positron is the IDE, and it talks
+to whatever `R` binary sits on your `PATH`.
+
+### 4.2 Recommended: install R packages via r2u (Ubuntu binaries)
+
+[r2u](https://github.com/eddelbuettel/r2u) is a project that builds almost all
+of CRAN (currently about 31,000 packages) into Ubuntu binary `.deb` packages
+and serves them as an `apt` repository. With a small companion called
+[`bspm`](https://cloud.r-project.org/package=bspm), your ordinary
+`install.packages("tidyverse")` transparently installs prebuilt Ubuntu
+binaries in seconds, with no compilation and no manual wiring of system
+libraries. This removes precisely the `libcurl`/`fontconfig`/`harfbuzz`…
+laundry list that makes a source install painful.
+
+Scope and caveats:
+
+- It targets Ubuntu LTS releases (22.04 "jammy", 24.04 "noble", 26.04
+  "resolute") on amd64, with arm64 supported on 24.04 and 26.04. It is not for
+  other distributions.
+- Installing via `bspm` needs `sudo`: it writes into the system R library.
+- `renv`-based projects (used later in the Reproducible Workflows course) do
+  *not* go through `bspm`; they compile from source. So keep the build tools
+  from the fallback below even if you use r2u.
+
+Set it up (condensed from the [official guide](https://eddelbuettel.github.io/r2u/)):
+
+```bash
+# 1. fetch the signing key
+sudo apt update
+sudo apt install --yes --no-install-recommends wget ca-certificates gnupg
+gpg --homedir /tmp --no-default-keyring \
+    --keyring /usr/share/keyrings/r2u.gpg \
+    --keyserver keyserver.ubuntu.com \
+    --recv-keys A1489FE2AB99A21A 67C2D66C4B1D4339 51716619E084DAB9
+
+# 2. register the r2u apt repository (adjust 'noble' to your Ubuntu release:
+#    jammy, noble or resolute; use `lsb_release -cs` to print it)
+echo "deb [signed-by=/usr/share/keyrings/r2u.gpg] https://r2u.stat.illinois.edu/ubuntu noble main" \
+    | sudo tee /etc/apt/sources.list.d/r2u.list
+sudo apt update
+
+# 3. python pieces bspm needs, then bspm itself
+sudo apt install --yes --no-install-recommends python3-{dbus,gi,apt}
+sudo Rscript -e 'install.packages("bspm")'
+
+# 4. enable bspm for every R session
+sudo bash -c 'echo "suppressMessages(bspm::enable())" >> "$(R RHOME)/etc/Rprofile.site"'
+```
+
+From then on, inside Positron's R console, the normal command just works and
+pulls binaries:
+
+```r
+install.packages("tidyverse")
+library(tidyverse)
+```
+
+### 4.3 Fallback: compile from source
+
+Use this route if your Ubuntu release is not covered by r2u, you do not want a
+system-wide (sudo) install, or a package you need is not in r2u. Compiling the
+tidyverse from source needs both a C/C++ toolchain and the header files of the
+system libraries several of its packages link against. Install them all at
+once:
+
+```bash
+sudo apt update && sudo apt install -y \
+  r-base r-base-dev cmake \
+  libcurl4-openssl-dev libssl-dev libxml2-dev libfontconfig1-dev \
+  libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev \
+  libjpeg-dev
+```
+
+(on 24.04 "noble" the JPEG/TIFF library is `libtiff6-dev`; on 22.04 "jammy"
+and older it is `libtiff5-dev`, so append the one matching your release).
+
+Then, still in the terminal, install **pak** (a modern, fast package manager
+that also helps resolve these build issues) and use it from the R console:
+
+```bash
+sudo Rscript -e 'install.packages("pak")'
+```
+
+```r
+pak::pak("tidyverse")
+library(tidyverse)
+```
+
+Unlike the r2u path (4.2) where plain `install.packages()` pulls prebuilt
+binaries, here pak actually compiles from source, but it does the dependency
+bookkeeping for you and caches the compiled result, so a later
+reinstallation is quick.
+
+## 5. Install R packages
 
 Open the R console in Positron and run:
 
 ```r
 install.packages("tidyverse")   # the core data-science collection
 ```
+
+On Ubuntu with r2u set up (section 4.2), this command automatically installs
+Ubuntu binaries, so you do not need `pak` or the manual toolchain. On
+macOS/Windows the installer handles everything for you.
+
+A note on the two commands you will meet in this guide:
+
+- `install.packages()` is the R-basics installer. With r2u (`+bspm`) running it
+  installs Ubuntu binaries, which is why it is the default here.
+- `pak::pak()` is an optional third-party package manager with better
+  dependency resolution and caching, and can also install straight from GitHub
+  or a local folder. It does **not** go through r2u, so on the r2u path it
+  offers no speed advantage. Reach for it when a package is not (yet) on CRAN,
+  or to compile from source as in the fallback (section 4.3).
 
 Verify with:
 
@@ -74,9 +210,10 @@ install.packages(c("janitor", "naniar", "skimr", "renv", "knitr", "rmarkdown", "
 ```
 
 (`renv` is used for dependency pinning; `pins` for data pinning; `janitor`/`naniar`/`skimr` feed the
-data-cleaning and EDA labs.)
+data-cleaning and EDA labs. All of these are available as r2u binaries too, so the same plain
+`install.packages()` call above works unchanged on the r2u path.)
 
-## 5. Some worthy Positron extensions (optional)
+## 6. Some worthy Positron extensions (optional)
 
 - **Air**: A Visual Studio Code extension for [Air](https://posit-dev.github.io/air/), an R formatter and language server, written in Rust.
 - **Jarl**: A Visual Studio Code extension for [Jarl](https://jarl.etiennebacher.com), a fast R linter.
@@ -88,7 +225,7 @@ data-cleaning and EDA labs.)
 
 Some of them are pre-installed with Positron; other require opt-in installs via the *Extensions* panel.
 
-## 6. Setup Python (optional)
+## 7. Setup Python (optional)
 
 In Positron:
 
@@ -97,7 +234,7 @@ In Positron:
 
 More at <https://opensource.posit.co/blog/2026-07-08_positron-uv/>
 
-## 7. Install Python packages (optional)
+## 8. Install Python packages (optional)
 
 [uv](https://docs.astral.sh/uv/) is an extremely fast Python package and project manager, written in Rust.
 
@@ -111,7 +248,7 @@ uv add pandas numpy
 
 More details can be found on the website.
 
-## 8. Version checks, all together
+## 9. Version checks, all together
 
 For these courses, we will use R and Quarto.
 

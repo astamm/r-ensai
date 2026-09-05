@@ -22,18 +22,20 @@ time.
 ## The R Statistical Language {#course-base-r}
 
 An **introductory / comprehensive** course on R, taught from the base-R console
-in Positron and progressively moving into the tidyverse and ggplot2.
-
-| Session | Deck |
-| ------- | ---- |
-| Session 1 · [Foundations: vectors to tables](r-statistical-language/session-1/session-1.qmd) | setup, data types, vectors, lists, data frames, read/write |
-| Session 2 · [Explore your data: the tidyverse](r-statistical-language/session-2/session-2.qmd) | pipe, dplyr, tidyr, stringr, ggplot2, EDA |
-| Session 3 · [Repeat & package: loops, matrices, functions](r-statistical-language/session-3/session-3.qmd) | control flow, `*apply`, matrices, custom functions |
+in Positron and progressively moving into the tidyverse and ggplot2. The
+[course home page](r-statistical-language/index.qmd) gathers the synopsis,
+the slides per session, the hands-on labs and the learning outcomes.
 
 ## Reproducible Workflows {#course-rr}
 
 <!-- TEMPORARY (2026-09): RR course not yet published; hidden from the homepage
      until it goes live. The deck files remain in the repo. -->
+
+::: {.callout-note}
+**Going back to a course page from a slide deck.** While you are following a
+deck, you can return to its course home page at any time by clicking the
+logo in the top-left corner of any slide.
+:::
 
 ## Why a website? {#why-a-website}
 

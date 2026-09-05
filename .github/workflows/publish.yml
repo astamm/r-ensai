@@ -3,6 +3,10 @@ on:
   push:
     branches: [master]
 
+concurrency:
+  group: gh-pages
+  cancel-in-progress: true
+
 name: Quarto Publish
 
 jobs:
@@ -16,6 +20,13 @@ jobs:
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Bootstrap gh-pages branch
+        run: |
+          git ls-remote --exit-code --heads origin gh-pages && exit 0
+          git checkout --orphan gh-pages
+          git commit -m "Initializing gh-pages branch" --allow-empty
+          git push origin gh-pages
 
       - name: Render and Publish
         uses: quarto-dev/quarto-actions/publish@v2
