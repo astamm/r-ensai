@@ -6,6 +6,9 @@ _site/
 *.knit.md
 *.html
 *_files/
+# ...but keep the authored include-after-body snippets under resources/, which
+# are source files (registered in _quarto.yml), not build artifacts.
+!resources/slidecrafting/*.html
 
 # R / renv
 .Rhistory
