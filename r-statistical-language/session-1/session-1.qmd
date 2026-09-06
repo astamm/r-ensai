@@ -422,10 +422,11 @@ R has its own vocabulary for edge cases:
 
 ## Atomic vectors {.inv}
 
-Use `c()` (**c**oncatenate) to build a vector, and values must share a type; a **sequence** is the shortcut for runs of integers:
-
 ::: {.panel-tabset}
 ### Build with `c()`
+
+Use `c()` (**c**oncatenate) to build a vector, and values must share a type:
+
 ::: {.codewindow .r width="100%"}
 Build vectors with `c()`
 ```{r}
@@ -436,6 +437,9 @@ z <- c(TRUE, FALSE, TRUE); class(z)
 :::
 
 ### Sequences
+
+A **sequence** is the shortcut for runs of integers:
+
 :::: {.split-2}
 ::: {.codewindow .r width="100%"}
 Colon & `seq()`
@@ -465,25 +469,39 @@ An atomic vector can only hold values of a **single data type**. Mix types and R
 The same operation applies to *every* element at once:
 
 ::: {.panel-tabset}
+
 ### Arithmetic
+
 ::: {.codewindow .r width="100%"}
 Arithmetic
 ```{r}
 height <- c(168, 177, 177, 177, 178, 172, 165, 171, 178, 170)
 weight <- c(88, 72, 85, 52, 71, 69, 61, 61, 51, 75)
 bmi <- weight / ((height / 100)^2)   # one op -> every element
-mean(bmi); var(bmi)
+bmi
+mean(bmi)
+var(bmi)
 ```
 :::
 
-### Negate & compare
+### Negate
+
 ::: {.codewindow .r width="100%"}
-Negate & compare
+Negate
 ```{r}
 !c(TRUE, FALSE, TRUE)
+```
+:::
+
+### Compare
+
+::: {.codewindow .r width="100%"}
+Compare
+```{r}
 c("Hello", "World") == "Hello"
 ```
 :::
+
 :::
 
 ## Generating data from distributions {.inv}
@@ -497,7 +515,7 @@ mu <- 3; sigma <- 2
 dnorm(0, mean = mu, sd = sigma)
 pnorm(0, mean = mu, sd = sigma)
 qnorm(0.5, mean = mu, sd = sigma)
-rnorm(10, mean = mu, sd = sigma)   # random — values differ each run
+rnorm(5, mean = mu, sd = sigma)   # random — values differ each run
 ```
 :::
 
@@ -597,6 +615,13 @@ c(1, 2, 3, 4) + c(10, 20)
 ```
 :::
 
+::: {.codewindow .r width="72%"}
+equivalent to
+```{r}
+c(1, 2, 3, 4) + c(10, 20, 10, 20)
+```
+:::
+
 ::: {.callout-caution title="Stretch / gotcha"}
 Recycling is powerful but silent; it can zip wrongly-sized vectors together without a warning if the longer length isn't a multiple. `c(1,2,3) == c(1,2)` gives `TRUE TRUE FALSE` with a warning; always sanity-check lengths after mixing.
 :::
@@ -626,13 +651,24 @@ Recycling is powerful but silent; it can zip wrongly-sized vectors together with
 
 ## Lists: containers of anything {.inv}
 
+::: {.split-2}
+
 ::: {.codewindow .r width="64%"}
 A list can mix types
 ```{r}
 x <- list(1, "a", TRUE, c(1, 2, 3))
 x
+```
+:::
+
+::: {.codewindow .r width="64%"}
+The object class is "list"
+```{r}
+x <- list(1, "a", TRUE, c(1, 2, 3))
 class(x)
 ```
+:::
+
 :::
 
 While an atomic vector needs one type, a **list** can hold objects of *different* types.
@@ -645,12 +681,12 @@ Functions like `mean` and `+` **don't work on a list**; apply them *to each elem
 
 The `*apply` family does "for each element, run this function":
 
-::: {.codewindow .r width="80%"}
+::: {.codewindow .r width="100%"}
 `lapply` / `sapply`
 ```{r}
-my_list <- list(var1 = rnorm(20), var2 = runif(12), var3 = rbinom(42, 1, 0.5))
+my_list <- list(var1 = rnorm(n = 20L), var2 = runif(n = 12L), var3 = rbinom(n = 42L, size = 1, prob = 0.5))
 lapply(my_list, FUN = mean)   # returns a list
-sapply(my_list, FUN = mean)   # tries to simplify to a vector
+sapply(my_list, FUN = mean)   # tries to simplify to an atomic vector
 ```
 :::
 
@@ -661,9 +697,9 @@ sapply(my_list, FUN = mean)   # tries to simplify to a vector
 ## The `[`, `[[`, `$` subsetting {.inv}
 
 ::: {.panel-tabset}
-### `[`: a *sub-list*
+### `[` (a *sub-list*)
 ::: {.codewindow .r width="100%"}
-`[`: a sub-list
+`[` (a sub-list)
 ```{r}
 x <- list(a = 1, b = "a", c = TRUE)
 x["a"]
@@ -671,9 +707,9 @@ class(x["a"])
 ```
 :::
 
-### `[[`: the element itself
+### `[[` (the element itself)
 ::: {.codewindow .r width="100%"}
-`[[`: the element
+`[[` (the element)
 ```{r}
 x <- list(a = 1, b = "a", c = TRUE)
 x[[1]]            # by position
@@ -683,9 +719,9 @@ class(x[["a"]])
 ```
 :::
 
-### `$`: shortcut by name
+### `$` (shortcut by name)
 ::: {.codewindow .r width="100%"}
-`$`: by name
+`$` (by name)
 ```{r}
 x <- list(a = 1, b = "a", c = TRUE)
 x$a
@@ -717,10 +753,10 @@ class(x[c("a", "b")])
 ::: {.paper-card}
 **Live code (≈10 min):** I type and narrate at the console; you follow on your own machine. Pause on the `[[` vs `$` distinction, the most common beginner stumble with lists.
 
-1. `pepper <- list(shake = "round", contents = list("salt", "cayenne"))`: build a nested list modelling the shaker.
-2. What does `pepper[[1]][1]` return? What about `pepper[[1]][[1]]`?
-3. Extend a list: assign to a new name (`pepper$lid <- "open"`). What happened to the list?
-4. Try `pepper$contents[[2]]` vs `pepper[["contents"]][[2]]`.
+1. `shaker <- list(shape = "round", contents = list("salt", "cayenne"))`: build a nested list modelling the shaker.
+2. What does `shaker[[1]][1]` return? What about `shaker[[1]][[1]]`?
+3. Extend a list: assign to a new name (`shaker$lid <- "open"`). What happened to the list?
+4. Try `shaker$contents[[2]]` vs `shaker[["contents"]][[2]]`.
 :::
 
 <div class="paper-adv">
@@ -742,7 +778,7 @@ class(x[c("a", "b")])
 1. Build a list of three vectors of lengths 10, 20, 30. Compute the mean of each with `sapply()`, then `vapply()`.
 2. Make a list of two length-5 vectors. Use `lapply()` to double each element; store the result.
 3. What happens if you use `[[` with an index *larger* than the list length? With a name that doesn't exist? (*Try it: read the error message.*)
-4. Given `pepper`, what is `pepper[[1]][1]` vs `pepper[[1]][[1]]`?
+4. Given `shaker`, what is `shaker[[1]][1]` vs `shaker[[1]][[1]]`?
 5. How do you *extend* a list?
 :::
 
@@ -763,18 +799,12 @@ class(x[c("a", "b")])
 
 A **data frame** is a *data table*: a list of named columns, all of the **same length**.
 
-::: {.split-2 .split-2-wide-left}
 ::: {.codewindow .r width="100%"}
 `iris` is a data frame
 ```{r}
 class(iris)
-head(iris, 3)
+head(iris, n = 3L)
 ```
-:::
-
-::: {.callout-desc}
-**Mental model.** A data frame is *a list of columns*, each a same-type vector of equal length.
-:::
 :::
 
 ::: {.callout-note title="Beyond & beside base R"}
@@ -785,20 +815,26 @@ head(iris, 3)
 ## Tibbles: the modern data frame {.inv}
 
 ::: {.split-2}
+
+::: {}
+Defined in the eponymous [{tibble}](https://tibble.tidyverse.org/) package:
+
 ::: {.codewindow .r width="100%"}
 `as_tibble()`
 ```{r}
-iris_tbl <- as_tibble(iris)   # tidyverse already loaded
+iris_tbl <- tibble::as_tibble(iris)   # tidyverse already loaded
 class(iris_tbl)
-head(iris_tbl, 3)
+head(iris_tbl, n = 3L)
 ```
+:::
+
 :::
 
 ::: {}
 A **tibble** *is* a data frame with friendlier defaults:
 
 ::: {.incremental .highlight-last}
-- prints only the first 10 rows and the columns that fit;
+- prints only the size of the data, the first 10 rows, only columns that fit (the rest of them are listed as `...`) and their types;
 - column names must be *syntactic* (safe to reference: `snake_case`, no spaces, no punctuation except `_`, no leading numbers);
 - never drops empty rows/columns on subsetting;
 - **no silent type conversion**.
@@ -878,44 +914,54 @@ Tibbles keep empty rows/columns and never auto-convert, so `df[, 1]` stays a tib
 
 ## Read rectangular data
 
-The **`{readr}`** package reads flat files fast and guesses column types:
+The [{readr}](https://readr.tidyverse.org/) package reads flat files fast and guesses column types:
 
 ::: {.codewindow .r width="70%"}
-readr
 ```r
-library(readr)
-read_csv("penguins.csv")     # comma-separated
-read_tsv("file.tsv")         # tab-separated
-read_table("file.txt")       # space-separated
-read_csv2("file.csv")        # European ; decimal comma
-read_delim("file.dat", delim = ";")
+readr::read_csv("penguins.csv")     # comma-separated
+readr::read_tsv("file.tsv")         # tab-separated
+readr::read_table("file.txt")       # space-separated
+readr::read_csv2("file.csv")        # European ; decimal comma
+readr::read_delim("file.dat", delim = ";")
 ```
 :::
 
 Also handy:
 
-- Excel: `readxl::read_excel()`;
-- SPSS / Stata / SAS: `haven::read_spss()` / `read_stata()` / `read_sas()`;
+- Excel: `readxl::read_excel()` (via [{readxl}](https://readxl.tidyverse.org/));
+- SPSS / Stata / SAS: `haven::read_spss()` / `read_stata()` / `read_sas()` (via [{haven}](https://haven.tidyverse.org/));
+- JSON: `jsonlite::read_json()` (via [{jsonlite}](https://jeroen.r-universe.dev/jsonlite));
 - R's own binary format: `read_rds()` / `saveRDS()`.
 
 ## Read & write: choosing the right reader {.inv}
 
-Open the file in a text editor *first*: what separates values? Is there a header? Are decimals `.` or `,`? Then pick the reader. `readr`'s writes mirror its reads:
+::: {.callout-tip title="Choosing the right reader"}
+Open the file in a text editor *first*:
 
-::: {.codewindow .r width="72%"}
-read + write
+- What separates values?
+- Is there a header?
+- Are decimals `.` or `,`?
+
+Then pick the reader.
+:::
+
+::: {.fragment}
+
+::: {.callout-note title="Writing data"}
+[{readr}](https://readr.tidyverse.org/)'s writes mirror its reads:
+
+::: {.codewindow .r width="100%"}
+Choosing the right writer
 ```r
-read_csv2("file.csv")            # European ; decimal comma
-write_csv(penguins, "penguins_clean.csv")
-write_tsv(penguins, "penguins_clean.tsv")
+readr::write_csv2(penguins, "penguins_clean.csv") # European ; decimal comma
+readr::write_csv(penguins, "penguins_clean.csv")
+readr::write_tsv(penguins, "penguins_clean.tsv")
 ```
 :::
 
-Other formats:
+:::
 
-- **Excel**: `readxl::read_excel()`;
-- **SPSS / Stata / SAS**: `haven::read_spss()` / `read_stata()` / `read_sas()`;
-- **JSON**: `jsonlite::read_json()`.
+:::
 
 ## Your turn: data cleaning {.paper}
 
@@ -975,7 +1021,7 @@ Three structures, one flow.
 ::: {.panel .card data-id="release" style="left:844px; top:220px; width:340px; height:360px;"}
 [Data frames]{.h}
 
-[Just a list of equal-length atomic vectors, bound as columns; read with `readr`.]{.p}
+[Just a list of equal-length vectors, bound as named columns; read with `readr`.]{.p}
 :::
 
 ## Data frames: the workhorse {.light auto-animate=true background-color="#F1EEE6"}
@@ -987,7 +1033,7 @@ Data frames power data science.
 ::: {.panel .card data-id="release" style="left:96px; top:200px; width:800px; height:400px;"}
 [Data frames]{.h}
 
-[The structure you'll reach for first: each column is an atomic vector, and the frame is just a list of them. Subset with `[`/`$`, reshape with the tidyverse, and read any table with `readr`.]{.p style="font-size:24px; line-height:1.6;"}
+[The structure you'll reach for first: each column is a vector, and the frame is just a list of them. Subset with `[`/`$`, reshape with the tidyverse, and read any table with `readr`.]{.p style="font-size:24px; line-height:1.6;"}
 :::
 
 ::: {.panel .marker data-id="draft"   style="left:944px; top:230px;"}
