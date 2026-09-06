@@ -85,7 +85,7 @@ to whatever `R` binary sits on your `PATH`.
 ### 4.2 Recommended: install R packages via r2u (Ubuntu binaries)
 
 [r2u](https://github.com/eddelbuettel/r2u) is a project that builds almost all
-of CRAN (currently about 31,000 packages) into Ubuntu binary `.deb` packages
+of CRAN (currently about 25,000 packages) into Ubuntu binary `.deb` packages
 and serves them as an `apt` repository. With a small companion called
 [`bspm`](https://cloud.r-project.org/package=bspm), your ordinary
 `install.packages("tidyverse")` transparently installs prebuilt Ubuntu
