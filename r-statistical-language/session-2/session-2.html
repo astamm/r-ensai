@@ -274,13 +274,11 @@ In Session 1 you built the core structures of R:
 </div>
 </div>
 <p>Session 2 is the <strong>“explore your data”</strong> move of the course: take rows and columns you <em>stored</em>, and turn them into understanding.</p>
-<div class="spread spread-md spread-evenly">
 <ul>
 <li><span class="green">shape it</span>: the pipe <code>|&gt;</code> and <code>dplyr</code>/<code>tidyr</code>: <code>filter</code>, <code>select</code>, <code>mutate</code>, <code>arrange</code>, <code>group_by</code>/<code>summarise</code>, <code>pivot_*</code>;</li>
 <li><span class="amber">read it</span>: base-R workhorses, then <span class="amber">ggplot2</span>’s layered grammar: histograms, scatters, facets, boxplots;</li>
 <li><span class="indigo">understand it</span>: the <strong>transform → plot → interpret</strong> loop that is Exploratory Data Analysis.</li>
 </ul>
-</div>
 <div class="callout-desc">
 <p><strong>The thread.</strong> We keep the penguins data the whole session: shape it, then plot it, then read the answers back off the plots. The EDA pipeline you build here is what the <em>repeat &amp; package</em> session and the Reproducible Workflows course will build on.</p>
 </div>
@@ -293,11 +291,9 @@ In Session 1 you built the core structures of R:
 
 Session 2 is the **"explore your data"** move of the course: take rows and columns you *stored*, and turn them into understanding.
 
-::: {.spread .spread-md .spread-evenly}
 - [shape it]{.green}: the pipe `|&gt;` and `dplyr`/`tidyr`: `filter`, `select`, `mutate`, `arrange`, `group_by`/`summarise`, `pivot_*`;
 - [read it]{.amber}: base-R workhorses, then [ggplot2]{.amber}'s layered grammar: histograms, scatters, facets, boxplots;
 - [understand it]{.indigo}: the **transform → plot → interpret** loop that is Exploratory Data Analysis.
-:::
 
 ::: {.callout-desc}
 **The thread.** We keep the penguins data the whole session: shape it, then plot it, then read the answers back off the plots. The EDA pipeline you build here is what the *repeat &amp; package* session and the Reproducible Workflows course will build on.
@@ -313,7 +309,6 @@ Session 2 is the **"explore your data"** move of the course: take rows and colum
 <section id="the-tidyverse-at-a-glance" class="slide level2 inv" data-number="2.1">
 <h2><span class="header-section-number">2.1</span> The tidyverse at a glance</h2>
 <p>A <strong>family of R packages</strong> that work as one: consistent syntax, a shared pipe, and the same <em>data frame in → data frame out</em> flow.</p>
-<div class="spread spread-md spread-evenly">
 <ul>
 <li><span class="green">readr</span>: bring data <em>in</em> (<code>read_csv</code>);</li>
 <li><span class="green">tibble</span>: the modern data frame;</li>
@@ -322,44 +317,41 @@ Session 2 is the **"explore your data"** move of the course: take rows and colum
 <li><span class="indigo">ggplot2</span>: <em>visualise</em> (the very next section);</li>
 <li>plus <code>purrr</code> (iterate), <code>stringr</code> (strings), <code>forcats</code> (factors), <code>lubridate</code> (dates).</li>
 </ul>
-</div>
 <div class="callout-desc">
-<p><strong>Today we master <code>dplyr</code> + <code>tidyr</code></strong>: the transform engine that feeds every <code>ggplot</code> and every analysis. The long tail (<code>purrr</code>, <code>stringr</code>, …) you pick up on demand; they all share the same one grammar.</p>
+<p><strong>Today we master <code>dplyr</code> + <code>tidyr</code></strong>: the transform engine that feeds every <code>ggplot</code> and every analysis. The long tail (<code>purrr</code>, <code>stringr</code>, …) you pick up on demand.</p>
 </div>
 <div class="code-pop">
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## The tidyverse at a glance {.inv}
 
 A **family of R packages** that work as one: consistent syntax, a shared pipe, and the same *data frame in → data frame out* flow.
 
-::: {.spread .spread-md .spread-evenly}
 - [readr]{.green}: bring data *in* (`read_csv`);
 - [tibble]{.green}: the modern data frame;
 - [dplyr]{.amber}: *transform* rows, columns, groups (**today**);
 - [tidyr]{.amber}: *reshape*: keep data [tidy]{.amber} (`pivot_*`);
 - [ggplot2]{.indigo}: *visualise* (the very next section);
 - plus `purrr` (iterate), `stringr` (strings), `forcats` (factors), `lubridate` (dates).
-:::
 
 ::: {.callout-desc}
-**Today we master `dplyr` + `tidyr`**: the transform engine that feeds every `ggplot` and every analysis. The long tail (`purrr`, `stringr`, …) you pick up on demand; they all share the same one grammar.
+**Today we master `dplyr` + `tidyr`**: the transform engine that feeds every `ggplot` and every analysis. The long tail (`purrr`, `stringr`, …) you pick up on demand.
 :::
 </code></pre></div></details>
 </div>
 </section>
 <section id="the-pipe" class="slide level2 inv" data-number="2.2">
 <h2><span class="header-section-number">2.2</span> The pipe: <code>|&gt;</code></h2>
-<p><code>|&gt;</code> sends the value on its left into the <em>first argument</em> of the function on its right: read it as “<strong>then</strong>”:</p>
-<div class="split-2">
+<p>The pipe <code>|&gt;</code> sends the value on its left into the <em>first argument</em> of the function on its right:</p>
 <div class="codewindow r" width="100%">
 <p>The pipe: top-to-bottom</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a>penguins <span class="sc">|&gt;</span> <span class="fu">filter</span>(species <span class="sc">==</span> <span class="st">"Adelie"</span>)</span>
-<span id="cb1-2"><a aria-label="2"></a><span class="co">#  reads: penguins, THEN filter(...)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a>penguins <span class="sc">|&gt;</span>                                        <span class="co"># raw data set</span></span>
+<span id="cb1-2"><a aria-label="2"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(species <span class="sc">==</span> <span class="st">"Adelie"</span>) <span class="sc">|&gt;</span>            <span class="co"># keep only Adelie penguins</span></span>
+<span id="cb1-3"><a aria-label="3"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">body_mass_kg =</span> body_mass_g <span class="sc">/</span> <span class="dv">1000</span>) <span class="co"># compute a new column</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p>Reads: penguins, THEN filter(…). One line per data processing step: easy to comment/read.</p>
 <div class="codewindow r" width="100%">
 <p>The nested equivalent: inside-out</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-label="1"></a><span class="fu">filter</span>(penguins, species <span class="sc">==</span> <span class="st">"Adelie"</span>)</span>
-<span id="cb2-2"><a aria-label="2"></a><span class="co">#  order of operations is reversed</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-label="1"></a>filtered_penguins <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(penguins, species <span class="sc">==</span> <span class="st">"Adelie"</span>)</span>
+<span id="cb2-2"><a aria-label="2"></a>dplyr<span class="sc">::</span><span class="fu">mutate</span>(filtered_penguins, <span class="at">body_mass_kg =</span> body_mass_g <span class="sc">/</span> <span class="dv">1000</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="paper-card">
 <p>The pipe keeps your script readable <strong>top-to-bottom</strong>; the nested alternative reads inside-out. The backbone of data work: one rule, <strong>the data always goes first</strong>.</p>
@@ -367,24 +359,25 @@ A **family of R packages** that work as one: consistent syntax, a shared pipe, a
 <div class="code-pop">
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## The pipe: `|&gt;` {.inv}
 
-`|&gt;` sends the value on its left into the *first argument* of the function on its right: read it as "**then**":
+The pipe `|&gt;` sends the value on its left into the *first argument* of the function on its right:
 
-::: {.split-2}
 ::: {.codewindow .r width="100%"}
 The pipe: top-to-bottom
 ```r
-penguins |&gt; filter(species == "Adelie")
-#  reads: penguins, THEN filter(...)
+penguins |&gt;                                        # raw data set
+  dplyr::filter(species == "Adelie") |&gt;            # keep only Adelie penguins
+  dplyr::mutate(body_mass_kg = body_mass_g / 1000) # compute a new column
 ```
 :::
+
+Reads: penguins, THEN filter(...). One line per data processing step: easy to comment/read.
 
 ::: {.codewindow .r width="100%"}
 The nested equivalent: inside-out
 ```r
-filter(penguins, species == "Adelie")
-#  order of operations is reversed
+filtered_penguins &lt;- dplyr::filter(penguins, species == "Adelie")
+dplyr::mutate(filtered_penguins, body_mass_kg = body_mass_g / 1000)
 ```
-:::
 :::
 
 ::: {.paper-card}
@@ -675,8 +668,23 @@ Every tidyverse tool expects **tidy data**: reshape first, analyse after.
 <li><code>pivot_longer</code> a <strong>wide</strong> table (<code>names_to</code>, <code>values_to</code>).</li>
 </ol>
 </div>
-<div class="callout-desc">
-<p><strong>Lab 1: tidyverse (≈25 min).</strong> Continue in <code>lab-1-tidyverse.R</code>. This is the <em>foundation</em>: the next lab (ggplot2) and the EDA in the Reproducible Workflows course build directly on it. <strong>Labs 1–2 together are the EDA half of the pipeline</strong>: transform in <code>lab-1</code>, plot in <code>lab-2</code>.</p>
+<div class="paper-adv">
+<button type="button" class="paper-adv-btn">
+Lab 1: tidyverse
+</button>
+<div class="paper-adv-backdrop" hidden="">
+
+</div>
+<div class="paper-adv-modal" hidden="">
+<div class="paper-adv-head">
+<strong>Lab 1: tidyverse</strong><button type="button" class="paper-adv-close" aria-label="Close">×</button>
+</div>
+<div class="adv-body">
+<p>
+<strong>Lab 1: tidyverse (≈25 min).</strong> Continue in <code>lab-1-tidyverse.R</code>. This is the <em>foundation</em>: the next lab (ggplot2) and the EDA in the Reproducible Workflows course build directly on it. <strong>Labs 1–2 together are the EDA half of the pipeline</strong>: transform in <code>lab-1</code>, plot in <code>lab-2</code>.
+</p>
+</div>
+</div>
 </div>
 <div class="code-pop">
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Your turn: tidyverse {.paper}
@@ -689,9 +697,16 @@ Every tidyverse tool expects **tidy data**: reshape first, analyse after.
 5. `pivot_longer` a **wide** table (`names_to`, `values_to`).
 :::
 
-::: {.callout-desc}
-**Lab 1: tidyverse (≈25 min).** Continue in `lab-1-tidyverse.R`. This is the *foundation*: the next lab (ggplot2) and the EDA in the Reproducible Workflows course build directly on it. **Labs 1–2 together are the EDA half of the pipeline**: transform in `lab-1`, plot in `lab-2`.
-:::
+&lt;div class="paper-adv"&gt;
+&lt;button type="button" class="paper-adv-btn"&gt;Lab 1: tidyverse&lt;/button&gt;
+&lt;div class="paper-adv-backdrop" hidden&gt;&lt;/div&gt;
+&lt;div class="paper-adv-modal" hidden&gt;
+&lt;div class="paper-adv-head"&gt;&lt;strong&gt;Lab 1: tidyverse&lt;/strong&gt;&lt;button type="button" class="paper-adv-close" aria-label="Close"&gt;&amp;times;&lt;/button&gt;&lt;/div&gt;
+&lt;div class="adv-body"&gt;
+&lt;p&gt;&lt;strong&gt;Lab 1: tidyverse (≈25 min).&lt;/strong&gt; Continue in &lt;code&gt;lab-1-tidyverse.R&lt;/code&gt;. This is the &lt;em&gt;foundation&lt;/em&gt;: the next lab (ggplot2) and the EDA in the Reproducible Workflows course build directly on it. &lt;strong&gt;Labs 1–2 together are the EDA half of the pipeline&lt;/strong&gt;: transform in &lt;code&gt;lab-1&lt;/code&gt;, plot in &lt;code&gt;lab-2&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 </code></pre></div></details>
 </div>
 </section></section>
@@ -1036,8 +1051,23 @@ We'll run a *ggplot2 build-up* live: from a bare histogram to a faceted, titled,
 <li>Which approach would you reach for?</li>
 </ol>
 </div>
-<div class="callout-desc">
-<p><strong>Lab 2: plotting (≈25 min).</strong> Continue in <code>lab-2-plotting.R</code>. Pair-programme: one types, one narrates. <strong>With Lab 1, this completes the EDA half of the pipeline</strong>: transform then plot, exactly the “explore your data” move from the wrap-up.</p>
+<div class="paper-adv">
+<button type="button" class="paper-adv-btn">
+Lab 2: plotting
+</button>
+<div class="paper-adv-backdrop" hidden="">
+
+</div>
+<div class="paper-adv-modal" hidden="">
+<div class="paper-adv-head">
+<strong>Lab 2: plotting</strong><button type="button" class="paper-adv-close" aria-label="Close">×</button>
+</div>
+<div class="adv-body">
+<p>
+<strong>Lab 2: plotting (≈25 min).</strong> Continue in <code>lab-2-plotting.R</code>. Pair-programme: one types, one narrates. <strong>With Lab 1, this completes the EDA half of the pipeline</strong>: transform then plot, exactly the “explore your data” move from the wrap-up.
+</p>
+</div>
+</div>
 </div>
 <div class="code-pop">
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Your turn: plotting {.paper}
@@ -1050,9 +1080,16 @@ We'll run a *ggplot2 build-up* live: from a bare histogram to a faceted, titled,
 5. Which approach would you reach for?
 :::
 
-::: {.callout-desc}
-**Lab 2: plotting (≈25 min).** Continue in `lab-2-plotting.R`. Pair-programme: one types, one narrates. **With Lab 1, this completes the EDA half of the pipeline**: transform then plot, exactly the "explore your data" move from the wrap-up.
-:::</code></pre></div></details>
+&lt;div class="paper-adv"&gt;
+&lt;button type="button" class="paper-adv-btn"&gt;Lab 2: plotting&lt;/button&gt;
+&lt;div class="paper-adv-backdrop" hidden&gt;&lt;/div&gt;
+&lt;div class="paper-adv-modal" hidden&gt;
+&lt;div class="paper-adv-head"&gt;&lt;strong&gt;Lab 2: plotting&lt;/strong&gt;&lt;button type="button" class="paper-adv-close" aria-label="Close"&gt;&amp;times;&lt;/button&gt;&lt;/div&gt;
+&lt;div class="adv-body"&gt;
+&lt;p&gt;&lt;strong&gt;Lab 2: plotting (≈25 min).&lt;/strong&gt; Continue in &lt;code&gt;lab-2-plotting.R&lt;/code&gt;. Pair-programme: one types, one narrates. &lt;strong&gt;With Lab 1, this completes the EDA half of the pipeline&lt;/strong&gt;: transform then plot, exactly the "explore your data" move from the wrap-up.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;</code></pre></div></details>
 </div>
 </section></section>
 <section>
