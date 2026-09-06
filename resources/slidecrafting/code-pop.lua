@@ -146,7 +146,13 @@ local function make_code_pop(source)
     .. '<pre><code class="language-markdown">' .. escape_html(source)
     .. "</code></pre></div>"
 
-  local details = "<details>" .. card .. "</details>"
+  -- An in-slide <details> with no <summary> child makes the browser insert its
+  -- own default summary labelled "Details" (with a disclosure marker), which
+  -- would paint at the slide's top-left where the deck logo sits. Emit an empty
+  -- hidden <summary> so the real (hoisted) trigger stays the only visible one
+  -- and nothing renders behind the logo.
+  local details = '<details><summary class="code-pop-slot" aria-hidden="true"></summary>'
+    .. card .. "</details>"
 
   return pandoc.Div(
     { pandoc.RawBlock("html", details) },

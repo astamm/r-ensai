@@ -195,6 +195,18 @@ $code-block-font-size: 0.9em !default;
   inset: 0;
   pointer-events: none;
 }
+/* The in-slide <details> carries no visible trigger (the one icon button is
+   hoisted to the .reveal root as .code-pop-trigger). Without a <summary> child
+   the browser paints its own default "Details" label at the slide's top-left,
+   behind the deck logo; code-pop.lua now emits an empty .code-pop-slot summary
+   to suppress that. Hide its disclosure marker so nothing renders at all. */
+.reveal .code-pop details > summary.code-pop-slot {
+  list-style: none;
+  display: none;
+}
+.reveal .code-pop details > summary.code-pop-slot::marker {
+  content: "";
+}
 /* The trigger is the <summary>: a small square icon button pinned to the
    bottom-right corner, re-enabling clicks over the transparent layer.
    Positioning is `position: fixed` (screen space), mirroring the slide-logo:
