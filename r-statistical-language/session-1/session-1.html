@@ -1169,11 +1169,11 @@ Going further
 </section>
 <section id="atomic-vectors" class="slide level2 inv" data-number="4.1">
 <h2><span class="header-section-number">4.1</span> Atomic vectors</h2>
-<p>Use <code>c()</code> (<strong>c</strong>oncatenate) to build a vector, and values must share a type; a <strong>sequence</strong> is the shortcut for runs of integers:</p>
 <div class="panel-tabset">
 <ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1">Build with <code>c()</code></a></li><li><a href="#tabset-2-2">Sequences</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1">
+<p>Use <code>c()</code> (<strong>c</strong>oncatenate) to build a vector, and values must share a type:</p>
 <div class="codewindow r" width="100%">
 <p>Build vectors with <code>c()</code></p>
 <div class="cell">
@@ -1193,6 +1193,7 @@ Going further
 </div>
 </div>
 <div id="tabset-2-2">
+<p>A <strong>sequence</strong> is the shortcut for runs of integers:</p>
 <div class="split-2">
 <div class="codewindow r" width="100%">
 <p>Colon &amp; <code>seq()</code></p>
@@ -1244,10 +1245,11 @@ Going further
 <div class="code-pop">
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Atomic vectors {.inv}
 
-Use `c()` (**c**oncatenate) to build a vector, and values must share a type; a **sequence** is the shortcut for runs of integers:
-
 ::: {.panel-tabset}
 ### Build with `c()`
+
+Use `c()` (**c**oncatenate) to build a vector, and values must share a type:
+
 ::: {.codewindow .r width="100%"}
 Build vectors with `c()`
 ```{r}
@@ -1258,6 +1260,9 @@ z &lt;- c(TRUE, FALSE, TRUE); class(z)
 :::
 
 ### Sequences
+
+A **sequence** is the shortcut for runs of integers:
+
 :::: {.split-2}
 ::: {.codewindow .r width="100%"}
 Colon &amp; `seq()`
@@ -1288,7 +1293,7 @@ An atomic vector can only hold values of a **single data type**. Mix types and R
 <h2><span class="header-section-number">4.2</span> Operations on atomic vectors: vectorization</h2>
 <p>The same operation applies to <em>every</em> element at once:</p>
 <div class="panel-tabset">
-<ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1">Arithmetic</a></li><li><a href="#tabset-3-2">Negate &amp; compare</a></li></ul>
+<ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1">Arithmetic</a></li><li><a href="#tabset-3-2">Negate</a></li><li><a href="#tabset-3-3">Compare</a></li></ul>
 <div class="tab-content">
 <div id="tabset-3-1">
 <div class="codewindow r" width="100%">
@@ -1297,10 +1302,16 @@ An atomic vector can only hold values of a **single data type**. Mix types and R
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a aria-label="1"></a>height <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">168</span>, <span class="dv">177</span>, <span class="dv">177</span>, <span class="dv">177</span>, <span class="dv">178</span>, <span class="dv">172</span>, <span class="dv">165</span>, <span class="dv">171</span>, <span class="dv">178</span>, <span class="dv">170</span>)</span>
 <span id="cb69-2"><a aria-label="2"></a>weight <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">88</span>, <span class="dv">72</span>, <span class="dv">85</span>, <span class="dv">52</span>, <span class="dv">71</span>, <span class="dv">69</span>, <span class="dv">61</span>, <span class="dv">61</span>, <span class="dv">51</span>, <span class="dv">75</span>)</span>
 <span id="cb69-3"><a aria-label="3"></a>bmi <span class="ot">&lt;-</span> weight <span class="sc">/</span> ((height <span class="sc">/</span> <span class="dv">100</span>)<span class="sc">^</span><span class="dv">2</span>)   <span class="co"># one op -&gt; every element</span></span>
-<span id="cb69-4"><a aria-label="4"></a><span class="fu">mean</span>(bmi); <span class="fu">var</span>(bmi)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb69-4"><a aria-label="4"></a>bmi</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 31.17914 22.98190 27.13141 16.59804 22.40879 23.32342 22.40588 20.86112
+ [9] 16.09645 25.95156</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a aria-label="1"></a><span class="fu">mean</span>(bmi)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 22.89377</code></pre>
 </div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a aria-label="1"></a><span class="fu">var</span>(bmi)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 20.73245</code></pre>
 </div>
@@ -1309,13 +1320,20 @@ An atomic vector can only hold values of a **single data type**. Mix types and R
 </div>
 <div id="tabset-3-2">
 <div class="codewindow r" width="100%">
-<p>Negate &amp; compare</p>
+<p>Negate</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a aria-label="1"></a><span class="sc">!</span><span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a aria-label="1"></a><span class="sc">!</span><span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] FALSE  TRUE FALSE</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a aria-label="1"></a><span class="fu">c</span>(<span class="st">"Hello"</span>, <span class="st">"World"</span>) <span class="sc">==</span> <span class="st">"Hello"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<div id="tabset-3-3">
+<div class="codewindow r" width="100%">
+<p>Compare</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb77"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a aria-label="1"></a><span class="fu">c</span>(<span class="st">"Hello"</span>, <span class="st">"World"</span>) <span class="sc">==</span> <span class="st">"Hello"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  TRUE FALSE</code></pre>
 </div>
@@ -1330,25 +1348,39 @@ An atomic vector can only hold values of a **single data type**. Mix types and R
 The same operation applies to *every* element at once:
 
 ::: {.panel-tabset}
+
 ### Arithmetic
+
 ::: {.codewindow .r width="100%"}
 Arithmetic
 ```{r}
 height &lt;- c(168, 177, 177, 177, 178, 172, 165, 171, 178, 170)
 weight &lt;- c(88, 72, 85, 52, 71, 69, 61, 61, 51, 75)
 bmi &lt;- weight / ((height / 100)^2)   # one op -&gt; every element
-mean(bmi); var(bmi)
+bmi
+mean(bmi)
+var(bmi)
 ```
 :::
 
-### Negate &amp; compare
+### Negate
+
 ::: {.codewindow .r width="100%"}
-Negate &amp; compare
+Negate
 ```{r}
 !c(TRUE, FALSE, TRUE)
+```
+:::
+
+### Compare
+
+::: {.codewindow .r width="100%"}
+Compare
+```{r}
 c("Hello", "World") == "Hello"
 ```
 :::
+
 :::
 </code></pre></div></details>
 </div>
@@ -1359,23 +1391,22 @@ c("Hello", "World") == "Hello"
 <div class="codewindow r" width="76%">
 <p>The normal distribution family</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a aria-label="1"></a>mu <span class="ot">&lt;-</span> <span class="dv">3</span>; sigma <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb76-2"><a aria-label="2"></a><span class="fu">dnorm</span>(<span class="dv">0</span>, <span class="at">mean =</span> mu, <span class="at">sd =</span> sigma)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a aria-label="1"></a>mu <span class="ot">&lt;-</span> <span class="dv">3</span>; sigma <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb79-2"><a aria-label="2"></a><span class="fu">dnorm</span>(<span class="dv">0</span>, <span class="at">mean =</span> mu, <span class="at">sd =</span> sigma)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.0647588</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a aria-label="1"></a><span class="fu">pnorm</span>(<span class="dv">0</span>, <span class="at">mean =</span> mu, <span class="at">sd =</span> sigma)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a aria-label="1"></a><span class="fu">pnorm</span>(<span class="dv">0</span>, <span class="at">mean =</span> mu, <span class="at">sd =</span> sigma)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.0668072</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb80"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a aria-label="1"></a><span class="fu">qnorm</span>(<span class="fl">0.5</span>, <span class="at">mean =</span> mu, <span class="at">sd =</span> sigma)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a aria-label="1"></a><span class="fu">qnorm</span>(<span class="fl">0.5</span>, <span class="at">mean =</span> mu, <span class="at">sd =</span> sigma)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb82"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a aria-label="1"></a><span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="at">mean =</span> mu, <span class="at">sd =</span> sigma)   <span class="co"># random — values differ each run</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb85"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a aria-label="1"></a><span class="fu">rnorm</span>(<span class="dv">5</span>, <span class="at">mean =</span> mu, <span class="at">sd =</span> sigma)   <span class="co"># random — values differ each run</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 3.4405651 3.0859827 3.5321924 1.2383969 3.9151650 4.5789146 1.4011353
- [8] 3.8463822 1.1640997 0.7319341</code></pre>
+<pre><code>[1] 5.677232 3.314685 2.454955 2.368490 2.157221</code></pre>
 </div>
 </div>
 </div>
@@ -1394,7 +1425,7 @@ mu &lt;- 3; sigma &lt;- 2
 dnorm(0, mean = mu, sd = sigma)
 pnorm(0, mean = mu, sd = sigma)
 qnorm(0.5, mean = mu, sd = sigma)
-rnorm(10, mean = mu, sd = sigma)   # random — values differ each run
+rnorm(5, mean = mu, sd = sigma)   # random — values differ each run
 ```
 :::
 
@@ -1466,8 +1497,8 @@ Lab 1 continues
 <div class="codewindow r" width="100%">
 <p>Positive</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a aria-label="1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"one"</span>, <span class="st">"two"</span>, <span class="st">"three"</span>, <span class="st">"four"</span>, <span class="st">"five"</span>)</span>
-<span id="cb84-2"><a aria-label="2"></a>x[<span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">5</span>)]   <span class="co"># keep by position</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb87"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a aria-label="1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"one"</span>, <span class="st">"two"</span>, <span class="st">"three"</span>, <span class="st">"four"</span>, <span class="st">"five"</span>)</span>
+<span id="cb87-2"><a aria-label="2"></a>x[<span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">5</span>)]   <span class="co"># keep by position</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "three" "two"   "five" </code></pre>
 </div>
@@ -1478,12 +1509,12 @@ Lab 1 continues
 <div class="codewindow r" width="100%">
 <p>Negative</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb86"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a aria-label="1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"one"</span>, <span class="st">"two"</span>, <span class="st">"three"</span>, <span class="st">"four"</span>, <span class="st">"five"</span>)</span>
-<span id="cb86-2"><a aria-label="2"></a>x[<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="sc">-</span><span class="dv">5</span>)]   <span class="co"># drop by position, equivalent to</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb89"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a aria-label="1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"one"</span>, <span class="st">"two"</span>, <span class="st">"three"</span>, <span class="st">"four"</span>, <span class="st">"five"</span>)</span>
+<span id="cb89-2"><a aria-label="2"></a>x[<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="sc">-</span><span class="dv">5</span>)]   <span class="co"># drop by position, equivalent to</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "two"  "four"</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb88"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a aria-label="1"></a>x[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb91"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a aria-label="1"></a>x[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "two"  "four"</code></pre>
 </div>
@@ -1494,12 +1525,12 @@ Lab 1 continues
 <div class="codewindow r" width="100%">
 <p>Logical</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb90"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a aria-label="1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">3</span>, <span class="cn">NA</span>, <span class="dv">5</span>, <span class="dv">8</span>, <span class="dv">1</span>, <span class="cn">NA</span>)</span>
-<span id="cb90-2"><a aria-label="2"></a>x[<span class="sc">!</span><span class="fu">is.na</span>(x)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb93"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a aria-label="1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">3</span>, <span class="cn">NA</span>, <span class="dv">5</span>, <span class="dv">8</span>, <span class="dv">1</span>, <span class="cn">NA</span>)</span>
+<span id="cb93-2"><a aria-label="2"></a>x[<span class="sc">!</span><span class="fu">is.na</span>(x)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 10  3  5  8  1</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb92"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a aria-label="1"></a>x[x <span class="sc">%%</span> <span class="dv">2</span> <span class="sc">==</span> <span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb95"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a aria-label="1"></a>x[x <span class="sc">%%</span> <span class="dv">2</span> <span class="sc">==</span> <span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 10 NA  8 NA</code></pre>
 </div>
@@ -1510,8 +1541,8 @@ Lab 1 continues
 <div class="codewindow r" width="100%">
 <p>Character</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb94"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a aria-label="1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">abc =</span> <span class="dv">1</span>, <span class="at">def =</span> <span class="dv">2</span>, <span class="at">xyz =</span> <span class="dv">5</span>)</span>
-<span id="cb94-2"><a aria-label="2"></a>x[<span class="fu">c</span>(<span class="st">"xyz"</span>, <span class="st">"def"</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb97"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a aria-label="1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">abc =</span> <span class="dv">1</span>, <span class="at">def =</span> <span class="dv">2</span>, <span class="at">xyz =</span> <span class="dv">5</span>)</span>
+<span id="cb97-2"><a aria-label="2"></a>x[<span class="fu">c</span>(<span class="st">"xyz"</span>, <span class="st">"def"</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>xyz def 
   5   2 </code></pre>
@@ -1524,12 +1555,12 @@ Lab 1 continues
 <div class="codewindow r" width="100%">
 <p>mental model</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb96"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a aria-label="1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">1</span>, <span class="cn">NA</span>, <span class="dv">8</span>, <span class="dv">2</span>)</span>
-<span id="cb96-2"><a aria-label="2"></a>x[x <span class="sc">&gt;</span> <span class="dv">3</span>]        <span class="co"># "x, where x is greater than 3"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb99"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a aria-label="1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">1</span>, <span class="cn">NA</span>, <span class="dv">8</span>, <span class="dv">2</span>)</span>
+<span id="cb99-2"><a aria-label="2"></a>x[x <span class="sc">&gt;</span> <span class="dv">3</span>]        <span class="co"># "x, where x is greater than 3"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  5 NA  8</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb98"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a aria-label="1"></a>x[<span class="sc">!</span><span class="fu">is.na</span>(x)]    <span class="co"># "x, where x is not missing"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb101"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a aria-label="1"></a>x[<span class="sc">!</span><span class="fu">is.na</span>(x)]    <span class="co"># "x, where x is not missing"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 5 1 8 2</code></pre>
 </div>
@@ -1610,7 +1641,16 @@ x[!is.na(x)]    # "x, where x is not missing"
 <div class="codewindow r" width="72%">
 <p>recycling</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb100"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a aria-label="1"></a><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb103"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a aria-label="1"></a><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 11 22 13 24</code></pre>
+</div>
+</div>
+</div>
+<div class="codewindow r" width="72%">
+<p>equivalent to</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb105"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a aria-label="1"></a><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">10</span>, <span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 11 22 13 24</code></pre>
 </div>
@@ -1640,6 +1680,13 @@ When two vectors differ in length, R **recycles** the shorter one to match the l
 recycling
 ```{r}
 c(1, 2, 3, 4) + c(10, 20)
+```
+:::
+
+::: {.codewindow .r width="72%"}
+equivalent to
+```{r}
+c(1, 2, 3, 4) + c(10, 20, 10, 20)
 ```
 :::
 
@@ -1708,11 +1755,12 @@ Lab 1 continues
 </section>
 <section id="lists-containers-of-anything" class="slide level2 inv" data-number="5.1">
 <h2><span class="header-section-number">5.1</span> Lists: containers of anything</h2>
+<div class="split-2">
 <div class="codewindow r" width="64%">
 <p>A list can mix types</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb102"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a aria-label="1"></a>x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">1</span>, <span class="st">"a"</span>, <span class="cn">TRUE</span>, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>))</span>
-<span id="cb102-2"><a aria-label="2"></a>x</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb107"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a aria-label="1"></a>x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">1</span>, <span class="st">"a"</span>, <span class="cn">TRUE</span>, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>))</span>
+<span id="cb107-2"><a aria-label="2"></a>x</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
 [1] 1
@@ -1726,9 +1774,16 @@ Lab 1 continues
 [[4]]
 [1] 1 2 3</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb104"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a aria-label="1"></a><span class="fu">class</span>(x)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<div class="codewindow r" width="64%">
+<p>The object class is “list”</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb109"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a aria-label="1"></a>x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">1</span>, <span class="st">"a"</span>, <span class="cn">TRUE</span>, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>))</span>
+<span id="cb109-2"><a aria-label="2"></a><span class="fu">class</span>(x)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "list"</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -1751,13 +1806,24 @@ Lab 1 continues
 <div class="code-pop">
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Lists: containers of anything {.inv}
 
+::: {.split-2}
+
 ::: {.codewindow .r width="64%"}
 A list can mix types
 ```{r}
 x &lt;- list(1, "a", TRUE, c(1, 2, 3))
 x
+```
+:::
+
+::: {.codewindow .r width="64%"}
+The object class is "list"
+```{r}
+x &lt;- list(1, "a", TRUE, c(1, 2, 3))
 class(x)
 ```
+:::
+
 :::
 
 While an atomic vector needs one type, a **list** can hold objects of *different* types.
@@ -1771,25 +1837,25 @@ Functions like `mean` and `+` **don't work on a list**; apply them *to each elem
 <section id="applying-a-function-to-every-element" class="slide level2 inv" data-number="5.2">
 <h2><span class="header-section-number">5.2</span> Applying a function to every element</h2>
 <p>The <code>*apply</code> family does “for each element, run this function”:</p>
-<div class="codewindow r" width="80%">
+<div class="codewindow r" width="100%">
 <p><code>lapply</code> / <code>sapply</code></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb106"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a aria-label="1"></a>my_list <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">var1 =</span> <span class="fu">rnorm</span>(<span class="dv">20</span>), <span class="at">var2 =</span> <span class="fu">runif</span>(<span class="dv">12</span>), <span class="at">var3 =</span> <span class="fu">rbinom</span>(<span class="dv">42</span>, <span class="dv">1</span>, <span class="fl">0.5</span>))</span>
-<span id="cb106-2"><a aria-label="2"></a><span class="fu">lapply</span>(my_list, <span class="at">FUN =</span> mean)   <span class="co"># returns a list</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb111"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a aria-label="1"></a>my_list <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">var1 =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">20</span>L), <span class="at">var2 =</span> <span class="fu">runif</span>(<span class="at">n =</span> <span class="dv">12</span>L), <span class="at">var3 =</span> <span class="fu">rbinom</span>(<span class="at">n =</span> <span class="dv">42</span>L, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> <span class="fl">0.5</span>))</span>
+<span id="cb111-2"><a aria-label="2"></a><span class="fu">lapply</span>(my_list, <span class="at">FUN =</span> mean)   <span class="co"># returns a list</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$var1
-[1] 0.03957262
+[1] 0.1945664
 
 $var2
-[1] 0.5866679
+[1] 0.4760063
 
 $var3
-[1] 0.6428571</code></pre>
+[1] 0.6190476</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb108"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a aria-label="1"></a><span class="fu">sapply</span>(my_list, <span class="at">FUN =</span> mean)   <span class="co"># tries to simplify to a vector</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb113"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a aria-label="1"></a><span class="fu">sapply</span>(my_list, <span class="at">FUN =</span> mean)   <span class="co"># tries to simplify to an atomic vector</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>      var1       var2       var3 
-0.03957262 0.58666791 0.64285714 </code></pre>
+<pre><code>     var1      var2      var3 
+0.1945664 0.4760063 0.6190476 </code></pre>
 </div>
 </div>
 </div>
@@ -1801,12 +1867,12 @@ $var3
 
 The `*apply` family does "for each element, run this function":
 
-::: {.codewindow .r width="80%"}
+::: {.codewindow .r width="100%"}
 `lapply` / `sapply`
 ```{r}
-my_list &lt;- list(var1 = rnorm(20), var2 = runif(12), var3 = rbinom(42, 1, 0.5))
+my_list &lt;- list(var1 = rnorm(n = 20L), var2 = runif(n = 12L), var3 = rbinom(n = 42L, size = 1, prob = 0.5))
 lapply(my_list, FUN = mean)   # returns a list
-sapply(my_list, FUN = mean)   # tries to simplify to a vector
+sapply(my_list, FUN = mean)   # tries to simplify to an atomic vector
 ```
 :::
 
@@ -1819,19 +1885,19 @@ sapply(my_list, FUN = mean)   # tries to simplify to a vector
 <section id="the-subsetting" class="slide level2 inv" data-number="5.3">
 <h2><span class="header-section-number">5.3</span> The <code>[</code>, <code>[[</code>, <code>$</code> subsetting</h2>
 <div class="panel-tabset">
-<ul id="tabset-5" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-5-1"><code>[</code>: a <em>sub-list</em></a></li><li><a href="#tabset-5-2"><code>[[</code>: the element itself</a></li><li><a href="#tabset-5-3"><code>$</code>: shortcut by name</a></li><li><a href="#tabset-5-4">Named selection</a></li></ul>
+<ul id="tabset-5" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-5-1"><code>[</code> (a <em>sub-list</em>)</a></li><li><a href="#tabset-5-2"><code>[[</code> (the element itself)</a></li><li><a href="#tabset-5-3"><code>$</code> (shortcut by name)</a></li><li><a href="#tabset-5-4">Named selection</a></li></ul>
 <div class="tab-content">
 <div id="tabset-5-1">
 <div class="codewindow r" width="100%">
-<p><code>[</code>: a sub-list</p>
+<p><code>[</code> (a sub-list)</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb110"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a aria-label="1"></a>x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="dv">1</span>, <span class="at">b =</span> <span class="st">"a"</span>, <span class="at">c =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb110-2"><a aria-label="2"></a>x[<span class="st">"a"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb115"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a aria-label="1"></a>x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="dv">1</span>, <span class="at">b =</span> <span class="st">"a"</span>, <span class="at">c =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb115-2"><a aria-label="2"></a>x[<span class="st">"a"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$a
 [1] 1</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb112"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a aria-label="1"></a><span class="fu">class</span>(x[<span class="st">"a"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb117"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a aria-label="1"></a><span class="fu">class</span>(x[<span class="st">"a"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "list"</code></pre>
 </div>
@@ -1840,22 +1906,22 @@ sapply(my_list, FUN = mean)   # tries to simplify to a vector
 </div>
 <div id="tabset-5-2">
 <div class="codewindow r" width="100%">
-<p><code>[[</code>: the element</p>
+<p><code>[[</code> (the element)</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb114"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a aria-label="1"></a>x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="dv">1</span>, <span class="at">b =</span> <span class="st">"a"</span>, <span class="at">c =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb114-2"><a aria-label="2"></a>x[[<span class="dv">1</span>]]            <span class="co"># by position</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb119"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a aria-label="1"></a>x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="dv">1</span>, <span class="at">b =</span> <span class="st">"a"</span>, <span class="at">c =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb119-2"><a aria-label="2"></a>x[[<span class="dv">1</span>]]            <span class="co"># by position</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb116"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a aria-label="1"></a><span class="fu">class</span>(x[[<span class="dv">1</span>]])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb121"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb121-1"><a aria-label="1"></a><span class="fu">class</span>(x[[<span class="dv">1</span>]])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "numeric"</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb118"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a aria-label="1"></a>x[[<span class="st">"a"</span>]]          <span class="co"># by name</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb123"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb123-1"><a aria-label="1"></a>x[[<span class="st">"a"</span>]]          <span class="co"># by name</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb120"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a aria-label="1"></a><span class="fu">class</span>(x[[<span class="st">"a"</span>]])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb125"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb125-1"><a aria-label="1"></a><span class="fu">class</span>(x[[<span class="st">"a"</span>]])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "numeric"</code></pre>
 </div>
@@ -1864,14 +1930,14 @@ sapply(my_list, FUN = mean)   # tries to simplify to a vector
 </div>
 <div id="tabset-5-3">
 <div class="codewindow r" width="100%">
-<p><code>$</code>: by name</p>
+<p><code>$</code> (by name)</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb122"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a aria-label="1"></a>x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="dv">1</span>, <span class="at">b =</span> <span class="st">"a"</span>, <span class="at">c =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb122-2"><a aria-label="2"></a>x<span class="sc">$</span>a</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb127"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb127-1"><a aria-label="1"></a>x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="dv">1</span>, <span class="at">b =</span> <span class="st">"a"</span>, <span class="at">c =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb127-2"><a aria-label="2"></a>x<span class="sc">$</span>a</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb124"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a aria-label="1"></a><span class="fu">class</span>(x<span class="sc">$</span>a)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb129"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb129-1"><a aria-label="1"></a><span class="fu">class</span>(x<span class="sc">$</span>a)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "numeric"</code></pre>
 </div>
@@ -1882,8 +1948,8 @@ sapply(my_list, FUN = mean)   # tries to simplify to a vector
 <div class="codewindow r" width="100%">
 <p>Named selection</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb126"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a aria-label="1"></a>x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="dv">1</span>, <span class="at">b =</span> <span class="st">"a"</span>, <span class="at">c =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb126-2"><a aria-label="2"></a>x[<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb131"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a aria-label="1"></a>x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="dv">1</span>, <span class="at">b =</span> <span class="st">"a"</span>, <span class="at">c =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb131-2"><a aria-label="2"></a>x[<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$a
 [1] 1
@@ -1891,7 +1957,7 @@ sapply(my_list, FUN = mean)   # tries to simplify to a vector
 $b
 [1] "a"</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb128"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a aria-label="1"></a><span class="fu">class</span>(x[<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>)])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb133"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb133-1"><a aria-label="1"></a><span class="fu">class</span>(x[<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>)])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "list"</code></pre>
 </div>
@@ -1904,9 +1970,9 @@ $b
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## The `[`, `[[`, `$` subsetting {.inv}
 
 ::: {.panel-tabset}
-### `[`: a *sub-list*
+### `[` (a *sub-list*)
 ::: {.codewindow .r width="100%"}
-`[`: a sub-list
+`[` (a sub-list)
 ```{r}
 x &lt;- list(a = 1, b = "a", c = TRUE)
 x["a"]
@@ -1914,9 +1980,9 @@ class(x["a"])
 ```
 :::
 
-### `[[`: the element itself
+### `[[` (the element itself)
 ::: {.codewindow .r width="100%"}
-`[[`: the element
+`[[` (the element)
 ```{r}
 x &lt;- list(a = 1, b = "a", c = TRUE)
 x[[1]]            # by position
@@ -1926,9 +1992,9 @@ class(x[["a"]])
 ```
 :::
 
-### `$`: shortcut by name
+### `$` (shortcut by name)
 ::: {.codewindow .r width="100%"}
-`$`: by name
+`$` (by name)
 ```{r}
 x &lt;- list(a = 1, b = "a", c = TRUE)
 x$a
@@ -1971,10 +2037,10 @@ class(x[c("a", "b")])
 <div class="paper-card">
 <p><strong>Live code (≈10 min):</strong> I type and narrate at the console; you follow on your own machine. Pause on the <code>[[</code> vs <code>$</code> distinction, the most common beginner stumble with lists.</p>
 <ol type="1">
-<li><code>pepper &lt;- list(shake = "round", contents = list("salt", "cayenne"))</code>: build a nested list modelling the shaker.</li>
-<li>What does <code>pepper[[1]][1]</code> return? What about <code>pepper[[1]][[1]]</code>?</li>
-<li>Extend a list: assign to a new name (<code>pepper$lid &lt;- "open"</code>). What happened to the list?</li>
-<li>Try <code>pepper$contents[[2]]</code> vs <code>pepper[["contents"]][[2]]</code>.</li>
+<li><code>shaker &lt;- list(shape = "round", contents = list("salt", "cayenne"))</code>: build a nested list modelling the shaker.</li>
+<li>What does <code>shaker[[1]][1]</code> return? What about <code>shaker[[1]][[1]]</code>?</li>
+<li>Extend a list: assign to a new name (<code>shaker$lid &lt;- "open"</code>). What happened to the list?</li>
+<li>Try <code>shaker$contents[[2]]</code> vs <code>shaker[["contents"]][[2]]</code>.</li>
 </ol>
 </div>
 <div class="paper-adv">
@@ -2001,10 +2067,10 @@ Going further
 ::: {.paper-card}
 **Live code (≈10 min):** I type and narrate at the console; you follow on your own machine. Pause on the `[[` vs `$` distinction, the most common beginner stumble with lists.
 
-1. `pepper &lt;- list(shake = "round", contents = list("salt", "cayenne"))`: build a nested list modelling the shaker.
-2. What does `pepper[[1]][1]` return? What about `pepper[[1]][[1]]`?
-3. Extend a list: assign to a new name (`pepper$lid &lt;- "open"`). What happened to the list?
-4. Try `pepper$contents[[2]]` vs `pepper[["contents"]][[2]]`.
+1. `shaker &lt;- list(shape = "round", contents = list("salt", "cayenne"))`: build a nested list modelling the shaker.
+2. What does `shaker[[1]][1]` return? What about `shaker[[1]][[1]]`?
+3. Extend a list: assign to a new name (`shaker$lid &lt;- "open"`). What happened to the list?
+4. Try `shaker$contents[[2]]` vs `shaker[["contents"]][[2]]`.
 :::
 
 &lt;div class="paper-adv"&gt;
@@ -2028,7 +2094,7 @@ Going further
 <li>Build a list of three vectors of lengths 10, 20, 30. Compute the mean of each with <code>sapply()</code>, then <code>vapply()</code>.</li>
 <li>Make a list of two length-5 vectors. Use <code>lapply()</code> to double each element; store the result.</li>
 <li>What happens if you use <code>[[</code> with an index <em>larger</em> than the list length? With a name that doesn’t exist? (<em>Try it: read the error message.</em>)</li>
-<li>Given <code>pepper</code>, what is <code>pepper[[1]][1]</code> vs <code>pepper[[1]][[1]]</code>?</li>
+<li>Given <code>shaker</code>, what is <code>shaker[[1]][1]</code> vs <code>shaker[[1]][[1]]</code>?</li>
 <li>How do you <em>extend</em> a list?</li>
 </ol>
 </div>
@@ -2059,7 +2125,7 @@ The real lesson
 1. Build a list of three vectors of lengths 10, 20, 30. Compute the mean of each with `sapply()`, then `vapply()`.
 2. Make a list of two length-5 vectors. Use `lapply()` to double each element; store the result.
 3. What happens if you use `[[` with an index *larger* than the list length? With a name that doesn't exist? (*Try it: read the error message.*)
-4. Given `pepper`, what is `pepper[[1]][1]` vs `pepper[[1]][[1]]`?
+4. Given `shaker`, what is `shaker[[1]][1]` vs `shaker[[1]][[1]]`?
 5. How do you *extend* a list?
 :::
 
@@ -2084,25 +2150,20 @@ The real lesson
 <section id="data-frames" class="slide level2 inv" data-number="6.1">
 <h2><span class="header-section-number">6.1</span> Data frames</h2>
 <p>A <strong>data frame</strong> is a <em>data table</em>: a list of named columns, all of the <strong>same length</strong>.</p>
-<div class="split-2 split-2-wide-left">
 <div class="codewindow r" width="100%">
 <p><code>iris</code> is a data frame</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb130"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a aria-label="1"></a><span class="fu">class</span>(iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb135"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a aria-label="1"></a><span class="fu">class</span>(iris)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "data.frame"</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb132"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb132-1"><a aria-label="1"></a><span class="fu">head</span>(iris, <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb137"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb137-1"><a aria-label="1"></a><span class="fu">head</span>(iris, <span class="at">n =</span> <span class="dv">3</span>L)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 1          5.1         3.5          1.4         0.2  setosa
 2          4.9         3.0          1.4         0.2  setosa
 3          4.7         3.2          1.3         0.2  setosa</code></pre>
 </div>
-</div>
-</div>
-<div class="callout-desc">
-<p><strong>Mental model.</strong> A data frame is <em>a list of columns</em>, each a same-type vector of equal length.</p>
 </div>
 </div>
 <div title="Beyond &amp; beside base R">
@@ -2128,18 +2189,12 @@ The real lesson
 
 A **data frame** is a *data table*: a list of named columns, all of the **same length**.
 
-::: {.split-2 .split-2-wide-left}
 ::: {.codewindow .r width="100%"}
 `iris` is a data frame
 ```{r}
 class(iris)
-head(iris, 3)
+head(iris, n = 3L)
 ```
-:::
-
-::: {.callout-desc}
-**Mental model.** A data frame is *a list of columns*, each a same-type vector of equal length.
-:::
 :::
 
 ::: {.callout-note title="Beyond &amp; beside base R"}
@@ -2152,15 +2207,17 @@ head(iris, 3)
 <section id="tibbles-the-modern-data-frame" class="slide level2 inv" data-number="6.2">
 <h2><span class="header-section-number">6.2</span> Tibbles: the modern data frame</h2>
 <div class="split-2">
+<div>
+<p>Defined in the eponymous <a href="https://tibble.tidyverse.org/">{tibble}</a> package:</p>
 <div class="codewindow r" width="100%">
 <p><code>as_tibble()</code></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb134"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb134-1"><a aria-label="1"></a>iris_tbl <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(iris)   <span class="co"># tidyverse already loaded</span></span>
-<span id="cb134-2"><a aria-label="2"></a><span class="fu">class</span>(iris_tbl)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb139"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a aria-label="1"></a>iris_tbl <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">as_tibble</span>(iris)   <span class="co"># tidyverse already loaded</span></span>
+<span id="cb139-2"><a aria-label="2"></a><span class="fu">class</span>(iris_tbl)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "tbl_df"     "tbl"        "data.frame"</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb136"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb136-1"><a aria-label="1"></a><span class="fu">head</span>(iris_tbl, <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb141"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb141-1"><a aria-label="1"></a><span class="fu">head</span>(iris_tbl, <span class="at">n =</span> <span class="dv">3</span>L)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 5
   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
@@ -2171,11 +2228,12 @@ head(iris, 3)
 </div>
 </div>
 </div>
+</div>
 <div>
 <p>A <strong>tibble</strong> <em>is</em> a data frame with friendlier defaults:</p>
 <div class="highlight-last">
 <ul>
-<li class="fragment">prints only the first 10 rows and the columns that fit;</li>
+<li class="fragment">prints only the size of the data, the first 10 rows, only columns that fit (the rest of them are listed as <code>...</code>) and their types;</li>
 <li class="fragment">column names must be <em>syntactic</em> (safe to reference: <code>snake_case</code>, no spaces, no punctuation except <code>_</code>, no leading numbers);</li>
 <li class="fragment">never drops empty rows/columns on subsetting;</li>
 <li class="fragment"><strong>no silent type conversion</strong>.</li>
@@ -2187,20 +2245,26 @@ head(iris, 3)
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Tibbles: the modern data frame {.inv}
 
 ::: {.split-2}
+
+::: {}
+Defined in the eponymous [{tibble}](https://tibble.tidyverse.org/) package:
+
 ::: {.codewindow .r width="100%"}
 `as_tibble()`
 ```{r}
-iris_tbl &lt;- as_tibble(iris)   # tidyverse already loaded
+iris_tbl &lt;- tibble::as_tibble(iris)   # tidyverse already loaded
 class(iris_tbl)
-head(iris_tbl, 3)
+head(iris_tbl, n = 3L)
 ```
+:::
+
 :::
 
 ::: {}
 A **tibble** *is* a data frame with friendlier defaults:
 
 ::: {.incremental .highlight-last}
-- prints only the first 10 rows and the columns that fit;
+- prints only the size of the data, the first 10 rows, only columns that fit (the rest of them are listed as `...`) and their types;
 - column names must be *syntactic* (safe to reference: `snake_case`, no spaces, no punctuation except `_`, no leading numbers);
 - never drops empty rows/columns on subsetting;
 - **no silent type conversion**.
@@ -2274,23 +2338,23 @@ A **tibble** *is* a data frame with friendlier defaults:
 <div class="codewindow r" width="76%">
 <p>Subsetting a data frame</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb138"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb138-1"><a aria-label="1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">y =</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"e"</span>, <span class="st">"f"</span>), <span class="at">z =</span> <span class="fu">runif</span>(<span class="dv">3</span>))</span>
-<span id="cb138-2"><a aria-label="2"></a>df[<span class="dv">1</span>, <span class="dv">2</span>]            <span class="co"># row 1, col 2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb143"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb143-1"><a aria-label="1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">y =</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"e"</span>, <span class="st">"f"</span>), <span class="at">z =</span> <span class="fu">runif</span>(<span class="dv">3</span>))</span>
+<span id="cb143-2"><a aria-label="2"></a>df[<span class="dv">1</span>, <span class="dv">2</span>]            <span class="co"># row 1, col 2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "a"</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb140"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb140-1"><a aria-label="1"></a>df[, <span class="fu">c</span>(<span class="st">"x"</span>, <span class="st">"y"</span>)]   <span class="co"># all rows, cols x &amp; y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb145"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb145-1"><a aria-label="1"></a>df[, <span class="fu">c</span>(<span class="st">"x"</span>, <span class="st">"y"</span>)]   <span class="co"># all rows, cols x &amp; y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  x y
 1 1 a
 2 2 e
 3 3 f</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb142"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb142-1"><a aria-label="1"></a>df[df<span class="sc">$</span>x <span class="sc">&gt;</span> <span class="dv">1</span>, ]      <span class="co"># rows where x &gt; 1  (z values vary each run)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb147"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb147-1"><a aria-label="1"></a>df[df<span class="sc">$</span>x <span class="sc">&gt;</span> <span class="dv">1</span>, ]      <span class="co"># rows where x &gt; 1  (z values vary each run)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  x y         z
-2 2 e 0.9896729
-3 3 f 0.6585874</code></pre>
+2 2 e 0.6163249
+3 3 f 0.4749678</code></pre>
 </div>
 </div>
 </div>
@@ -2317,21 +2381,21 @@ df[df$x &gt; 1, ]      # rows where x &gt; 1  (z values vary each run)
 <div class="codewindow r" width="76%">
 <p>Subsetting a tibble</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb144"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb144-1"><a aria-label="1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">y =</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"e"</span>, <span class="st">"f"</span>), <span class="at">z =</span> <span class="fu">runif</span>(<span class="dv">3</span>))</span>
-<span id="cb144-2"><a aria-label="2"></a>df[<span class="dv">1</span>, <span class="dv">2</span>]          <span class="co"># row 1, col 2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb149"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb149-1"><a aria-label="1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">y =</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"e"</span>, <span class="st">"f"</span>), <span class="at">z =</span> <span class="fu">runif</span>(<span class="dv">3</span>))</span>
+<span id="cb149-2"><a aria-label="2"></a>df[<span class="dv">1</span>, <span class="dv">2</span>]          <span class="co"># row 1, col 2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
   y    
   &lt;chr&gt;
 1 a    </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb146"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb146-1"><a aria-label="1"></a>df[df<span class="sc">$</span>x <span class="sc">&gt;</span> <span class="dv">1</span>, ]    <span class="co"># rows where x &gt; 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb151"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb151-1"><a aria-label="1"></a>df[df<span class="sc">$</span>x <span class="sc">&gt;</span> <span class="dv">1</span>, ]    <span class="co"># rows where x &gt; 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
       x y         z
   &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;
-1     2 e     0.439
-2     3 f     0.909</code></pre>
+1     2 e     0.521
+2     3 f     0.507</code></pre>
 </div>
 </div>
 </div>
@@ -2433,81 +2497,121 @@ Lab 2 continues
 </section>
 <section id="read-rectangular-data" class="slide level2" data-number="7.1">
 <h2><span class="header-section-number">7.1</span> Read rectangular data</h2>
-<p>The <strong><code>{readr}</code></strong> package reads flat files fast and guesses column types:</p>
+<p>The <a href="https://readr.tidyverse.org/">{readr}</a> package reads flat files fast and guesses column types:</p>
 <div class="codewindow r" width="70%">
-<p>readr</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb148"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb148-1"><a aria-label="1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb148-2"><a aria-label="2"></a><span class="fu">read_csv</span>(<span class="st">"penguins.csv"</span>)     <span class="co"># comma-separated</span></span>
-<span id="cb148-3"><a aria-label="3"></a><span class="fu">read_tsv</span>(<span class="st">"file.tsv"</span>)         <span class="co"># tab-separated</span></span>
-<span id="cb148-4"><a aria-label="4"></a><span class="fu">read_table</span>(<span class="st">"file.txt"</span>)       <span class="co"># space-separated</span></span>
-<span id="cb148-5"><a aria-label="5"></a><span class="fu">read_csv2</span>(<span class="st">"file.csv"</span>)        <span class="co"># European ; decimal comma</span></span>
-<span id="cb148-6"><a aria-label="6"></a><span class="fu">read_delim</span>(<span class="st">"file.dat"</span>, <span class="at">delim =</span> <span class="st">";"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb153"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb153-1"><a aria-label="1"></a>readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"penguins.csv"</span>)     <span class="co"># comma-separated</span></span>
+<span id="cb153-2"><a aria-label="2"></a>readr<span class="sc">::</span><span class="fu">read_tsv</span>(<span class="st">"file.tsv"</span>)         <span class="co"># tab-separated</span></span>
+<span id="cb153-3"><a aria-label="3"></a>readr<span class="sc">::</span><span class="fu">read_table</span>(<span class="st">"file.txt"</span>)       <span class="co"># space-separated</span></span>
+<span id="cb153-4"><a aria-label="4"></a>readr<span class="sc">::</span><span class="fu">read_csv2</span>(<span class="st">"file.csv"</span>)        <span class="co"># European ; decimal comma</span></span>
+<span id="cb153-5"><a aria-label="5"></a>readr<span class="sc">::</span><span class="fu">read_delim</span>(<span class="st">"file.dat"</span>, <span class="at">delim =</span> <span class="st">";"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Also handy:</p>
 <ul>
-<li>Excel: <code>readxl::read_excel()</code>;</li>
-<li>SPSS / Stata / SAS: <code>haven::read_spss()</code> / <code>read_stata()</code> / <code>read_sas()</code>;</li>
+<li>Excel: <code>readxl::read_excel()</code> (via <a href="https://readxl.tidyverse.org/">{readxl}</a>);</li>
+<li>SPSS / Stata / SAS: <code>haven::read_spss()</code> / <code>read_stata()</code> / <code>read_sas()</code> (via <a href="https://haven.tidyverse.org/">{haven}</a>);</li>
+<li>JSON: <code>jsonlite::read_json()</code> (via <a href="https://jeroen.r-universe.dev/jsonlite">{jsonlite}</a>);</li>
 <li>R’s own binary format: <code>read_rds()</code> / <code>saveRDS()</code>.</li>
 </ul>
 <div class="code-pop">
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Read rectangular data
 
-The **`{readr}`** package reads flat files fast and guesses column types:
+The [{readr}](https://readr.tidyverse.org/) package reads flat files fast and guesses column types:
 
 ::: {.codewindow .r width="70%"}
-readr
 ```r
-library(readr)
-read_csv("penguins.csv")     # comma-separated
-read_tsv("file.tsv")         # tab-separated
-read_table("file.txt")       # space-separated
-read_csv2("file.csv")        # European ; decimal comma
-read_delim("file.dat", delim = ";")
+readr::read_csv("penguins.csv")     # comma-separated
+readr::read_tsv("file.tsv")         # tab-separated
+readr::read_table("file.txt")       # space-separated
+readr::read_csv2("file.csv")        # European ; decimal comma
+readr::read_delim("file.dat", delim = ";")
 ```
 :::
 
 Also handy:
 
-- Excel: `readxl::read_excel()`;
-- SPSS / Stata / SAS: `haven::read_spss()` / `read_stata()` / `read_sas()`;
+- Excel: `readxl::read_excel()` (via [{readxl}](https://readxl.tidyverse.org/));
+- SPSS / Stata / SAS: `haven::read_spss()` / `read_stata()` / `read_sas()` (via [{haven}](https://haven.tidyverse.org/));
+- JSON: `jsonlite::read_json()` (via [{jsonlite}](https://jeroen.r-universe.dev/jsonlite));
 - R's own binary format: `read_rds()` / `saveRDS()`.
 </code></pre></div></details>
 </div>
 </section>
 <section id="read-write-choosing-the-right-reader" class="slide level2 inv" data-number="7.2">
 <h2><span class="header-section-number">7.2</span> Read &amp; write: choosing the right reader</h2>
-<p>Open the file in a text editor <em>first</em>: what separates values? Is there a header? Are decimals <code>.</code> or <code>,</code>? Then pick the reader. <code>readr</code>’s writes mirror its reads:</p>
-<div class="codewindow r" width="72%">
-<p>read + write</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb149"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb149-1"><a aria-label="1"></a><span class="fu">read_csv2</span>(<span class="st">"file.csv"</span>)            <span class="co"># European ; decimal comma</span></span>
-<span id="cb149-2"><a aria-label="2"></a><span class="fu">write_csv</span>(penguins, <span class="st">"penguins_clean.csv"</span>)</span>
-<span id="cb149-3"><a aria-label="3"></a><span class="fu">write_tsv</span>(penguins, <span class="st">"penguins_clean.tsv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div title="Choosing the right reader">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<p>Other formats:</p>
+<p><strong>Choosing the right reader</strong></p>
+</div>
+<div class="callout-content">
+<p>Open the file in a text editor <em>first</em>:</p>
 <ul>
-<li><strong>Excel</strong>: <code>readxl::read_excel()</code>;</li>
-<li><strong>SPSS / Stata / SAS</strong>: <code>haven::read_spss()</code> / <code>read_stata()</code> / <code>read_sas()</code>;</li>
-<li><strong>JSON</strong>: <code>jsonlite::read_json()</code>.</li>
+<li>What separates values?</li>
+<li>Is there a header?</li>
+<li>Are decimals <code>.</code> or <code>,</code>?</li>
 </ul>
+<p>Then pick the reader.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div title="Writing data">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Writing data</strong></p>
+</div>
+<div class="callout-content">
+<p><a href="https://readr.tidyverse.org/">{readr}</a>’s writes mirror its reads:</p>
+<div class="codewindow r" width="100%">
+<p>Choosing the right writer</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb154"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb154-1"><a aria-label="1"></a>readr<span class="sc">::</span><span class="fu">write_csv2</span>(penguins, <span class="st">"penguins_clean.csv"</span>) <span class="co"># European ; decimal comma</span></span>
+<span id="cb154-2"><a aria-label="2"></a>readr<span class="sc">::</span><span class="fu">write_csv</span>(penguins, <span class="st">"penguins_clean.csv"</span>)</span>
+<span id="cb154-3"><a aria-label="3"></a>readr<span class="sc">::</span><span class="fu">write_tsv</span>(penguins, <span class="st">"penguins_clean.tsv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 <div class="code-pop">
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Read &amp; write: choosing the right reader {.inv}
 
-Open the file in a text editor *first*: what separates values? Is there a header? Are decimals `.` or `,`? Then pick the reader. `readr`'s writes mirror its reads:
+::: {.callout-tip title="Choosing the right reader"}
+Open the file in a text editor *first*:
 
-::: {.codewindow .r width="72%"}
-read + write
+- What separates values?
+- Is there a header?
+- Are decimals `.` or `,`?
+
+Then pick the reader.
+:::
+
+::: {.fragment}
+
+::: {.callout-note title="Writing data"}
+[{readr}](https://readr.tidyverse.org/)'s writes mirror its reads:
+
+::: {.codewindow .r width="100%"}
+Choosing the right writer
 ```r
-read_csv2("file.csv")            # European ; decimal comma
-write_csv(penguins, "penguins_clean.csv")
-write_tsv(penguins, "penguins_clean.tsv")
+readr::write_csv2(penguins, "penguins_clean.csv") # European ; decimal comma
+readr::write_csv(penguins, "penguins_clean.csv")
+readr::write_tsv(penguins, "penguins_clean.tsv")
 ```
 :::
 
-Other formats:
+:::
 
-- **Excel**: `readxl::read_excel()`;
-- **SPSS / Stata / SAS**: `haven::read_spss()` / `read_stata()` / `read_sas()`;
-- **JSON**: `jsonlite::read_json()`.
+:::
 </code></pre></div></details>
 </div>
 </section>
@@ -2618,7 +2722,7 @@ combine.
 </div>
 <div class="panel card" data-id="release" style="left:844px; top:220px; width:340px; height:360px;">
 <p><span class="h">Data frames</span></p>
-<p><span class="p">Just a list of equal-length atomic vectors, bound as columns; read with <code>readr</code>.</span></p>
+<p><span class="p">Just a list of equal-length vectors, bound as named columns; read with <code>readr</code>.</span></p>
 </div>
 <div class="code-pop">
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Vectors, lists, data frames {.light auto-animate=true background-color="#F1EEE6"}
@@ -2640,7 +2744,7 @@ Three structures, one flow.
 ::: {.panel .card data-id="release" style="left:844px; top:220px; width:340px; height:360px;"}
 [Data frames]{.h}
 
-[Just a list of equal-length atomic vectors, bound as columns; read with `readr`.]{.p}
+[Just a list of equal-length vectors, bound as named columns; read with `readr`.]{.p}
 :::
 </code></pre></div></details>
 </div>
@@ -2652,7 +2756,7 @@ Three structures, one flow.
 </div>
 <div class="panel card" data-id="release" style="left:96px; top:200px; width:800px; height:400px;">
 <p><span class="h">Data frames</span></p>
-<p><span class="p" style="font-size:24px; line-height:1.6;">The structure you’ll reach for first: each column is an atomic vector, and the frame is just a list of them. Subset with <code>[</code>/<code>$</code>, reshape with the tidyverse, and read any table with <code>readr</code>.</span></p>
+<p><span class="p" style="font-size:24px; line-height:1.6;">The structure you’ll reach for first: each column is a vector, and the frame is just a list of them. Subset with <code>[</code>/<code>$</code>, reshape with the tidyverse, and read any table with <code>readr</code>.</span></p>
 </div>
 <div class="panel marker" data-id="draft" style="left:944px; top:230px;">
 
@@ -2670,7 +2774,7 @@ Data frames power data science.
 ::: {.panel .card data-id="release" style="left:96px; top:200px; width:800px; height:400px;"}
 [Data frames]{.h}
 
-[The structure you'll reach for first: each column is an atomic vector, and the frame is just a list of them. Subset with `[`/`$`, reshape with the tidyverse, and read any table with `readr`.]{.p style="font-size:24px; line-height:1.6;"}
+[The structure you'll reach for first: each column is a vector, and the frame is just a list of them. Subset with `[`/`$`, reshape with the tidyverse, and read any table with `readr`.]{.p style="font-size:24px; line-height:1.6;"}
 :::
 
 ::: {.panel .marker data-id="draft"   style="left:944px; top:230px;"}
