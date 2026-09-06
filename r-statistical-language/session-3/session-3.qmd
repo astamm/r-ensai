@@ -219,9 +219,16 @@ aggregate(body_mass_g ~ species, data = penguins, FUN = mean)
 4. **Monte-Carlo**: average 5000 samples of `rexp(30)` into a pre-allocated vector, then `hist()` it: bell-shaped despite the exponential source?
 :::
 
-::: {.callout-desc}
-**Lab 1: loops (≈25 min).** Continue in `lab-1-loops.R`. The Monte-Carlo in Q4 is our Central Limit Theorem *by simulation*: no theorem needed, just loops and histograms.
-:::
+<div class="paper-adv">
+<button type="button" class="paper-adv-btn">Lab 1: loops</button>
+<div class="paper-adv-backdrop" hidden></div>
+<div class="paper-adv-modal" hidden>
+<div class="paper-adv-head"><strong>Lab 1: loops</strong><button type="button" class="paper-adv-close" aria-label="Close">&times;</button></div>
+<div class="adv-body">
+<p><strong>Lab 1: loops (≈25 min).</strong> Continue in <code>lab-1-loops.R</code>. The Monte-Carlo in Q4 is our Central Limit Theorem <em>by simulation</em>: no theorem needed, just loops and histograms.</p>
+</div>
+</div>
+</div>
 
 # Matrices
 
@@ -364,9 +371,16 @@ apply(Z, 2, sd)               # ~ 1
 4. Standardise the columns of `iris[, 1:4]` (as a matrix) so each column has mean 0, sd 1. Check with `colMeans` / `apply(., 2, sd)`.
 :::
 
-::: {.callout-desc}
-**Lab 2: matrices (≈20 min).** In `lab-2-matrices.R`. Standardising by hand is the kind of thing you'll later hand to a *function*, which is exactly the next section.
-:::
+<div class="paper-adv">
+<button type="button" class="paper-adv-btn">Lab 2: matrices</button>
+<div class="paper-adv-backdrop" hidden></div>
+<div class="paper-adv-modal" hidden>
+<div class="paper-adv-head"><strong>Lab 2: matrices</strong><button type="button" class="paper-adv-close" aria-label="Close">&times;</button></div>
+<div class="adv-body">
+<p><strong>Lab 2: matrices (≈20 min).</strong> In <code>lab-2-matrices.R</code>. Standardising by hand is the kind of thing you'll later hand to a <em>function</em>, which is exactly the next section.</p>
+</div>
+</div>
+</div>
 
 # Writing custom functions
 
@@ -528,9 +542,16 @@ stopifnot(all(clamp(c(-1, 0.5, 2)) == c(0, 0.5, 1)))
 4. (Stretch) Wrap the matrices standardisation into `standardize_cols(M)` using `sweep`.
 :::
 
-::: {.callout-desc}
-**Lab 3: functions (≈25 min).** Continue in `lab-3-functions.R`; the matrices standardisation in Q4 hands your `sweep` work a reusable home.
-:::
+<div class="paper-adv">
+<button type="button" class="paper-adv-btn">Lab 3: functions</button>
+<div class="paper-adv-backdrop" hidden></div>
+<div class="paper-adv-modal" hidden>
+<div class="paper-adv-head"><strong>Lab 3: functions</strong><button type="button" class="paper-adv-close" aria-label="Close">&times;</button></div>
+<div class="adv-body">
+<p><strong>Lab 3: functions (≈25 min).</strong> Continue in <code>lab-3-functions.R</code>; the matrices standardisation in Q4 hands your <code>sweep</code> work a reusable home.</p>
+</div>
+</div>
+</div>
 
 # Wrap up
 

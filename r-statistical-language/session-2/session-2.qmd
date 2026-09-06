@@ -53,11 +53,9 @@ In Session 1 you built the core structures of R:
 
 Session 2 is the **"explore your data"** move of the course: take rows and columns you *stored*, and turn them into understanding.
 
-::: {.spread .spread-md .spread-evenly}
 - [shape it]{.green}: the pipe `|>` and `dplyr`/`tidyr`: `filter`, `select`, `mutate`, `arrange`, `group_by`/`summarise`, `pivot_*`;
 - [read it]{.amber}: base-R workhorses, then [ggplot2]{.amber}'s layered grammar: histograms, scatters, facets, boxplots;
 - [understand it]{.indigo}: the **transform → plot → interpret** loop that is Exploratory Data Analysis.
-:::
 
 ::: {.callout-desc}
 **The thread.** We keep the penguins data the whole session: shape it, then plot it, then read the answers back off the plots. The EDA pipeline you build here is what the *repeat & package* session and the Reproducible Workflows course will build on.
@@ -69,39 +67,38 @@ Session 2 is the **"explore your data"** move of the course: take rows and colum
 
 A **family of R packages** that work as one: consistent syntax, a shared pipe, and the same *data frame in → data frame out* flow.
 
-::: {.spread .spread-md .spread-evenly}
 - [readr]{.green}: bring data *in* (`read_csv`);
 - [tibble]{.green}: the modern data frame;
 - [dplyr]{.amber}: *transform* rows, columns, groups (**today**);
 - [tidyr]{.amber}: *reshape*: keep data [tidy]{.amber} (`pivot_*`);
 - [ggplot2]{.indigo}: *visualise* (the very next section);
 - plus `purrr` (iterate), `stringr` (strings), `forcats` (factors), `lubridate` (dates).
-:::
 
 ::: {.callout-desc}
-**Today we master `dplyr` + `tidyr`**: the transform engine that feeds every `ggplot` and every analysis. The long tail (`purrr`, `stringr`, …) you pick up on demand; they all share the same one grammar.
+**Today we master `dplyr` + `tidyr`**: the transform engine that feeds every `ggplot` and every analysis. The long tail (`purrr`, `stringr`, …) you pick up on demand.
 :::
 
 ## The pipe: `|>` {.inv}
 
-`|>` sends the value on its left into the *first argument* of the function on its right: read it as "**then**":
+The pipe `|>` sends the value on its left into the *first argument* of the function on its right:
 
-::: {.split-2}
 ::: {.codewindow .r width="100%"}
 The pipe: top-to-bottom
 ```r
-penguins |> filter(species == "Adelie")
-#  reads: penguins, THEN filter(...)
+penguins |>                                        # raw data set
+  dplyr::filter(species == "Adelie") |>            # keep only Adelie penguins
+  dplyr::mutate(body_mass_kg = body_mass_g / 1000) # compute a new column
 ```
 :::
+
+Reads: penguins, THEN filter(...). One line per data processing step: easy to comment/read.
 
 ::: {.codewindow .r width="100%"}
 The nested equivalent: inside-out
 ```r
-filter(penguins, species == "Adelie")
-#  order of operations is reversed
+filtered_penguins <- dplyr::filter(penguins, species == "Adelie")
+dplyr::mutate(filtered_penguins, body_mass_kg = body_mass_g / 1000)
 ```
-:::
 :::
 
 ::: {.paper-card}
@@ -258,9 +255,16 @@ Every tidyverse tool expects **tidy data**: reshape first, analyse after.
 5. `pivot_longer` a **wide** table (`names_to`, `values_to`).
 :::
 
-::: {.callout-desc}
-**Lab 1: tidyverse (≈25 min).** Continue in `lab-1-tidyverse.R`. This is the *foundation*: the next lab (ggplot2) and the EDA in the Reproducible Workflows course build directly on it. **Labs 1–2 together are the EDA half of the pipeline**: transform in `lab-1`, plot in `lab-2`.
-:::
+<div class="paper-adv">
+<button type="button" class="paper-adv-btn">Lab 1: tidyverse</button>
+<div class="paper-adv-backdrop" hidden></div>
+<div class="paper-adv-modal" hidden>
+<div class="paper-adv-head"><strong>Lab 1: tidyverse</strong><button type="button" class="paper-adv-close" aria-label="Close">&times;</button></div>
+<div class="adv-body">
+<p><strong>Lab 1: tidyverse (≈25 min).</strong> Continue in <code>lab-1-tidyverse.R</code>. This is the <em>foundation</em>: the next lab (ggplot2) and the EDA in the Reproducible Workflows course build directly on it. <strong>Labs 1–2 together are the EDA half of the pipeline</strong>: transform in <code>lab-1</code>, plot in <code>lab-2</code>.</p>
+</div>
+</div>
+</div>
 
 # Plotting with base R
 
@@ -451,9 +455,16 @@ We'll run a *ggplot2 build-up* live: from a bare histogram to a faceted, titled,
 5. Which approach would you reach for?
 :::
 
-::: {.callout-desc}
-**Lab 2: plotting (≈25 min).** Continue in `lab-2-plotting.R`. Pair-programme: one types, one narrates. **With Lab 1, this completes the EDA half of the pipeline**: transform then plot, exactly the "explore your data" move from the wrap-up.
-:::
+<div class="paper-adv">
+<button type="button" class="paper-adv-btn">Lab 2: plotting</button>
+<div class="paper-adv-backdrop" hidden></div>
+<div class="paper-adv-modal" hidden>
+<div class="paper-adv-head"><strong>Lab 2: plotting</strong><button type="button" class="paper-adv-close" aria-label="Close">&times;</button></div>
+<div class="adv-body">
+<p><strong>Lab 2: plotting (≈25 min).</strong> Continue in <code>lab-2-plotting.R</code>. Pair-programme: one types, one narrates. <strong>With Lab 1, this completes the EDA half of the pipeline</strong>: transform then plot, exactly the "explore your data" move from the wrap-up.</p>
+</div>
+</div>
+</div>
 # Wrap up
 
 ## The EDA loop {.dark auto-animate=true background-color="#17251F"}

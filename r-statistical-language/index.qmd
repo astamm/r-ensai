@@ -72,9 +72,9 @@ subjects <- data.frame(
     "`for`/`while`/`if`/`else` (preallocation, vectorization); the `*apply()` family; base-R grouped summaries; **matrices** (arithmetic, `%*%`, `solve()`, `apply()`, `sweep()`); custom **functions**."
   ),
   lab = c(
-    "[lab 1](session-1/lab-1-vectors.R) · [lab 2](session-1/lab-2-dataframes.R)",
-    "[lab 1](session-2/lab-1-tidyverse.R) · [lab 2](session-2/lab-2-plotting.R)",
-    "[lab 1](session-3/lab-1-loops.R) · [lab 2](session-3/lab-2-matrices.R) · [lab 3](session-3/lab-3-functions.R)"
+    "[lab 1](session-1/lab-1-vectors.R) · [lab 2](session-1/lab-2-dataframes.R) · data: [penguins_messy.txt](session-1/penguins_messy.txt)",
+    "[lab 1](session-2/lab-1-tidyverse.R) · [lab 2](session-2/lab-2-plotting.R) · data: [penguins.csv](session-2/penguins.csv)",
+    "[lab 1](session-3/lab-1-loops.R) · [lab 2](session-3/lab-2-matrices.R) · [lab 3](session-3/lab-3-functions.R) · data: [penguins.csv](session-3/penguins.csv)"
   )
 )
 
