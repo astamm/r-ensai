@@ -21,10 +21,16 @@ theme_dark <- function(base_size = 11) {
     text = ggplot2::element_text(color = "#F1EEE6"),
     axis.text = ggplot2::element_text(color = "#F1EEE6"),
     axis.line = ggplot2::element_line(color = "grey60"),
-    panel.background = ggplot2::element_rect(fill = "transparent", colour = NA),
+    # Opaque dark panel + plot fills: on the {.inv} step-plot slides the four
+    # build PNGs are overlaid in a .plot-stack, each revealed over the last. If
+    # these fills were transparent, an earlier PNG (e.g. still with its legend)
+    # would bleed through the later one, making legend.position = "none" look
+    # as if it never applied (a shifted/ghosted boxplot). Fully opaque fills
+    # make each PNG conceal its predecessor, so the reveal reads cleanly.
+    panel.background = ggplot2::element_rect(fill = "#17251F", colour = NA),
     panel.grid.major = ggplot2::element_line(color = "grey30"),
     panel.grid.minor = ggplot2::element_line(color = "grey25"),
-    plot.background = ggplot2::element_rect(fill = "transparent", colour = NA),
+    plot.background = ggplot2::element_rect(fill = "#17251F", colour = NA),
     legend.background = ggplot2::element_rect(fill = "transparent", colour = NA),
     legend.key = ggplot2::element_rect(fill = "transparent", colour = NA)
   )
@@ -69,10 +75,10 @@ A **family of R packages** that work as one: consistent syntax, a shared pipe, a
 
 - [readr]{.green}: bring data *in* (`read_csv`);
 - [tibble]{.green}: the modern data frame;
-- [dplyr]{.amber}: *transform* rows, columns, groups (**today**);
+- [dplyr]{.amber}: *transform* rows, columns, groups;
 - [tidyr]{.amber}: *reshape*: keep data [tidy]{.amber} (`pivot_*`);
-- [ggplot2]{.indigo}: *visualise* (the very next section);
-- plus `purrr` (iterate), `stringr` (strings), `forcats` (factors), `lubridate` (dates).
+- [ggplot2]{.indigo}: *visualise*;
+- type-focused: `purrr` (iterate), `stringr` (strings), `forcats` (factors), `lubridate` (dates).
 
 ::: {.callout-desc}
 **Today we master `dplyr` + `tidyr`**: the transform engine that feeds every `ggplot` and every analysis. The long tail (`purrr`, `stringr`, …) you pick up on demand.
@@ -112,16 +118,21 @@ Two verbs get you the *slice* you need: **rows** by a condition, **columns** by 
 ::: {.codewindow .r width="100%"}
 filter rows, select columns
 ```r
-penguins |> filter(body_mass_g >= 4000)              # keep rows that match
-penguins |> filter(species != "Chinstrap", !is.na(sex))  # conditions AND together
-penguins |> select(species, island, body_mass_g)     # keep these columns
-penguins |> select(-bill_depth_mm)                   # …or drop just one
+penguins |> dplyr::filter(body_mass_g >= 4000)                 # keep rows that match
+penguins |> dplyr::filter(species != "Chinstrap", !is.na(sex)) # conditions AND together
+penguins |> dplyr::select(species, island, body_mass_g)        # keep these columns
+penguins |> dplyr::select(-bill_depth_mm)                      # or drop just one
 ```
 :::
 
 ::: {.paper-card}
-`filter()` keeps **rows**; `select()` keeps **columns**. Multiple conditions in `filter` are AND-ed by default.
+- `filter()` keeps **rows**;
+- `select()` keeps **columns**;
+- Multiple conditions in `filter` are AND-ed by default.
 :::
+
+- Helper functions for `select()`: <https://dplyr.tidyverse.org/reference/select.html>
+- Helper functions for `filter()`: <https://dplyr.tidyverse.org/reference/filter.html>
 
 ## New columns: `mutate` {.inv}
 
@@ -129,16 +140,21 @@ penguins |> select(-bill_depth_mm)                   # …or drop just one
 
 ::: {.codewindow .r width="100%"}
 Compute a new column with `mutate()`
-```r
+```{r}
+#| echo: true
 penguins |>
-  mutate(bmi = body_mass_g / (flipper_length_mm / 100)^2) |>
-  select(species, flipper_length_mm, body_mass_g, bmi)
+  dplyr::mutate(bmi = body_mass_g / (flipper_length_mm / 100)^2) |>
+  dplyr::select(species, flipper_length_mm, body_mass_g, bmi) |> 
+  dplyr::slice(1:5) # show first 5 rows
 ```
 :::
 
 ::: {.paper-card}
-New columns are available to later steps in the **same** pipe, and you can `mutate()` several columns at once.
+- New columns are available to later steps in the **same** pipe;
+- You can `mutate()` several columns at once.
 :::
+
+Helper functions for `mutate()`: <https://dplyr.tidyverse.org/reference/mutate.html>
 
 ## Recode with `case_when` {.inv}
 
@@ -148,7 +164,7 @@ New columns are available to later steps in the **same** pipe, and you can `muta
 Multiple conditions, first match wins
 ```r
 penguins |>
-  mutate(size = case_when(
+  dplyr::mutate(size = dplyr::case_when(
     body_mass_g >= 5000 ~ "large",
     body_mass_g >= 3500 ~ "medium",
     .default = "small"
@@ -157,8 +173,11 @@ penguins |>
 :::
 
 ::: {.paper-card}
-`case_when` reads like a **look-up table**: each `condition ~ value` row is evaluated in order, and `.default` catches everything else. Perfect for binning or relabelling inside a `mutate()`.
+- `case_when` reads like a **look-up table**: each `condition ~ value` row is evaluated in order, and `.default` catches everything else;
+- Perfect for binning or relabelling inside a `mutate()`.
 :::
+
+Documentation: <https://dplyr.tidyverse.org/reference/case-and-replace-when.html>
 
 ## Strings with `stringr` {.inv}
 
@@ -168,15 +187,116 @@ penguins |>
 The `str_*` verbs: detect, replace, extract
 ```r
 penguins |>
-  filter(str_detect(species, "tin"))          # species contains "tin" (Chinstrap…)
+  dplyr::filter(stringr::str_detect(species, "inst"))         # species contains "inst" (Chinstrap…)
 
 species_clean <- penguins |>
-  mutate(species = str_to_title(species))     # "adelie" → "Adelie"
+  dplyr::mutate(species = stringr::str_to_title(species))     # "adelie" → "Adelie"
 ```
 :::
 
 ::: {.paper-card}
-`str_detect` pairs with `filter`, `str_replace`/`str_to_*` with `mutate`: strings behave exactly like any tidyverse column once you use `str_*`.
+- `str_detect` pairs with `filter`,
+- `str_replace`/`str_to_*` with `mutate`: strings behave exactly like any tidyverse column once you use `str_*`.
+:::
+
+Documentation: <https://stringr.tidyverse.org>
+
+## Sort: `arrange` {.inv}
+
+`arrange()` sorts the rows; wrap a column in `desc()` to go **descending**:
+
+::: {.panel-tabset}
+
+### Ascending order
+
+::: {.codewindow .r width="100%"}
+Sort with `arrange()` / `desc()`
+```{r}
+#| echo: true
+penguins |> 
+  dplyr::arrange(body_mass_g) # lightest first
+```
+:::
+
+### Descending order
+
+::: {.codewindow .r width="100%"}
+Sort with `arrange()` / `desc()`
+```{r}
+#| echo: true
+penguins |> 
+  dplyr::arrange(dplyr::desc(body_mass_g), species) # heaviest first, ties by species
+```
+:::
+
+:::
+
+## Summarise by group {.inv}
+
+`group_by()` + `summarise()` collapse rows into **one row per group**: `group_by` sets the split, `summarise` reduces each group:
+
+::: {.split-2}
+<div class="tile-flow">
+<div class="tile-panel">
+<div class="tile-cue">data · 4 rows</div>
+<div class="tile-grid">
+<div class="tg-head"><span>species</span><span>mass (g)</span></div>
+<div class="tile-row">
+<div class="tile" style="background:#2E7D6B">Adelie</div>
+<div class="tile" style="background:#2E7D6B;opacity:.72">3400</div>
+</div>
+<div class="tile-row">
+<div class="tile" style="background:#2E7D6B">Adelie</div>
+<div class="tile" style="background:#2E7D6B;opacity:.72">3700</div>
+</div>
+<div class="tile-row">
+<div class="tile" style="background:#4A5899">Gentoo</div>
+<div class="tile" style="background:#4A5899;opacity:.72">4700</div>
+</div>
+<div class="tile-row">
+<div class="tile" style="background:#4A5899">Gentoo</div>
+<div class="tile" style="background:#4A5899;opacity:.72">5200</div>
+</div>
+</div>
+</div>
+<div class="tile-flow-after fragment">
+<div class="tile-arrow"><span class="cap">group_by +<br>summarise</span>→</div>
+<div class="tile-panel">
+<div class="tile-cue">summary · one row per group</div>
+<div class="tile-grid">
+<div class="tg-head"><span>species</span><span>n</span><span>mean</span></div>
+<div class="tile-row">
+<div class="tile" style="background:#2E7D6B">Adelie</div>
+<div class="tile output" style="background:#2E7D6B">2</div>
+<div class="tile output" style="background:#2E7D6B">3550</div>
+</div>
+<div class="tile-row">
+<div class="tile" style="background:#4A5899">Gentoo</div>
+<div class="tile output" style="background:#4A5899">2</div>
+<div class="tile output" style="background:#4A5899">4950</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+::: {.codewindow .r width="100%"}
+`group_by()` + `summarise()`
+```{r}
+#| warning: false
+#| echo: true
+penguins |>
+  dplyr::group_by(species) |>
+  dplyr::summarise(
+    n = dplyr::n(), 
+    avg_mass = mean(body_mass_g, na.rm = TRUE)
+  )
+```
+:::
+:::
+
+::: {.callout-desc}
+`n()` counts rows per group; `na.rm = TRUE` skips missing values.
 :::
 
 ## `across()`: apply to many columns {.inv}
@@ -185,10 +305,14 @@ species_clean <- penguins |>
 
 ::: {.codewindow .r width="100%"}
 Apply `mean` within a group, over several columns
-```r
+```{r}
+#| echo: true
 penguins |>
-  group_by(species) |>
-  summarise(across(where(is.numeric), \(x) mean(x, na.rm = TRUE)))
+  dplyr::group_by(species) |>
+  dplyr::summarise(dplyr::across(
+    dplyr::where(is.numeric), 
+    \(x) mean(x, na.rm = TRUE)
+  ))
 ```
 :::
 
@@ -196,48 +320,67 @@ penguins |>
 `across(where(is.numeric), …)` targets a whole **family** of columns at once: the bridge from "many similar lines" to programmatic thinking you'll meet again in Session 3's functions.
 :::
 
-## Sort: `arrange` {.inv}
-
-`arrange()` sorts the rows; wrap a column in `desc()` to go **descending**:
-
-::: {.codewindow .r width="100%"}
-Sort with `arrange()` / `desc()`
-```r
-penguins |> arrange(body_mass_g)                  # lightest first
-penguins |> arrange(desc(body_mass_g), species)   # heaviest first, ties by species
-```
-:::
-
-## Summarise by group {.inv}
-
-`group_by()` + `summarise()` collapse rows into **one row per group**: `group_by` sets the split, `summarise` reduces each group:
-
-```{r}
-#| warning: false
-penguins |>
-  group_by(species) |>
-  summarise(n = n(), avg_mass = mean(body_mass_g, na.rm = TRUE))
-```
-
-::: {.callout-desc}
-`n()` counts rows per group; `na.rm = TRUE` drops missing values inside `mean()`. The result is a small tidy table, ready to plot or pipe onward.
-:::
-
-## Reshape: `pivot_longer` & `pivot_wider` {.inv}
+## Reshape with [{tidyr}](https://tidyr.tidyverse.org): `pivot_longer` & `pivot_wider` {.inv}
 
 [Tidy data]{.amber}: one row per observation, one column per variable. When it isn't, reshape:
+
+<div class="tile-stage">
+<div class="tile-panel">
+<div class="tile-cue">wide · 2 rows</div>
+<div class="tile-grid">
+<div class="tg-head"><span>penguin</span><span style="color:#B26A00">bill_l</span><span style="color:#4A5899">bill_d</span></div>
+<div class="tile-row">
+<div class="tile" style="background:#2E7D6B">A</div>
+<div class="tile" style="background:#E8A33D;opacity:.85">39.1</div>
+<div class="tile" style="background:#4A5899;opacity:.85">18.7</div>
+</div>
+<div class="tile-row">
+<div class="tile" style="background:#2E7D6B">B</div>
+<div class="tile" style="background:#E8A33D;opacity:.85">46.5</div>
+<div class="tile" style="background:#4A5899;opacity:.85">17.9</div>
+</div>
+</div>
+</div>
+<div class="tile-arrows">
+<div class="tile-arrow fragment" data-fragment-index="2"><span class="cap">pivot_longer</span>→</div>
+<div class="tile-arrow fragment" data-fragment-index="3">←<span class="cap">pivot_wider</span></div>
+</div>
+<div class="tile-panel fragment" data-fragment-index="2">
+<div class="tile-cue">long · 4 rows</div>
+<div class="tile-grid">
+<div class="tg-head"><span>penguin</span><span>measure</span><span>mm</span></div>
+<div class="tile-row">
+<div class="tile" style="background:#2E7D6B">A</div>
+<div class="tile" style="background:#E8A33D;opacity:.85">bill_l</div>
+<div class="tile" style="background:#E8A33D">39.1</div>
+</div>
+<div class="tile-row">
+<div class="tile" style="background:#2E7D6B">A</div>
+<div class="tile" style="background:#4A5899;opacity:.85">bill_d</div>
+<div class="tile" style="background:#4A5899">18.7</div>
+</div>
+<div class="tile-row">
+<div class="tile" style="background:#2E7D6B">B</div>
+<div class="tile" style="background:#E8A33D;opacity:.85">bill_l</div>
+<div class="tile" style="background:#E8A33D">46.5</div>
+</div>
+<div class="tile-row">
+<div class="tile" style="background:#2E7D6B">B</div>
+<div class="tile" style="background:#4A5899;opacity:.85">bill_d</div>
+<div class="tile" style="background:#4A5899">17.9</div>
+</div>
+</div>
+</div>
+</div>
 
 ::: {.codewindow .r width="100%"}
 Wide ↔ long with `pivot_*`
 ```r
 # wide → long (melt several columns back into one key/value pair)
-df |>
-  pivot_longer(cols = starts_with("bill_"),
-               names_to = "measure", values_to = "mm")
+df |> tidyr::pivot_longer(cols = dplyr::starts_with("bill_"), names_to = "measure", values_to = "mm")
 
 # long → wide (spread key/value columns back out)
-df |>
-  pivot_wider(names_from = measure, values_from = mm)
+df |> tidyr::pivot_wider(names_from = measure, values_from = mm)
 ```
 :::
 
@@ -270,10 +413,27 @@ Every tidyverse tool expects **tidy data**: reshape first, analyse after.
 
 ## Why plot? {.inv}
 
-A plot is the fastest way to *feel* your data. Four numbers (Anscombe's quartet) can look identical in a table and totally different in a plot.
+A plot is the fastest way to *feel* your data. Anscombe's quartet is the classic proof: four data sets with nearly identical means, variances and correlations, yet plots that look nothing alike.
+
+::: {.split-2}
+```{r}
+#| label: anscombe
+#| echo: false
+#| fig-width: 6
+#| fig-height: 4.8
+par(bg = "white")                 # opaque white figure so the black ink shows on the dark slide
+par(mfrow = c(2, 2), mar = c(2.5, 2.5, 2, 1), cex = 0.8)
+for (i in 1:4) {
+  plot(anscombe[, c(2*i - 1, 2*i)], pch = 19, col = "#2E7D6B",
+       main = paste0("Dataset ", i))
+}
+```
+
+The four data sets share the same slope, intercept, correlation and means; only the *plots* tell them apart. A table could not, a `hist()` of a single column would not, an illustration does.
 
 ::: {.callout-desc}
-**The lesson.** Always look at your data before you summarise it. A single well-chosen plot often tells you more than ten summary statistics: this is the heart of *Exploratory Data Analysis* (explored properly in the Reproducible Workflows course).
+**The lesson.** Look at your data before you summarise it: a single well-chosen plot often tells you more than ten summary statistics. This is the heart of *Exploratory Data Analysis*.
+:::
 :::
 
 ## Histograms in base R {.inv}
@@ -282,28 +442,79 @@ The simplest first look at one variable: **`hist()`**.
 
 ::: {.codewindow .r width="100%"}
 A histogram of one variable
-```r
-hist(penguins$body_mass_g,               # the variable
-     breaks = 30,                        # how many bins
-     col = "steelblue", border = "white",
-     main = "Penguin body mass (g)")      # title
+```{r}
+#| echo: true
+#| output-location: column
+par(bg = "white")                # opaque white figure: dark slide would hide the default black ink
+hist(
+  penguins$body_mass_g,          # the variable
+  breaks = 30,                   # how many bins
+  col = "steelblue", 
+  border = "white",
+  main = "Penguin body mass (g)" # title
+)
 ```
 :::
 
 ::: {.callout-desc}
-RStudio/Positron draws the plot in the **Plots** pane, and it appears in your report if you render it. `hist()` is one call, but its defaults are utilitarian.
+Positron draws the plot in the **Plots** pane. `hist()` is one call, but its defaults are utilitarian.
 :::
 
 ## Other base-R workhorses {.inv}
 
+::: {.panel-tabset}
+
+### Scatterplot
+
 ::: {.codewindow .r width="100%"}
 The rest of the base-R drawer
-```r
+```{r}
+#| echo: true
+#| output-location: column
+par(bg = "white")   # opaque white figure so the default black ink shows on the dark slide
+x <- rnorm(10)
+y <- rnorm(10)
 plot(x, y)          # scatter plot
-barplot(table(x))   # counts of categories
+```
+:::
+
+### Barplot
+
+::: {.codewindow .r width="100%"}
+The rest of the base-R drawer
+```{r}
+#| echo: true
+#| output-location: column
+par(bg = "white")   # opaque white figure so the default black ink shows on the dark slide
+g <- rpois(n = 10L, lambda = 1)
+barplot(table(g))   # counts of categories
+```
+:::
+
+### Boxplot
+
+::: {.codewindow .r width="100%"}
+The rest of the base-R drawer
+```{r}
+#| echo: true
+#| output-location: column
+par(bg = "white")   # opaque white figure so the default black ink shows on the dark slide
 boxplot(y ~ g)      # one box per group
+```
+:::
+
+### Function plotting
+
+::: {.codewindow .r width="100%"}
+The rest of the base-R drawer
+```{r}
+#| echo: true
+#| output-location: column
+par(bg = "white")   # opaque white figure so the default black ink shows on the dark slide
 curve(sin, 0, 2*pi) # plot a function
 ```
+:::
+
 :::
 
 ::: {.paper-card}
@@ -354,50 +565,174 @@ This is the *same histogram* we drew in base R, but now each piece is explicit a
 
 Mapping variables to `x` and `y`, and a third to `color`:
 
+::: {.split-2}
+<div class="code-build">
+  <pre class="fragment" data-fragment-index="1">ggplot(penguins, aes(x = flipper_length_mm,
+                      y = body_mass_g))</pre>
+  <pre class="fragment cb-cur" data-fragment-index="2">  + geom_point(aes(color = species), alpha = 0.7)</pre>
+  <pre class="fragment cb-cur" data-fragment-index="3">  + theme_dark()</pre>
+</div>
+
+::: {.plot-stack}
 ```{r}
-#| fig-width: 7
-#| fig-height: 4.5
+#| echo: false
+#| fig-width: 6.5
+#| fig-height: 4.2
+#| out.extra: 'class="fragment step-plot" data-fragment-index="1"'
+ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g))
+```
+
+```{r}
+#| echo: false
+#| fig-width: 6.5
+#| fig-height: 4.2
+#| out.extra: 'class="fragment step-plot" data-fragment-index="2"'
+ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(aes(color = species), alpha = 0.7)
+```
+
+```{r}
+#| echo: false
+#| fig-width: 6.5
+#| fig-height: 4.2
+#| out.extra: 'class="fragment step-plot" data-fragment-index="3"'
 ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
   geom_point(aes(color = species), alpha = 0.7) +
   theme_dark()
 ```
+:::
+:::
+
+::: {.fragment}
 
 ::: {.callout-desc}
 **Read it aloud.** "Body mass grows with flipper length", and each species clusters in its own region of this space. That's a finding you'd never see from `summary()`.
+:::
+
 :::
 
 ## One variable per facet {.inv}
 
 **Faceting** splits the plot into small multiples: one per level of a variable:
 
+::: {.split-2}
+<div class="code-build">
+  <pre class="fragment" data-fragment-index="1">ggplot(penguins, aes(x = body_mass_g))</pre>
+  <pre class="fragment cb-cur" data-fragment-index="2">  + geom_histogram(bins = 25, fill = "#2E7D6B",
+                    color = "#17251F")</pre>
+  <pre class="fragment cb-cur" data-fragment-index="3">  + facet_wrap(~ species, ncol = 1)</pre>
+  <pre class="fragment cb-cur" data-fragment-index="4">  + theme_dark()</pre>
+</div>
+
+::: {.plot-stack}
 ```{r}
-#| fig-width: 7
-#| fig-height: 4.5
+#| echo: false
+#| fig-width: 6.5
+#| fig-height: 4.2
+#| out.extra: 'class="fragment step-plot" data-fragment-index="1"'
+ggplot(penguins, aes(x = body_mass_g))
+```
+
+```{r}
+#| echo: false
+#| fig-width: 6.5
+#| fig-height: 4.2
+#| out.extra: 'class="fragment step-plot" data-fragment-index="2"'
+ggplot(penguins, aes(x = body_mass_g)) +
+  geom_histogram(bins = 25, fill = "#2E7D6B", color = "#17251F")
+```
+
+```{r}
+#| echo: false
+#| fig-width: 6.5
+#| fig-height: 4.2
+#| out.extra: 'class="fragment step-plot" data-fragment-index="3"'
+ggplot(penguins, aes(x = body_mass_g)) +
+  geom_histogram(bins = 25, fill = "#2E7D6B", color = "#17251F") +
+  facet_wrap(~ species, ncol = 1)
+```
+
+```{r}
+#| echo: false
+#| fig-width: 6.5
+#| fig-height: 4.2
+#| out.extra: 'class="fragment step-plot" data-fragment-index="4"'
 ggplot(penguins, aes(x = body_mass_g)) +
   geom_histogram(bins = 25, fill = "#2E7D6B", color = "#17251F") +
   facet_wrap(~ species, ncol = 1) +
   theme_dark()
 ```
+:::
+:::
+
+::: {.fragment}
 
 ::: {.callout-desc}
 Different species have *different* distributions of body mass: a comparison that's hard to see in one pooled histogram.
+:::
+
 :::
 
 ## Boxplots for groups {.inv}
 
 Categorical `x` + continuous `y`:
 
+::: {.split-2}
+<div class="code-build">
+  <pre class="fragment" data-fragment-index="1">ggplot(penguins, aes(x = species, y = body_mass_g,
+                      fill = species))</pre>
+  <pre class="fragment cb-cur" data-fragment-index="2">  + geom_boxplot(alpha = 0.8)</pre>
+  <pre class="fragment cb-cur" data-fragment-index="3">  + theme_dark()</pre>
+  <pre class="fragment cb-cur" data-fragment-index="4">  + theme(legend.position = "none")</pre>
+</div>
+
+::: {.plot-stack}
 ```{r}
-#| fig-width: 7
-#| fig-height: 4.5
+#| echo: false
+#| fig-width: 6.5
+#| fig-height: 4.2
+#| out.extra: 'class="fragment step-plot" data-fragment-index="1"'
+ggplot(penguins, aes(x = species, y = body_mass_g, fill = species))
+```
+
+```{r}
+#| echo: false
+#| fig-width: 6.5
+#| fig-height: 4.2
+#| out.extra: 'class="fragment step-plot" data-fragment-index="2"'
+ggplot(penguins, aes(x = species, y = body_mass_g, fill = species)) +
+  geom_boxplot(alpha = 0.8)
+```
+
+```{r}
+#| echo: false
+#| fig-width: 6.5
+#| fig-height: 4.2
+#| out.extra: 'class="fragment step-plot" data-fragment-index="3"'
+ggplot(penguins, aes(x = species, y = body_mass_g, fill = species)) +
+  geom_boxplot(alpha = 0.8) +
+  theme_dark()
+```
+
+```{r}
+#| echo: false
+#| fig-width: 6.5
+#| fig-height: 4.2
+#| out.extra: 'class="fragment step-plot" data-fragment-index="4"'
 ggplot(penguins, aes(x = species, y = body_mass_g, fill = species)) +
   geom_boxplot(alpha = 0.8) +
   theme_dark() +
   theme(legend.position = "none")
 ```
+:::
+:::
+
+::: {.fragment}
 
 ::: {.callout-desc}
 A boxplot shows the median, the box (IQR) and outliers at a glance: ideal for comparing a numeric variable *across groups*.
+:::
+
 :::
 
 ## Order factors with `forcats` {.inv}
@@ -422,17 +757,63 @@ penguins |>
 
 An important ggplot2 habit: plots are built from **many layers**. For example, scatter + a smooth trend:
 
+::: {.split-2}
+<div class="code-build">
+  <pre class="fragment" data-fragment-index="1">ggplot(penguins, aes(x = flipper_length_mm,
+                      y = body_mass_g))</pre>
+  <pre class="fragment cb-cur" data-fragment-index="2">  + geom_point(aes(color = species), alpha = 0.6)</pre>
+  <pre class="fragment cb-cur" data-fragment-index="3">  + geom_smooth(method = "lm", se = FALSE,
+                 color = "#E8A33D", linewidth = 1)</pre>
+  <pre class="fragment cb-cur" data-fragment-index="4">  + theme_dark()</pre>
+</div>
+
+::: {.plot-stack}
 ```{r}
-#| fig-width: 7
-#| fig-height: 4.5
+#| echo: false
+#| fig-width: 6.5
+#| fig-height: 4.2
+#| out.extra: 'class="fragment step-plot" data-fragment-index="1"'
+ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g))
+```
+
+```{r}
+#| echo: false
+#| fig-width: 6.5
+#| fig-height: 4.2
+#| out.extra: 'class="fragment step-plot" data-fragment-index="2"'
+ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(aes(color = species), alpha = 0.6)
+```
+
+```{r}
+#| echo: false
+#| fig-width: 6.5
+#| fig-height: 4.2
+#| out.extra: 'class="fragment step-plot" data-fragment-index="3"'
+ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(aes(color = species), alpha = 0.6) +
+  geom_smooth(method = "lm", se = FALSE, color = "#E8A33D", linewidth = 1)
+```
+
+```{r}
+#| echo: false
+#| fig-width: 6.5
+#| fig-height: 4.2
+#| out.extra: 'class="fragment step-plot" data-fragment-index="4"'
 ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
   geom_point(aes(color = species), alpha = 0.6) +
   geom_smooth(method = "lm", se = FALSE, color = "#E8A33D", linewidth = 1) +
   theme_dark()
 ```
+:::
+:::
+
+::: {.fragment}
 
 ::: {.callout-desc}
 `geom_point()` and `geom_smooth()` *layer* on the same plot, each with its own mapping. This layering is what makes ggplot2 so expressive.
+:::
+
 :::
 
 ## A grammar, not a menu {.inv}

@@ -324,6 +324,30 @@ $colors: (
 .reveal section.paper .paper-card li:last-child { margin-bottom: 0; }
 .reveal section.paper .paper-card p { margin: 0.25em 0; }
 
+/* Slim takeaway flag on regular {.inv} code slides (sessions 2/3 convention).
+   The full-bleed .paper-card above is absolute within a section.paper slide;
+   here .paper-card instead sits in-flow below a codewindow as a compact cream
+   strip that flags the one-line takeaway without absorbing the whole canvas.
+   Scoped to :not(.paper) so hands-on section.paper cards keep their layout. */
+.reveal .slides section:not(.paper) .paper-card {
+  margin: 0.9em 0 0;
+  padding: 0.5em 0.9em;
+  border-radius: 10px;
+  background-color: #FDFBF4;
+  color: $ink-dark;
+  font-size: 0.72em;
+  line-height: 1.3;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+.reveal .slides section:not(.paper) .paper-card > :first-child { margin-top: 0; }
+.reveal .slides section:not(.paper) .paper-card > :last-child { margin-bottom: 0; }
+.reveal .slides section:not(.paper) .paper-card code {
+  color: $ink-dark;
+  background: rgba($ink-dark, 0.08);
+  border-radius: 4px;
+  padding: 0 0.25em;
+}
+
 /* ---------------- Side-by-side panels (inside paper cards) ----------- */
 /* "R ecosystem" and "Console vs script" deck slides pair two complementary
    ideas side by side. Make the whole card a flex column so the intro line,
@@ -661,5 +685,210 @@ $colors: (
   border: 0 !important;
   color: $review;
   white-space: pre-wrap;
+}
+
+/* ---------------- Colored-tile data-shape animations ------------------ */
+/* The two "data-shape" demos (2.8 group_by + summarise, 2.10 pivot_longer /
+   pivot_wider) illustrate a dplyr/tidyr verb by reshaping toy tables built
+   from colored tiles. A `.tile-stage` is a horizontal strip that holds one or
+   two `.tile-grid`s plus a `.tile-arrow` between them; tiles appear/move via
+   revealjs `.fragment` steps. All sizing uses the deck's 1280x700
+   coordinate space (px predictable), em-free. */
+.tile-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 12px;
+}
+/* 2.8 summarise demo, laid out inside the left .split-2 column: the data grid
+   and the summary grid sit side by side, joined by a right arrow, while the
+   code runs alongside on the right. A single click reveals the arrow + summary
+   together. Tiles are compact so data → arrow → summary all fit the half-width
+   panel next to the codewindow. */
+.tile-flow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+}
+.tile-flow .tile,
+.tile-flow .tile-grid .tg-head span {
+  flex-basis: 58px;
+  min-width: 58px;
+}
+.tile-flow-after {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+.tile-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 15px;
+  line-height: 1.1;
+  /* Neutralise reveal's --r-block-margin on every block child so the grids
+     stack at their natural (flex-gap) height instead of sprawling. */
+  margin: 0;
+}
+.tile-grid .tg-head {
+  display: flex;
+  gap: 6px;
+  margin: 0 0 2px;
+  padding: 0;
+}
+.tile-grid .tg-head span {
+  /* Match the tile columns so each header name sits centered over its data. */
+  flex: 1 1 92px;
+  min-width: 92px;
+  text-align: center;
+  font-size: 0.82em;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba($ink-dark, 0.55);
+  font-weight: 700;
+}
+/* On {.inv} (dark-background) slides the header labels must flip to light ink,
+   otherwise the dark-ink labels vanish on the dark slide. Both tile demos
+   (2.8, 2.10) are .inv, so scope the override to section.inv. */
+.reveal .slides section.inv .tile-grid .tg-head span {
+  color: rgba($ink-light, 0.55);
+}
+.tile-row {
+  display: flex;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+}
+.tile {
+  box-sizing: border-box;
+  flex: 1 1 92px;
+  min-width: 92px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-family: var(--bs-font-monospace);
+  font-size: 0.92em;
+  color: $ink-light;
+  font-weight: 600;
+  margin: 0;
+}
+.tile.dim { color: rgba($ink-dark, 0.45); }
+.tile.hollow {
+  background: transparent;
+  border: 2px dashed rgba($ink-dark, 0.4);
+  color: $ink-dark;
+}
+.tile .tg-label { font-size: 0.78em; }
+.tile-arrow {
+  font-size: 28px;
+  color: $release;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+  margin: 0;
+}
+.tile-arrow .cap {
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba($ink-dark, 0.6);
+  font-weight: 700;
+}
+/* Stack of two opposite arrows (pivot_longer → / ← pivot_wider) between the
+   wide and long grids on the tidyr slide. */
+.tile-arrows {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  margin: 0;
+}
+/* A labelled panel of tiles (one grid plus its cue) inside a .tile-stage. */
+.tile-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+/* Verb labels above each grid ("original", "grouped", "summary", …) */
+.tile-cue {
+  text-align: center;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $ink-dark;
+  opacity: 0.6;
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+/* A summary output tile sits on an elevated card so it reads as the reduced
+   result, distinct from the raw input tiles. */
+.tile.output {
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.22);
+}
+/* Step plots: on the incremental ggplot slides each build step is a separate
+   rendered PNG. They are stacked at the same absolute corner and revealed one
+   fragment at a time (a later PNG paints over its predecessors), so the plot
+   appears to grow layer by layer in step with the code column on the left. */
+.step-plot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: 100%;
+  height: auto;
+}
+/* Container for the overlaid step plots on the right half of a build slide:
+   must be positioned so the absolutely-placed .step-plot imgs anchor here. */
+.plot-stack {
+  position: relative;
+  min-height: 300px;
+}
+/* The incremental code column on the left half of a build slide: each layer is
+   its own .fragment line that appears in step with the matching .step-plot. */
+.code-build {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: var(--bs-font-monospace);
+  font-size: 15px;
+  line-height: 1.45;
+  background: $ink-dark;
+  color: $ink-light;
+  border-radius: 10px;
+  padding: 14px 16px;
+  min-width: 0;
+  overflow-x: auto;
+  white-space: pre;
+}
+.code-build pre {
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  white-space: pre;
+}
+.code-build .cb-cur {
+  color: $review;
+  font-weight: 700;
+}
+
+/* Full-width stacked data-shape slide (2.10 pivot): the horizontal tile-stage
+   plus a full-width codewindow plus its takeaway card must all fit the 700px
+   canvas. The codewindow extension's 21px textarea pad on every side, joined
+   with reveal's block margin, pushes the bottom card off-canvas; compact the
+   window text and the card margin only on slides whose top-level block is a
+   .tile-stage (the two tile demos). Slides inside a .split-2 are untouched. */
+.reveal .slides section:has(> .tile-stage) .codewindow .textarea {
+  padding: 8px 14px;
+}
+.reveal .slides section:has(> .tile-stage) .paper-card {
+  margin-top: 0.25em;
 }
 
