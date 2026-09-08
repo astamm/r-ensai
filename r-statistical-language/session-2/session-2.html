@@ -106,7 +106,7 @@
     code span.vs { color: #abe338; } /* VerbatimString */
     code span.wa { color: #dcc6e0; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-83229a6113011613404a893c503e2c49.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-85b76460e3d5b21f1509af2a7bf68d16.css">
   <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -388,61 +388,211 @@ The pipe keeps your script readable **top-to-bottom**; the nested alternative re
 </section>
 <section id="rows-and-columns-filter-select" class="slide level2 inv" data-number="2.3">
 <h2><span class="header-section-number">2.3</span> Rows and columns: <code>filter</code> &amp; <code>select</code></h2>
-<p>Two verbs get you the <em>slice</em> you need: <strong>rows</strong> by a condition, <strong>columns</strong> by name:</p>
-<div class="codewindow r" width="100%">
-<p>filter rows, select columns</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a>penguins <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(body_mass_g <span class="sc">&gt;=</span> <span class="dv">4000</span>)                 <span class="co"># keep rows that match</span></span>
-<span id="cb3-2"><a aria-label="2"></a>penguins <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(species <span class="sc">!=</span> <span class="st">"Chinstrap"</span>, <span class="sc">!</span><span class="fu">is.na</span>(sex)) <span class="co"># conditions AND together</span></span>
-<span id="cb3-3"><a aria-label="3"></a>penguins <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">select</span>(species, island, body_mass_g)        <span class="co"># keep these columns</span></span>
-<span id="cb3-4"><a aria-label="4"></a>penguins <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>bill_depth_mm)                      <span class="co"># or drop just one</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="panel-tabset">
+<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Filter rows</a></li><li><a href="#tabset-1-2">Select columns</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1">
+<div class="codewindow">
+<div class="editor r" name="01-filter-rows.R">
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a aria-label="2"></a>  <span class="co"># keep penguins with body mass ≥ 4000 g</span></span>
+<span id="cb3-3"><a aria-label="3"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(body_mass_g <span class="sc">&gt;=</span> <span class="dv">4000</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb3-4"><a aria-label="4"></a>  <span class="co"># show the first 4 penguins that meet this condition</span></span>
+<span id="cb3-5"><a aria-label="5"></a>  dplyr<span class="sc">::</span><span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 8
+  species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+  &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;
+1 Adelie  Torgersen           39.2          19.6               195        4675
+2 Adelie  Torgersen           42            20.2               190        4250
+3 Adelie  Torgersen           34.6          21.1               198        4400
+4 Adelie  Torgersen           42.5          20.7               197        4500
+# ℹ 2 more variables: sex &lt;chr&gt;, year &lt;dbl&gt;</code></pre>
+</div>
+</div></div>
+</div>
+<div class="editor r fragment" name="02-filter-rows.R">
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a aria-label="2"></a>  <span class="co"># conditions AND together</span></span>
+<span id="cb5-3"><a aria-label="3"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(species <span class="sc">!=</span> <span class="st">"Chinstrap"</span>, <span class="sc">!</span><span class="fu">is.na</span>(sex)) <span class="sc">|&gt;</span></span>
+<span id="cb5-4"><a aria-label="4"></a>  <span class="co"># show first 5 rows</span></span>
+<span id="cb5-5"><a aria-label="5"></a>  dplyr<span class="sc">::</span><span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 8
+  species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+  &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;
+1 Adelie  Torgersen           39.1          18.7               181        3750
+2 Adelie  Torgersen           39.5          17.4               186        3800
+3 Adelie  Torgersen           40.3          18                 195        3250
+4 Adelie  Torgersen           36.7          19.3               193        3450
+5 Adelie  Torgersen           39.3          20.6               190        3650
+# ℹ 2 more variables: sex &lt;chr&gt;, year &lt;dbl&gt;</code></pre>
+</div>
+</div></div>
+</div>
 </div>
 <div class="paper-card">
 <ul>
-<li><code>filter()</code> keeps <strong>rows</strong>;</li>
-<li><code>select()</code> keeps <strong>columns</strong>;</li>
-<li>Multiple conditions in <code>filter</code> are AND-ed by default.</li>
+<li><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a> keeps <strong>rows</strong>;</li>
+<li>Multiple conditions in <code>filter</code> are AND-ed by default; use other logical operators (<code>|</code>, <code>!</code>, <code>%in%</code>) to combine them.</li>
 </ul>
 </div>
+</div>
+<div id="tabset-1-2">
+<div class="codewindow">
+<div class="editor r" name="select-columns.R">
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb7-2"><a aria-label="2"></a>  <span class="co"># keep these columns</span></span>
+<span id="cb7-3"><a aria-label="3"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(species, island, body_mass_g)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 344 × 3
+   species island    body_mass_g
+   &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt;
+ 1 Adelie  Torgersen        3750
+ 2 Adelie  Torgersen        3800
+ 3 Adelie  Torgersen        3250
+ 4 Adelie  Torgersen          NA
+ 5 Adelie  Torgersen        3450
+ 6 Adelie  Torgersen        3650
+ 7 Adelie  Torgersen        3625
+ 8 Adelie  Torgersen        4675
+ 9 Adelie  Torgersen        3475
+10 Adelie  Torgersen        4250
+# ℹ 334 more rows</code></pre>
+</div>
+</div></div>
+</div>
+<div class="editor r fragment" name="drop-columns.R">
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-label="1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb9-2"><a aria-label="2"></a>  <span class="co"># drop columns whose names end with "_mm"</span></span>
+<span id="cb9-3"><a aria-label="3"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>dplyr<span class="sc">::</span><span class="fu">ends_with</span>(<span class="st">"_mm"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 344 × 5
+   species island    body_mass_g sex     year
+   &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;
+ 1 Adelie  Torgersen        3750 male    2007
+ 2 Adelie  Torgersen        3800 female  2007
+ 3 Adelie  Torgersen        3250 female  2007
+ 4 Adelie  Torgersen          NA &lt;NA&gt;    2007
+ 5 Adelie  Torgersen        3450 female  2007
+ 6 Adelie  Torgersen        3650 male    2007
+ 7 Adelie  Torgersen        3625 female  2007
+ 8 Adelie  Torgersen        4675 male    2007
+ 9 Adelie  Torgersen        3475 &lt;NA&gt;    2007
+10 Adelie  Torgersen        4250 &lt;NA&gt;    2007
+# ℹ 334 more rows</code></pre>
+</div>
+</div></div>
+</div>
+</div>
+<div class="paper-card">
 <ul>
-<li>Helper functions for <code>select()</code>: <a href="https://dplyr.tidyverse.org/reference/select.html" class="uri">https://dplyr.tidyverse.org/reference/select.html</a></li>
-<li>Helper functions for <code>filter()</code>: <a href="https://dplyr.tidyverse.org/reference/filter.html" class="uri">https://dplyr.tidyverse.org/reference/filter.html</a></li>
+<li><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a> keeps <strong>columns</strong>;</li>
+<li>helpful helpers: <code>starts_with()</code>, <code>ends_with()</code>, <code>contains()</code>, <code>matches()</code>, <code>everything()</code>.</li>
 </ul>
+</div>
+</div>
+</div>
+</div>
 <div class="code-pop">
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Rows and columns: `filter` &amp; `select` {.inv}
 
-Two verbs get you the *slice* you need: **rows** by a condition, **columns** by name:
+::: {.panel-tabset}
 
-::: {.codewindow .r width="100%"}
-filter rows, select columns
-```r
-penguins |&gt; dplyr::filter(body_mass_g &gt;= 4000)                 # keep rows that match
-penguins |&gt; dplyr::filter(species != "Chinstrap", !is.na(sex)) # conditions AND together
-penguins |&gt; dplyr::select(species, island, body_mass_g)        # keep these columns
-penguins |&gt; dplyr::select(-bill_depth_mm)                      # or drop just one
+### Filter rows
+
+::: {.codewindow}
+
+::: {.editor .r name="01-filter-rows.R"}
+```{r}
+#| echo: true
+#| output-location: column
+penguins |&gt; 
+  # keep penguins with body mass ≥ 4000 g
+  dplyr::filter(body_mass_g &gt;= 4000) |&gt; 
+  # show the first 4 penguins that meet this condition
+  dplyr::slice(1:4)
 ```
 :::
 
-::: {.paper-card}
-- `filter()` keeps **rows**;
-- `select()` keeps **columns**;
-- Multiple conditions in `filter` are AND-ed by default.
+::: {.editor .r .fragment name="02-filter-rows.R"}
+```{r}
+#| echo: true
+#| output-location: column
+penguins |&gt; 
+  # conditions AND together
+  dplyr::filter(species != "Chinstrap", !is.na(sex)) |&gt;
+  # show first 5 rows
+  dplyr::slice(1:5)
+```
 :::
 
-- Helper functions for `select()`: &lt;https://dplyr.tidyverse.org/reference/select.html&gt;
-- Helper functions for `filter()`: &lt;https://dplyr.tidyverse.org/reference/filter.html&gt;
+:::
+
+::: {.paper-card}
+- [filter()](https://dplyr.tidyverse.org/reference/filter.html) keeps **rows**;
+- Multiple conditions in `filter` are AND-ed by default; use other logical operators (`|`, `!`, `%in%`) to combine them.
+:::
+
+### Select columns
+
+::: {.codewindow}
+
+::: {.editor .r name="select-columns.R"}
+```{r}
+#| echo: true
+#| output-location: column
+penguins |&gt; 
+  # keep these columns
+  dplyr::select(species, island, body_mass_g)
+```
+:::
+
+::: {.editor .r .fragment name="drop-columns.R"}
+```{r}
+#| echo: true
+#| output-location: column
+penguins |&gt; 
+  # drop columns whose names end with "_mm"
+  dplyr::select(-dplyr::ends_with("_mm"))
+```
+:::
+
+:::
+
+::: {.paper-card}
+- [select()](https://dplyr.tidyverse.org/reference/select.html) keeps **columns**;
+- helpful helpers: `starts_with()`, `ends_with()`, `contains()`, `matches()`, `everything()`.
+:::
+
+:::
 </code></pre></div></details>
 </div>
 </section>
 <section id="new-columns-mutate" class="slide level2 inv" data-number="2.4">
 <h2><span class="header-section-number">2.4</span> New columns: <code>mutate</code></h2>
-<p><code>mutate()</code> computes <strong>new columns</strong> from existing ones, keeping everything else:</p>
 <div class="codewindow r" width="100%">
-<p>Compute a new column with <code>mutate()</code></p>
+<p>mutate.R</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-label="1"></a>penguins <span class="sc">|&gt;</span></span>
-<span id="cb4-2"><a aria-label="2"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">bmi =</span> body_mass_g <span class="sc">/</span> (flipper_length_mm <span class="sc">/</span> <span class="dv">100</span>)<span class="sc">^</span><span class="dv">2</span>) <span class="sc">|&gt;</span></span>
-<span id="cb4-3"><a aria-label="3"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(species, flipper_length_mm, body_mass_g, bmi) <span class="sc">|&gt;</span> </span>
-<span id="cb4-4"><a aria-label="4"></a>  dplyr<span class="sc">::</span><span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>) <span class="co"># show first 5 rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-label="1"></a>penguins <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a aria-label="2"></a>  <span class="co"># compute the body-mass index (BMI) in kg/m²</span></span>
+<span id="cb11-3"><a aria-label="3"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">bmi =</span> body_mass_g <span class="sc">/</span> (flipper_length_mm <span class="sc">/</span> <span class="dv">100</span>)<span class="sc">^</span><span class="dv">2</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-4"><a aria-label="4"></a>  <span class="co"># keep only the columns we want to see</span></span>
+<span id="cb11-5"><a aria-label="5"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(species, flipper_length_mm, body_mass_g, bmi) <span class="sc">|&gt;</span> </span>
+<span id="cb11-6"><a aria-label="6"></a>  <span class="co"># show first 5 rows</span></span>
+<span id="cb11-7"><a aria-label="7"></a>  dplyr<span class="sc">::</span><span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 4
   species flipper_length_mm body_mass_g   bmi
@@ -457,136 +607,247 @@ penguins |&gt; dplyr::select(-bill_depth_mm)                      # or drop just
 </div>
 <div class="paper-card">
 <ul>
+<li><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a> computes <strong>new columns</strong> from existing ones, keeping everything else;</li>
 <li>New columns are available to later steps in the <strong>same</strong> pipe;</li>
 <li>You can <code>mutate()</code> several columns at once.</li>
 </ul>
 </div>
-<p>Helper functions for <code>mutate()</code>: <a href="https://dplyr.tidyverse.org/reference/mutate.html" class="uri">https://dplyr.tidyverse.org/reference/mutate.html</a></p>
 <div class="code-pop">
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## New columns: `mutate` {.inv}
 
-`mutate()` computes **new columns** from existing ones, keeping everything else:
-
 ::: {.codewindow .r width="100%"}
-Compute a new column with `mutate()`
+mutate.R
 ```{r}
 #| echo: true
 penguins |&gt;
+  # compute the body-mass index (BMI) in kg/m²
   dplyr::mutate(bmi = body_mass_g / (flipper_length_mm / 100)^2) |&gt;
+  # keep only the columns we want to see
   dplyr::select(species, flipper_length_mm, body_mass_g, bmi) |&gt; 
-  dplyr::slice(1:5) # show first 5 rows
+  # show first 5 rows
+  dplyr::slice(1:5)
 ```
 :::
 
 ::: {.paper-card}
+- [mutate()](https://dplyr.tidyverse.org/reference/mutate.html) computes **new columns** from existing ones, keeping everything else;
 - New columns are available to later steps in the **same** pipe;
 - You can `mutate()` several columns at once.
 :::
-
-Helper functions for `mutate()`: &lt;https://dplyr.tidyverse.org/reference/mutate.html&gt;
 </code></pre></div></details>
 </div>
 </section>
 <section id="recode-with-case_when" class="slide level2 inv" data-number="2.5">
 <h2><span class="header-section-number">2.5</span> Recode with <code>case_when</code></h2>
-<p><code>case_when()</code> turns a sequence of <strong>if…else</strong> conditions into a new column: a tidyverse-friendly replacement for nested <code>ifelse</code>:</p>
 <div class="codewindow r" width="100%">
-<p>Multiple conditions, first match wins</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-label="1"></a>penguins <span class="sc">|&gt;</span></span>
-<span id="cb6-2"><a aria-label="2"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">size =</span> dplyr<span class="sc">::</span><span class="fu">case_when</span>(</span>
-<span id="cb6-3"><a aria-label="3"></a>    body_mass_g <span class="sc">&gt;=</span> <span class="dv">5000</span> <span class="sc">~</span> <span class="st">"large"</span>,</span>
-<span id="cb6-4"><a aria-label="4"></a>    body_mass_g <span class="sc">&gt;=</span> <span class="dv">3500</span> <span class="sc">~</span> <span class="st">"medium"</span>,</span>
-<span id="cb6-5"><a aria-label="5"></a>    <span class="at">.default =</span> <span class="st">"small"</span></span>
-<span id="cb6-6"><a aria-label="6"></a>  ))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>case-when.R</p>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-label="1"></a>penguins <span class="sc">|&gt;</span></span>
+<span id="cb13-2"><a aria-label="2"></a>  <span class="co"># create a new column "size" based on body mass</span></span>
+<span id="cb13-3"><a aria-label="3"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">size =</span> dplyr<span class="sc">::</span><span class="fu">case_when</span>(</span>
+<span id="cb13-4"><a aria-label="4"></a>    body_mass_g <span class="sc">&gt;=</span> <span class="dv">5000</span> <span class="sc">~</span> <span class="st">"large"</span>,</span>
+<span id="cb13-5"><a aria-label="5"></a>    body_mass_g <span class="sc">&gt;=</span> <span class="dv">3500</span> <span class="sc">~</span> <span class="st">"medium"</span>,</span>
+<span id="cb13-6"><a aria-label="6"></a>    <span class="at">.default =</span> <span class="st">"small"</span></span>
+<span id="cb13-7"><a aria-label="7"></a>  )) <span class="sc">|&gt;</span> </span>
+<span id="cb13-8"><a aria-label="8"></a>  <span class="co"># keep only the columns we want to see</span></span>
+<span id="cb13-9"><a aria-label="9"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(species, body_mass_g, size) <span class="sc">|&gt;</span></span>
+<span id="cb13-10"><a aria-label="10"></a>  <span class="co"># show first 10 rows</span></span>
+<span id="cb13-11"><a aria-label="11"></a>  dplyr<span class="sc">::</span><span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 3
+   species body_mass_g size  
+   &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt; 
+ 1 Adelie         3750 medium
+ 2 Adelie         3800 medium
+ 3 Adelie         3250 small 
+ 4 Adelie           NA small 
+ 5 Adelie         3450 small 
+ 6 Adelie         3650 medium
+ 7 Adelie         3625 medium
+ 8 Adelie         4675 medium
+ 9 Adelie         3475 small 
+10 Adelie         4250 medium</code></pre>
+</div>
+</div></div>
 </div>
 <div class="paper-card">
 <ul>
-<li><code>case_when</code> reads like a <strong>look-up table</strong>: each <code>condition ~ value</code> row is evaluated in order, and <code>.default</code> catches everything else;</li>
+<li><a href="https://dplyr.tidyverse.org/reference/case-and-replace-when.html">case_when()</a> turns a sequence of <strong>if…else</strong> conditions into a new column: a tidyverse-friendly replacement for nested <code>ifelse</code>;</li>
+<li><code>case_when()</code> reads like a <strong>look-up table</strong>: each <code>condition ~ value</code> row is evaluated in order, and <code>.default</code> catches everything else;</li>
 <li>Perfect for binning or relabelling inside a <code>mutate()</code>.</li>
 </ul>
 </div>
-<p>Documentation: <a href="https://dplyr.tidyverse.org/reference/case-and-replace-when.html" class="uri">https://dplyr.tidyverse.org/reference/case-and-replace-when.html</a></p>
 <div class="code-pop">
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Recode with `case_when` {.inv}
 
-`case_when()` turns a sequence of **if…else** conditions into a new column: a tidyverse-friendly replacement for nested `ifelse`:
-
 ::: {.codewindow .r width="100%"}
-Multiple conditions, first match wins
-```r
+case-when.R
+```{r}
+#| echo: true
+#| output-location: column
 penguins |&gt;
+  # create a new column "size" based on body mass
   dplyr::mutate(size = dplyr::case_when(
     body_mass_g &gt;= 5000 ~ "large",
     body_mass_g &gt;= 3500 ~ "medium",
     .default = "small"
-  ))
+  )) |&gt; 
+  # keep only the columns we want to see
+  dplyr::select(species, body_mass_g, size) |&gt;
+  # show first 10 rows
+  dplyr::slice(1:10)
 ```
 :::
 
 ::: {.paper-card}
-- `case_when` reads like a **look-up table**: each `condition ~ value` row is evaluated in order, and `.default` catches everything else;
+- [case_when()](https://dplyr.tidyverse.org/reference/case-and-replace-when.html) turns a sequence of **if…else** conditions into a new column: a tidyverse-friendly replacement for nested `ifelse`;
+- `case_when()` reads like a **look-up table**: each `condition ~ value` row is evaluated in order, and `.default` catches everything else;
 - Perfect for binning or relabelling inside a `mutate()`.
 :::
-
-Documentation: &lt;https://dplyr.tidyverse.org/reference/case-and-replace-when.html&gt;
 </code></pre></div></details>
 </div>
 </section>
 <section id="strings-with-stringr" class="slide level2 inv" data-number="2.6">
-<h2><span class="header-section-number">2.6</span> Strings with <code>stringr</code></h2>
-<p><code>stringr</code> gives you one consistent family for <strong>text</strong>: every function is <code>str_*</code> with the string first, so they all pipe:</p>
-<div class="codewindow r" width="100%">
-<p>The <code>str_*</code> verbs: detect, replace, extract</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a>penguins <span class="sc">|&gt;</span></span>
-<span id="cb7-2"><a aria-label="2"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(stringr<span class="sc">::</span><span class="fu">str_detect</span>(species, <span class="st">"inst"</span>))         <span class="co"># species contains "inst" (Chinstrap…)</span></span>
-<span id="cb7-3"><a aria-label="3"></a></span>
-<span id="cb7-4"><a aria-label="4"></a>species_clean <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span></span>
-<span id="cb7-5"><a aria-label="5"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">species =</span> stringr<span class="sc">::</span><span class="fu">str_to_title</span>(species))     <span class="co"># "adelie" → "Adelie"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<h2><span class="header-section-number">2.6</span> Strings with <a href="https://stringr.tidyverse.org">{stringr}</a></h2>
+<div class="codewindow">
+<div class="editor r" name="01-string-manipulation.R">
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a aria-label="1"></a>penguins <span class="sc">|&gt;</span></span>
+<span id="cb15-2"><a aria-label="2"></a>  <span class="co"># species contains "inst" (Chinstrap…)</span></span>
+<span id="cb15-3"><a aria-label="3"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(stringr<span class="sc">::</span><span class="fu">str_detect</span>(species, <span class="st">"inst"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb15-4"><a aria-label="4"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(species, island, body_mass_g) <span class="sc">|&gt;</span></span>
+<span id="cb15-5"><a aria-label="5"></a>  dplyr<span class="sc">::</span><span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">14</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 14 × 3
+   species   island body_mass_g
+   &lt;chr&gt;     &lt;chr&gt;        &lt;dbl&gt;
+ 1 Chinstrap Dream         3500
+ 2 Chinstrap Dream         3900
+ 3 Chinstrap Dream         3650
+ 4 Chinstrap Dream         3525
+ 5 Chinstrap Dream         3725
+ 6 Chinstrap Dream         3950
+ 7 Chinstrap Dream         3250
+ 8 Chinstrap Dream         3750
+ 9 Chinstrap Dream         4150
+10 Chinstrap Dream         3700
+11 Chinstrap Dream         3800
+12 Chinstrap Dream         3775
+13 Chinstrap Dream         3700
+14 Chinstrap Dream         4050</code></pre>
+</div>
+</div></div>
+</div>
+<div class="editor r fragment" name="02-string-manipulation.R">
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a aria-label="1"></a>species_clean <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a aria-label="2"></a>  <span class="co"># "adelie" → "Adelie"</span></span>
+<span id="cb17-3"><a aria-label="3"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb17-4"><a aria-label="4"></a>    <span class="at">species =</span> stringr<span class="sc">::</span><span class="fu">str_to_title</span>(species)</span>
+<span id="cb17-5"><a aria-label="5"></a>  )</span>
+<span id="cb17-6"><a aria-label="6"></a>species_clean <span class="sc">|&gt;</span></span>
+<span id="cb17-7"><a aria-label="7"></a>  <span class="co"># "Adelie" → "Adélie"</span></span>
+<span id="cb17-8"><a aria-label="8"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb17-9"><a aria-label="9"></a>    <span class="at">species =</span> stringr<span class="sc">::</span><span class="fu">str_replace</span>(</span>
+<span id="cb17-10"><a aria-label="10"></a>      species, </span>
+<span id="cb17-11"><a aria-label="11"></a>      <span class="at">pattern =</span> <span class="st">"Adelie"</span>, </span>
+<span id="cb17-12"><a aria-label="12"></a>      <span class="at">replacement =</span> <span class="st">"Adélie"</span></span>
+<span id="cb17-13"><a aria-label="13"></a>    )</span>
+<span id="cb17-14"><a aria-label="14"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb17-15"><a aria-label="15"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(species, island, body_mass_g) <span class="sc">|&gt;</span></span>
+<span id="cb17-16"><a aria-label="16"></a>  dplyr<span class="sc">::</span><span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">14</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 14 × 3
+   species island    body_mass_g
+   &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt;
+ 1 Adélie  Torgersen        3750
+ 2 Adélie  Torgersen        3800
+ 3 Adélie  Torgersen        3250
+ 4 Adélie  Torgersen          NA
+ 5 Adélie  Torgersen        3450
+ 6 Adélie  Torgersen        3650
+ 7 Adélie  Torgersen        3625
+ 8 Adélie  Torgersen        4675
+ 9 Adélie  Torgersen        3475
+10 Adélie  Torgersen        4250
+11 Adélie  Torgersen        3300
+12 Adélie  Torgersen        3700
+13 Adélie  Torgersen        3200
+14 Adélie  Torgersen        3800</code></pre>
+</div>
+</div></div>
+</div>
 </div>
 <div class="paper-card">
 <ul>
+<li><a href="https://stringr.tidyverse.org">{stringr}</a> gives you one consistent family for <strong>text</strong>: every function is <code>str_*</code> with the string first, so they all pipe;</li>
 <li><code>str_detect</code> pairs with <code>filter</code>,</li>
 <li><code>str_replace</code>/<code>str_to_*</code> with <code>mutate</code>: strings behave exactly like any tidyverse column once you use <code>str_*</code>.</li>
 </ul>
 </div>
-<p>Documentation: <a href="https://stringr.tidyverse.org" class="uri">https://stringr.tidyverse.org</a></p>
 <div class="code-pop">
-<details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Strings with `stringr` {.inv}
+<details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Strings with [{stringr}](https://stringr.tidyverse.org) {.inv}
 
-`stringr` gives you one consistent family for **text**: every function is `str_*` with the string first, so they all pipe:
+::: {.codewindow}
 
-::: {.codewindow .r width="100%"}
-The `str_*` verbs: detect, replace, extract
-```r
+::: {.editor .r name="01-string-manipulation.R"}
+```{r}
+#| echo: true
+#| output-location: column
 penguins |&gt;
-  dplyr::filter(stringr::str_detect(species, "inst"))         # species contains "inst" (Chinstrap…)
-
-species_clean &lt;- penguins |&gt;
-  dplyr::mutate(species = stringr::str_to_title(species))     # "adelie" → "Adelie"
+  # species contains "inst" (Chinstrap…)
+  dplyr::filter(stringr::str_detect(species, "inst")) |&gt; 
+  dplyr::select(species, island, body_mass_g) |&gt;
+  dplyr::slice(1:14)
 ```
 :::
 
+::: {.editor .r .fragment name="02-string-manipulation.R"}
+```{r}
+#| echo: true
+#| output-location: column
+species_clean &lt;- penguins |&gt;
+  # "adelie" → "Adelie"
+  dplyr::mutate(
+    species = stringr::str_to_title(species)
+  )
+species_clean |&gt;
+  # "Adelie" → "Adélie"
+  dplyr::mutate(
+    species = stringr::str_replace(
+      species, 
+      pattern = "Adelie", 
+      replacement = "Adélie"
+    )
+  ) |&gt;
+  dplyr::select(species, island, body_mass_g) |&gt;
+  dplyr::slice(1:14)
+```
+:::
+
+:::
+
 ::: {.paper-card}
+- [{stringr}](https://stringr.tidyverse.org) gives you one consistent family for **text**: every function is `str_*` with the string first, so they all pipe;
 - `str_detect` pairs with `filter`,
 - `str_replace`/`str_to_*` with `mutate`: strings behave exactly like any tidyverse column once you use `str_*`.
 :::
-
-Documentation: &lt;https://stringr.tidyverse.org&gt;
 </code></pre></div></details>
 </div>
 </section>
 <section id="sort-arrange" class="slide level2 inv" data-number="2.7">
 <h2><span class="header-section-number">2.7</span> Sort: <code>arrange</code></h2>
-<p><code>arrange()</code> sorts the rows; wrap a column in <code>desc()</code> to go <strong>descending</strong>:</p>
-<div class="panel-tabset">
-<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Ascending order</a></li><li><a href="#tabset-1-2">Descending order</a></li></ul>
-<div class="tab-content">
-<div id="tabset-1-1">
-<div class="codewindow r" width="100%">
-<p>Sort with <code>arrange()</code> / <code>desc()</code></p>
+<div class="codewindow">
+<div class="editor r" name="01-arrange-ascending.R">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-label="1"></a>penguins <span class="sc">|&gt;</span> </span>
-<span id="cb8-2"><a aria-label="2"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(body_mass_g) <span class="co"># lightest first</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-label="1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb19-2"><a aria-label="2"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(body_mass_g) <span class="co"># lightest first</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 344 × 8
    species   island   bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
@@ -606,46 +867,42 @@ Documentation: &lt;https://stringr.tidyverse.org&gt;
 </div>
 </div>
 </div>
-</div>
-<div id="tabset-1-2">
-<div class="codewindow r" width="100%">
-<p>Sort with <code>arrange()</code> / <code>desc()</code></p>
+<div class="editor r fragment" name="02-arrange-descending.R">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-label="1"></a>penguins <span class="sc">|&gt;</span> </span>
-<span id="cb10-2"><a aria-label="2"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(dplyr<span class="sc">::</span><span class="fu">desc</span>(body_mass_g), species) <span class="co"># heaviest first, ties by species</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a aria-label="1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb21-2"><a aria-label="2"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(dplyr<span class="sc">::</span><span class="fu">desc</span>(body_mass_g), bill_length_mm) <span class="co"># heaviest first, ties by bill length</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 344 × 8
    species island bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
    &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;
  1 Gentoo  Biscoe           49.2          15.2               221        6300
  2 Gentoo  Biscoe           59.6          17                 230        6050
- 3 Gentoo  Biscoe           51.1          16.3               220        6000
- 4 Gentoo  Biscoe           48.8          16.2               222        6000
+ 3 Gentoo  Biscoe           48.8          16.2               222        6000
+ 4 Gentoo  Biscoe           51.1          16.3               220        6000
  5 Gentoo  Biscoe           45.2          16.4               223        5950
  6 Gentoo  Biscoe           49.8          15.9               229        5950
  7 Gentoo  Biscoe           48.4          14.6               213        5850
  8 Gentoo  Biscoe           49.3          15.7               217        5850
  9 Gentoo  Biscoe           55.1          16                 230        5850
-10 Gentoo  Biscoe           49.5          16.2               229        5800
+10 Gentoo  Biscoe           48.6          16                 230        5800
 # ℹ 334 more rows
 # ℹ 2 more variables: sex &lt;chr&gt;, year &lt;dbl&gt;</code></pre>
 </div>
 </div>
 </div>
 </div>
-</div>
+<div class="paper-card">
+<ul>
+<li><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a> sorts the rows;</li>
+<li>Wrap a column in <a href="https://dplyr.tidyverse.org/reference/desc.html">desc()</a> to go <strong>descending</strong>.</li>
+</ul>
 </div>
 <div class="code-pop">
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Sort: `arrange` {.inv}
 
-`arrange()` sorts the rows; wrap a column in `desc()` to go **descending**:
+::: {.codewindow}
 
-::: {.panel-tabset}
-
-### Ascending order
-
-::: {.codewindow .r width="100%"}
-Sort with `arrange()` / `desc()`
+::: {.editor .r name="01-arrange-ascending.R"}
 ```{r}
 #| echo: true
 penguins |&gt; 
@@ -653,29 +910,74 @@ penguins |&gt;
 ```
 :::
 
-### Descending order
-
-::: {.codewindow .r width="100%"}
-Sort with `arrange()` / `desc()`
+::: {.editor .r .fragment name="02-arrange-descending.R"}
 ```{r}
 #| echo: true
 penguins |&gt; 
-  dplyr::arrange(dplyr::desc(body_mass_g), species) # heaviest first, ties by species
+  dplyr::arrange(dplyr::desc(body_mass_g), bill_length_mm) # heaviest first, ties by bill length
 ```
 :::
 
+:::
+
+::: {.paper-card}
+- [arrange()](https://dplyr.tidyverse.org/reference/arrange.html) sorts the rows;
+- Wrap a column in [desc()](https://dplyr.tidyverse.org/reference/desc.html) to go **descending**.
 :::
 </code></pre></div></details>
 </div>
 </section>
 <section id="summarise-by-group" class="slide level2 inv" data-number="2.8">
 <h2><span class="header-section-number">2.8</span> Summarise by group</h2>
-<p><code>group_by()</code> + <code>summarise()</code> collapse rows into <strong>one row per group</strong>: <code>group_by</code> sets the split, <code>summarise</code> reduces each group:</p>
-<div class="split-2">
-<div class="tile-flow">
+<div class="tile-stage">
 <div class="tile-panel">
 <div class="tile-cue">
-data · 4 rows
+data · ungrouped
+</div>
+<div class="tile-grid">
+<div class="tg-head">
+<span>species</span><span>mass (g)</span>
+</div>
+<div class="tile-row">
+<div class="tile" style="background:#8B94A0">
+Adelie
+</div>
+<div class="tile" style="background:#8B94A0;opacity:.72">
+3400
+</div>
+</div>
+<div class="tile-row">
+<div class="tile" style="background:#8B94A0">
+Adelie
+</div>
+<div class="tile" style="background:#8B94A0;opacity:.72">
+3700
+</div>
+</div>
+<div class="tile-row">
+<div class="tile" style="background:#8B94A0">
+Gentoo
+</div>
+<div class="tile" style="background:#8B94A0;opacity:.72">
+4700
+</div>
+</div>
+<div class="tile-row">
+<div class="tile" style="background:#8B94A0">
+Gentoo
+</div>
+<div class="tile" style="background:#8B94A0;opacity:.72">
+5200
+</div>
+</div>
+</div>
+</div>
+<div class="tile-arrow fragment" data-fragment-index="1">
+<span class="cap">group_by</span>→
+</div>
+<div class="tile-panel fragment" data-fragment-index="1">
+<div class="tile-cue">
+grouped · 4 rows
 </div>
 <div class="tile-grid">
 <div class="tg-head">
@@ -715,11 +1017,10 @@ Gentoo
 </div>
 </div>
 </div>
-<div class="tile-flow-after fragment">
-<div class="tile-arrow">
-<span class="cap">group_by +<br>summarise</span>→
+<div class="tile-arrow fragment" data-fragment-index="2">
+<span class="cap">summarise</span>→
 </div>
-<div class="tile-panel">
+<div class="tile-panel fragment" data-fragment-index="2">
 <div class="tile-cue">
 summary · one row per group
 </div>
@@ -752,16 +1053,17 @@ Gentoo
 </div>
 </div>
 </div>
-</div>
-<div class="codewindow r" width="100%">
-<p><code>group_by()</code> + <code>summarise()</code></p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-label="1"></a>penguins <span class="sc">|&gt;</span></span>
-<span id="cb12-2"><a aria-label="2"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(species) <span class="sc">|&gt;</span></span>
-<span id="cb12-3"><a aria-label="3"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(</span>
-<span id="cb12-4"><a aria-label="4"></a>    <span class="at">n =</span> dplyr<span class="sc">::</span><span class="fu">n</span>(), </span>
-<span id="cb12-5"><a aria-label="5"></a>    <span class="at">avg_mass =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb12-6"><a aria-label="6"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment" data-fragment-index="3">
+<div class="codewindow r" width="100%" name="grouped-summarise.R">
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a aria-label="1"></a>penguins <span class="sc">|&gt;</span></span>
+<span id="cb23-2"><a aria-label="2"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(species) <span class="sc">|&gt;</span></span>
+<span id="cb23-3"><a aria-label="3"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(</span>
+<span id="cb23-4"><a aria-label="4"></a>    <span class="at">n =</span> dplyr<span class="sc">::</span><span class="fu">n</span>(), </span>
+<span id="cb23-5"><a aria-label="5"></a>    <span class="at">avg_mass =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb23-6"><a aria-label="6"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
   species       n avg_mass
@@ -770,21 +1072,47 @@ Gentoo
 2 Chinstrap    68    3733.
 3 Gentoo      124    5076.</code></pre>
 </div>
+</div></div>
 </div>
 </div>
+<div class="fragment" data-fragment-index="3">
+<div class="paper-card">
+<ul>
+<li><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a> splits the data;</li>
+<li><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a> collapses rows into <strong>one row per group</strong>;</li>
+<li><a href="https://dplyr.tidyverse.org/reference/n.html">n()</a> counts rows per group; <code>na.rm = TRUE</code> skips missing values.</li>
+</ul>
 </div>
-<div class="callout-desc">
-<p><code>n()</code> counts rows per group; <code>na.rm = TRUE</code> skips missing values.</p>
 </div>
 <div class="code-pop">
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Summarise by group {.inv}
 
-`group_by()` + `summarise()` collapse rows into **one row per group**: `group_by` sets the split, `summarise` reduces each group:
-
-::: {.split-2}
-&lt;div class="tile-flow"&gt;
+&lt;div class="tile-stage"&gt;
 &lt;div class="tile-panel"&gt;
-&lt;div class="tile-cue"&gt;data · 4 rows&lt;/div&gt;
+&lt;div class="tile-cue"&gt;data · ungrouped&lt;/div&gt;
+&lt;div class="tile-grid"&gt;
+&lt;div class="tg-head"&gt;&lt;span&gt;species&lt;/span&gt;&lt;span&gt;mass (g)&lt;/span&gt;&lt;/div&gt;
+&lt;div class="tile-row"&gt;
+&lt;div class="tile" style="background:#8B94A0"&gt;Adelie&lt;/div&gt;
+&lt;div class="tile" style="background:#8B94A0;opacity:.72"&gt;3400&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="tile-row"&gt;
+&lt;div class="tile" style="background:#8B94A0"&gt;Adelie&lt;/div&gt;
+&lt;div class="tile" style="background:#8B94A0;opacity:.72"&gt;3700&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="tile-row"&gt;
+&lt;div class="tile" style="background:#8B94A0"&gt;Gentoo&lt;/div&gt;
+&lt;div class="tile" style="background:#8B94A0;opacity:.72"&gt;4700&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="tile-row"&gt;
+&lt;div class="tile" style="background:#8B94A0"&gt;Gentoo&lt;/div&gt;
+&lt;div class="tile" style="background:#8B94A0;opacity:.72"&gt;5200&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="tile-arrow fragment" data-fragment-index="1"&gt;&lt;span class="cap"&gt;group_by&lt;/span&gt;→&lt;/div&gt;
+&lt;div class="tile-panel fragment" data-fragment-index="1"&gt;
+&lt;div class="tile-cue"&gt;grouped · 4 rows&lt;/div&gt;
 &lt;div class="tile-grid"&gt;
 &lt;div class="tg-head"&gt;&lt;span&gt;species&lt;/span&gt;&lt;span&gt;mass (g)&lt;/span&gt;&lt;/div&gt;
 &lt;div class="tile-row"&gt;
@@ -805,9 +1133,8 @@ Gentoo
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div class="tile-flow-after fragment"&gt;
-&lt;div class="tile-arrow"&gt;&lt;span class="cap"&gt;group_by +&lt;br&gt;summarise&lt;/span&gt;→&lt;/div&gt;
-&lt;div class="tile-panel"&gt;
+&lt;div class="tile-arrow fragment" data-fragment-index="2"&gt;&lt;span class="cap"&gt;summarise&lt;/span&gt;→&lt;/div&gt;
+&lt;div class="tile-panel fragment" data-fragment-index="2"&gt;
 &lt;div class="tile-cue"&gt;summary · one row per group&lt;/div&gt;
 &lt;div class="tile-grid"&gt;
 &lt;div class="tg-head"&gt;&lt;span&gt;species&lt;/span&gt;&lt;span&gt;n&lt;/span&gt;&lt;span&gt;mean&lt;/span&gt;&lt;/div&gt;
@@ -824,13 +1151,14 @@ Gentoo
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;/div&gt;
 
-::: {.codewindow .r width="100%"}
-`group_by()` + `summarise()`
+::: {.fragment fragment-index=3}
+
+::: {.codewindow .r width="100%" name="grouped-summarise.R"}
 ```{r}
 #| warning: false
 #| echo: true
+#| output-location: column
 penguins |&gt;
   dplyr::group_by(species) |&gt;
   dplyr::summarise(
@@ -839,26 +1167,34 @@ penguins |&gt;
   )
 ```
 :::
+
 :::
 
-::: {.callout-desc}
-`n()` counts rows per group; `na.rm = TRUE` skips missing values.
+::: {.fragment fragment-index=3}
+
+::: {.paper-card}
+- [group_by()](https://dplyr.tidyverse.org/reference/group_by.html) splits the data;
+- [summarise()](https://dplyr.tidyverse.org/reference/summarise.html) collapses rows into **one row per group**;
+- [n()](https://dplyr.tidyverse.org/reference/n.html) counts rows per group; `na.rm = TRUE` skips missing values.
+:::
+
 :::
 </code></pre></div></details>
 </div>
 </section>
 <section id="across-apply-to-many-columns" class="slide level2 inv" data-number="2.9">
 <h2><span class="header-section-number">2.9</span> <code>across()</code>: apply to many columns</h2>
-<p><code>across()</code> applies one expression to <strong>every column that matches</strong> a selector: no copy-pasting verbs per column:</p>
 <div class="codewindow r" width="100%">
-<p>Apply <code>mean</code> within a group, over several columns</p>
+<p>across.R</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-label="1"></a>penguins <span class="sc">|&gt;</span></span>
-<span id="cb14-2"><a aria-label="2"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(species) <span class="sc">|&gt;</span></span>
-<span id="cb14-3"><a aria-label="3"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(dplyr<span class="sc">::</span><span class="fu">across</span>(</span>
-<span id="cb14-4"><a aria-label="4"></a>    dplyr<span class="sc">::</span><span class="fu">where</span>(is.numeric), </span>
-<span id="cb14-5"><a aria-label="5"></a>    \(x) <span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb14-6"><a aria-label="6"></a>  ))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a aria-label="1"></a>penguins <span class="sc">|&gt;</span></span>
+<span id="cb25-2"><a aria-label="2"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(species) <span class="sc">|&gt;</span></span>
+<span id="cb25-3"><a aria-label="3"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(dplyr<span class="sc">::</span><span class="fu">across</span>(</span>
+<span id="cb25-4"><a aria-label="4"></a>    <span class="at">.cols =</span> dplyr<span class="sc">::</span><span class="fu">where</span>(is.numeric), </span>
+<span id="cb25-5"><a aria-label="5"></a>    <span class="at">.fns =</span> \(.x) {</span>
+<span id="cb25-6"><a aria-label="6"></a>      <span class="fu">mean</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb25-7"><a aria-label="7"></a>    }</span>
+<span id="cb25-8"><a aria-label="8"></a>  ))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 6
   species   bill_length_mm bill_depth_mm flipper_length_mm body_mass_g  year
@@ -870,35 +1206,40 @@ penguins |&gt;
 </div>
 </div>
 <div class="paper-card">
-<p><code>across(where(is.numeric), …)</code> targets a whole <strong>family</strong> of columns at once: the bridge from “many similar lines” to programmatic thinking you’ll meet again in Session 3’s functions.</p>
+<ul>
+<li><a href="https://dplyr.tidyverse.org/reference/across.html"><code>across()</code></a> applies one expression to <strong>every column that matches</strong> a selector: no copy-pasting verbs per column;</li>
+<li><code>across(where(is.numeric), ...)</code> targets a whole <strong>family</strong> of columns at once: the bridge from “many similar lines” to programmatic thinking you’ll meet again in Session 3’s functions;</li>
+<li><code>\() {}</code> is the anonymous (lambda) function syntax to create a custom function.</li>
+</ul>
 </div>
 <div class="code-pop">
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## `across()`: apply to many columns {.inv}
 
-`across()` applies one expression to **every column that matches** a selector: no copy-pasting verbs per column:
-
 ::: {.codewindow .r width="100%"}
-Apply `mean` within a group, over several columns
+across.R
 ```{r}
 #| echo: true
 penguins |&gt;
   dplyr::group_by(species) |&gt;
   dplyr::summarise(dplyr::across(
-    dplyr::where(is.numeric), 
-    \(x) mean(x, na.rm = TRUE)
+    .cols = dplyr::where(is.numeric), 
+    .fns = \(.x) {
+      mean(.x, na.rm = TRUE)
+    }
   ))
 ```
 :::
 
 ::: {.paper-card}
-`across(where(is.numeric), …)` targets a whole **family** of columns at once: the bridge from "many similar lines" to programmatic thinking you'll meet again in Session 3's functions.
+- [`across()`](https://dplyr.tidyverse.org/reference/across.html) applies one expression to **every column that matches** a selector: no copy-pasting verbs per column;
+- `across(where(is.numeric), ...)` targets a whole **family** of columns at once: the bridge from "many similar lines" to programmatic thinking you'll meet again in Session 3's functions;
+- `\() {}` is the anonymous (lambda) function syntax to create a custom function.
 :::
 </code></pre></div></details>
 </div>
 </section>
 <section id="reshape-with-tidyr-pivot_longer-pivot_wider" class="slide level2 inv" data-number="2.10">
 <h2><span class="header-section-number">2.10</span> Reshape with <a href="https://tidyr.tidyverse.org">{tidyr}</a>: <code>pivot_longer</code> &amp; <code>pivot_wider</code></h2>
-<p><span class="amber">Tidy data</span>: one row per observation, one column per variable. When it isn’t, reshape:</p>
 <div class="tile-stage">
 <div class="tile-panel">
 <div class="tile-cue">
@@ -906,7 +1247,7 @@ wide · 2 rows
 </div>
 <div class="tile-grid">
 <div class="tg-head">
-<span>penguin</span><span style="color:#B26A00">bill_l</span><span style="color:#4A5899">bill_d</span>
+<span>penguin</span><span style="color:#B26A00">bill_l</span><span style="color:#4A5899">bill_d</span><span style="color:#2FA8B0">flipper</span>
 </div>
 <div class="tile-row">
 <div class="tile" style="background:#2E7D6B">
@@ -918,6 +1259,9 @@ A
 <div class="tile" style="background:#4A5899;opacity:.85">
 18.7
 </div>
+<div class="tile" style="background:#2FA8B0;opacity:.85">
+181
+</div>
 </div>
 <div class="tile-row">
 <div class="tile" style="background:#2E7D6B">
@@ -928,6 +1272,9 @@ B
 </div>
 <div class="tile" style="background:#4A5899;opacity:.85">
 17.9
+</div>
+<div class="tile" style="background:#2FA8B0;opacity:.85">
+195
 </div>
 </div>
 </div>
@@ -942,7 +1289,7 @@ B
 </div>
 <div class="tile-panel fragment" data-fragment-index="2">
 <div class="tile-cue">
-long · 4 rows
+long · 6 rows
 </div>
 <div class="tile-grid">
 <div class="tg-head">
@@ -972,6 +1319,17 @@ bill_d
 </div>
 <div class="tile-row">
 <div class="tile" style="background:#2E7D6B">
+A
+</div>
+<div class="tile" style="background:#2FA8B0;opacity:.85">
+flipper
+</div>
+<div class="tile" style="background:#2FA8B0">
+181
+</div>
+</div>
+<div class="tile-row">
+<div class="tile" style="background:#2E7D6B">
 B
 </div>
 <div class="tile" style="background:#E8A33D;opacity:.85">
@@ -992,39 +1350,54 @@ bill_d
 17.9
 </div>
 </div>
+<div class="tile-row">
+<div class="tile" style="background:#2E7D6B">
+B
+</div>
+<div class="tile" style="background:#2FA8B0;opacity:.85">
+flipper
+</div>
+<div class="tile" style="background:#2FA8B0">
+195
 </div>
 </div>
 </div>
+</div>
+</div>
+<div class="fragment">
 <div class="codewindow r" width="100%">
-<p>Wide ↔︎ long with <code>pivot_*</code></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a aria-label="1"></a><span class="co"># wide → long (melt several columns back into one key/value pair)</span></span>
-<span id="cb16-2"><a aria-label="2"></a>df <span class="sc">|&gt;</span> tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="at">cols =</span> dplyr<span class="sc">::</span><span class="fu">starts_with</span>(<span class="st">"bill_"</span>), <span class="at">names_to =</span> <span class="st">"measure"</span>, <span class="at">values_to =</span> <span class="st">"mm"</span>)</span>
-<span id="cb16-3"><a aria-label="3"></a></span>
-<span id="cb16-4"><a aria-label="4"></a><span class="co"># long → wide (spread key/value columns back out)</span></span>
-<span id="cb16-5"><a aria-label="5"></a>df <span class="sc">|&gt;</span> tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(<span class="at">names_from =</span> measure, <span class="at">values_from =</span> mm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>reshape.R</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a aria-label="1"></a><span class="co"># wide → long (melt several columns back into one key/value pair)</span></span>
+<span id="cb27-2"><a aria-label="2"></a>df <span class="sc">|&gt;</span> tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>penguin, <span class="at">names_to =</span> <span class="st">"measure"</span>, <span class="at">values_to =</span> <span class="st">"mm"</span>)</span>
+<span id="cb27-3"><a aria-label="3"></a><span class="co"># long → wide (spread key/value columns back out)</span></span>
+<span id="cb27-4"><a aria-label="4"></a>df <span class="sc">|&gt;</span> tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(<span class="at">names_from =</span> measure, <span class="at">values_from =</span> mm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="paper-card">
-<p>Every tidyverse tool expects <strong>tidy data</strong>: reshape first, analyse after.</p>
+<ul>
+<li><span class="amber">Tidy data</span>: one row per observation, one column per variable. When it isn’t, reshape;</li>
+<li>Every tidyverse tool expects <strong>tidy data</strong>: reshape first, analyse after.</li>
+</ul>
+</div>
 </div>
 <div class="code-pop">
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Reshape with [{tidyr}](https://tidyr.tidyverse.org): `pivot_longer` &amp; `pivot_wider` {.inv}
-
-[Tidy data]{.amber}: one row per observation, one column per variable. When it isn't, reshape:
 
 &lt;div class="tile-stage"&gt;
 &lt;div class="tile-panel"&gt;
 &lt;div class="tile-cue"&gt;wide · 2 rows&lt;/div&gt;
 &lt;div class="tile-grid"&gt;
-&lt;div class="tg-head"&gt;&lt;span&gt;penguin&lt;/span&gt;&lt;span style="color:#B26A00"&gt;bill_l&lt;/span&gt;&lt;span style="color:#4A5899"&gt;bill_d&lt;/span&gt;&lt;/div&gt;
+&lt;div class="tg-head"&gt;&lt;span&gt;penguin&lt;/span&gt;&lt;span style="color:#B26A00"&gt;bill_l&lt;/span&gt;&lt;span style="color:#4A5899"&gt;bill_d&lt;/span&gt;&lt;span style="color:#2FA8B0"&gt;flipper&lt;/span&gt;&lt;/div&gt;
 &lt;div class="tile-row"&gt;
 &lt;div class="tile" style="background:#2E7D6B"&gt;A&lt;/div&gt;
 &lt;div class="tile" style="background:#E8A33D;opacity:.85"&gt;39.1&lt;/div&gt;
 &lt;div class="tile" style="background:#4A5899;opacity:.85"&gt;18.7&lt;/div&gt;
+&lt;div class="tile" style="background:#2FA8B0;opacity:.85"&gt;181&lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="tile-row"&gt;
 &lt;div class="tile" style="background:#2E7D6B"&gt;B&lt;/div&gt;
 &lt;div class="tile" style="background:#E8A33D;opacity:.85"&gt;46.5&lt;/div&gt;
 &lt;div class="tile" style="background:#4A5899;opacity:.85"&gt;17.9&lt;/div&gt;
+&lt;div class="tile" style="background:#2FA8B0;opacity:.85"&gt;195&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -1033,7 +1406,7 @@ bill_d
 &lt;div class="tile-arrow fragment" data-fragment-index="3"&gt;←&lt;span class="cap"&gt;pivot_wider&lt;/span&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="tile-panel fragment" data-fragment-index="2"&gt;
-&lt;div class="tile-cue"&gt;long · 4 rows&lt;/div&gt;
+&lt;div class="tile-cue"&gt;long · 6 rows&lt;/div&gt;
 &lt;div class="tile-grid"&gt;
 &lt;div class="tg-head"&gt;&lt;span&gt;penguin&lt;/span&gt;&lt;span&gt;measure&lt;/span&gt;&lt;span&gt;mm&lt;/span&gt;&lt;/div&gt;
 &lt;div class="tile-row"&gt;
@@ -1047,6 +1420,11 @@ bill_d
 &lt;div class="tile" style="background:#4A5899"&gt;18.7&lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="tile-row"&gt;
+&lt;div class="tile" style="background:#2E7D6B"&gt;A&lt;/div&gt;
+&lt;div class="tile" style="background:#2FA8B0;opacity:.85"&gt;flipper&lt;/div&gt;
+&lt;div class="tile" style="background:#2FA8B0"&gt;181&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="tile-row"&gt;
 &lt;div class="tile" style="background:#2E7D6B"&gt;B&lt;/div&gt;
 &lt;div class="tile" style="background:#E8A33D;opacity:.85"&gt;bill_l&lt;/div&gt;
 &lt;div class="tile" style="background:#E8A33D"&gt;46.5&lt;/div&gt;
@@ -1056,23 +1434,32 @@ bill_d
 &lt;div class="tile" style="background:#4A5899;opacity:.85"&gt;bill_d&lt;/div&gt;
 &lt;div class="tile" style="background:#4A5899"&gt;17.9&lt;/div&gt;
 &lt;/div&gt;
+&lt;div class="tile-row"&gt;
+&lt;div class="tile" style="background:#2E7D6B"&gt;B&lt;/div&gt;
+&lt;div class="tile" style="background:#2FA8B0;opacity:.85"&gt;flipper&lt;/div&gt;
+&lt;div class="tile" style="background:#2FA8B0"&gt;195&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+&lt;/div&gt;
+
+::: {.fragment}
 
 ::: {.codewindow .r width="100%"}
-Wide ↔ long with `pivot_*`
+reshape.R
 ```r
 # wide → long (melt several columns back into one key/value pair)
-df |&gt; tidyr::pivot_longer(cols = dplyr::starts_with("bill_"), names_to = "measure", values_to = "mm")
-
+df |&gt; tidyr::pivot_longer(cols = -penguin, names_to = "measure", values_to = "mm")
 # long → wide (spread key/value columns back out)
 df |&gt; tidyr::pivot_wider(names_from = measure, values_from = mm)
 ```
 :::
 
 ::: {.paper-card}
-Every tidyverse tool expects **tidy data**: reshape first, analyse after.
+- [Tidy data]{.amber}: one row per observation, one column per variable. When it isn't, reshape;
+- Every tidyverse tool expects **tidy data**: reshape first, analyse after.
+:::
+
 :::
 </code></pre></div></details>
 </div>
@@ -1185,28 +1572,28 @@ The four data sets share the same slope, intercept, correlation and means; only 
 <h2><span class="header-section-number">3.2</span> Histograms in base R</h2>
 <p>The simplest first look at one variable: <strong><code>hist()</code></strong>.</p>
 <div class="codewindow r" width="100%">
-<p>A histogram of one variable</p>
+<p>hist.R</p>
 <div class="cell columns column-output-location">
 <div class="column">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a aria-label="1"></a><span class="fu">par</span>(<span class="at">bg =</span> <span class="st">"white"</span>)                <span class="co"># opaque white figure: dark slide would hide the default black ink</span></span>
-<span id="cb17-2"><a aria-label="2"></a><span class="fu">hist</span>(</span>
-<span id="cb17-3"><a aria-label="3"></a>  penguins<span class="sc">$</span>body_mass_g,          <span class="co"># the variable</span></span>
-<span id="cb17-4"><a aria-label="4"></a>  <span class="at">breaks =</span> <span class="dv">30</span>,                   <span class="co"># how many bins</span></span>
-<span id="cb17-5"><a aria-label="5"></a>  <span class="at">col =</span> <span class="st">"steelblue"</span>, </span>
-<span id="cb17-6"><a aria-label="6"></a>  <span class="at">border =</span> <span class="st">"white"</span>,</span>
-<span id="cb17-7"><a aria-label="7"></a>  <span class="at">main =</span> <span class="st">"Penguin body mass (g)"</span> <span class="co"># title</span></span>
-<span id="cb17-8"><a aria-label="8"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a aria-label="1"></a><span class="fu">par</span>(<span class="at">bg =</span> <span class="st">"white"</span>)                <span class="co"># opaque white figure: dark slide would hide the default black ink</span></span>
+<span id="cb28-2"><a aria-label="2"></a><span class="fu">hist</span>(</span>
+<span id="cb28-3"><a aria-label="3"></a>  penguins<span class="sc">$</span>body_mass_g,          <span class="co"># the variable</span></span>
+<span id="cb28-4"><a aria-label="4"></a>  <span class="at">breaks =</span> <span class="dv">30</span>,                   <span class="co"># how many bins</span></span>
+<span id="cb28-5"><a aria-label="5"></a>  <span class="at">col =</span> <span class="st">"steelblue"</span>, </span>
+<span id="cb28-6"><a aria-label="6"></a>  <span class="at">border =</span> <span class="st">"white"</span>,</span>
+<span id="cb28-7"><a aria-label="7"></a>  <span class="at">main =</span> <span class="st">"Penguin body mass (g)"</span> <span class="co"># title</span></span>
+<span id="cb28-8"><a aria-label="8"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-6-1.png" width="960"></p>
+<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-13-1.png" width="960"></p>
 </figure>
 </div>
 </div>
 </div></div>
 </div>
-<div class="callout-desc">
+<div class="paper-card">
 <p>Positron draws the plot in the <strong>Plots</strong> pane. <code>hist()</code> is one call, but its defaults are utilitarian.</p>
 </div>
 <div class="code-pop">
@@ -1215,7 +1602,7 @@ The four data sets share the same slope, intercept, correlation and means; only 
 The simplest first look at one variable: **`hist()`**.
 
 ::: {.codewindow .r width="100%"}
-A histogram of one variable
+hist.R
 ```{r}
 #| echo: true
 #| output-location: column
@@ -1230,7 +1617,7 @@ hist(
 ```
 :::
 
-::: {.callout-desc}
+::: {.paper-card}
 Positron draws the plot in the **Plots** pane. `hist()` is one call, but its defaults are utilitarian.
 :::
 </code></pre></div></details>
@@ -1246,15 +1633,15 @@ Positron draws the plot in the **Plots** pane. `hist()` is one call, but its def
 <p>The rest of the base-R drawer</p>
 <div class="cell columns column-output-location">
 <div class="column">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a aria-label="1"></a><span class="fu">par</span>(<span class="at">bg =</span> <span class="st">"white"</span>)   <span class="co"># opaque white figure so the default black ink shows on the dark slide</span></span>
-<span id="cb18-2"><a aria-label="2"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>)</span>
-<span id="cb18-3"><a aria-label="3"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>)</span>
-<span id="cb18-4"><a aria-label="4"></a><span class="fu">plot</span>(x, y)          <span class="co"># scatter plot</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a aria-label="1"></a><span class="fu">par</span>(<span class="at">bg =</span> <span class="st">"white"</span>)   <span class="co"># opaque white figure so the default black ink shows on the dark slide</span></span>
+<span id="cb29-2"><a aria-label="2"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>)</span>
+<span id="cb29-3"><a aria-label="3"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>)</span>
+<span id="cb29-4"><a aria-label="4"></a><span class="fu">plot</span>(x, y)          <span class="co"># scatter plot</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-7-1.png" width="960"></p>
+<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-14-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1266,14 +1653,14 @@ Positron draws the plot in the **Plots** pane. `hist()` is one call, but its def
 <p>The rest of the base-R drawer</p>
 <div class="cell columns column-output-location">
 <div class="column">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-label="1"></a><span class="fu">par</span>(<span class="at">bg =</span> <span class="st">"white"</span>)   <span class="co"># opaque white figure so the default black ink shows on the dark slide</span></span>
-<span id="cb19-2"><a aria-label="2"></a>g <span class="ot">&lt;-</span> <span class="fu">rpois</span>(<span class="at">n =</span> <span class="dv">10</span>L, <span class="at">lambda =</span> <span class="dv">1</span>)</span>
-<span id="cb19-3"><a aria-label="3"></a><span class="fu">barplot</span>(<span class="fu">table</span>(g))   <span class="co"># counts of categories</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a aria-label="1"></a><span class="fu">par</span>(<span class="at">bg =</span> <span class="st">"white"</span>)   <span class="co"># opaque white figure so the default black ink shows on the dark slide</span></span>
+<span id="cb30-2"><a aria-label="2"></a>g <span class="ot">&lt;-</span> <span class="fu">rpois</span>(<span class="at">n =</span> <span class="dv">10</span>L, <span class="at">lambda =</span> <span class="dv">1</span>)</span>
+<span id="cb30-3"><a aria-label="3"></a><span class="fu">barplot</span>(<span class="fu">table</span>(g))   <span class="co"># counts of categories</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-8-1.png" width="960"></p>
+<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-15-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1285,13 +1672,13 @@ Positron draws the plot in the **Plots** pane. `hist()` is one call, but its def
 <p>The rest of the base-R drawer</p>
 <div class="cell columns column-output-location">
 <div class="column">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a aria-label="1"></a><span class="fu">par</span>(<span class="at">bg =</span> <span class="st">"white"</span>)   <span class="co"># opaque white figure so the default black ink shows on the dark slide</span></span>
-<span id="cb20-2"><a aria-label="2"></a><span class="fu">boxplot</span>(y <span class="sc">~</span> g)      <span class="co"># one box per group</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a aria-label="1"></a><span class="fu">par</span>(<span class="at">bg =</span> <span class="st">"white"</span>)   <span class="co"># opaque white figure so the default black ink shows on the dark slide</span></span>
+<span id="cb31-2"><a aria-label="2"></a><span class="fu">boxplot</span>(y <span class="sc">~</span> g)      <span class="co"># one box per group</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-9-1.png" width="960"></p>
+<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-16-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1303,13 +1690,13 @@ Positron draws the plot in the **Plots** pane. `hist()` is one call, but its def
 <p>The rest of the base-R drawer</p>
 <div class="cell columns column-output-location">
 <div class="column">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a aria-label="1"></a><span class="fu">par</span>(<span class="at">bg =</span> <span class="st">"white"</span>)   <span class="co"># opaque white figure so the default black ink shows on the dark slide</span></span>
-<span id="cb21-2"><a aria-label="2"></a><span class="fu">curve</span>(sin, <span class="dv">0</span>, <span class="dv">2</span><span class="sc">*</span>pi) <span class="co"># plot a function</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a aria-label="1"></a><span class="fu">par</span>(<span class="at">bg =</span> <span class="st">"white"</span>)   <span class="co"># opaque white figure so the default black ink shows on the dark slide</span></span>
+<span id="cb32-2"><a aria-label="2"></a><span class="fu">curve</span>(sin, <span class="dv">0</span>, <span class="dv">2</span><span class="sc">*</span>pi) <span class="co"># plot a function</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-10-1.png" width="960"></p>
+<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-17-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1387,17 +1774,23 @@ Base R can already do a lot, but its look is dated and customisation is verbose:
 </section>
 <section id="the-limit-of-base-r-plots" class="slide level2 inv" data-number="3.4">
 <h2><span class="header-section-number">3.4</span> The limit of base-R plots</h2>
+<div class="spread spread-md spread-evenly">
 <p>Base <code>plot()</code> is fine for a quick peek. For <strong>publication-grade</strong> graphics (faceting, legends, themes, layered encodings), it gets unwieldy fast.</p>
 <p>That’s the gap <strong>ggplot2</strong> fills: a single coherent <em>grammar</em>, rather than a grab-bag of functions.</p>
+</div>
 <div class="callout-desc">
 <p>You’ll implement several of these base-R plots <strong>by hand in lab 2</strong>, then rebuild one in ggplot2 to feel the difference.</p>
 </div>
 <div class="code-pop">
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## The limit of base-R plots {.inv}
 
+::: {.spread .spread-md .spread-evenly}
+
 Base `plot()` is fine for a quick peek. For **publication-grade** graphics (faceting, legends, themes, layered encodings), it gets unwieldy fast.
 
 That's the gap **ggplot2** fills: a single coherent *grammar*, rather than a grab-bag of functions.
+
+:::
 
 ::: {.callout-desc}
 You'll implement several of these base-R plots **by hand in lab 2**, then rebuild one in ggplot2 to feel the difference.
@@ -1439,29 +1832,80 @@ You'll implement several of these base-R plots **by hand in lab 2**, then rebuil
 </section>
 <section id="the-first-ggplot" class="slide level2 inv" data-number="4.2">
 <h2><span class="header-section-number">4.2</span> The first ggplot</h2>
-<p>Every plot starts with <code>ggplot(data, aes(...))</code>, then adds layers with <code>+</code>:</p>
-<div class="codewindow r" width="100%">
-<p>The first ggplot</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a aria-label="1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g)) <span class="sc">+</span></span>
-<span id="cb22-2"><a aria-label="2"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Every plot starts with <code>ggplot(data = , mapping = aes(...))</code>, then adds layers with <code>+</code>:</p>
+<div class="split-2">
+<div class="code-build">
+<pre class="fragment" data-fragment-index="1">ggplot(
+    data = penguins, 
+    mapping = aes(x = body_mass_g)
+  ) + </pre>
+<pre class="fragment cb-cur" data-fragment-index="2">  geom_histogram(bins = 30, color = "white")</pre>
 </div>
-<div class="paper-card">
+<div class="plot-stack">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-18-1.png" class="fragment step-plot" data-fragment-index="1" width="624"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-19-1.png" class="fragment step-plot" data-fragment-index="2" width="624"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="paper-card fragment">
 <p>This is the <em>same histogram</em> we drew in base R, but now each piece is explicit and easy to extend.</p>
 </div>
 <div class="code-pop">
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## The first ggplot {.inv}
 
-Every plot starts with `ggplot(data, aes(...))`, then adds layers with `+`:
+Every plot starts with `ggplot(data = , mapping = aes(...))`, then adds layers with `+`:
 
-::: {.codewindow .r width="100%"}
-The first ggplot
-```r
-ggplot(penguins, aes(x = body_mass_g)) +
-  geom_histogram(bins = 30)
+::: {.split-2}
+&lt;div class="code-build"&gt;
+  &lt;pre class="fragment" data-fragment-index="1"&gt;ggplot(
+    data = penguins, 
+    mapping = aes(x = body_mass_g)
+  ) + &lt;/pre&gt;
+  &lt;pre class="fragment cb-cur" data-fragment-index="2"&gt;  geom_histogram(bins = 30, color = "white")&lt;/pre&gt;
+&lt;/div&gt;
+
+::: {.plot-stack}
+```{r}
+#| echo: false
+#| fig-width: 6.5
+#| fig-height: 4.2
+#| out.extra: 'class="fragment step-plot" data-fragment-index="1"'
+ggplot(
+  data = penguins, 
+  mapping = aes(x = body_mass_g)
+)
+```
+
+```{r}
+#| echo: false
+#| fig-width: 6.5
+#| fig-height: 4.2
+#| out.extra: 'class="fragment step-plot" data-fragment-index="2"'
+ggplot(
+  data = penguins, 
+  mapping = aes(x = body_mass_g)
+) + 
+  geom_histogram(bins = 30, color = "white")
 ```
 :::
+:::
 
-::: {.paper-card}
+::: {.paper-card .fragment}
 This is the *same histogram* we drew in base R, but now each piece is explicit and easy to extend.
 :::
 </code></pre></div></details>
@@ -1472,17 +1916,26 @@ This is the *same histogram* we drew in base R, but now each piece is explicit a
 <p>Mapping variables to <code>x</code> and <code>y</code>, and a third to <code>color</code>:</p>
 <div class="split-2">
 <div class="code-build">
-<pre class="fragment" data-fragment-index="1">ggplot(penguins, aes(x = flipper_length_mm,
-                      y = body_mass_g))</pre>
-<pre class="fragment cb-cur" data-fragment-index="2">  + geom_point(aes(color = species), alpha = 0.7)</pre>
-<pre class="fragment cb-cur" data-fragment-index="3">  + theme_dark()</pre>
+<pre class="fragment" data-fragment-index="1">ggplot(
+    data = penguins,
+    mapping = aes(x = flipper_length_mm, y = body_mass_g)
+  ) + </pre>
+<pre class="fragment cb-cur" data-fragment-index="2">  geom_point(aes(color = species), alpha = 0.7) + </pre>
+<pre class="fragment cb-cur" data-fragment-index="3">  theme_dark() + </pre>
+<pre class="fragment cb-cur" data-fragment-index="4">  labs(
+    title = "Body mass variation with flipper length",
+    caption = "Data from the {palmerpengins} package.",
+    x = "Flipper Length (mm)", 
+    y = "Body Mass (g)", 
+    color = "Species"
+  )</pre>
 </div>
 <div class="plot-stack">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-11-1.png" class="fragment step-plot" data-fragment-index="1" width="624"></p>
+<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-20-1.png" class="fragment step-plot" data-fragment-index="1" width="624"></p>
 </figure>
 </div>
 </div>
@@ -1491,7 +1944,7 @@ This is the *same histogram* we drew in base R, but now each piece is explicit a
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-12-1.png" class="fragment step-plot" data-fragment-index="2" width="624"></p>
+<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-21-1.png" class="fragment step-plot" data-fragment-index="2" width="624"></p>
 </figure>
 </div>
 </div>
@@ -1500,17 +1953,24 @@ This is the *same histogram* we drew in base R, but now each piece is explicit a
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-13-1.png" class="fragment step-plot" data-fragment-index="3" width="624"></p>
+<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-22-1.png" class="fragment step-plot" data-fragment-index="3" width="624"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-23-1.png" class="fragment step-plot" data-fragment-index="4" width="624"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
 </div>
-<div class="fragment">
-<div class="callout-desc">
+<div class="paper-card fragment">
 <p><strong>Read it aloud.</strong> “Body mass grows with flipper length”, and each species clusters in its own region of this space. That’s a finding you’d never see from <code>summary()</code>.</p>
-</div>
 </div>
 <div class="code-pop">
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Scatter: two continuous variables {.inv}
@@ -1519,10 +1979,19 @@ Mapping variables to `x` and `y`, and a third to `color`:
 
 ::: {.split-2}
 &lt;div class="code-build"&gt;
-  &lt;pre class="fragment" data-fragment-index="1"&gt;ggplot(penguins, aes(x = flipper_length_mm,
-                      y = body_mass_g))&lt;/pre&gt;
-  &lt;pre class="fragment cb-cur" data-fragment-index="2"&gt;  + geom_point(aes(color = species), alpha = 0.7)&lt;/pre&gt;
-  &lt;pre class="fragment cb-cur" data-fragment-index="3"&gt;  + theme_dark()&lt;/pre&gt;
+  &lt;pre class="fragment" data-fragment-index="1"&gt;ggplot(
+    data = penguins,
+    mapping = aes(x = flipper_length_mm, y = body_mass_g)
+  ) + &lt;/pre&gt;
+  &lt;pre class="fragment cb-cur" data-fragment-index="2"&gt;  geom_point(aes(color = species), alpha = 0.7) + &lt;/pre&gt;
+  &lt;pre class="fragment cb-cur" data-fragment-index="3"&gt;  theme_dark() + &lt;/pre&gt;
+  &lt;pre class="fragment cb-cur" data-fragment-index="4"&gt;  labs(
+    title = "Body mass variation with flipper length",
+    caption = "Data from the {palmerpengins} package.",
+    x = "Flipper Length (mm)", 
+    y = "Body Mass (g)", 
+    color = "Species"
+  )&lt;/pre&gt;
 &lt;/div&gt;
 
 ::: {.plot-stack}
@@ -1552,15 +2021,28 @@ ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
   geom_point(aes(color = species), alpha = 0.7) +
   theme_dark()
 ```
+
+```{r}
+#| echo: false
+#| fig-width: 6.5
+#| fig-height: 4.2
+#| out.extra: 'class="fragment step-plot" data-fragment-index="4"'
+ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(aes(color = species), alpha = 0.7) +
+  theme_dark() +
+  labs(
+    title = "Body mass variation with flipper length",
+    caption = "Data from the {palmerpengins} package.",
+    x = "Flipper Length (mm)", 
+    y = "Body Mass (g)", 
+    color = "Species"
+  )
+```
 :::
 :::
 
-::: {.fragment}
-
-::: {.callout-desc}
+::: {.paper-card .fragment}
 **Read it aloud.** "Body mass grows with flipper length", and each species clusters in its own region of this space. That's a finding you'd never see from `summary()`.
-:::
-
 :::
 </code></pre></div></details>
 </div>
@@ -1570,18 +2052,27 @@ ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
 <p><strong>Faceting</strong> splits the plot into small multiples: one per level of a variable:</p>
 <div class="split-2">
 <div class="code-build">
-<pre class="fragment" data-fragment-index="1">ggplot(penguins, aes(x = body_mass_g))</pre>
-<pre class="fragment cb-cur" data-fragment-index="2">  + geom_histogram(bins = 25, fill = "#2E7D6B",
-                    color = "#17251F")</pre>
-<pre class="fragment cb-cur" data-fragment-index="3">  + facet_wrap(~ species, ncol = 1)</pre>
-<pre class="fragment cb-cur" data-fragment-index="4">  + theme_dark()</pre>
+<pre class="fragment" data-fragment-index="1">ggplot(
+    data = penguins, 
+    mapping = aes(x = body_mass_g)
+  ) + </pre>
+<pre class="fragment cb-cur" data-fragment-index="2">  geom_histogram(
+    bins = 25, 
+    fill = "#2E7D6B", 
+    color = "#17251F"
+  ) + </pre>
+<pre class="fragment cb-cur" data-fragment-index="3">  facet_wrap(
+    facets = vars(species), 
+    ncol = 1
+  ) + </pre>
+<pre class="fragment cb-cur" data-fragment-index="4">  theme_dark()</pre>
 </div>
 <div class="plot-stack">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-14-1.png" class="fragment step-plot" data-fragment-index="1" width="624"></p>
+<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-24-1.png" class="fragment step-plot" data-fragment-index="1" width="624"></p>
 </figure>
 </div>
 </div>
@@ -1590,7 +2081,7 @@ ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-15-1.png" class="fragment step-plot" data-fragment-index="2" width="624"></p>
+<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-25-1.png" class="fragment step-plot" data-fragment-index="2" width="624"></p>
 </figure>
 </div>
 </div>
@@ -1599,7 +2090,7 @@ ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-16-1.png" class="fragment step-plot" data-fragment-index="3" width="624"></p>
+<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-26-1.png" class="fragment step-plot" data-fragment-index="3" width="624"></p>
 </figure>
 </div>
 </div>
@@ -1608,17 +2099,15 @@ ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-17-1.png" class="fragment step-plot" data-fragment-index="4" width="624"></p>
+<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-27-1.png" class="fragment step-plot" data-fragment-index="4" width="624"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
 </div>
-<div class="fragment">
-<div class="callout-desc">
+<div class="paper-card fragment">
 <p>Different species have <em>different</em> distributions of body mass: a comparison that’s hard to see in one pooled histogram.</p>
-</div>
 </div>
 <div class="code-pop">
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## One variable per facet {.inv}
@@ -1627,11 +2116,20 @@ ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
 
 ::: {.split-2}
 &lt;div class="code-build"&gt;
-  &lt;pre class="fragment" data-fragment-index="1"&gt;ggplot(penguins, aes(x = body_mass_g))&lt;/pre&gt;
-  &lt;pre class="fragment cb-cur" data-fragment-index="2"&gt;  + geom_histogram(bins = 25, fill = "#2E7D6B",
-                    color = "#17251F")&lt;/pre&gt;
-  &lt;pre class="fragment cb-cur" data-fragment-index="3"&gt;  + facet_wrap(~ species, ncol = 1)&lt;/pre&gt;
-  &lt;pre class="fragment cb-cur" data-fragment-index="4"&gt;  + theme_dark()&lt;/pre&gt;
+  &lt;pre class="fragment" data-fragment-index="1"&gt;ggplot(
+    data = penguins, 
+    mapping = aes(x = body_mass_g)
+  ) + &lt;/pre&gt;
+  &lt;pre class="fragment cb-cur" data-fragment-index="2"&gt;  geom_histogram(
+    bins = 25, 
+    fill = "#2E7D6B", 
+    color = "#17251F"
+  ) + &lt;/pre&gt;
+  &lt;pre class="fragment cb-cur" data-fragment-index="3"&gt;  facet_wrap(
+    facets = vars(species), 
+    ncol = 1
+  ) + &lt;/pre&gt;
+  &lt;pre class="fragment cb-cur" data-fragment-index="4"&gt;  theme_dark()&lt;/pre&gt;
 &lt;/div&gt;
 
 ::: {.plot-stack}
@@ -1675,12 +2173,8 @@ ggplot(penguins, aes(x = body_mass_g)) +
 :::
 :::
 
-::: {.fragment}
-
-::: {.callout-desc}
+::: {.paper-card .fragment}
 Different species have *different* distributions of body mass: a comparison that's hard to see in one pooled histogram.
-:::
-
 :::
 </code></pre></div></details>
 </div>
@@ -1690,18 +2184,20 @@ Different species have *different* distributions of body mass: a comparison that
 <p>Categorical <code>x</code> + continuous <code>y</code>:</p>
 <div class="split-2">
 <div class="code-build">
-<pre class="fragment" data-fragment-index="1">ggplot(penguins, aes(x = species, y = body_mass_g,
-                      fill = species))</pre>
-<pre class="fragment cb-cur" data-fragment-index="2">  + geom_boxplot(alpha = 0.8)</pre>
-<pre class="fragment cb-cur" data-fragment-index="3">  + theme_dark()</pre>
-<pre class="fragment cb-cur" data-fragment-index="4">  + theme(legend.position = "none")</pre>
+<pre class="fragment" data-fragment-index="1">ggplot(
+    data = penguins, 
+    mapping = aes(x = species, y = bill_length_mm, fill = species)
+  ) + </pre>
+<pre class="fragment cb-cur" data-fragment-index="2">  geom_boxplot(alpha = 0.8) + </pre>
+<pre class="fragment cb-cur" data-fragment-index="3">  theme_dark() + </pre>
+<pre class="fragment cb-cur" data-fragment-index="4">  theme(legend.position = "none")</pre>
 </div>
 <div class="plot-stack">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-18-1.png" class="fragment step-plot" data-fragment-index="1" width="624"></p>
+<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-28-1.png" class="fragment step-plot" data-fragment-index="1" width="624"></p>
 </figure>
 </div>
 </div>
@@ -1710,7 +2206,7 @@ Different species have *different* distributions of body mass: a comparison that
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-19-1.png" class="fragment step-plot" data-fragment-index="2" width="624"></p>
+<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-29-1.png" class="fragment step-plot" data-fragment-index="2" width="624"></p>
 </figure>
 </div>
 </div>
@@ -1719,7 +2215,7 @@ Different species have *different* distributions of body mass: a comparison that
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-20-1.png" class="fragment step-plot" data-fragment-index="3" width="624"></p>
+<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-30-1.png" class="fragment step-plot" data-fragment-index="3" width="624"></p>
 </figure>
 </div>
 </div>
@@ -1728,17 +2224,15 @@ Different species have *different* distributions of body mass: a comparison that
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-21-1.png" class="fragment step-plot" data-fragment-index="4" width="624"></p>
+<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-31-1.png" class="fragment step-plot" data-fragment-index="4" width="624"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
 </div>
-<div class="fragment">
-<div class="callout-desc">
+<div class="paper-card fragment">
 <p>A boxplot shows the median, the box (IQR) and outliers at a glance: ideal for comparing a numeric variable <em>across groups</em>.</p>
-</div>
 </div>
 <div class="code-pop">
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Boxplots for groups {.inv}
@@ -1747,11 +2241,13 @@ Categorical `x` + continuous `y`:
 
 ::: {.split-2}
 &lt;div class="code-build"&gt;
-  &lt;pre class="fragment" data-fragment-index="1"&gt;ggplot(penguins, aes(x = species, y = body_mass_g,
-                      fill = species))&lt;/pre&gt;
-  &lt;pre class="fragment cb-cur" data-fragment-index="2"&gt;  + geom_boxplot(alpha = 0.8)&lt;/pre&gt;
-  &lt;pre class="fragment cb-cur" data-fragment-index="3"&gt;  + theme_dark()&lt;/pre&gt;
-  &lt;pre class="fragment cb-cur" data-fragment-index="4"&gt;  + theme(legend.position = "none")&lt;/pre&gt;
+  &lt;pre class="fragment" data-fragment-index="1"&gt;ggplot(
+    data = penguins, 
+    mapping = aes(x = species, y = bill_length_mm, fill = species)
+  ) + &lt;/pre&gt;
+  &lt;pre class="fragment cb-cur" data-fragment-index="2"&gt;  geom_boxplot(alpha = 0.8) + &lt;/pre&gt;
+  &lt;pre class="fragment cb-cur" data-fragment-index="3"&gt;  theme_dark() + &lt;/pre&gt;
+  &lt;pre class="fragment cb-cur" data-fragment-index="4"&gt;  theme(legend.position = "none")&lt;/pre&gt;
 &lt;/div&gt;
 
 ::: {.plot-stack}
@@ -1760,7 +2256,7 @@ Categorical `x` + continuous `y`:
 #| fig-width: 6.5
 #| fig-height: 4.2
 #| out.extra: 'class="fragment step-plot" data-fragment-index="1"'
-ggplot(penguins, aes(x = species, y = body_mass_g, fill = species))
+ggplot(penguins, aes(x = species, y = bill_length_mm, fill = species))
 ```
 
 ```{r}
@@ -1768,7 +2264,7 @@ ggplot(penguins, aes(x = species, y = body_mass_g, fill = species))
 #| fig-width: 6.5
 #| fig-height: 4.2
 #| out.extra: 'class="fragment step-plot" data-fragment-index="2"'
-ggplot(penguins, aes(x = species, y = body_mass_g, fill = species)) +
+ggplot(penguins, aes(x = species, y = bill_length_mm, fill = species)) +
   geom_boxplot(alpha = 0.8)
 ```
 
@@ -1777,7 +2273,7 @@ ggplot(penguins, aes(x = species, y = body_mass_g, fill = species)) +
 #| fig-width: 6.5
 #| fig-height: 4.2
 #| out.extra: 'class="fragment step-plot" data-fragment-index="3"'
-ggplot(penguins, aes(x = species, y = body_mass_g, fill = species)) +
+ggplot(penguins, aes(x = species, y = bill_length_mm, fill = species)) +
   geom_boxplot(alpha = 0.8) +
   theme_dark()
 ```
@@ -1787,7 +2283,7 @@ ggplot(penguins, aes(x = species, y = body_mass_g, fill = species)) +
 #| fig-width: 6.5
 #| fig-height: 4.2
 #| out.extra: 'class="fragment step-plot" data-fragment-index="4"'
-ggplot(penguins, aes(x = species, y = body_mass_g, fill = species)) +
+ggplot(penguins, aes(x = species, y = bill_length_mm, fill = species)) +
   geom_boxplot(alpha = 0.8) +
   theme_dark() +
   theme(legend.position = "none")
@@ -1795,46 +2291,71 @@ ggplot(penguins, aes(x = species, y = body_mass_g, fill = species)) +
 :::
 :::
 
-::: {.fragment}
-
-::: {.callout-desc}
+::: {.paper-card .fragment}
 A boxplot shows the median, the box (IQR) and outliers at a glance: ideal for comparing a numeric variable *across groups*.
-:::
-
 :::
 </code></pre></div></details>
 </div>
 </section>
 <section id="order-factors-with-forcats" class="slide level2 inv" data-number="4.6">
-<h2><span class="header-section-number">4.6</span> Order factors with <code>forcats</code></h2>
-<p>Plots order themselves however the factor levels say: <code>forcats</code> (part of the tidyverse) lets you <strong>reorder</strong> those levels so graphs tell the story you want:</p>
-<div class="codewindow r" width="100%">
-<p><code>fct_reorder</code> sorts a factor by another variable</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a aria-label="1"></a>penguins <span class="sc">|&gt;</span></span>
-<span id="cb23-2"><a aria-label="2"></a>  <span class="fu">mutate</span>(<span class="at">species =</span> <span class="fu">fct_reorder</span>(species, body_mass_g, median, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb23-3"><a aria-label="3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> body_mass_g, <span class="at">fill =</span> species)) <span class="sc">+</span></span>
-<span id="cb23-4"><a aria-label="4"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<h2><span class="header-section-number">4.6</span> Order factors with <a href="https://forcats.tidyverse.org">{forcats}</a></h2>
+<p><a href="https://forcats.tidyverse.org">{forcats}</a> lets you <strong>reorder</strong> those levels so graphs tell the story you want:</p>
+<div class="codewindow r" width="100%" name="fct-reorder.R">
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a aria-label="1"></a>penguins <span class="sc">|&gt;</span></span>
+<span id="cb33-2"><a aria-label="2"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">species =</span> forcats<span class="sc">::</span><span class="fu">fct_reorder</span>(</span>
+<span id="cb33-3"><a aria-label="3"></a>    <span class="at">.f =</span> species, </span>
+<span id="cb33-4"><a aria-label="4"></a>    <span class="at">.x =</span> bill_length_mm, </span>
+<span id="cb33-5"><a aria-label="5"></a>    <span class="at">.fun =</span> median, </span>
+<span id="cb33-6"><a aria-label="6"></a>    <span class="at">na.rm =</span> <span class="cn">TRUE</span></span>
+<span id="cb33-7"><a aria-label="7"></a>  )) <span class="sc">|&gt;</span></span>
+<span id="cb33-8"><a aria-label="8"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(</span>
+<span id="cb33-9"><a aria-label="9"></a>    <span class="at">x =</span> species, </span>
+<span id="cb33-10"><a aria-label="10"></a>    <span class="at">y =</span> bill_length_mm, </span>
+<span id="cb33-11"><a aria-label="11"></a>    <span class="at">fill =</span> species</span>
+<span id="cb33-12"><a aria-label="12"></a>  )) <span class="sc">+</span></span>
+<span id="cb33-13"><a aria-label="13"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-32-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div></div>
 </div>
 <div class="paper-card">
-<p><code>fct_reorder</code> puts the <em>highest median first</em> on the axis: order becomes part of your message. <code>fct_relevel</code>/<code>fct_lump</code> fine-tune and collapse rare levels.</p>
+<p><code>fct_reorder()</code> puts the <em>highest median first</em> on the axis: order becomes part of your message. <code>fct_relevel</code>/<code>fct_lump</code> fine-tune and collapse rare levels.</p>
 </div>
 <div class="code-pop">
-<details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Order factors with `forcats` {.inv}
+<details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Order factors with [{forcats}](https://forcats.tidyverse.org) {.inv}
 
-Plots order themselves however the factor levels say: `forcats` (part of the tidyverse) lets you **reorder** those levels so graphs tell the story you want:
+[{forcats}](https://forcats.tidyverse.org) lets you **reorder** those levels so graphs tell the story you want:
 
-::: {.codewindow .r width="100%"}
-`fct_reorder` sorts a factor by another variable
-```r
+::: {.codewindow .r width="100%" name="fct-reorder.R"}
+```{r}
+#| echo: true
+#| output-location: column
 penguins |&gt;
-  mutate(species = fct_reorder(species, body_mass_g, median, na.rm = TRUE)) |&gt;
-  ggplot(aes(x = species, y = body_mass_g, fill = species)) +
+  dplyr::mutate(species = forcats::fct_reorder(
+    .f = species, 
+    .x = bill_length_mm, 
+    .fun = median, 
+    na.rm = TRUE
+  )) |&gt;
+  ggplot(mapping = aes(
+    x = species, 
+    y = bill_length_mm, 
+    fill = species
+  )) +
   geom_boxplot()
 ```
 :::
 
 ::: {.paper-card}
-`fct_reorder` puts the *highest median first* on the axis: order becomes part of your message. `fct_relevel`/`fct_lump` fine-tune and collapse rare levels.
+`fct_reorder()` puts the *highest median first* on the axis: order becomes part of your message. `fct_relevel`/`fct_lump` fine-tune and collapse rare levels.
 :::
 </code></pre></div></details>
 </div>
@@ -1844,19 +2365,25 @@ penguins |&gt;
 <p>An important ggplot2 habit: plots are built from <strong>many layers</strong>. For example, scatter + a smooth trend:</p>
 <div class="split-2">
 <div class="code-build">
-<pre class="fragment" data-fragment-index="1">ggplot(penguins, aes(x = flipper_length_mm,
-                      y = body_mass_g))</pre>
-<pre class="fragment cb-cur" data-fragment-index="2">  + geom_point(aes(color = species), alpha = 0.6)</pre>
-<pre class="fragment cb-cur" data-fragment-index="3">  + geom_smooth(method = "lm", se = FALSE,
-                 color = "#E8A33D", linewidth = 1)</pre>
-<pre class="fragment cb-cur" data-fragment-index="4">  + theme_dark()</pre>
+<pre class="fragment" data-fragment-index="1">ggplot(
+    data = penguins, 
+    mapping = aes(x = flipper_length_mm, y = body_mass_g)
+  ) + </pre>
+<pre class="fragment cb-cur" data-fragment-index="2">  geom_point(aes(color = species), alpha = 0.6) + </pre>
+<pre class="fragment cb-cur" data-fragment-index="3">  geom_smooth(
+    method = "lm", 
+    se = FALSE, 
+    color = "#E8A33D", 
+    linewidth = 1
+  ) + </pre>
+<pre class="fragment cb-cur" data-fragment-index="4">  theme_dark()</pre>
 </div>
 <div class="plot-stack">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-22-1.png" class="fragment step-plot" data-fragment-index="1" width="624"></p>
+<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-33-1.png" class="fragment step-plot" data-fragment-index="1" width="624"></p>
 </figure>
 </div>
 </div>
@@ -1865,7 +2392,7 @@ penguins |&gt;
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-23-1.png" class="fragment step-plot" data-fragment-index="2" width="624"></p>
+<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-34-1.png" class="fragment step-plot" data-fragment-index="2" width="624"></p>
 </figure>
 </div>
 </div>
@@ -1874,7 +2401,7 @@ penguins |&gt;
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-24-1.png" class="fragment step-plot" data-fragment-index="3" width="624"></p>
+<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-35-1.png" class="fragment step-plot" data-fragment-index="3" width="624"></p>
 </figure>
 </div>
 </div>
@@ -1883,17 +2410,15 @@ penguins |&gt;
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-25-1.png" class="fragment step-plot" data-fragment-index="4" width="624"></p>
+<p><img data-src="session-2_files/figure-revealjs/unnamed-chunk-36-1.png" class="fragment step-plot" data-fragment-index="4" width="624"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
 </div>
-<div class="fragment">
-<div class="callout-desc">
+<div class="paper-card fragment">
 <p><code>geom_point()</code> and <code>geom_smooth()</code> <em>layer</em> on the same plot, each with its own mapping. This layering is what makes ggplot2 so expressive.</p>
-</div>
 </div>
 <div class="code-pop">
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Layers compose {.inv}
@@ -1902,12 +2427,18 @@ An important ggplot2 habit: plots are built from **many layers**. For example, s
 
 ::: {.split-2}
 &lt;div class="code-build"&gt;
-  &lt;pre class="fragment" data-fragment-index="1"&gt;ggplot(penguins, aes(x = flipper_length_mm,
-                      y = body_mass_g))&lt;/pre&gt;
-  &lt;pre class="fragment cb-cur" data-fragment-index="2"&gt;  + geom_point(aes(color = species), alpha = 0.6)&lt;/pre&gt;
-  &lt;pre class="fragment cb-cur" data-fragment-index="3"&gt;  + geom_smooth(method = "lm", se = FALSE,
-                 color = "#E8A33D", linewidth = 1)&lt;/pre&gt;
-  &lt;pre class="fragment cb-cur" data-fragment-index="4"&gt;  + theme_dark()&lt;/pre&gt;
+  &lt;pre class="fragment" data-fragment-index="1"&gt;ggplot(
+    data = penguins, 
+    mapping = aes(x = flipper_length_mm, y = body_mass_g)
+  ) + &lt;/pre&gt;
+  &lt;pre class="fragment cb-cur" data-fragment-index="2"&gt;  geom_point(aes(color = species), alpha = 0.6) + &lt;/pre&gt;
+  &lt;pre class="fragment cb-cur" data-fragment-index="3"&gt;  geom_smooth(
+    method = "lm", 
+    se = FALSE, 
+    color = "#E8A33D", 
+    linewidth = 1
+  ) + &lt;/pre&gt;
+  &lt;pre class="fragment cb-cur" data-fragment-index="4"&gt;  theme_dark()&lt;/pre&gt;
 &lt;/div&gt;
 
 ::: {.plot-stack}
@@ -1951,29 +2482,31 @@ ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
 :::
 :::
 
-::: {.fragment}
-
-::: {.callout-desc}
+::: {.paper-card .fragment}
 `geom_point()` and `geom_smooth()` *layer* on the same plot, each with its own mapping. This layering is what makes ggplot2 so expressive.
-:::
-
 :::
 </code></pre></div></details>
 </div>
 </section>
 <section id="a-grammar-not-a-menu" class="slide level2 inv" data-number="4.8">
 <h2><span class="header-section-number">4.8</span> A grammar, not a menu</h2>
+<div class="spread spread-md spread-evenly">
 <p>The power is <strong>consistency</strong>: you learn a few verbs (<code>geom_point</code>, <code>geom_bar</code>, <code>geom_histogram</code>, <code>facet_wrap</code>, <code>aes</code>) and combine them, instead of memorising a different function per plot type.</p>
-<p>There’s a gallery of extensions (e.g.&nbsp;<code>{ggpubr}</code>, <code>{patchwork}</code>, <code>{plotly}</code> for interactivity).</p>
+<p>There’s a gallery of extensions (e.g.&nbsp;<code>{ggpubr}</code>, <code>{patchwork}</code>, <code>{plotly}</code> for interactivity): <a href="https://exts.ggplot2.tidyverse.org" class="uri">https://exts.ggplot2.tidyverse.org</a></p>
+</div>
 <div class="callout-desc">
 <p>We’ll run a <em>ggplot2 build-up</em> live: from a bare histogram to a faceted, titled, themed figure in a handful of added lines. Watch how small edits compound.</p>
 </div>
 <div class="code-pop">
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## A grammar, not a menu {.inv}
 
+::: {.spread .spread-md .spread-evenly}
+
 The power is **consistency**: you learn a few verbs (`geom_point`, `geom_bar`, `geom_histogram`, `facet_wrap`, `aes`) and combine them, instead of memorising a different function per plot type.
 
-There's a gallery of extensions (e.g. `{ggpubr}`, `{patchwork}`, `{plotly}` for interactivity).
+There's a gallery of extensions (e.g. `{ggpubr}`, `{patchwork}`, `{plotly}` for interactivity): &lt;https://exts.ggplot2.tidyverse.org&gt;
+
+:::
 
 ::: {.callout-desc}
 We'll run a *ggplot2 build-up* live: from a bare histogram to a faceted, titled, themed figure in a handful of added lines. Watch how small edits compound.
