@@ -74,6 +74,11 @@ window.RevealJsTabset = function () {
        * `data-tab-active`, then sets up fragment indices for tab content and
        * creates invisible fragment triggers for tab navigation.
        */
+      // Build the per-tab ARIA structure and activate any non-zero initial tab.
+      // Unlike the fragment-indexing below, this must happen on reveal's own
+      // `ready`: the codewindow plugin transforms `.editor` blocks on the later
+      // `window 'ready'`, and this bookkeeping lives on the tabset container,
+      // which is untouched by that transform.
       deck.on("ready", function () {
         const tabsetSlides = document.querySelectorAll(
           ".reveal .slides section .panel-tabset",
@@ -106,6 +111,29 @@ window.RevealJsTabset = function () {
               tabLinks[initialTabIndex].click();
             }
           }
+        });
+      });
+
+      // Assign fragment indices and insert the tab-navigation triggers only
+      // AFTER the codewindow extension has replaced each `.editor` block with a
+      // tabbed pane (it runs on `window 'ready'`, later than reveal's `ready`,
+      // and is registered before this listener so it runs first).
+      //
+      // A fragment-stepped multi-tab codewindow nested inside a tabset works
+      // here because the codewindow's `Reveal.sync()` has already run by the
+      // time this listener fires, so the interleaved order this loop assigns
+      // (pane fragments, then this tabset's fragment, then the next pane's)
+      // is the final one and is not re-scrambled by a later re-sort.
+      window.addEventListener("ready", function () {
+        const tabsetSlides = document.querySelectorAll(
+          ".reveal .slides section .panel-tabset",
+        );
+
+        tabsetSlides.forEach(function (tabset) {
+          const tabs = tabset.querySelectorAll(TAB_SELECTOR);
+          const tabCount = tabs.length;
+
+          if (tabCount <= 1) return;
 
           const tabPanes = getTabPanes(tabset);
           const parentNode = tabset.parentNode;

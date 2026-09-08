@@ -113,104 +113,177 @@ The pipe keeps your script readable **top-to-bottom**; the nested alternative re
 
 ## Rows and columns: `filter` & `select` {.inv}
 
-Two verbs get you the *slice* you need: **rows** by a condition, **columns** by name:
+::: {.panel-tabset}
 
-::: {.codewindow .r width="100%"}
-filter rows, select columns
-```r
-penguins |> dplyr::filter(body_mass_g >= 4000)                 # keep rows that match
-penguins |> dplyr::filter(species != "Chinstrap", !is.na(sex)) # conditions AND together
-penguins |> dplyr::select(species, island, body_mass_g)        # keep these columns
-penguins |> dplyr::select(-bill_depth_mm)                      # or drop just one
+### Filter rows
+
+::: {.codewindow}
+
+::: {.editor .r name="01-filter-rows.R"}
+```{r}
+#| echo: true
+#| output-location: column
+penguins |> 
+  # keep penguins with body mass ≥ 4000 g
+  dplyr::filter(body_mass_g >= 4000) |> 
+  # show the first 4 penguins that meet this condition
+  dplyr::slice(1:4)
 ```
 :::
 
-::: {.paper-card}
-- `filter()` keeps **rows**;
-- `select()` keeps **columns**;
-- Multiple conditions in `filter` are AND-ed by default.
+::: {.editor .r .fragment name="02-filter-rows.R"}
+```{r}
+#| echo: true
+#| output-location: column
+penguins |> 
+  # conditions AND together
+  dplyr::filter(species != "Chinstrap", !is.na(sex)) |>
+  # show first 5 rows
+  dplyr::slice(1:5)
+```
 :::
 
-- Helper functions for `select()`: <https://dplyr.tidyverse.org/reference/select.html>
-- Helper functions for `filter()`: <https://dplyr.tidyverse.org/reference/filter.html>
+:::
+
+::: {.paper-card}
+- [filter()](https://dplyr.tidyverse.org/reference/filter.html) keeps **rows**;
+- Multiple conditions in `filter` are AND-ed by default; use other logical operators (`|`, `!`, `%in%`) to combine them.
+:::
+
+### Select columns
+
+::: {.codewindow}
+
+::: {.editor .r name="select-columns.R"}
+```{r}
+#| echo: true
+#| output-location: column
+penguins |> 
+  # keep these columns
+  dplyr::select(species, island, body_mass_g)
+```
+:::
+
+::: {.editor .r .fragment name="drop-columns.R"}
+```{r}
+#| echo: true
+#| output-location: column
+penguins |> 
+  # drop columns whose names end with "_mm"
+  dplyr::select(-dplyr::ends_with("_mm"))
+```
+:::
+
+:::
+
+::: {.paper-card}
+- [select()](https://dplyr.tidyverse.org/reference/select.html) keeps **columns**;
+- helpful helpers: `starts_with()`, `ends_with()`, `contains()`, `matches()`, `everything()`.
+:::
+
+:::
 
 ## New columns: `mutate` {.inv}
 
-`mutate()` computes **new columns** from existing ones, keeping everything else:
-
 ::: {.codewindow .r width="100%"}
-Compute a new column with `mutate()`
+mutate.R
 ```{r}
 #| echo: true
 penguins |>
+  # compute the body-mass index (BMI) in kg/m²
   dplyr::mutate(bmi = body_mass_g / (flipper_length_mm / 100)^2) |>
+  # keep only the columns we want to see
   dplyr::select(species, flipper_length_mm, body_mass_g, bmi) |> 
-  dplyr::slice(1:5) # show first 5 rows
+  # show first 5 rows
+  dplyr::slice(1:5)
 ```
 :::
 
 ::: {.paper-card}
+- [mutate()](https://dplyr.tidyverse.org/reference/mutate.html) computes **new columns** from existing ones, keeping everything else;
 - New columns are available to later steps in the **same** pipe;
 - You can `mutate()` several columns at once.
 :::
 
-Helper functions for `mutate()`: <https://dplyr.tidyverse.org/reference/mutate.html>
-
 ## Recode with `case_when` {.inv}
 
-`case_when()` turns a sequence of **if…else** conditions into a new column: a tidyverse-friendly replacement for nested `ifelse`:
-
 ::: {.codewindow .r width="100%"}
-Multiple conditions, first match wins
-```r
+case-when.R
+```{r}
+#| echo: true
+#| output-location: column
 penguins |>
+  # create a new column "size" based on body mass
   dplyr::mutate(size = dplyr::case_when(
     body_mass_g >= 5000 ~ "large",
     body_mass_g >= 3500 ~ "medium",
     .default = "small"
-  ))
+  )) |> 
+  # keep only the columns we want to see
+  dplyr::select(species, body_mass_g, size) |>
+  # show first 10 rows
+  dplyr::slice(1:10)
 ```
 :::
 
 ::: {.paper-card}
-- `case_when` reads like a **look-up table**: each `condition ~ value` row is evaluated in order, and `.default` catches everything else;
+- [case_when()](https://dplyr.tidyverse.org/reference/case-and-replace-when.html) turns a sequence of **if…else** conditions into a new column: a tidyverse-friendly replacement for nested `ifelse`;
+- `case_when()` reads like a **look-up table**: each `condition ~ value` row is evaluated in order, and `.default` catches everything else;
 - Perfect for binning or relabelling inside a `mutate()`.
 :::
 
-Documentation: <https://dplyr.tidyverse.org/reference/case-and-replace-when.html>
+## Strings with [{stringr}](https://stringr.tidyverse.org) {.inv}
 
-## Strings with `stringr` {.inv}
+::: {.codewindow}
 
-`stringr` gives you one consistent family for **text**: every function is `str_*` with the string first, so they all pipe:
-
-::: {.codewindow .r width="100%"}
-The `str_*` verbs: detect, replace, extract
-```r
+::: {.editor .r name="01-string-manipulation.R"}
+```{r}
+#| echo: true
+#| output-location: column
 penguins |>
-  dplyr::filter(stringr::str_detect(species, "inst"))         # species contains "inst" (Chinstrap…)
-
-species_clean <- penguins |>
-  dplyr::mutate(species = stringr::str_to_title(species))     # "adelie" → "Adelie"
+  # species contains "inst" (Chinstrap…)
+  dplyr::filter(stringr::str_detect(species, "inst")) |> 
+  dplyr::select(species, island, body_mass_g) |>
+  dplyr::slice(1:14)
 ```
 :::
 
+::: {.editor .r .fragment name="02-string-manipulation.R"}
+```{r}
+#| echo: true
+#| output-location: column
+species_clean <- penguins |>
+  # "adelie" → "Adelie"
+  dplyr::mutate(
+    species = stringr::str_to_title(species)
+  )
+species_clean |>
+  # "Adelie" → "Adélie"
+  dplyr::mutate(
+    species = stringr::str_replace(
+      species, 
+      pattern = "Adelie", 
+      replacement = "Adélie"
+    )
+  ) |>
+  dplyr::select(species, island, body_mass_g) |>
+  dplyr::slice(1:14)
+```
+:::
+
+:::
+
 ::: {.paper-card}
+- [{stringr}](https://stringr.tidyverse.org) gives you one consistent family for **text**: every function is `str_*` with the string first, so they all pipe;
 - `str_detect` pairs with `filter`,
 - `str_replace`/`str_to_*` with `mutate`: strings behave exactly like any tidyverse column once you use `str_*`.
 :::
 
-Documentation: <https://stringr.tidyverse.org>
-
 ## Sort: `arrange` {.inv}
 
-`arrange()` sorts the rows; wrap a column in `desc()` to go **descending**:
+::: {.codewindow}
 
-::: {.panel-tabset}
-
-### Ascending order
-
-::: {.codewindow .r width="100%"}
-Sort with `arrange()` / `desc()`
+::: {.editor .r name="01-arrange-ascending.R"}
 ```{r}
 #| echo: true
 penguins |> 
@@ -218,27 +291,49 @@ penguins |>
 ```
 :::
 
-### Descending order
-
-::: {.codewindow .r width="100%"}
-Sort with `arrange()` / `desc()`
+::: {.editor .r .fragment name="02-arrange-descending.R"}
 ```{r}
 #| echo: true
 penguins |> 
-  dplyr::arrange(dplyr::desc(body_mass_g), species) # heaviest first, ties by species
+  dplyr::arrange(dplyr::desc(body_mass_g), bill_length_mm) # heaviest first, ties by bill length
 ```
 :::
 
 :::
 
+::: {.paper-card}
+- [arrange()](https://dplyr.tidyverse.org/reference/arrange.html) sorts the rows;
+- Wrap a column in [desc()](https://dplyr.tidyverse.org/reference/desc.html) to go **descending**.
+:::
+
 ## Summarise by group {.inv}
 
-`group_by()` + `summarise()` collapse rows into **one row per group**: `group_by` sets the split, `summarise` reduces each group:
-
-::: {.split-2}
-<div class="tile-flow">
+<div class="tile-stage">
 <div class="tile-panel">
-<div class="tile-cue">data · 4 rows</div>
+<div class="tile-cue">data · ungrouped</div>
+<div class="tile-grid">
+<div class="tg-head"><span>species</span><span>mass (g)</span></div>
+<div class="tile-row">
+<div class="tile" style="background:#8B94A0">Adelie</div>
+<div class="tile" style="background:#8B94A0;opacity:.72">3400</div>
+</div>
+<div class="tile-row">
+<div class="tile" style="background:#8B94A0">Adelie</div>
+<div class="tile" style="background:#8B94A0;opacity:.72">3700</div>
+</div>
+<div class="tile-row">
+<div class="tile" style="background:#8B94A0">Gentoo</div>
+<div class="tile" style="background:#8B94A0;opacity:.72">4700</div>
+</div>
+<div class="tile-row">
+<div class="tile" style="background:#8B94A0">Gentoo</div>
+<div class="tile" style="background:#8B94A0;opacity:.72">5200</div>
+</div>
+</div>
+</div>
+<div class="tile-arrow fragment" data-fragment-index="1"><span class="cap">group_by</span>→</div>
+<div class="tile-panel fragment" data-fragment-index="1">
+<div class="tile-cue">grouped · 4 rows</div>
 <div class="tile-grid">
 <div class="tg-head"><span>species</span><span>mass (g)</span></div>
 <div class="tile-row">
@@ -259,9 +354,8 @@ penguins |>
 </div>
 </div>
 </div>
-<div class="tile-flow-after fragment">
-<div class="tile-arrow"><span class="cap">group_by +<br>summarise</span>→</div>
-<div class="tile-panel">
+<div class="tile-arrow fragment" data-fragment-index="2"><span class="cap">summarise</span>→</div>
+<div class="tile-panel fragment" data-fragment-index="2">
 <div class="tile-cue">summary · one row per group</div>
 <div class="tile-grid">
 <div class="tg-head"><span>species</span><span>n</span><span>mean</span></div>
@@ -278,13 +372,14 @@ penguins |>
 </div>
 </div>
 </div>
-</div>
 
-::: {.codewindow .r width="100%"}
-`group_by()` + `summarise()`
+::: {.fragment fragment-index=3}
+
+::: {.codewindow .r width="100%" name="grouped-summarise.R"}
 ```{r}
 #| warning: false
 #| echo: true
+#| output-location: column
 penguins |>
   dplyr::group_by(species) |>
   dplyr::summarise(
@@ -293,51 +388,60 @@ penguins |>
   )
 ```
 :::
+
 :::
 
-::: {.callout-desc}
-`n()` counts rows per group; `na.rm = TRUE` skips missing values.
+::: {.fragment fragment-index=3}
+
+::: {.paper-card}
+- [group_by()](https://dplyr.tidyverse.org/reference/group_by.html) splits the data;
+- [summarise()](https://dplyr.tidyverse.org/reference/summarise.html) collapses rows into **one row per group**;
+- [n()](https://dplyr.tidyverse.org/reference/n.html) counts rows per group; `na.rm = TRUE` skips missing values.
+:::
+
 :::
 
 ## `across()`: apply to many columns {.inv}
 
-`across()` applies one expression to **every column that matches** a selector: no copy-pasting verbs per column:
-
 ::: {.codewindow .r width="100%"}
-Apply `mean` within a group, over several columns
+across.R
 ```{r}
 #| echo: true
 penguins |>
   dplyr::group_by(species) |>
   dplyr::summarise(dplyr::across(
-    dplyr::where(is.numeric), 
-    \(x) mean(x, na.rm = TRUE)
+    .cols = dplyr::where(is.numeric), 
+    .fns = \(.x) {
+      mean(.x, na.rm = TRUE)
+    }
   ))
 ```
 :::
 
 ::: {.paper-card}
-`across(where(is.numeric), …)` targets a whole **family** of columns at once: the bridge from "many similar lines" to programmatic thinking you'll meet again in Session 3's functions.
+- [`across()`](https://dplyr.tidyverse.org/reference/across.html) applies one expression to **every column that matches** a selector: no copy-pasting verbs per column;
+- `across(where(is.numeric), ...)` targets a whole **family** of columns at once: the bridge from "many similar lines" to programmatic thinking you'll meet again in Session 3's functions;
+- `\() {}` is the anonymous (lambda) function syntax to create a custom function.
 :::
 
 ## Reshape with [{tidyr}](https://tidyr.tidyverse.org): `pivot_longer` & `pivot_wider` {.inv}
-
-[Tidy data]{.amber}: one row per observation, one column per variable. When it isn't, reshape:
 
 <div class="tile-stage">
 <div class="tile-panel">
 <div class="tile-cue">wide · 2 rows</div>
 <div class="tile-grid">
-<div class="tg-head"><span>penguin</span><span style="color:#B26A00">bill_l</span><span style="color:#4A5899">bill_d</span></div>
+<div class="tg-head"><span>penguin</span><span style="color:#B26A00">bill_l</span><span style="color:#4A5899">bill_d</span><span style="color:#2FA8B0">flipper</span></div>
 <div class="tile-row">
 <div class="tile" style="background:#2E7D6B">A</div>
 <div class="tile" style="background:#E8A33D;opacity:.85">39.1</div>
 <div class="tile" style="background:#4A5899;opacity:.85">18.7</div>
+<div class="tile" style="background:#2FA8B0;opacity:.85">181</div>
 </div>
 <div class="tile-row">
 <div class="tile" style="background:#2E7D6B">B</div>
 <div class="tile" style="background:#E8A33D;opacity:.85">46.5</div>
 <div class="tile" style="background:#4A5899;opacity:.85">17.9</div>
+<div class="tile" style="background:#2FA8B0;opacity:.85">195</div>
 </div>
 </div>
 </div>
@@ -346,7 +450,7 @@ penguins |>
 <div class="tile-arrow fragment" data-fragment-index="3">←<span class="cap">pivot_wider</span></div>
 </div>
 <div class="tile-panel fragment" data-fragment-index="2">
-<div class="tile-cue">long · 4 rows</div>
+<div class="tile-cue">long · 6 rows</div>
 <div class="tile-grid">
 <div class="tg-head"><span>penguin</span><span>measure</span><span>mm</span></div>
 <div class="tile-row">
@@ -360,6 +464,11 @@ penguins |>
 <div class="tile" style="background:#4A5899">18.7</div>
 </div>
 <div class="tile-row">
+<div class="tile" style="background:#2E7D6B">A</div>
+<div class="tile" style="background:#2FA8B0;opacity:.85">flipper</div>
+<div class="tile" style="background:#2FA8B0">181</div>
+</div>
+<div class="tile-row">
 <div class="tile" style="background:#2E7D6B">B</div>
 <div class="tile" style="background:#E8A33D;opacity:.85">bill_l</div>
 <div class="tile" style="background:#E8A33D">46.5</div>
@@ -369,23 +478,32 @@ penguins |>
 <div class="tile" style="background:#4A5899;opacity:.85">bill_d</div>
 <div class="tile" style="background:#4A5899">17.9</div>
 </div>
+<div class="tile-row">
+<div class="tile" style="background:#2E7D6B">B</div>
+<div class="tile" style="background:#2FA8B0;opacity:.85">flipper</div>
+<div class="tile" style="background:#2FA8B0">195</div>
 </div>
 </div>
 </div>
+</div>
+
+::: {.fragment}
 
 ::: {.codewindow .r width="100%"}
-Wide ↔ long with `pivot_*`
+reshape.R
 ```r
 # wide → long (melt several columns back into one key/value pair)
-df |> tidyr::pivot_longer(cols = dplyr::starts_with("bill_"), names_to = "measure", values_to = "mm")
-
+df |> tidyr::pivot_longer(cols = -penguin, names_to = "measure", values_to = "mm")
 # long → wide (spread key/value columns back out)
 df |> tidyr::pivot_wider(names_from = measure, values_from = mm)
 ```
 :::
 
 ::: {.paper-card}
-Every tidyverse tool expects **tidy data**: reshape first, analyse after.
+- [Tidy data]{.amber}: one row per observation, one column per variable. When it isn't, reshape;
+- Every tidyverse tool expects **tidy data**: reshape first, analyse after.
+:::
+
 :::
 
 ## Your turn: tidyverse {.paper}
@@ -441,7 +559,7 @@ The four data sets share the same slope, intercept, correlation and means; only 
 The simplest first look at one variable: **`hist()`**.
 
 ::: {.codewindow .r width="100%"}
-A histogram of one variable
+hist.R
 ```{r}
 #| echo: true
 #| output-location: column
@@ -456,7 +574,7 @@ hist(
 ```
 :::
 
-::: {.callout-desc}
+::: {.paper-card}
 Positron draws the plot in the **Plots** pane. `hist()` is one call, but its defaults are utilitarian.
 :::
 
@@ -523,9 +641,13 @@ Base R can already do a lot, but its look is dated and customisation is verbose:
 
 ## The limit of base-R plots {.inv}
 
+::: {.spread .spread-md .spread-evenly}
+
 Base `plot()` is fine for a quick peek. For **publication-grade** graphics (faceting, legends, themes, layered encodings), it gets unwieldy fast.
 
 That's the gap **ggplot2** fills: a single coherent *grammar*, rather than a grab-bag of functions.
+
+:::
 
 ::: {.callout-desc}
 You'll implement several of these base-R plots **by hand in lab 2**, then rebuild one in ggplot2 to feel the difference.
@@ -547,17 +669,44 @@ You'll implement several of these base-R plots **by hand in lab 2**, then rebuil
 
 ## The first ggplot {.inv}
 
-Every plot starts with `ggplot(data, aes(...))`, then adds layers with `+`:
+Every plot starts with `ggplot(data = , mapping = aes(...))`, then adds layers with `+`:
 
-::: {.codewindow .r width="100%"}
-The first ggplot
-```r
-ggplot(penguins, aes(x = body_mass_g)) +
-  geom_histogram(bins = 30)
+::: {.split-2}
+<div class="code-build">
+  <pre class="fragment" data-fragment-index="1">ggplot(
+    data = penguins, 
+    mapping = aes(x = body_mass_g)
+  ) + </pre>
+  <pre class="fragment cb-cur" data-fragment-index="2">  geom_histogram(bins = 30, color = "white")</pre>
+</div>
+
+::: {.plot-stack}
+```{r}
+#| echo: false
+#| fig-width: 6.5
+#| fig-height: 4.2
+#| out.extra: 'class="fragment step-plot" data-fragment-index="1"'
+ggplot(
+  data = penguins, 
+  mapping = aes(x = body_mass_g)
+)
+```
+
+```{r}
+#| echo: false
+#| fig-width: 6.5
+#| fig-height: 4.2
+#| out.extra: 'class="fragment step-plot" data-fragment-index="2"'
+ggplot(
+  data = penguins, 
+  mapping = aes(x = body_mass_g)
+) + 
+  geom_histogram(bins = 30, color = "white")
 ```
 :::
+:::
 
-::: {.paper-card}
+::: {.paper-card .fragment}
 This is the *same histogram* we drew in base R, but now each piece is explicit and easy to extend.
 :::
 
@@ -567,10 +716,19 @@ Mapping variables to `x` and `y`, and a third to `color`:
 
 ::: {.split-2}
 <div class="code-build">
-  <pre class="fragment" data-fragment-index="1">ggplot(penguins, aes(x = flipper_length_mm,
-                      y = body_mass_g))</pre>
-  <pre class="fragment cb-cur" data-fragment-index="2">  + geom_point(aes(color = species), alpha = 0.7)</pre>
-  <pre class="fragment cb-cur" data-fragment-index="3">  + theme_dark()</pre>
+  <pre class="fragment" data-fragment-index="1">ggplot(
+    data = penguins,
+    mapping = aes(x = flipper_length_mm, y = body_mass_g)
+  ) + </pre>
+  <pre class="fragment cb-cur" data-fragment-index="2">  geom_point(aes(color = species), alpha = 0.7) + </pre>
+  <pre class="fragment cb-cur" data-fragment-index="3">  theme_dark() + </pre>
+  <pre class="fragment cb-cur" data-fragment-index="4">  labs(
+    title = "Body mass variation with flipper length",
+    caption = "Data from the {palmerpengins} package.",
+    x = "Flipper Length (mm)", 
+    y = "Body Mass (g)", 
+    color = "Species"
+  )</pre>
 </div>
 
 ::: {.plot-stack}
@@ -600,15 +758,28 @@ ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
   geom_point(aes(color = species), alpha = 0.7) +
   theme_dark()
 ```
+
+```{r}
+#| echo: false
+#| fig-width: 6.5
+#| fig-height: 4.2
+#| out.extra: 'class="fragment step-plot" data-fragment-index="4"'
+ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(aes(color = species), alpha = 0.7) +
+  theme_dark() +
+  labs(
+    title = "Body mass variation with flipper length",
+    caption = "Data from the {palmerpengins} package.",
+    x = "Flipper Length (mm)", 
+    y = "Body Mass (g)", 
+    color = "Species"
+  )
+```
 :::
 :::
 
-::: {.fragment}
-
-::: {.callout-desc}
+::: {.paper-card .fragment}
 **Read it aloud.** "Body mass grows with flipper length", and each species clusters in its own region of this space. That's a finding you'd never see from `summary()`.
-:::
-
 :::
 
 ## One variable per facet {.inv}
@@ -617,11 +788,20 @@ ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
 
 ::: {.split-2}
 <div class="code-build">
-  <pre class="fragment" data-fragment-index="1">ggplot(penguins, aes(x = body_mass_g))</pre>
-  <pre class="fragment cb-cur" data-fragment-index="2">  + geom_histogram(bins = 25, fill = "#2E7D6B",
-                    color = "#17251F")</pre>
-  <pre class="fragment cb-cur" data-fragment-index="3">  + facet_wrap(~ species, ncol = 1)</pre>
-  <pre class="fragment cb-cur" data-fragment-index="4">  + theme_dark()</pre>
+  <pre class="fragment" data-fragment-index="1">ggplot(
+    data = penguins, 
+    mapping = aes(x = body_mass_g)
+  ) + </pre>
+  <pre class="fragment cb-cur" data-fragment-index="2">  geom_histogram(
+    bins = 25, 
+    fill = "#2E7D6B", 
+    color = "#17251F"
+  ) + </pre>
+  <pre class="fragment cb-cur" data-fragment-index="3">  facet_wrap(
+    facets = vars(species), 
+    ncol = 1
+  ) + </pre>
+  <pre class="fragment cb-cur" data-fragment-index="4">  theme_dark()</pre>
 </div>
 
 ::: {.plot-stack}
@@ -665,12 +845,8 @@ ggplot(penguins, aes(x = body_mass_g)) +
 :::
 :::
 
-::: {.fragment}
-
-::: {.callout-desc}
+::: {.paper-card .fragment}
 Different species have *different* distributions of body mass: a comparison that's hard to see in one pooled histogram.
-:::
-
 :::
 
 ## Boxplots for groups {.inv}
@@ -679,11 +855,13 @@ Categorical `x` + continuous `y`:
 
 ::: {.split-2}
 <div class="code-build">
-  <pre class="fragment" data-fragment-index="1">ggplot(penguins, aes(x = species, y = body_mass_g,
-                      fill = species))</pre>
-  <pre class="fragment cb-cur" data-fragment-index="2">  + geom_boxplot(alpha = 0.8)</pre>
-  <pre class="fragment cb-cur" data-fragment-index="3">  + theme_dark()</pre>
-  <pre class="fragment cb-cur" data-fragment-index="4">  + theme(legend.position = "none")</pre>
+  <pre class="fragment" data-fragment-index="1">ggplot(
+    data = penguins, 
+    mapping = aes(x = species, y = bill_length_mm, fill = species)
+  ) + </pre>
+  <pre class="fragment cb-cur" data-fragment-index="2">  geom_boxplot(alpha = 0.8) + </pre>
+  <pre class="fragment cb-cur" data-fragment-index="3">  theme_dark() + </pre>
+  <pre class="fragment cb-cur" data-fragment-index="4">  theme(legend.position = "none")</pre>
 </div>
 
 ::: {.plot-stack}
@@ -692,7 +870,7 @@ Categorical `x` + continuous `y`:
 #| fig-width: 6.5
 #| fig-height: 4.2
 #| out.extra: 'class="fragment step-plot" data-fragment-index="1"'
-ggplot(penguins, aes(x = species, y = body_mass_g, fill = species))
+ggplot(penguins, aes(x = species, y = bill_length_mm, fill = species))
 ```
 
 ```{r}
@@ -700,7 +878,7 @@ ggplot(penguins, aes(x = species, y = body_mass_g, fill = species))
 #| fig-width: 6.5
 #| fig-height: 4.2
 #| out.extra: 'class="fragment step-plot" data-fragment-index="2"'
-ggplot(penguins, aes(x = species, y = body_mass_g, fill = species)) +
+ggplot(penguins, aes(x = species, y = bill_length_mm, fill = species)) +
   geom_boxplot(alpha = 0.8)
 ```
 
@@ -709,7 +887,7 @@ ggplot(penguins, aes(x = species, y = body_mass_g, fill = species)) +
 #| fig-width: 6.5
 #| fig-height: 4.2
 #| out.extra: 'class="fragment step-plot" data-fragment-index="3"'
-ggplot(penguins, aes(x = species, y = body_mass_g, fill = species)) +
+ggplot(penguins, aes(x = species, y = bill_length_mm, fill = species)) +
   geom_boxplot(alpha = 0.8) +
   theme_dark()
 ```
@@ -719,7 +897,7 @@ ggplot(penguins, aes(x = species, y = body_mass_g, fill = species)) +
 #| fig-width: 6.5
 #| fig-height: 4.2
 #| out.extra: 'class="fragment step-plot" data-fragment-index="4"'
-ggplot(penguins, aes(x = species, y = body_mass_g, fill = species)) +
+ggplot(penguins, aes(x = species, y = bill_length_mm, fill = species)) +
   geom_boxplot(alpha = 0.8) +
   theme_dark() +
   theme(legend.position = "none")
@@ -727,30 +905,36 @@ ggplot(penguins, aes(x = species, y = body_mass_g, fill = species)) +
 :::
 :::
 
-::: {.fragment}
-
-::: {.callout-desc}
+::: {.paper-card .fragment}
 A boxplot shows the median, the box (IQR) and outliers at a glance: ideal for comparing a numeric variable *across groups*.
 :::
 
-:::
+## Order factors with [{forcats}](https://forcats.tidyverse.org) {.inv}
 
-## Order factors with `forcats` {.inv}
+[{forcats}](https://forcats.tidyverse.org) lets you **reorder** those levels so graphs tell the story you want:
 
-Plots order themselves however the factor levels say: `forcats` (part of the tidyverse) lets you **reorder** those levels so graphs tell the story you want:
-
-::: {.codewindow .r width="100%"}
-`fct_reorder` sorts a factor by another variable
-```r
+::: {.codewindow .r width="100%" name="fct-reorder.R"}
+```{r}
+#| echo: true
+#| output-location: column
 penguins |>
-  mutate(species = fct_reorder(species, body_mass_g, median, na.rm = TRUE)) |>
-  ggplot(aes(x = species, y = body_mass_g, fill = species)) +
+  dplyr::mutate(species = forcats::fct_reorder(
+    .f = species, 
+    .x = bill_length_mm, 
+    .fun = median, 
+    na.rm = TRUE
+  )) |>
+  ggplot(mapping = aes(
+    x = species, 
+    y = bill_length_mm, 
+    fill = species
+  )) +
   geom_boxplot()
 ```
 :::
 
 ::: {.paper-card}
-`fct_reorder` puts the *highest median first* on the axis: order becomes part of your message. `fct_relevel`/`fct_lump` fine-tune and collapse rare levels.
+`fct_reorder()` puts the *highest median first* on the axis: order becomes part of your message. `fct_relevel`/`fct_lump` fine-tune and collapse rare levels.
 :::
 
 ## Layers compose {.inv}
@@ -759,12 +943,18 @@ An important ggplot2 habit: plots are built from **many layers**. For example, s
 
 ::: {.split-2}
 <div class="code-build">
-  <pre class="fragment" data-fragment-index="1">ggplot(penguins, aes(x = flipper_length_mm,
-                      y = body_mass_g))</pre>
-  <pre class="fragment cb-cur" data-fragment-index="2">  + geom_point(aes(color = species), alpha = 0.6)</pre>
-  <pre class="fragment cb-cur" data-fragment-index="3">  + geom_smooth(method = "lm", se = FALSE,
-                 color = "#E8A33D", linewidth = 1)</pre>
-  <pre class="fragment cb-cur" data-fragment-index="4">  + theme_dark()</pre>
+  <pre class="fragment" data-fragment-index="1">ggplot(
+    data = penguins, 
+    mapping = aes(x = flipper_length_mm, y = body_mass_g)
+  ) + </pre>
+  <pre class="fragment cb-cur" data-fragment-index="2">  geom_point(aes(color = species), alpha = 0.6) + </pre>
+  <pre class="fragment cb-cur" data-fragment-index="3">  geom_smooth(
+    method = "lm", 
+    se = FALSE, 
+    color = "#E8A33D", 
+    linewidth = 1
+  ) + </pre>
+  <pre class="fragment cb-cur" data-fragment-index="4">  theme_dark()</pre>
 </div>
 
 ::: {.plot-stack}
@@ -808,19 +998,19 @@ ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
 :::
 :::
 
-::: {.fragment}
-
-::: {.callout-desc}
+::: {.paper-card .fragment}
 `geom_point()` and `geom_smooth()` *layer* on the same plot, each with its own mapping. This layering is what makes ggplot2 so expressive.
-:::
-
 :::
 
 ## A grammar, not a menu {.inv}
 
+::: {.spread .spread-md .spread-evenly}
+
 The power is **consistency**: you learn a few verbs (`geom_point`, `geom_bar`, `geom_histogram`, `facet_wrap`, `aes`) and combine them, instead of memorising a different function per plot type.
 
-There's a gallery of extensions (e.g. `{ggpubr}`, `{patchwork}`, `{plotly}` for interactivity).
+There's a gallery of extensions (e.g. `{ggpubr}`, `{patchwork}`, `{plotly}` for interactivity): <https://exts.ggplot2.tidyverse.org>
+
+:::
 
 ::: {.callout-desc}
 We'll run a *ggplot2 build-up* live: from a bare histogram to a faceted, titled, themed figure in a handful of added lines. Watch how small edits compound.
