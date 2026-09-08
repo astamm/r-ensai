@@ -776,7 +776,7 @@ class(x[c("a", "b")])
 **Your turn (≈15 min):** work alone, then compare with a neighbour.
 
 1. Build a list of three vectors of lengths 10, 20, 30. Compute the mean of each with `sapply()`, then `vapply()`.
-2. Make a list of two length-5 vectors. Use `lapply()` to double each element; store the result.
+2. Make a list of two length-5 vectors. Use `lapply()` to double each element; store the result. *Hint: `lapply()` needs a function to apply; a one-liner `\(.x) .x * 2` does the doubling.*
 3. What happens if you use `[[` with an index *larger* than the list length? With a name that doesn't exist? (*Try it: read the error message.*)
 4. Given `shaker`, what is `shaker[[1]][1]` vs `shaker[[1]][[1]]`?
 5. How do you *extend* a list?
@@ -912,6 +912,36 @@ Tibbles keep empty rows/columns and never auto-convert, so `df[, 1]` stays a tib
 
 # Reading and writing data
 
+## Working directory & relative paths {.inv}
+
+::: {.split-2}
+
+Every file path in R is resolved **relative to your working directory** (the folder R is currently "in"), unless you write an *absolute* path (`/Users/you/...`).
+
+::: {.codewindow .r width="75%" name="working-directory.R"}
+```r
+getwd()        # where is R right now?
+list.files()   # what is in that folder?
+setwd("...")   # move elsewhere (avoid in scripts!)
+```
+:::
+
+:::
+
+::: {.callout-tip title="Think in terms of projects"}
+Open your course folder as a **project** and work there: the working directory *is* that folder, so a relative path like `read_csv("data/raw/penguins.csv")` just works. A small, predictable layout keeps things tidy:
+
+```text
+my-course/
+├── data/
+│   ├── raw/
+│   └── processed/
+└── scripts/
+```
+
+Prefer relative paths; they let a script run on any machine with the same folder layout.
+:::
+
 ## Read rectangular data
 
 The [{readr}](https://readr.tidyverse.org/) package reads flat files fast and guesses column types:
@@ -963,12 +993,25 @@ readr::write_tsv(penguins, "penguins_clean.tsv")
 
 :::
 
+## First steps towards data cleaning {.paper}
+
+::: {.paper-card}
+**A first data-cleaning pass is a handful of *foreseeable* chores.** We'll put each to practice in the hands-on that follows:
+
+- **Import**: *parse* the file correctly (right delimiter, header, decimals) with the right reader;
+- **Fix wrong guessed types**: [`readr`](https://readr.tidyverse.org/) guesses column types, and numeric data arriving as character, or `NA` where numbers belong, are the usual failures;
+- **Decode missing values**: real files encode "no data" many ways (`NA`, empty cells, `""`, `999`, `-`, `?`), and R must be told which values count as missing;
+- **Tame non-syntactic names**: column names with spaces or accents (e.g. `body mass g`) are awkward to type; you rename them once, up front.
+
+Each is small and knowable. Knowing they exist *before* hitting them is half the exercise.
+:::
+
 ## Your turn: data cleaning {.paper}
 
 ::: {.paper-card}
 **Your turn (≈30 min), pair up:** this is the course's first **data-cleaning** exercise. Work in pairs, alternating who types.
 
-1. Download [`penguins_messy.txt`](penguins_messy.txt) (in the `common/` folder).
+1. Download [penguins_messy.txt](https://astamm.github.io/r-ensai/r-statistical-language/session-1/penguins_messy.txt).
 2. **Open it in a text editor.** How are values separated? Is there a header? Are there missing values, and how do they appear?
 3. Read it into R, choosing the right `readr` function. Look at the column types: are any wrong?
 4. Fix the column types as needed (numeric vs character vs factor).
