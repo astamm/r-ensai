@@ -137,9 +137,12 @@ penguins |>
 #| output-location: column
 penguins |> 
   # conditions AND together
-  dplyr::filter(species != "Chinstrap", !is.na(sex)) |>
-  # show first 5 rows
-  dplyr::slice(1:5)
+  dplyr::filter(
+    species != "Chinstrap", 
+    !is.na(sex)
+  ) |>
+  # show first 4 rows
+  dplyr::slice(1:4)
 ```
 :::
 

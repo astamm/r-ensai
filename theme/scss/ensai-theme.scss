@@ -259,12 +259,14 @@ $colors: (
    (same layout mechanism the template uses for its masthead/panels), and cap
    the spread so the note always stays on-screen. */
 .reveal .slides section:has(.spread):has(.callout-desc),
-.reveal .slides section:has(.spread):has(.highlight-last) {
+.reveal .slides section:has(.spread):has(.highlight-last),
+.reveal .slides section:has(.spread):has(.paper-card):not(.paper) {
   display: flex;
   flex-direction: column;
 }
 .reveal .slides section:has(.spread):has(.callout-desc) > .spread,
-.reveal .slides section:has(.spread):has(.highlight-last) > .spread {
+.reveal .slides section:has(.spread):has(.highlight-last) > .spread,
+.reveal .slides section:has(.spread):has(.paper-card):not(.paper) > .spread {
   flex: 0 1 auto;
   max-height: 56%;
 }

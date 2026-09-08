@@ -24,11 +24,9 @@ penguins <- read_csv("penguins.csv", show_col_types = FALSE)
 
 You can already *explore* a dataset: shape it with the pipe and `dplyr`/`tidyr`, and read it back with ggplot2's grammar.
 
-::: {.spread .spread-md .spread-evenly}
 - the [pipe]{.green} `|>` and the `dplyr`/`tidyr` verbs (`filter`, `select`, `mutate`, `arrange`, `group_by`/`summarise`);
 - [base-R plots]{.green} and [ggplot2]{.amber}: histograms, scatters, facets, boxplots;
 - the [transform → plot → interpret]{.indigo} EDA loop.
-:::
 
 ::: {.callout-desc}
 **The move today.** Your EDA loop is full of moves you repeat: grouped summaries, reshapes, simulations. This session looks *underneath* them: we leave the tidyverse and work in base R, replacing copy-paste with loops, reaching into two dimensions with matrices, and turning the moves you repeat into reusable functions you keep.
@@ -42,11 +40,9 @@ You can already *explore* a dataset: shape it with the pipe and `dplyr`/`tidyr`,
 
 Session 3 is the **"repeat & package"** move of the course: stop doing by hand what R can do by itself:
 
-::: {.spread .spread-md .spread-evenly}
 - [repeat & branch]{.green}: [loops]{.green} (`for`, `while`) and conditionals (`if/else`, `ifelse`);
 - [reach 2D]{.amber}: [matrices]{.amber}, the vector's 2D cousin, plus linear algebra and `apply`;
 - [package the logic]{.indigo}: [writing your own functions]{.indigo}, scope-aware, vectorised, tested.
-:::
 
 ::: {.callout-desc}
 **The thread.** The Monte-Carlo experiment ties the session together: we *loop* over thousands of samples, and we *package* that loop into one reusable, tested function. Matrices give us the two-dimensional structures the algebra often lives in.
@@ -57,6 +53,7 @@ Session 3 is the **"repeat & package"** move of the course: stop doing by hand w
 ## The problem loops solve {.inv}
 
 Often you want to repeat the same step on many things:
+
 - your function models ten species;
 - you average over 1000 simulations;
 - you transform every column of a table.
@@ -67,36 +64,56 @@ You could copy-paste... or you let **R repeat for you**.
 
 Repeat a block a fixed number of times: the body runs once per value:
 
-::: {.codewindow .r width="100%"}
-A simple `for` loop
-```r
-for (i in 1:5) print(i^2)            # i takes each value of the sequence in turn
-total <- 0                           # the body runs once per value
-for (x in c(2, 4, 6, 8)) total <- total + x
-total   # 20
+::: {.codewindow .r width="100%" name="01-for-loops.R"}
+```{r}
+#| echo: true
+#| output-location: column
+for (i in 1:5) {
+  # i takes each value of the sequence in turn
+  print(i^2)
+}
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+total <- 0
+for (x in c(2, 4, 6, 8)) {
+  # the body runs once per value
+  total <- total + x
+}
+total
 ```
 :::
 
 ::: {.paper-card}
-Afterwards `i` is a normal variable: it still holds the loop's last value.
+Afterwards `i` and `x` are normal variables: they still hold the loop's last value.
 :::
 
 ## Pre-allocate for speed {.inv}
 
 Growing a vector inside a loop is slow. **Pre-allocate** the result first:
 
-::: {.codewindow .r width="100%"}
-Pre-allocate, then fill by index
-```r
-n <- 1000
-out <- numeric(n)          # a vector of n zeros, ready to fill
+::: {.codewindow .r width="100%" name="02-preallocate.R"}
+```{r}
+#| echo: true
+#| output-location: column
+n <- 1000L
+# a numeric vector of n zeros
+out <- numeric(length = n) 
+# character(length = n): character vector with n ""
+# logical(length = n): logical vector with n FALSE
+# integer(length = n): integer vector with n 0L 
+# vector(mode = "list", length = n): list with n NULL
 for (i in 1:n) {
   out[i] <- rnorm(1)
 }
+par(bg = "white")
+hist(out)
 ```
 :::
 
-::: {.callout-desc}
+::: {.paper-card}
 **Rule of thumb.** Decide the output's length *before* the loop, create the container, then fill slots by index (`out[i] <- ...`). This is much faster than `out <- c(out, ...)` inside the loop, a habit that matters once your data grows.
 :::
 
@@ -104,32 +121,50 @@ for (i in 1:n) {
 
 Repeat *while a condition holds*: useful when you don't know the number of steps in advance:
 
-::: {.codewindow .r width="100%"}
-A `while` loop
-```r
+::: {.codewindow .r width="100%" name="03-while-loops.R"}
+```{r}
+#| echo: true
+#| output-location: column
 x <- 1
 while (x < 1000) {
   x <- x * 2
 }
-x    # 1024
+x
 ```
 :::
 
 ::: {.callout-caution title="Guard against infinite loops"}
-If the condition never becomes `FALSE`, the loop runs forever. Always make sure something inside the body moves toward stopping the loop.
+If the condition never becomes `FALSE`, the loop runs forever. Always add a safeguard, e.g.:
+
+```r
+x <- 1
+max_iter <- 10
+counter <- 0
+while (x < 1000 && counter < max_iter) {
+  x <- x * 2
+  counter <- counter + 1
+}
+```
+
 :::
 
 ## Conditionals: `if` / `else if` / `else` {.inv}
 
 Branch on a condition: only **one** branch runs:
 
-::: {.codewindow .r width="100%"}
-`if`/`else` is an expression: it hands a value back
-```r
+::: {.codewindow .r width="100%" name="04-if-else.R"}
+```{r}
+#| echo: true
+#| output-location: column
 score <- 82
-grade <- if (score >= 90) "A"
-         else if (score >= 80) "B"
-         else "C"
+grade <- if (score >= 90) {
+  "A"
+} else if (score >= 80) {
+  "B"
+} else {
+  "C"
+}
+grade
 ```
 :::
 
@@ -141,9 +176,10 @@ grade <- if (score >= 90) "A"
 
 For **vectorised** decisions, use `ifelse(condition, when_true, when_false)`:
 
-::: {.codewindow .r width="100%"}
-Element-wise choice with `ifelse`
-```r
+::: {.codewindow .r width="100%" name="05-ifelse.R"}
+```{r}
+#| echo: true
+#| output-location: column
 temps <- c(-2, 15, 28, 33)
 ifelse(temps > 25, "hot", "not hot")
 ```
@@ -151,14 +187,19 @@ ifelse(temps > 25, "hot", "not hot")
 
 It applies the branch *element-wise* to a whole vector: no loop needed. This is the idiomatic replacement for "for each value, choose one of two things".
 
-::: {.callout-desc}
-**`if` vs `ifelse`.** Use `if/else` to choose *which block of code* runs once; use `ifelse` to map a *vector* to one of two values. Mixing them up is a classic beginner bug.
+::: {.paper-card}
+**`if` vs `ifelse`.**
+
+- Use `if/else` to choose *which block of code* runs once;
+- Use `ifelse` to map a *vector* to one of two values.
+
+Mixing them up is a classic beginner bug.
 :::
 
 ## Which tool when? {.inv}
 
 ::: {.spread .spread-md .spread-evenly}
-**`for`**: repeat a block a *known* number of times (fill a pre-allocated vector, iterate over columns).
+**`for`**: repeat a block a *known* number of times (loop over columns, pre-allocated slots).
 
 **`while`**: repeat *until a condition* flips (unknown count of steps).
 
@@ -166,48 +207,54 @@ It applies the branch *element-wise* to a whole vector: no loop needed. This is 
 
 **`ifelse`**: map a *vector* element-wise to one of two values.
 
-**`*apply` family**: "loop over each element and apply a function" (met in Session 1 with lists, and again below with matrices).
+**`*apply` family**: apply a function to each element (Session 1 lists, matrices below).
+
+::: {.paper-card}
+Often the *cleanest* loop is no loop at all: vectorization, `ifelse`, or `lapply`/`vapply` are simpler than an explicit `for`.
 :::
 
-::: {.callout-desc}
-Often the *cleanest* loop is no loop at all: vectorization, `ifelse`, or `lapply`/`vapply` are simpler than an explicit `for`.
 :::
 
 ## The `*apply` family: loop & apply {.inv}
 
 Say "**apply this function to every element**" instead of writing the loop by hand:
 
-::: {.codewindow .r width="100%"}
-lapply, sapply, vapply
-```r
+::: {.codewindow}
+
+::: {.editor .r name="lapply.R"}
+```{r}
+#| echo: true
 l <- list(a = 1:3, b = 4:6)
 lapply(l, mean)          # a list back — keeps the original structure
+```
+:::
+
+::: {.editor .r .fragment name="sapply.R"}
+```{r}
+#| echo: true
+l <- list(a = 1:3, b = 4:6)
 sapply(l, mean)          # tries to simplify: a named vector
+```
+:::
+
+::: {.editor .r .fragment name="vapply.R"}
+```{r}
+#| echo: true
+l <- list(a = 1:3, b = 4:6)
 vapply(l, mean, 0)       # like sapply, but you promise the output type
 ```
 :::
 
-::: {.paper-card}
-The family you first met on lists in **Session 1** (and will meet again on matrices as `apply`, `MARGIN = …`): `lapply` always, `sapply` when simple, `vapply` when you want the guarantee. It's "loop, *then* apply" collapsed into one verb.
 :::
 
-## Grouped summaries in base R {.inv}
+::: {.paper-card .fragment fragment-index=3}
+The family you first met on lists in **Session 1** (and will meet again on matrices as `apply`, `MARGIN = ...`):
 
-`group_by |> summarise` (Session 2) has a base-R cousin that returns the split-by-group result directly:
+- `lapply` always,
+- `sapply` when simple,
+- `vapply` when you want the guarantee.
 
-::: {.codewindow .r width="100%"}
-tapply & aggregate, base R
-```r
-tapply(penguins$body_mass_g, penguins$species, mean, na.rm = TRUE)
-#   Adelie Chinstrap   Gentoo
-#  3700.7    3733.1    5076.0
-
-aggregate(body_mass_g ~ species, data = penguins, FUN = mean)
-```
-:::
-
-::: {.paper-card}
-`tapply(vector, group, fun)` summarises by group; `aggregate(formula, data, fun)` returns a tidy `data.frame`. When your pipeline gets more steps, reach for the `dplyr` verbs; when it's one grouped summary, these one-liners are hard to beat.
+It's "loop, *then* apply" collapsed into one verb.
 :::
 
 ## Your turn: loops & conditionals {.paper}
@@ -236,31 +283,74 @@ aggregate(body_mass_g ~ species, data = penguins, FUN = mean)
 
 A **matrix** is a *two-dimensional rectangular array* of **one type** (usually numeric): a vector folded into rows and columns. It's the **2D cousin of the vector**.
 
-::: {.codewindow .r width="100%"}
-Build and subset a matrix
-```r
-m <- matrix(1:12, nrow = 3, ncol = 4)   # vector -> rows & columns
-m[2, 3]      # subset with [row, col], like a data frame
-dim(m)       # 3 4
-nrow(m); ncol(m)   # 3 4
+::: {.codewindow .r width="100%" name="matrix.R"}
+```{r}
+#| echo: true
+#| output-location: column
+(m <- matrix(1:12, nrow = 3, ncol = 4))
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+m[2, ] # subset with [row, col], like a data frame
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+dim(m) # length-2 vector with dimensions
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+nrow(m) # number of rows
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+ncol(m) # number of columns
 ```
 :::
 
-::: {.callout-desc}
+::: {.paper-card}
 **Key distinction.** A data frame is a *list of columns* (columns may differ in type); a matrix is *one vector in 2D* (single type). For tabular *data* with mixed types, prefer a data frame/tibble; reach for a matrix when you need **linear algebra**.
 :::
 
 ## Building & reshaping {.inv}
 
-A matrix is just a vector with a `dim` (dimension) attribute, so you can build or reshape them freely:
+A matrix is just a vector with a `dim`(ension) attribute; you can build or reshape them freely:
 
-::: {.codewindow .r width="100%"}
-`matrix()`, `rbind`/`cbind`, and `dim()`
-```r
-A <- matrix(1:6, nrow = 2, ncol = 3)          # column-major fill
-identical(A, rbind(1:3, 4:6))                 # TRUE — cbind/rbind by row
-cbind(A, c(7, 8))                             # add a column
-dim(A) <- NULL                                # strip the dim -> back to a vector
+::: {.codewindow .r width="100%" name="reshape.R"}
+```{r}
+#| echo: true
+#| output-location: column
+# column-major fill
+(A <- matrix(1:6, nrow = 2, ncol = 3))
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+# rbind: bind by row
+identical(A, rbind(1:3, 4:6))
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+# cbind: bind by column
+cbind(A, c(7, 8))
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+# strip the dim -> back to a vector
+dim(A) <- NULL 
+A
 ```
 :::
 
@@ -272,17 +362,29 @@ dim(A) <- NULL                                # strip the dim -> back to a vecto
 
 Element-wise arithmetic works like it does on vectors, and **recycling** applies:
 
-::: {.codewindow .r width="100%"}
-Arithmetic on a matrix
-```r
-M <- matrix(1:6, 2, 3)
-M * 2            # scalar multiplies every entry
-M + c(10, 20)    # length-2 vector recycles down the COLUMNS
-M * matrix(c(1, 10), 2, 1)   # column vector scales each column
+::: {.codewindow .r width="100%" name="matrix-arithmetic.R"}
+```{r}
+#| echo: true
+#| output-location: column
+(M <- matrix(1:6, nrow = 2, ncol = 3))
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+# scalar multiplies every entry
+M * 2
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+# length-2 vector recycles down the COLUMNS
+M + c(10, 20)
 ```
 :::
 
-::: {.callout-desc}
+::: {.paper-card}
 **Watch the recycling axis.** A length-2 vector recycles along columns (down), not across: get this wrong and your standardisation silently miscalculates each column.
 :::
 
@@ -290,35 +392,98 @@ M * matrix(c(1, 10), 2, 1)   # column vector scales each column
 
 Matrices exist to do **algebra**: matrix product, transpose, inverse, determinant:
 
-::: {.codewindow .r width="100%"}
-Matrix algebra
-```r
-A <- matrix(c(2, 4, 1, 3), nrow = 2)   # a 2x2
-A %*% A        # matrix product       t(A) # transpose
-solve(A)       # inverse              det(A) # determinant
-diag(4)        # 4x4 identity
+::: {.codewindow}
+
+::: {.editor .r name="01-matrix-algebra.R"}
+```{r}
+#| echo: true
+#| output-location: column
+(A <- matrix(c(2, 4, 1, 3), nrow = 2))
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+A %*% t(A) # matrix product
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+t(A) # transpose
 ```
 :::
 
-::: {.callout-caution title="`%*%` is not `*`"}
-`A * B` is **element-wise**; `A %*% B` is the **matrix product** (rows × columns). Absent the right dimensions, `%*%` errors, which is usually the clue you wanted a matrix, not a data frame.
+::: {.editor .r .fragment name="02-matrix-algebra.R"}
+```{r}
+#| echo: true
+#| output-location: column
+solve(A) # inverse
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+(A <- matrix(c(2, 4, 1, 3), nrow = 2))
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+det(A) # determinant
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+diag(A) # extract diagonal
+```
+:::
+
+::: {.editor .r .fragment name="03-matrix-algebra.R"}
+```{r}
+#| echo: true
+#| output-location: column
+eigen(A) # eigen decomposition
+```
+:::
+
+:::
+
+::: {.callout-caution .fragment title="`%*%` is not `*`"}
+- `A * B` is **element-wise**;
+- `A %*% B` is the **matrix product** (rows × columns).
+
+Absent the right dimensions, `%*%` errors, which is usually the clue you wanted a matrix, not a data frame.
 :::
 
 ## Fold a data frame into a matrix {.inv}
 
 Any rectangular **numeric** block can be coerced to a matrix when algebra needs it:
 
-::: {.codewindow .r width="100%"}
-`as.matrix()` for numeric tables
-```r
-nums <- iris[, 1:4]            # 150 x 4, all numeric
-M    <- as.matrix(nums)        # data frame -> matrix
-dim(M)                         # 150 4
-class(M)                       # "matrix" "array"
+::: {.codewindow .r width="100%" name="as-matrix.R"}
+```{r}
+#| echo: true
+#| output-location: column
+nums <- iris[, 1:4] # 150 x 4, all numeric
+head(nums, n = 9L)
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+M <- as.matrix(nums) # data frame -> matrix
+dim(M)
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+class(M)
 ```
 :::
 
-::: {.callout-desc}
+::: {.paper-card}
 `as.matrix()` forces everything to **one type**: if any column is character, the whole matrix becomes character. Check `str()` before you coerce, and keep a real data frame for mixed-type data.
 :::
 
@@ -326,40 +491,77 @@ class(M)                       # "matrix" "array"
 
 Summarise along one axis with the `row*`/`col*` helpers, or generalise with `apply`:
 
-::: {.codewindow .r width="100%"}
-rowSums, colMeans, and apply(MARGIN)
-```r
-M <- matrix(1:12, 3, 4)
-rowSums(M); rowMeans(M)     # per row   (MARGIN = 1)
-colSums(M); colMeans(M)     # per column (MARGIN = 2)
-apply(M, 1, sd)             # sd of each row
-apply(M, 2, function(x) max(x) - min(x))   # range of each column
+::: {.codewindow .r width="100%" name="matrix-apply.R"}
+```{r}
+#| echo: true
+#| output-location: column
+(M <- matrix(1:12, 3, 4))
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+# per row (MARGIN = 1) - see also rowSums(M)
+rowMeans(M)
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+# per column (MARGIN = 2) - see also colSums(M)
+colMeans(M)
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+# standard deviation of each row
+apply(M, 1, sd)
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+# range of each column
+apply(M, 2, \(x) max(x) - min(x))
 ```
 :::
 
-::: {.callout-desc}
+::: {.paper-card}
 `apply(M, MARGIN, fun)`: `MARGIN = 1` goes down rows, `MARGIN = 2` across columns. It's `lapply`'s 2D sibling: a loop over one axis hidden inside a one-liner.
 :::
 
 ## Standardise a matrix (full example) {.inv}
 
-Let's **z-score** every column of a matrix, the machinery behind a real analysis:
+Let's **standardize** (z-score) every column of a matrix, the machinery behind a real analysis:
 
-::: {.codewindow .r width="100%"}
-Column-wise z-scoring
-```r
+::: {.codewindow .r width="100%" name="scale.R"}
+```{r}
+#| echo: true
 M   <- matrix(c(1, 100, 2, 200), 2, 2)
 mu  <- colMeans(M)            # mean of each column
 sig <- apply(M, 2, sd)        # sd of each column
-Z   <- sweep(M, 2, mu, "-")   # subtract each column's mean
+Z   <- sweep(M, 2, mu,  "-")  # subtract each column's mean
 Z   <- sweep(Z, 2, sig, "/")  # divide each column's sd
+```
+
+```{r}
+#| echo: true
+#| output-location: column
 colMeans(Z)                   # ~ 0
+```
+
+```{r}
+#| echo: true
+#| output-location: column
 apply(Z, 2, sd)               # ~ 1
 ```
 :::
 
-::: {.callout-desc}
-`sweep(M, MARGIN, vector, FUN)` applies a function across one axis, here subtracting a column mean. This is the pattern `scale(M)` automates; you now see what's underneath.
+::: {.paper-card}
+`sweep(M, MARGIN, vector, FUN)` applies a function across one axis, here subtracting a column mean.
+
+This is the pattern `scale(M)` automates; you now see what's underneath.
 :::
 
 ## Your turn: matrices {.paper}
@@ -386,17 +588,19 @@ apply(Z, 2, sd)               # ~ 1
 
 ## Why functions? {.inv}
 
+::: {.spread .spread-md .spread-evenly}
 Copy-pasting code is how bugs multiply. A **function** lets you:
+
 - name a block of logic so its *intent* is readable;
 - reuse it with different inputs;
 - fix a bug **once** instead of in every copy.
 
 Any analysis you do more than twice deserves a function.
+:::
 
 ## Anatomy of a function {.inv}
 
-::: {.codewindow .r width="100%"}
-The anatomy of a function
+::: {.codewindow .r width="100%" name="function-anatomy.R"}
 ```r
 function_name <- function(arg1, arg2 = default) {
   result <- ...      # body: work on the arguments
@@ -415,14 +619,13 @@ function_name <- function(arg1, arg2 = default) {
 
 Variables created *inside* a function live **only there**: they don't leak out:
 
-::: {.codewindow .r width="100%"}
-What the body sees
-```r
+::: {.codewindow .r width="100%" name="scope.R"}
+```{r}
 g <- function(x) {
   internal <- x * 2    # exists only inside the call
   internal + 1
 }
-g(5)          # 11
+g(5)
 ```
 :::
 
@@ -434,60 +637,72 @@ A function *can* see variables from the outside, but relying on that is fragile:
 
 The Monte-Carlo from the loops section is a loop crying out to be a function:
 
-::: {.codewindow .r width="100%"}
-Turn the loop into a function
-```r
+::: {.codewindow .r width="100%" name="monte-carlo.R"}
+```{r}
+#| output-location: column
 clt_sim <- function(n = 30, R = 5000) {
   means <- numeric(R)
   for (r in 1:R) means[r] <- mean(rexp(n))
   means
 }
+par(bg = "white")
 hist(clt_sim())
 ```
 :::
 
-::: {.callout-desc}
+::: {.paper-card}
 **The payoff.** The loop from "Your turn: loops" is now a *named, reusable, parameterisable* tool: `clt_sim(n = 100)` measures the same CLT with bigger samples, no copy-paste.
 :::
 
 ## Vectorised functions & defaults {.inv}
 
-Functions are **vectorised**: they work element-wise on vectors:
+Most functions are **vectorised** when building upon vectorized functions; they work element-wise on vectors:
 
-::: {.codewindow .r width="100%"}
-Vectorised with defaults
-```r
-f_to_c(c(32, 212, 98.6))   # works on the whole vector
-clamp <- function(x, lo = 0, hi = 1)        # defaults → optional args
+::: {.codewindow .r width="100%" name="vectorized-function.R"}
+```{r}
+clamp <- function(x, lo = 0, hi = 1) {
   ifelse(x < lo, lo, ifelse(x > hi, hi, x))
-clamp(c(-1, 0.5, 2))       # 0.0 0.5 1.0
+}
+clamp(c(-1, 0.5, 2))
 ```
 :::
 
 ::: {.paper-card}
-`ifelse` in the body: the element-wise tool from earlier, and the vectorised `clamp` needs no loop at all.
+- `ifelse` in the body: the element-wise tool from earlier, and the vectorised `clamp` needs no loop at all;
+- Note the use of default arguments which makes the parameters optional.
 :::
 
 ## When functions aren't vectorised: `Vectorize()` & `replicate()` {.inv}
 
 Built-in functions are usually vectorised, but your own (or a third-party) function may only accept **one scalar at a time**. Two loop-free helpers:
 
-::: {.codewindow .r width="100%"}
-`Vectorize()` wraps a scalar function so it takes a vector; `replicate()` repeats an expression
-```r
+::: {.codewindow .r width="100%" name="vectorize.R"}
+```{r}
 # not vectorised: takes one date string
 parse_it <- function(x) strsplit(x, "-")[[1]][1]
-parse_it(c("2024-05-01", "2024-06-15"))   # only the first is parsed
+```
 
-parse_all <- Vectorize(parse_it)          # wraps it => element-wise
+```{r}
+#| output-location: column
+# only the first is parsed
+parse_it(c("2024-05-01", "2024-06-15"))
+```
+
+```{r}
+#| output-location: column
+# wraps it => element-wise
+parse_all <- Vectorize(parse_it)
 parse_all(c("2024-05-01", "2024-06-15"))
+```
 
-set.seed(7)
-replicate(4, mean(rexp(10)))              # repeat an expression R times
+```{r}
+#| output-location: column
+# repeat an expression R times
+replicate(4, mean(rexp(10)))
 ```
 :::
 
-::: {.callout-desc}
+::: {.paper-card}
 **Loops without loops.** `Vectorize()` turns a scalar-only function into a vector one; `replicate(R, expr)` re-runs an expression `R` times and collects results, the function-flavoured cousin of `for`/`sapply`. Works with any expression, not just a named function.
 :::
 
@@ -495,24 +710,23 @@ replicate(4, mean(rexp(10)))              # repeat an expression R times
 
 The tidyverse pipes data through functions with `|>`:
 
-::: {.codewindow .r width="100%"}
-Pipe into your own function
+::: {.codewindow .r width="100%" name="pipe.R"}
 ```r
 penguins |>
-  filter(!is.na(body_mass_g)) |>
-  summarize(avg_mass = mean(body_mass_g))
+  dplyr::filter(!is.na(body_mass_g)) |>
+  dplyr::summarize(avg_mass = mean(body_mass_g))
 
 # wrap a computation in your own function and pipe right in
 avg_mass_by <- function(df, group) {
   df |>
-    filter(!is.na(body_mass_g)) |>
-    group_by({{ group }}) |>
-    summarize(avg_mass = mean(body_mass_g, na.rm = TRUE))
+    dplyr::filter(!is.na(body_mass_g)) |>
+    dplyr::group_by({{ group }}) |>
+    dplyr::summarize(avg_mass = mean(body_mass_g, na.rm = TRUE))
 }
 ```
 :::
 
-::: {.callout-desc}
+::: {.paper-card}
 **`{{ var }}`** is the tidyverse "embrace" shortcut that passes a bare column name into a function cleanly. We'll rely on it, and on writing tidy functions, throughout the Reproducible Workflows course.
 :::
 
@@ -520,11 +734,8 @@ avg_mass_by <- function(df, group) {
 
 A good habit: check a function against a case you *already know the answer to*:
 
-::: {.codewindow .r width="100%"}
-One-line assertions with `stopifnot`
+::: {.codewindow .r width="100%" name="test.R"}
 ```r
-stopifnot(f_to_c(32) == 0)         # freezing
-stopifnot(f_to_c(212) == 100)      # boiling
 stopifnot(all(clamp(c(-1, 0.5, 2)) == c(0, 0.5, 1)))
 ```
 :::
