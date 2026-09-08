@@ -106,7 +106,7 @@
     code span.vs { color: #abe338; } /* VerbatimString */
     code span.wa { color: #dcc6e0; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-85b76460e3d5b21f1509af2a7bf68d16.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-daf1006862dd1888ff46ad68833b8b3d.css">
   <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -419,19 +419,21 @@ The pipe keeps your script readable **top-to-bottom**; the nested alternative re
 <div class="column">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a>penguins <span class="sc">|&gt;</span> </span>
 <span id="cb5-2"><a aria-label="2"></a>  <span class="co"># conditions AND together</span></span>
-<span id="cb5-3"><a aria-label="3"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(species <span class="sc">!=</span> <span class="st">"Chinstrap"</span>, <span class="sc">!</span><span class="fu">is.na</span>(sex)) <span class="sc">|&gt;</span></span>
-<span id="cb5-4"><a aria-label="4"></a>  <span class="co"># show first 5 rows</span></span>
-<span id="cb5-5"><a aria-label="5"></a>  dplyr<span class="sc">::</span><span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-3"><a aria-label="3"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(</span>
+<span id="cb5-4"><a aria-label="4"></a>    species <span class="sc">!=</span> <span class="st">"Chinstrap"</span>, </span>
+<span id="cb5-5"><a aria-label="5"></a>    <span class="sc">!</span><span class="fu">is.na</span>(sex)</span>
+<span id="cb5-6"><a aria-label="6"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb5-7"><a aria-label="7"></a>  <span class="co"># show first 4 rows</span></span>
+<span id="cb5-8"><a aria-label="8"></a>  dplyr<span class="sc">::</span><span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column">
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 5 × 8
+<pre><code># A tibble: 4 × 8
   species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
   &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;
 1 Adelie  Torgersen           39.1          18.7               181        3750
 2 Adelie  Torgersen           39.5          17.4               186        3800
 3 Adelie  Torgersen           40.3          18                 195        3250
 4 Adelie  Torgersen           36.7          19.3               193        3450
-5 Adelie  Torgersen           39.3          20.6               190        3650
 # ℹ 2 more variables: sex &lt;chr&gt;, year &lt;dbl&gt;</code></pre>
 </div>
 </div></div>
@@ -533,9 +535,12 @@ penguins |&gt;
 #| output-location: column
 penguins |&gt; 
   # conditions AND together
-  dplyr::filter(species != "Chinstrap", !is.na(sex)) |&gt;
-  # show first 5 rows
-  dplyr::slice(1:5)
+  dplyr::filter(
+    species != "Chinstrap", 
+    !is.na(sex)
+  ) |&gt;
+  # show first 4 rows
+  dplyr::slice(1:4)
 ```
 :::
 

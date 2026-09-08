@@ -106,7 +106,7 @@
     code span.vs { color: #abe338; } /* VerbatimString */
     code span.wa { color: #dcc6e0; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-85b76460e3d5b21f1509af2a7bf68d16.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-daf1006862dd1888ff46ad68833b8b3d.css">
   <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -230,13 +230,11 @@ A. Stamm <a href="https://orcid.org/0000-0002-8725-3654" class="quarto-title-aut
 <section id="where-we-left-off" class="slide level2 inv" data-number="1.1">
 <h2><span class="header-section-number">1.1</span> Where we left off</h2>
 <p>You can already <em>explore</em> a dataset: shape it with the pipe and <code>dplyr</code>/<code>tidyr</code>, and read it back with ggplot2’s grammar.</p>
-<div class="spread spread-md spread-evenly">
 <ul>
 <li>the <span class="green">pipe</span> <code>|&gt;</code> and the <code>dplyr</code>/<code>tidyr</code> verbs (<code>filter</code>, <code>select</code>, <code>mutate</code>, <code>arrange</code>, <code>group_by</code>/<code>summarise</code>);</li>
 <li><span class="green">base-R plots</span> and <span class="amber">ggplot2</span>: histograms, scatters, facets, boxplots;</li>
 <li>the <span class="indigo">transform → plot → interpret</span> EDA loop.</li>
 </ul>
-</div>
 <div class="callout-desc">
 <p><strong>The move today.</strong> Your EDA loop is full of moves you repeat: grouped summaries, reshapes, simulations. This session looks <em>underneath</em> them: we leave the tidyverse and work in base R, replacing copy-paste with loops, reaching into two dimensions with matrices, and turning the moves you repeat into reusable functions you keep.</p>
 </div>
@@ -245,11 +243,9 @@ A. Stamm <a href="https://orcid.org/0000-0002-8725-3654" class="quarto-title-aut
 
 You can already *explore* a dataset: shape it with the pipe and `dplyr`/`tidyr`, and read it back with ggplot2's grammar.
 
-::: {.spread .spread-md .spread-evenly}
 - the [pipe]{.green} `|&gt;` and the `dplyr`/`tidyr` verbs (`filter`, `select`, `mutate`, `arrange`, `group_by`/`summarise`);
 - [base-R plots]{.green} and [ggplot2]{.amber}: histograms, scatters, facets, boxplots;
 - the [transform → plot → interpret]{.indigo} EDA loop.
-:::
 
 ::: {.callout-desc}
 **The move today.** Your EDA loop is full of moves you repeat: grouped summaries, reshapes, simulations. This session looks *underneath* them: we leave the tidyverse and work in base R, replacing copy-paste with loops, reaching into two dimensions with matrices, and turning the moves you repeat into reusable functions you keep.
@@ -277,13 +273,11 @@ You can already *explore* a dataset: shape it with the pipe and `dplyr`/`tidyr`,
 </div>
 </div>
 <p>Session 3 is the <strong>“repeat &amp; package”</strong> move of the course: stop doing by hand what R can do by itself:</p>
-<div class="spread spread-md spread-evenly">
 <ul>
 <li><span class="green">repeat &amp; branch</span>: <span class="green">loops</span> (<code>for</code>, <code>while</code>) and conditionals (<code>if/else</code>, <code>ifelse</code>);</li>
 <li><span class="amber">reach 2D</span>: <span class="amber">matrices</span>, the vector’s 2D cousin, plus linear algebra and <code>apply</code>;</li>
 <li><span class="indigo">package the logic</span>: <span class="indigo">writing your own functions</span>, scope-aware, vectorised, tested.</li>
 </ul>
-</div>
 <div class="callout-desc">
 <p><strong>The thread.</strong> The Monte-Carlo experiment ties the session together: we <em>loop</em> over thousands of samples, and we <em>package</em> that loop into one reusable, tested function. Matrices give us the two-dimensional structures the algebra often lives in.</p>
 </div>
@@ -296,11 +290,9 @@ You can already *explore* a dataset: shape it with the pipe and `dplyr`/`tidyr`,
 
 Session 3 is the **"repeat &amp; package"** move of the course: stop doing by hand what R can do by itself:
 
-::: {.spread .spread-md .spread-evenly}
 - [repeat &amp; branch]{.green}: [loops]{.green} (`for`, `while`) and conditionals (`if/else`, `ifelse`);
 - [reach 2D]{.amber}: [matrices]{.amber}, the vector's 2D cousin, plus linear algebra and `apply`;
 - [package the logic]{.indigo}: [writing your own functions]{.indigo}, scope-aware, vectorised, tested.
-:::
 
 ::: {.callout-desc}
 **The thread.** The Monte-Carlo experiment ties the session together: we *loop* over thousands of samples, and we *package* that loop into one reusable, tested function. Matrices give us the two-dimensional structures the algebra often lives in.
@@ -315,12 +307,18 @@ Session 3 is the **"repeat &amp; package"** move of the course: stop doing by ha
 </section>
 <section id="the-problem-loops-solve" class="slide level2 inv" data-number="2.1">
 <h2><span class="header-section-number">2.1</span> The problem loops solve</h2>
-<p>Often you want to repeat the same step on many things: - your function models ten species; - you average over 1000 simulations; - you transform every column of a table.</p>
+<p>Often you want to repeat the same step on many things:</p>
+<ul>
+<li>your function models ten species;</li>
+<li>you average over 1000 simulations;</li>
+<li>you transform every column of a table.</li>
+</ul>
 <p>You could copy-paste… or you let <strong>R repeat for you</strong>.</p>
 <div class="code-pop">
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## The problem loops solve {.inv}
 
 Often you want to repeat the same step on many things:
+
 - your function models ten species;
 - you average over 1000 simulations;
 - you transform every column of a table.
@@ -332,33 +330,68 @@ You could copy-paste... or you let **R repeat for you**.
 <section id="for-loops" class="slide level2 inv" data-number="2.2">
 <h2><span class="header-section-number">2.2</span> <code>for</code> loops</h2>
 <p>Repeat a block a fixed number of times: the body runs once per value:</p>
-<div class="codewindow r" width="100%">
-<p>A simple <code>for</code> loop</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>) <span class="fu">print</span>(i<span class="sc">^</span><span class="dv">2</span>)            <span class="co"># i takes each value of the sequence in turn</span></span>
-<span id="cb1-2"><a aria-label="2"></a>total <span class="ot">&lt;-</span> <span class="dv">0</span>                           <span class="co"># the body runs once per value</span></span>
-<span id="cb1-3"><a aria-label="3"></a><span class="cf">for</span> (x <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>)) total <span class="ot">&lt;-</span> total <span class="sc">+</span> x</span>
-<span id="cb1-4"><a aria-label="4"></a>total   <span class="co"># 20</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="codewindow r" width="100%" name="01-for-loops.R">
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>) {</span>
+<span id="cb1-2"><a aria-label="2"></a>  <span class="co"># i takes each value of the sequence in turn</span></span>
+<span id="cb1-3"><a aria-label="3"></a>  <span class="fu">print</span>(i<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb1-4"><a aria-label="4"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1
+[1] 4
+[1] 9
+[1] 16
+[1] 25</code></pre>
+</div>
+</div></div>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a>total <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-2"><a aria-label="2"></a><span class="cf">for</span> (x <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>)) {</span>
+<span id="cb3-3"><a aria-label="3"></a>  <span class="co"># the body runs once per value</span></span>
+<span id="cb3-4"><a aria-label="4"></a>  total <span class="ot">&lt;-</span> total <span class="sc">+</span> x</span>
+<span id="cb3-5"><a aria-label="5"></a>}</span>
+<span id="cb3-6"><a aria-label="6"></a>total</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 20</code></pre>
+</div>
+</div></div>
 </div>
 <div class="paper-card">
-<p>Afterwards <code>i</code> is a normal variable: it still holds the loop’s last value.</p>
+<p>Afterwards <code>i</code> and <code>x</code> are normal variables: they still hold the loop’s last value.</p>
 </div>
 <div class="code-pop">
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## `for` loops {.inv}
 
 Repeat a block a fixed number of times: the body runs once per value:
 
-::: {.codewindow .r width="100%"}
-A simple `for` loop
-```r
-for (i in 1:5) print(i^2)            # i takes each value of the sequence in turn
-total &lt;- 0                           # the body runs once per value
-for (x in c(2, 4, 6, 8)) total &lt;- total + x
-total   # 20
+::: {.codewindow .r width="100%" name="01-for-loops.R"}
+```{r}
+#| echo: true
+#| output-location: column
+for (i in 1:5) {
+  # i takes each value of the sequence in turn
+  print(i^2)
+}
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+total &lt;- 0
+for (x in c(2, 4, 6, 8)) {
+  # the body runs once per value
+  total &lt;- total + x
+}
+total
 ```
 :::
 
 ::: {.paper-card}
-Afterwards `i` is a normal variable: it still holds the loop's last value.
+Afterwards `i` and `x` are normal variables: they still hold the loop's last value.
 :::
 </code></pre></div></details>
 </div>
@@ -366,15 +399,32 @@ Afterwards `i` is a normal variable: it still holds the loop's last value.
 <section id="pre-allocate-for-speed" class="slide level2 inv" data-number="2.3">
 <h2><span class="header-section-number">2.3</span> Pre-allocate for speed</h2>
 <p>Growing a vector inside a loop is slow. <strong>Pre-allocate</strong> the result first:</p>
-<div class="codewindow r" width="100%">
-<p>Pre-allocate, then fill by index</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-label="1"></a>n <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb2-2"><a aria-label="2"></a>out <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n)          <span class="co"># a vector of n zeros, ready to fill</span></span>
-<span id="cb2-3"><a aria-label="3"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) {</span>
-<span id="cb2-4"><a aria-label="4"></a>  out[i] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1</span>)</span>
-<span id="cb2-5"><a aria-label="5"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="codewindow r" width="100%" name="02-preallocate.R">
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a>n <span class="ot">&lt;-</span> <span class="dv">1000</span>L</span>
+<span id="cb5-2"><a aria-label="2"></a><span class="co"># a numeric vector of n zeros</span></span>
+<span id="cb5-3"><a aria-label="3"></a>out <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="at">length =</span> n) </span>
+<span id="cb5-4"><a aria-label="4"></a><span class="co"># character(length = n): character vector with n ""</span></span>
+<span id="cb5-5"><a aria-label="5"></a><span class="co"># logical(length = n): logical vector with n FALSE</span></span>
+<span id="cb5-6"><a aria-label="6"></a><span class="co"># integer(length = n): integer vector with n 0L </span></span>
+<span id="cb5-7"><a aria-label="7"></a><span class="co"># vector(mode = "list", length = n): list with n NULL</span></span>
+<span id="cb5-8"><a aria-label="8"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) {</span>
+<span id="cb5-9"><a aria-label="9"></a>  out[i] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1</span>)</span>
+<span id="cb5-10"><a aria-label="10"></a>}</span>
+<span id="cb5-11"><a aria-label="11"></a><span class="fu">par</span>(<span class="at">bg =</span> <span class="st">"white"</span>)</span>
+<span id="cb5-12"><a aria-label="12"></a><span class="fu">hist</span>(out)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="session-3_files/figure-revealjs/unnamed-chunk-3-1.png" width="960"></p>
+</figure>
 </div>
-<div class="callout-desc">
+</div>
+</div></div>
+</div>
+<div class="paper-card">
 <p><strong>Rule of thumb.</strong> Decide the output’s length <em>before</em> the loop, create the container, then fill slots by index (<code>out[i] &lt;- ...</code>). This is much faster than <code>out &lt;- c(out, ...)</code> inside the loop, a habit that matters once your data grows.</p>
 </div>
 <div class="code-pop">
@@ -382,18 +432,26 @@ Afterwards `i` is a normal variable: it still holds the loop's last value.
 
 Growing a vector inside a loop is slow. **Pre-allocate** the result first:
 
-::: {.codewindow .r width="100%"}
-Pre-allocate, then fill by index
-```r
-n &lt;- 1000
-out &lt;- numeric(n)          # a vector of n zeros, ready to fill
+::: {.codewindow .r width="100%" name="02-preallocate.R"}
+```{r}
+#| echo: true
+#| output-location: column
+n &lt;- 1000L
+# a numeric vector of n zeros
+out &lt;- numeric(length = n) 
+# character(length = n): character vector with n ""
+# logical(length = n): logical vector with n FALSE
+# integer(length = n): integer vector with n 0L 
+# vector(mode = "list", length = n): list with n NULL
 for (i in 1:n) {
   out[i] &lt;- rnorm(1)
 }
+par(bg = "white")
+hist(out)
 ```
 :::
 
-::: {.callout-desc}
+::: {.paper-card}
 **Rule of thumb.** Decide the output's length *before* the loop, create the container, then fill slots by index (`out[i] &lt;- ...`). This is much faster than `out &lt;- c(out, ...)` inside the loop, a habit that matters once your data grows.
 :::
 </code></pre></div></details>
@@ -402,13 +460,19 @@ for (i in 1:n) {
 <section id="while-loops" class="slide level2 inv" data-number="2.4">
 <h2><span class="header-section-number">2.4</span> <code>while</code> loops</h2>
 <p>Repeat <em>while a condition holds</em>: useful when you don’t know the number of steps in advance:</p>
-<div class="codewindow r" width="100%">
-<p>A <code>while</code> loop</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb3-2"><a aria-label="2"></a><span class="cf">while</span> (x <span class="sc">&lt;</span> <span class="dv">1000</span>) {</span>
-<span id="cb3-3"><a aria-label="3"></a>  x <span class="ot">&lt;-</span> x <span class="sc">*</span> <span class="dv">2</span></span>
-<span id="cb3-4"><a aria-label="4"></a>}</span>
-<span id="cb3-5"><a aria-label="5"></a>x    <span class="co"># 1024</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="codewindow r" width="100%" name="03-while-loops.R">
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-label="1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb6-2"><a aria-label="2"></a><span class="cf">while</span> (x <span class="sc">&lt;</span> <span class="dv">1000</span>) {</span>
+<span id="cb6-3"><a aria-label="3"></a>  x <span class="ot">&lt;-</span> x <span class="sc">*</span> <span class="dv">2</span></span>
+<span id="cb6-4"><a aria-label="4"></a>}</span>
+<span id="cb6-5"><a aria-label="5"></a>x</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1024</code></pre>
+</div>
+</div></div>
 </div>
 <div title="Guard against infinite loops">
 <div class="callout callout-caution callout-titled callout-style-default">
@@ -420,7 +484,14 @@ for (i in 1:n) {
 <p><strong>Guard against infinite loops</strong></p>
 </div>
 <div class="callout-content">
-<p>If the condition never becomes <code>FALSE</code>, the loop runs forever. Always make sure something inside the body moves toward stopping the loop.</p>
+<p>If the condition never becomes <code>FALSE</code>, the loop runs forever. Always add a safeguard, e.g.:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-label="1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb8-2"><a aria-label="2"></a>max_iter <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb8-3"><a aria-label="3"></a>counter <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb8-4"><a aria-label="4"></a><span class="cf">while</span> (x <span class="sc">&lt;</span> <span class="dv">1000</span> <span class="sc">&amp;&amp;</span> counter <span class="sc">&lt;</span> max_iter) {</span>
+<span id="cb8-5"><a aria-label="5"></a>  x <span class="ot">&lt;-</span> x <span class="sc">*</span> <span class="dv">2</span></span>
+<span id="cb8-6"><a aria-label="6"></a>  counter <span class="ot">&lt;-</span> counter <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb8-7"><a aria-label="7"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -430,19 +501,31 @@ for (i in 1:n) {
 
 Repeat *while a condition holds*: useful when you don't know the number of steps in advance:
 
-::: {.codewindow .r width="100%"}
-A `while` loop
-```r
+::: {.codewindow .r width="100%" name="03-while-loops.R"}
+```{r}
+#| echo: true
+#| output-location: column
 x &lt;- 1
 while (x &lt; 1000) {
   x &lt;- x * 2
 }
-x    # 1024
+x
 ```
 :::
 
 ::: {.callout-caution title="Guard against infinite loops"}
-If the condition never becomes `FALSE`, the loop runs forever. Always make sure something inside the body moves toward stopping the loop.
+If the condition never becomes `FALSE`, the loop runs forever. Always add a safeguard, e.g.:
+
+```r
+x &lt;- 1
+max_iter &lt;- 10
+counter &lt;- 0
+while (x &lt; 1000 &amp;&amp; counter &lt; max_iter) {
+  x &lt;- x * 2
+  counter &lt;- counter + 1
+}
+```
+
 :::
 </code></pre></div></details>
 </div>
@@ -450,12 +533,23 @@ If the condition never becomes `FALSE`, the loop runs forever. Always make sure 
 <section id="conditionals-if-else-if-else" class="slide level2 inv" data-number="2.5">
 <h2><span class="header-section-number">2.5</span> Conditionals: <code>if</code> / <code>else if</code> / <code>else</code></h2>
 <p>Branch on a condition: only <strong>one</strong> branch runs:</p>
-<div class="codewindow r" width="100%">
-<p><code>if</code>/<code>else</code> is an expression: it hands a value back</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-label="1"></a>score <span class="ot">&lt;-</span> <span class="dv">82</span></span>
-<span id="cb4-2"><a aria-label="2"></a>grade <span class="ot">&lt;-</span> <span class="cf">if</span> (score <span class="sc">&gt;=</span> <span class="dv">90</span>) <span class="st">"A"</span></span>
-<span id="cb4-3"><a aria-label="3"></a>         <span class="cf">else</span> <span class="cf">if</span> (score <span class="sc">&gt;=</span> <span class="dv">80</span>) <span class="st">"B"</span></span>
-<span id="cb4-4"><a aria-label="4"></a>         <span class="cf">else</span> <span class="st">"C"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="codewindow r" width="100%" name="04-if-else.R">
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-label="1"></a>score <span class="ot">&lt;-</span> <span class="dv">82</span></span>
+<span id="cb9-2"><a aria-label="2"></a>grade <span class="ot">&lt;-</span> <span class="cf">if</span> (score <span class="sc">&gt;=</span> <span class="dv">90</span>) {</span>
+<span id="cb9-3"><a aria-label="3"></a>  <span class="st">"A"</span></span>
+<span id="cb9-4"><a aria-label="4"></a>} <span class="cf">else</span> <span class="cf">if</span> (score <span class="sc">&gt;=</span> <span class="dv">80</span>) {</span>
+<span id="cb9-5"><a aria-label="5"></a>  <span class="st">"B"</span></span>
+<span id="cb9-6"><a aria-label="6"></a>} <span class="cf">else</span> {</span>
+<span id="cb9-7"><a aria-label="7"></a>  <span class="st">"C"</span></span>
+<span id="cb9-8"><a aria-label="8"></a>}</span>
+<span id="cb9-9"><a aria-label="9"></a>grade</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "B"</code></pre>
+</div>
+</div></div>
 </div>
 <div title="Long vectors break `if`">
 <div class="callout callout-caution callout-titled callout-style-default">
@@ -477,13 +571,19 @@ If the condition never becomes `FALSE`, the loop runs forever. Always make sure 
 
 Branch on a condition: only **one** branch runs:
 
-::: {.codewindow .r width="100%"}
-`if`/`else` is an expression: it hands a value back
-```r
+::: {.codewindow .r width="100%" name="04-if-else.R"}
+```{r}
+#| echo: true
+#| output-location: column
 score &lt;- 82
-grade &lt;- if (score &gt;= 90) "A"
-         else if (score &gt;= 80) "B"
-         else "C"
+grade &lt;- if (score &gt;= 90) {
+  "A"
+} else if (score &gt;= 80) {
+  "B"
+} else {
+  "C"
+}
+grade
 ```
 :::
 
@@ -496,23 +596,35 @@ grade &lt;- if (score &gt;= 90) "A"
 <section id="element-wise-choice-ifelse" class="slide level2 inv" data-number="2.6">
 <h2><span class="header-section-number">2.6</span> Element-wise choice: <code>ifelse</code></h2>
 <p>For <strong>vectorised</strong> decisions, use <code>ifelse(condition, when_true, when_false)</code>:</p>
-<div class="codewindow r" width="100%">
-<p>Element-wise choice with <code>ifelse</code></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a>temps <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">15</span>, <span class="dv">28</span>, <span class="dv">33</span>)</span>
-<span id="cb5-2"><a aria-label="2"></a><span class="fu">ifelse</span>(temps <span class="sc">&gt;</span> <span class="dv">25</span>, <span class="st">"hot"</span>, <span class="st">"not hot"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="codewindow r" width="100%" name="05-ifelse.R">
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-label="1"></a>temps <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">15</span>, <span class="dv">28</span>, <span class="dv">33</span>)</span>
+<span id="cb11-2"><a aria-label="2"></a><span class="fu">ifelse</span>(temps <span class="sc">&gt;</span> <span class="dv">25</span>, <span class="st">"hot"</span>, <span class="st">"not hot"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "not hot" "not hot" "hot"     "hot"    </code></pre>
+</div>
+</div></div>
 </div>
 <p>It applies the branch <em>element-wise</em> to a whole vector: no loop needed. This is the idiomatic replacement for “for each value, choose one of two things”.</p>
-<div class="callout-desc">
-<p><strong><code>if</code> vs <code>ifelse</code>.</strong> Use <code>if/else</code> to choose <em>which block of code</em> runs once; use <code>ifelse</code> to map a <em>vector</em> to one of two values. Mixing them up is a classic beginner bug.</p>
+<div class="paper-card">
+<p><strong><code>if</code> vs <code>ifelse</code>.</strong></p>
+<ul>
+<li>Use <code>if/else</code> to choose <em>which block of code</em> runs once;</li>
+<li>Use <code>ifelse</code> to map a <em>vector</em> to one of two values.</li>
+</ul>
+<p>Mixing them up is a classic beginner bug.</p>
 </div>
 <div class="code-pop">
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Element-wise choice: `ifelse` {.inv}
 
 For **vectorised** decisions, use `ifelse(condition, when_true, when_false)`:
 
-::: {.codewindow .r width="100%"}
-Element-wise choice with `ifelse`
-```r
+::: {.codewindow .r width="100%" name="05-ifelse.R"}
+```{r}
+#| echo: true
+#| output-location: column
 temps &lt;- c(-2, 15, 28, 33)
 ifelse(temps &gt; 25, "hot", "not hot")
 ```
@@ -520,8 +632,13 @@ ifelse(temps &gt; 25, "hot", "not hot")
 
 It applies the branch *element-wise* to a whole vector: no loop needed. This is the idiomatic replacement for "for each value, choose one of two things".
 
-::: {.callout-desc}
-**`if` vs `ifelse`.** Use `if/else` to choose *which block of code* runs once; use `ifelse` to map a *vector* to one of two values. Mixing them up is a classic beginner bug.
+::: {.paper-card}
+**`if` vs `ifelse`.**
+
+- Use `if/else` to choose *which block of code* runs once;
+- Use `ifelse` to map a *vector* to one of two values.
+
+Mixing them up is a classic beginner bug.
 :::
 </code></pre></div></details>
 </div>
@@ -529,20 +646,20 @@ It applies the branch *element-wise* to a whole vector: no loop needed. This is 
 <section id="which-tool-when" class="slide level2 inv" data-number="2.7">
 <h2><span class="header-section-number">2.7</span> Which tool when?</h2>
 <div class="spread spread-md spread-evenly">
-<p><strong><code>for</code></strong>: repeat a block a <em>known</em> number of times (fill a pre-allocated vector, iterate over columns).</p>
+<p><strong><code>for</code></strong>: repeat a block a <em>known</em> number of times (loop over columns, pre-allocated slots).</p>
 <p><strong><code>while</code></strong>: repeat <em>until a condition</em> flips (unknown count of steps).</p>
 <p><strong><code>if/else</code></strong>: choose <em>one block of code</em> based on a condition.</p>
 <p><strong><code>ifelse</code></strong>: map a <em>vector</em> element-wise to one of two values.</p>
-<p><strong><code>*apply</code> family</strong>: “loop over each element and apply a function” (met in Session 1 with lists, and again below with matrices).</p>
-</div>
-<div class="callout-desc">
+<p><strong><code>*apply</code> family</strong>: apply a function to each element (Session 1 lists, matrices below).</p>
+<div class="paper-card">
 <p>Often the <em>cleanest</em> loop is no loop at all: vectorization, <code>ifelse</code>, or <code>lapply</code>/<code>vapply</code> are simpler than an explicit <code>for</code>.</p>
+</div>
 </div>
 <div class="code-pop">
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Which tool when? {.inv}
 
 ::: {.spread .spread-md .spread-evenly}
-**`for`**: repeat a block a *known* number of times (fill a pre-allocated vector, iterate over columns).
+**`for`**: repeat a block a *known* number of times (loop over columns, pre-allocated slots).
 
 **`while`**: repeat *until a condition* flips (unknown count of steps).
 
@@ -550,11 +667,12 @@ It applies the branch *element-wise* to a whole vector: no loop needed. This is 
 
 **`ifelse`**: map a *vector* element-wise to one of two values.
 
-**`*apply` family**: "loop over each element and apply a function" (met in Session 1 with lists, and again below with matrices).
+**`*apply` family**: apply a function to each element (Session 1 lists, matrices below).
+
+::: {.paper-card}
+Often the *cleanest* loop is no loop at all: vectorization, `ifelse`, or `lapply`/`vapply` are simpler than an explicit `for`.
 :::
 
-::: {.callout-desc}
-Often the *cleanest* loop is no loop at all: vectorization, `ifelse`, or `lapply`/`vapply` are simpler than an explicit `for`.
 :::
 </code></pre></div></details>
 </div>
@@ -562,75 +680,97 @@ Often the *cleanest* loop is no loop at all: vectorization, `ifelse`, or `lapply
 <section id="the-apply-family-loop-apply" class="slide level2 inv" data-number="2.8">
 <h2><span class="header-section-number">2.8</span> The <code>*apply</code> family: loop &amp; apply</h2>
 <p>Say “<strong>apply this function to every element</strong>” instead of writing the loop by hand:</p>
-<div class="codewindow r" width="100%">
-<p>lapply, sapply, vapply</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-label="1"></a>l <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">b =</span> <span class="dv">4</span><span class="sc">:</span><span class="dv">6</span>)</span>
-<span id="cb6-2"><a aria-label="2"></a><span class="fu">lapply</span>(l, mean)          <span class="co"># a list back — keeps the original structure</span></span>
-<span id="cb6-3"><a aria-label="3"></a><span class="fu">sapply</span>(l, mean)          <span class="co"># tries to simplify: a named vector</span></span>
-<span id="cb6-4"><a aria-label="4"></a><span class="fu">vapply</span>(l, mean, <span class="dv">0</span>)       <span class="co"># like sapply, but you promise the output type</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="codewindow">
+<div class="editor r" name="lapply.R">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-label="1"></a>l <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">b =</span> <span class="dv">4</span><span class="sc">:</span><span class="dv">6</span>)</span>
+<span id="cb13-2"><a aria-label="2"></a><span class="fu">lapply</span>(l, mean)          <span class="co"># a list back — keeps the original structure</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$a
+[1] 2
+
+$b
+[1] 5</code></pre>
 </div>
-<div class="paper-card">
-<p>The family you first met on lists in <strong>Session 1</strong> (and will meet again on matrices as <code>apply</code>, <code>MARGIN = …</code>): <code>lapply</code> always, <code>sapply</code> when simple, <code>vapply</code> when you want the guarantee. It’s “loop, <em>then</em> apply” collapsed into one verb.</p>
+</div>
+</div>
+<div class="editor r fragment" name="sapply.R">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a aria-label="1"></a>l <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">b =</span> <span class="dv">4</span><span class="sc">:</span><span class="dv">6</span>)</span>
+<span id="cb15-2"><a aria-label="2"></a><span class="fu">sapply</span>(l, mean)          <span class="co"># tries to simplify: a named vector</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>a b 
+2 5 </code></pre>
+</div>
+</div>
+</div>
+<div class="editor r fragment" name="vapply.R">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a aria-label="1"></a>l <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">b =</span> <span class="dv">4</span><span class="sc">:</span><span class="dv">6</span>)</span>
+<span id="cb17-2"><a aria-label="2"></a><span class="fu">vapply</span>(l, mean, <span class="dv">0</span>)       <span class="co"># like sapply, but you promise the output type</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>a b 
+2 5 </code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paper-card fragment" data-fragment-index="3">
+<p>The family you first met on lists in <strong>Session 1</strong> (and will meet again on matrices as <code>apply</code>, <code>MARGIN = ...</code>):</p>
+<ul>
+<li><code>lapply</code> always,</li>
+<li><code>sapply</code> when simple,</li>
+<li><code>vapply</code> when you want the guarantee.</li>
+</ul>
+<p>It’s “loop, <em>then</em> apply” collapsed into one verb.</p>
 </div>
 <div class="code-pop">
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## The `*apply` family: loop &amp; apply {.inv}
 
 Say "**apply this function to every element**" instead of writing the loop by hand:
 
-::: {.codewindow .r width="100%"}
-lapply, sapply, vapply
-```r
+::: {.codewindow}
+
+::: {.editor .r name="lapply.R"}
+```{r}
+#| echo: true
 l &lt;- list(a = 1:3, b = 4:6)
 lapply(l, mean)          # a list back — keeps the original structure
+```
+:::
+
+::: {.editor .r .fragment name="sapply.R"}
+```{r}
+#| echo: true
+l &lt;- list(a = 1:3, b = 4:6)
 sapply(l, mean)          # tries to simplify: a named vector
+```
+:::
+
+::: {.editor .r .fragment name="vapply.R"}
+```{r}
+#| echo: true
+l &lt;- list(a = 1:3, b = 4:6)
 vapply(l, mean, 0)       # like sapply, but you promise the output type
 ```
 :::
 
-::: {.paper-card}
-The family you first met on lists in **Session 1** (and will meet again on matrices as `apply`, `MARGIN = …`): `lapply` always, `sapply` when simple, `vapply` when you want the guarantee. It's "loop, *then* apply" collapsed into one verb.
+:::
+
+::: {.paper-card .fragment fragment-index=3}
+The family you first met on lists in **Session 1** (and will meet again on matrices as `apply`, `MARGIN = ...`):
+
+- `lapply` always,
+- `sapply` when simple,
+- `vapply` when you want the guarantee.
+
+It's "loop, *then* apply" collapsed into one verb.
 :::
 </code></pre></div></details>
 </div>
 </section>
-<section id="grouped-summaries-in-base-r" class="slide level2 inv" data-number="2.9">
-<h2><span class="header-section-number">2.9</span> Grouped summaries in base R</h2>
-<p><code>group_by |&gt; summarise</code> (Session 2) has a base-R cousin that returns the split-by-group result directly:</p>
-<div class="codewindow r" width="100%">
-<p>tapply &amp; aggregate, base R</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a><span class="fu">tapply</span>(penguins<span class="sc">$</span>body_mass_g, penguins<span class="sc">$</span>species, mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb7-2"><a aria-label="2"></a><span class="co">#   Adelie Chinstrap   Gentoo</span></span>
-<span id="cb7-3"><a aria-label="3"></a><span class="co">#  3700.7    3733.1    5076.0</span></span>
-<span id="cb7-4"><a aria-label="4"></a></span>
-<span id="cb7-5"><a aria-label="5"></a><span class="fu">aggregate</span>(body_mass_g <span class="sc">~</span> species, <span class="at">data =</span> penguins, <span class="at">FUN =</span> mean)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="paper-card">
-<p><code>tapply(vector, group, fun)</code> summarises by group; <code>aggregate(formula, data, fun)</code> returns a tidy <code>data.frame</code>. When your pipeline gets more steps, reach for the <code>dplyr</code> verbs; when it’s one grouped summary, these one-liners are hard to beat.</p>
-</div>
-<div class="code-pop">
-<details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Grouped summaries in base R {.inv}
-
-`group_by |&gt; summarise` (Session 2) has a base-R cousin that returns the split-by-group result directly:
-
-::: {.codewindow .r width="100%"}
-tapply &amp; aggregate, base R
-```r
-tapply(penguins$body_mass_g, penguins$species, mean, na.rm = TRUE)
-#   Adelie Chinstrap   Gentoo
-#  3700.7    3733.1    5076.0
-
-aggregate(body_mass_g ~ species, data = penguins, FUN = mean)
-```
-:::
-
-::: {.paper-card}
-`tapply(vector, group, fun)` summarises by group; `aggregate(formula, data, fun)` returns a tidy `data.frame`. When your pipeline gets more steps, reach for the `dplyr` verbs; when it's one grouped summary, these one-liners are hard to beat.
-:::
-</code></pre></div></details>
-</div>
-</section>
-<section id="your-turn-loops-conditionals" class="slide level2 paper" data-number="2.10">
-<h2><span class="header-section-number">2.10</span> Your turn: loops &amp; conditionals</h2>
+<section id="your-turn-loops-conditionals" class="slide level2 paper" data-number="2.9">
+<h2><span class="header-section-number">2.9</span> Your turn: loops &amp; conditionals</h2>
 <div class="paper-card">
 <ol type="1">
 <li><code>for</code> loop printing squares of <code>1:10</code>.</li>
@@ -688,14 +828,52 @@ Lab 1: loops
 <section id="what-is-a-matrix" class="slide level2 inv" data-number="3.1">
 <h2><span class="header-section-number">3.1</span> What is a matrix?</h2>
 <p>A <strong>matrix</strong> is a <em>two-dimensional rectangular array</em> of <strong>one type</strong> (usually numeric): a vector folded into rows and columns. It’s the <strong>2D cousin of the vector</strong>.</p>
-<div class="codewindow r" width="100%">
-<p>Build and subset a matrix</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-label="1"></a>m <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">ncol =</span> <span class="dv">4</span>)   <span class="co"># vector -&gt; rows &amp; columns</span></span>
-<span id="cb8-2"><a aria-label="2"></a>m[<span class="dv">2</span>, <span class="dv">3</span>]      <span class="co"># subset with [row, col], like a data frame</span></span>
-<span id="cb8-3"><a aria-label="3"></a><span class="fu">dim</span>(m)       <span class="co"># 3 4</span></span>
-<span id="cb8-4"><a aria-label="4"></a><span class="fu">nrow</span>(m); <span class="fu">ncol</span>(m)   <span class="co"># 3 4</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="codewindow r" width="100%" name="matrix.R">
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-label="1"></a>(m <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">ncol =</span> <span class="dv">4</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3] [,4]
+[1,]    1    4    7   10
+[2,]    2    5    8   11
+[3,]    3    6    9   12</code></pre>
 </div>
-<div class="callout-desc">
+</div></div>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a aria-label="1"></a>m[<span class="dv">2</span>, ] <span class="co"># subset with [row, col], like a data frame</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  2  5  8 11</code></pre>
+</div>
+</div></div>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a aria-label="1"></a><span class="fu">dim</span>(m) <span class="co"># length-2 vector with dimensions</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3 4</code></pre>
+</div>
+</div></div>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a aria-label="1"></a><span class="fu">nrow</span>(m) <span class="co"># number of rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+</div></div>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a aria-label="1"></a><span class="fu">ncol</span>(m) <span class="co"># number of columns</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4</code></pre>
+</div>
+</div></div>
+</div>
+<div class="paper-card">
 <p><strong>Key distinction.</strong> A data frame is a <em>list of columns</em> (columns may differ in type); a matrix is <em>one vector in 2D</em> (single type). For tabular <em>data</em> with mixed types, prefer a data frame/tibble; reach for a matrix when you need <strong>linear algebra</strong>.</p>
 </div>
 <div class="code-pop">
@@ -703,17 +881,39 @@ Lab 1: loops
 
 A **matrix** is a *two-dimensional rectangular array* of **one type** (usually numeric): a vector folded into rows and columns. It's the **2D cousin of the vector**.
 
-::: {.codewindow .r width="100%"}
-Build and subset a matrix
-```r
-m &lt;- matrix(1:12, nrow = 3, ncol = 4)   # vector -&gt; rows &amp; columns
-m[2, 3]      # subset with [row, col], like a data frame
-dim(m)       # 3 4
-nrow(m); ncol(m)   # 3 4
+::: {.codewindow .r width="100%" name="matrix.R"}
+```{r}
+#| echo: true
+#| output-location: column
+(m &lt;- matrix(1:12, nrow = 3, ncol = 4))
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+m[2, ] # subset with [row, col], like a data frame
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+dim(m) # length-2 vector with dimensions
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+nrow(m) # number of rows
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+ncol(m) # number of columns
 ```
 :::
 
-::: {.callout-desc}
+::: {.paper-card}
 **Key distinction.** A data frame is a *list of columns* (columns may differ in type); a matrix is *one vector in 2D* (single type). For tabular *data* with mixed types, prefer a data frame/tibble; reach for a matrix when you need **linear algebra**.
 :::
 </code></pre></div></details>
@@ -721,13 +921,49 @@ nrow(m); ncol(m)   # 3 4
 </section>
 <section id="building-reshaping" class="slide level2 inv" data-number="3.2">
 <h2><span class="header-section-number">3.2</span> Building &amp; reshaping</h2>
-<p>A matrix is just a vector with a <code>dim</code> (dimension) attribute, so you can build or reshape them freely:</p>
-<div class="codewindow r" width="100%">
-<p><code>matrix()</code>, <code>rbind</code>/<code>cbind</code>, and <code>dim()</code></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-label="1"></a>A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">3</span>)          <span class="co"># column-major fill</span></span>
-<span id="cb9-2"><a aria-label="2"></a><span class="fu">identical</span>(A, <span class="fu">rbind</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">4</span><span class="sc">:</span><span class="dv">6</span>))                 <span class="co"># TRUE — cbind/rbind by row</span></span>
-<span id="cb9-3"><a aria-label="3"></a><span class="fu">cbind</span>(A, <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">8</span>))                             <span class="co"># add a column</span></span>
-<span id="cb9-4"><a aria-label="4"></a><span class="fu">dim</span>(A) <span class="ot">&lt;-</span> <span class="cn">NULL</span>                                <span class="co"># strip the dim -&gt; back to a vector</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A matrix is just a vector with a <code>dim</code>(ension) attribute; you can build or reshape them freely:</p>
+<div class="codewindow r" width="100%" name="reshape.R">
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a aria-label="1"></a><span class="co"># column-major fill</span></span>
+<span id="cb29-2"><a aria-label="2"></a>(A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    1    3    5
+[2,]    2    4    6</code></pre>
+</div>
+</div></div>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a aria-label="1"></a><span class="co"># rbind: bind by row</span></span>
+<span id="cb31-2"><a aria-label="2"></a><span class="fu">identical</span>(A, <span class="fu">rbind</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">4</span><span class="sc">:</span><span class="dv">6</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
+</div>
+</div></div>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a aria-label="1"></a><span class="co"># cbind: bind by column</span></span>
+<span id="cb33-2"><a aria-label="2"></a><span class="fu">cbind</span>(A, <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">8</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3] [,4]
+[1,]    1    3    5    7
+[2,]    2    4    6    8</code></pre>
+</div>
+</div></div>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a aria-label="1"></a><span class="co"># strip the dim -&gt; back to a vector</span></span>
+<span id="cb35-2"><a aria-label="2"></a><span class="fu">dim</span>(A) <span class="ot">&lt;-</span> <span class="cn">NULL</span> </span>
+<span id="cb35-3"><a aria-label="3"></a>A</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 2 3 4 5 6</code></pre>
+</div>
+</div></div>
 </div>
 <div title="Column-major by default">
 <div class="callout callout-caution callout-titled callout-style-default">
@@ -747,15 +983,36 @@ nrow(m); ncol(m)   # 3 4
 <div class="code-pop">
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Building &amp; reshaping {.inv}
 
-A matrix is just a vector with a `dim` (dimension) attribute, so you can build or reshape them freely:
+A matrix is just a vector with a `dim`(ension) attribute; you can build or reshape them freely:
 
-::: {.codewindow .r width="100%"}
-`matrix()`, `rbind`/`cbind`, and `dim()`
-```r
-A &lt;- matrix(1:6, nrow = 2, ncol = 3)          # column-major fill
-identical(A, rbind(1:3, 4:6))                 # TRUE — cbind/rbind by row
-cbind(A, c(7, 8))                             # add a column
-dim(A) &lt;- NULL                                # strip the dim -&gt; back to a vector
+::: {.codewindow .r width="100%" name="reshape.R"}
+```{r}
+#| echo: true
+#| output-location: column
+# column-major fill
+(A &lt;- matrix(1:6, nrow = 2, ncol = 3))
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+# rbind: bind by row
+identical(A, rbind(1:3, 4:6))
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+# cbind: bind by column
+cbind(A, c(7, 8))
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+# strip the dim -&gt; back to a vector
+dim(A) &lt;- NULL 
+A
 ```
 :::
 
@@ -768,14 +1025,41 @@ dim(A) &lt;- NULL                                # strip the dim -&gt; back to a
 <section id="arithmetic-recycling" class="slide level2 inv" data-number="3.3">
 <h2><span class="header-section-number">3.3</span> Arithmetic &amp; recycling</h2>
 <p>Element-wise arithmetic works like it does on vectors, and <strong>recycling</strong> applies:</p>
-<div class="codewindow r" width="100%">
-<p>Arithmetic on a matrix</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-label="1"></a>M <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
-<span id="cb10-2"><a aria-label="2"></a>M <span class="sc">*</span> <span class="dv">2</span>            <span class="co"># scalar multiplies every entry</span></span>
-<span id="cb10-3"><a aria-label="3"></a>M <span class="sc">+</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>)    <span class="co"># length-2 vector recycles down the COLUMNS</span></span>
-<span id="cb10-4"><a aria-label="4"></a>M <span class="sc">*</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">10</span>), <span class="dv">2</span>, <span class="dv">1</span>)   <span class="co"># column vector scales each column</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="codewindow r" width="100%" name="matrix-arithmetic.R">
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a aria-label="1"></a>(M <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    1    3    5
+[2,]    2    4    6</code></pre>
 </div>
-<div class="callout-desc">
+</div></div>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a aria-label="1"></a><span class="co"># scalar multiplies every entry</span></span>
+<span id="cb39-2"><a aria-label="2"></a>M <span class="sc">*</span> <span class="dv">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    2    6   10
+[2,]    4    8   12</code></pre>
+</div>
+</div></div>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a aria-label="1"></a><span class="co"># length-2 vector recycles down the COLUMNS</span></span>
+<span id="cb41-2"><a aria-label="2"></a>M <span class="sc">+</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]   11   13   15
+[2,]   22   24   26</code></pre>
+</div>
+</div></div>
+</div>
+<div class="paper-card">
 <p><strong>Watch the recycling axis.</strong> A length-2 vector recycles along columns (down), not across: get this wrong and your standardisation silently miscalculates each column.</p>
 </div>
 <div class="code-pop">
@@ -783,17 +1067,29 @@ dim(A) &lt;- NULL                                # strip the dim -&gt; back to a
 
 Element-wise arithmetic works like it does on vectors, and **recycling** applies:
 
-::: {.codewindow .r width="100%"}
-Arithmetic on a matrix
-```r
-M &lt;- matrix(1:6, 2, 3)
-M * 2            # scalar multiplies every entry
-M + c(10, 20)    # length-2 vector recycles down the COLUMNS
-M * matrix(c(1, 10), 2, 1)   # column vector scales each column
+::: {.codewindow .r width="100%" name="matrix-arithmetic.R"}
+```{r}
+#| echo: true
+#| output-location: column
+(M &lt;- matrix(1:6, nrow = 2, ncol = 3))
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+# scalar multiplies every entry
+M * 2
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+# length-2 vector recycles down the COLUMNS
+M + c(10, 20)
 ```
 :::
 
-::: {.callout-desc}
+::: {.paper-card}
 **Watch the recycling axis.** A length-2 vector recycles along columns (down), not across: get this wrong and your standardisation silently miscalculates each column.
 :::
 </code></pre></div></details>
@@ -802,14 +1098,96 @@ M * matrix(c(1, 10), 2, 1)   # column vector scales each column
 <section id="linear-algebra" class="slide level2 inv" data-number="3.4">
 <h2><span class="header-section-number">3.4</span> Linear algebra</h2>
 <p>Matrices exist to do <strong>algebra</strong>: matrix product, transpose, inverse, determinant:</p>
-<div class="codewindow r" width="100%">
-<p>Matrix algebra</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-label="1"></a>A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">3</span>), <span class="at">nrow =</span> <span class="dv">2</span>)   <span class="co"># a 2x2</span></span>
-<span id="cb11-2"><a aria-label="2"></a>A <span class="sc">%*%</span> A        <span class="co"># matrix product       t(A) # transpose</span></span>
-<span id="cb11-3"><a aria-label="3"></a><span class="fu">solve</span>(A)       <span class="co"># inverse              det(A) # determinant</span></span>
-<span id="cb11-4"><a aria-label="4"></a><span class="fu">diag</span>(<span class="dv">4</span>)        <span class="co"># 4x4 identity</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="codewindow">
+<div class="editor r" name="01-matrix-algebra.R">
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a aria-label="1"></a>(A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">3</span>), <span class="at">nrow =</span> <span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]    2    1
+[2,]    4    3</code></pre>
 </div>
-<div title="`%*%` is not `*`">
+</div></div>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a aria-label="1"></a>A <span class="sc">%*%</span> <span class="fu">t</span>(A) <span class="co"># matrix product</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]    5   11
+[2,]   11   25</code></pre>
+</div>
+</div></div>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a aria-label="1"></a><span class="fu">t</span>(A) <span class="co"># transpose</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]    2    4
+[2,]    1    3</code></pre>
+</div>
+</div></div>
+</div>
+<div class="editor r fragment" name="02-matrix-algebra.R">
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a aria-label="1"></a><span class="fu">solve</span>(A) <span class="co"># inverse</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]  1.5 -0.5
+[2,] -2.0  1.0</code></pre>
+</div>
+</div></div>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a aria-label="1"></a>(A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">3</span>), <span class="at">nrow =</span> <span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]    2    1
+[2,]    4    3</code></pre>
+</div>
+</div></div>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a aria-label="1"></a><span class="fu">det</span>(A) <span class="co"># determinant</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+</div></div>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a aria-label="1"></a><span class="fu">diag</span>(A) <span class="co"># extract diagonal</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2 3</code></pre>
+</div>
+</div></div>
+</div>
+<div class="editor r fragment" name="03-matrix-algebra.R">
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a aria-label="1"></a><span class="fu">eigen</span>(A) <span class="co"># eigen decomposition</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>eigen() decomposition
+$values
+[1] 4.5615528 0.4384472
+
+$vectors
+           [,1]       [,2]
+[1,] -0.3636591 -0.5392856
+[2,] -0.9315321  0.8421229</code></pre>
+</div>
+</div></div>
+</div>
+</div>
+<div class="fragment" title="`%*%` is not `*`">
 <div class="callout callout-caution callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -819,7 +1197,11 @@ M * matrix(c(1, 10), 2, 1)   # column vector scales each column
 <p><strong><code>%*%</code> is not <code>*</code></strong></p>
 </div>
 <div class="callout-content">
-<p><code>A * B</code> is <strong>element-wise</strong>; <code>A %*% B</code> is the <strong>matrix product</strong> (rows × columns). Absent the right dimensions, <code>%*%</code> errors, which is usually the clue you wanted a matrix, not a data frame.</p>
+<ul>
+<li><code>A * B</code> is <strong>element-wise</strong>;</li>
+<li><code>A %*% B</code> is the <strong>matrix product</strong> (rows × columns).</li>
+</ul>
+<p>Absent the right dimensions, <code>%*%</code> errors, which is usually the clue you wanted a matrix, not a data frame.</p>
 </div>
 </div>
 </div>
@@ -829,18 +1211,69 @@ M * matrix(c(1, 10), 2, 1)   # column vector scales each column
 
 Matrices exist to do **algebra**: matrix product, transpose, inverse, determinant:
 
-::: {.codewindow .r width="100%"}
-Matrix algebra
-```r
-A &lt;- matrix(c(2, 4, 1, 3), nrow = 2)   # a 2x2
-A %*% A        # matrix product       t(A) # transpose
-solve(A)       # inverse              det(A) # determinant
-diag(4)        # 4x4 identity
+::: {.codewindow}
+
+::: {.editor .r name="01-matrix-algebra.R"}
+```{r}
+#| echo: true
+#| output-location: column
+(A &lt;- matrix(c(2, 4, 1, 3), nrow = 2))
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+A %*% t(A) # matrix product
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+t(A) # transpose
 ```
 :::
 
-::: {.callout-caution title="`%*%` is not `*`"}
-`A * B` is **element-wise**; `A %*% B` is the **matrix product** (rows × columns). Absent the right dimensions, `%*%` errors, which is usually the clue you wanted a matrix, not a data frame.
+::: {.editor .r .fragment name="02-matrix-algebra.R"}
+```{r}
+#| echo: true
+#| output-location: column
+solve(A) # inverse
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+(A &lt;- matrix(c(2, 4, 1, 3), nrow = 2))
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+det(A) # determinant
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+diag(A) # extract diagonal
+```
+:::
+
+::: {.editor .r .fragment name="03-matrix-algebra.R"}
+```{r}
+#| echo: true
+#| output-location: column
+eigen(A) # eigen decomposition
+```
+:::
+
+:::
+
+::: {.callout-caution .fragment title="`%*%` is not `*`"}
+- `A * B` is **element-wise**;
+- `A %*% B` is the **matrix product** (rows × columns).
+
+Absent the right dimensions, `%*%` errors, which is usually the clue you wanted a matrix, not a data frame.
 :::
 </code></pre></div></details>
 </div>
@@ -848,14 +1281,44 @@ diag(4)        # 4x4 identity
 <section id="fold-a-data-frame-into-a-matrix" class="slide level2 inv" data-number="3.5">
 <h2><span class="header-section-number">3.5</span> Fold a data frame into a matrix</h2>
 <p>Any rectangular <strong>numeric</strong> block can be coerced to a matrix when algebra needs it:</p>
-<div class="codewindow r" width="100%">
-<p><code>as.matrix()</code> for numeric tables</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-label="1"></a>nums <span class="ot">&lt;-</span> iris[, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]            <span class="co"># 150 x 4, all numeric</span></span>
-<span id="cb12-2"><a aria-label="2"></a>M    <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(nums)        <span class="co"># data frame -&gt; matrix</span></span>
-<span id="cb12-3"><a aria-label="3"></a><span class="fu">dim</span>(M)                         <span class="co"># 150 4</span></span>
-<span id="cb12-4"><a aria-label="4"></a><span class="fu">class</span>(M)                       <span class="co"># "matrix" "array"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="codewindow r" width="100%" name="as-matrix.R">
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a aria-label="1"></a>nums <span class="ot">&lt;-</span> iris[, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="co"># 150 x 4, all numeric</span></span>
+<span id="cb59-2"><a aria-label="2"></a><span class="fu">head</span>(nums, <span class="at">n =</span> <span class="dv">9</span>L)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width
+1          5.1         3.5          1.4         0.2
+2          4.9         3.0          1.4         0.2
+3          4.7         3.2          1.3         0.2
+4          4.6         3.1          1.5         0.2
+5          5.0         3.6          1.4         0.2
+6          5.4         3.9          1.7         0.4
+7          4.6         3.4          1.4         0.3
+8          5.0         3.4          1.5         0.2
+9          4.4         2.9          1.4         0.2</code></pre>
 </div>
-<div class="callout-desc">
+</div></div>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a aria-label="1"></a>M <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(nums) <span class="co"># data frame -&gt; matrix</span></span>
+<span id="cb61-2"><a aria-label="2"></a><span class="fu">dim</span>(M)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 150   4</code></pre>
+</div>
+</div></div>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a aria-label="1"></a><span class="fu">class</span>(M)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "matrix" "array" </code></pre>
+</div>
+</div></div>
+</div>
+<div class="paper-card">
 <p><code>as.matrix()</code> forces everything to <strong>one type</strong>: if any column is character, the whole matrix becomes character. Check <code>str()</code> before you coerce, and keep a real data frame for mixed-type data.</p>
 </div>
 <div class="code-pop">
@@ -863,17 +1326,29 @@ diag(4)        # 4x4 identity
 
 Any rectangular **numeric** block can be coerced to a matrix when algebra needs it:
 
-::: {.codewindow .r width="100%"}
-`as.matrix()` for numeric tables
-```r
-nums &lt;- iris[, 1:4]            # 150 x 4, all numeric
-M    &lt;- as.matrix(nums)        # data frame -&gt; matrix
-dim(M)                         # 150 4
-class(M)                       # "matrix" "array"
+::: {.codewindow .r width="100%" name="as-matrix.R"}
+```{r}
+#| echo: true
+#| output-location: column
+nums &lt;- iris[, 1:4] # 150 x 4, all numeric
+head(nums, n = 9L)
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+M &lt;- as.matrix(nums) # data frame -&gt; matrix
+dim(M)
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+class(M)
 ```
 :::
 
-::: {.callout-desc}
+::: {.paper-card}
 `as.matrix()` forces everything to **one type**: if any column is character, the whole matrix becomes character. Check `str()` before you coerce, and keep a real data frame for mixed-type data.
 :::
 </code></pre></div></details>
@@ -882,15 +1357,56 @@ class(M)                       # "matrix" "array"
 <section id="rowcolumn-summaries-apply" class="slide level2 inv" data-number="3.6">
 <h2><span class="header-section-number">3.6</span> Row/column summaries &amp; <code>apply</code></h2>
 <p>Summarise along one axis with the <code>row*</code>/<code>col*</code> helpers, or generalise with <code>apply</code>:</p>
-<div class="codewindow r" width="100%">
-<p>rowSums, colMeans, and apply(MARGIN)</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-label="1"></a>M <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="dv">3</span>, <span class="dv">4</span>)</span>
-<span id="cb13-2"><a aria-label="2"></a><span class="fu">rowSums</span>(M); <span class="fu">rowMeans</span>(M)     <span class="co"># per row   (MARGIN = 1)</span></span>
-<span id="cb13-3"><a aria-label="3"></a><span class="fu">colSums</span>(M); <span class="fu">colMeans</span>(M)     <span class="co"># per column (MARGIN = 2)</span></span>
-<span id="cb13-4"><a aria-label="4"></a><span class="fu">apply</span>(M, <span class="dv">1</span>, sd)             <span class="co"># sd of each row</span></span>
-<span id="cb13-5"><a aria-label="5"></a><span class="fu">apply</span>(M, <span class="dv">2</span>, <span class="cf">function</span>(x) <span class="fu">max</span>(x) <span class="sc">-</span> <span class="fu">min</span>(x))   <span class="co"># range of each column</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="codewindow r" width="100%" name="matrix-apply.R">
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a aria-label="1"></a>(M <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="dv">3</span>, <span class="dv">4</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3] [,4]
+[1,]    1    4    7   10
+[2,]    2    5    8   11
+[3,]    3    6    9   12</code></pre>
 </div>
-<div class="callout-desc">
+</div></div>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a aria-label="1"></a><span class="co"># per row (MARGIN = 1) - see also rowSums(M)</span></span>
+<span id="cb67-2"><a aria-label="2"></a><span class="fu">rowMeans</span>(M)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5.5 6.5 7.5</code></pre>
+</div>
+</div></div>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a aria-label="1"></a><span class="co"># per column (MARGIN = 2) - see also colSums(M)</span></span>
+<span id="cb69-2"><a aria-label="2"></a><span class="fu">colMeans</span>(M)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  2  5  8 11</code></pre>
+</div>
+</div></div>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a aria-label="1"></a><span class="co"># standard deviation of each row</span></span>
+<span id="cb71-2"><a aria-label="2"></a><span class="fu">apply</span>(M, <span class="dv">1</span>, sd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.872983 3.872983 3.872983</code></pre>
+</div>
+</div></div>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a aria-label="1"></a><span class="co"># range of each column</span></span>
+<span id="cb73-2"><a aria-label="2"></a><span class="fu">apply</span>(M, <span class="dv">2</span>, \(x) <span class="fu">max</span>(x) <span class="sc">-</span> <span class="fu">min</span>(x))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2 2 2 2</code></pre>
+</div>
+</div></div>
+</div>
+<div class="paper-card">
 <p><code>apply(M, MARGIN, fun)</code>: <code>MARGIN = 1</code> goes down rows, <code>MARGIN = 2</code> across columns. It’s <code>lapply</code>’s 2D sibling: a loop over one axis hidden inside a one-liner.</p>
 </div>
 <div class="code-pop">
@@ -898,18 +1414,43 @@ class(M)                       # "matrix" "array"
 
 Summarise along one axis with the `row*`/`col*` helpers, or generalise with `apply`:
 
-::: {.codewindow .r width="100%"}
-rowSums, colMeans, and apply(MARGIN)
-```r
-M &lt;- matrix(1:12, 3, 4)
-rowSums(M); rowMeans(M)     # per row   (MARGIN = 1)
-colSums(M); colMeans(M)     # per column (MARGIN = 2)
-apply(M, 1, sd)             # sd of each row
-apply(M, 2, function(x) max(x) - min(x))   # range of each column
+::: {.codewindow .r width="100%" name="matrix-apply.R"}
+```{r}
+#| echo: true
+#| output-location: column
+(M &lt;- matrix(1:12, 3, 4))
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+# per row (MARGIN = 1) - see also rowSums(M)
+rowMeans(M)
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+# per column (MARGIN = 2) - see also colSums(M)
+colMeans(M)
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+# standard deviation of each row
+apply(M, 1, sd)
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+# range of each column
+apply(M, 2, \(x) max(x) - min(x))
 ```
 :::
 
-::: {.callout-desc}
+::: {.paper-card}
 `apply(M, MARGIN, fun)`: `MARGIN = 1` goes down rows, `MARGIN = 2` across columns. It's `lapply`'s 2D sibling: a loop over one axis hidden inside a one-liner.
 :::
 </code></pre></div></details>
@@ -917,40 +1458,68 @@ apply(M, 2, function(x) max(x) - min(x))   # range of each column
 </section>
 <section id="standardise-a-matrix-full-example" class="slide level2 inv" data-number="3.7">
 <h2><span class="header-section-number">3.7</span> Standardise a matrix (full example)</h2>
-<p>Let’s <strong>z-score</strong> every column of a matrix, the machinery behind a real analysis:</p>
-<div class="codewindow r" width="100%">
-<p>Column-wise z-scoring</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-label="1"></a>M   <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">100</span>, <span class="dv">2</span>, <span class="dv">200</span>), <span class="dv">2</span>, <span class="dv">2</span>)</span>
-<span id="cb14-2"><a aria-label="2"></a>mu  <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(M)            <span class="co"># mean of each column</span></span>
-<span id="cb14-3"><a aria-label="3"></a>sig <span class="ot">&lt;-</span> <span class="fu">apply</span>(M, <span class="dv">2</span>, sd)        <span class="co"># sd of each column</span></span>
-<span id="cb14-4"><a aria-label="4"></a>Z   <span class="ot">&lt;-</span> <span class="fu">sweep</span>(M, <span class="dv">2</span>, mu, <span class="st">"-"</span>)   <span class="co"># subtract each column's mean</span></span>
-<span id="cb14-5"><a aria-label="5"></a>Z   <span class="ot">&lt;-</span> <span class="fu">sweep</span>(Z, <span class="dv">2</span>, sig, <span class="st">"/"</span>)  <span class="co"># divide each column's sd</span></span>
-<span id="cb14-6"><a aria-label="6"></a><span class="fu">colMeans</span>(Z)                   <span class="co"># ~ 0</span></span>
-<span id="cb14-7"><a aria-label="7"></a><span class="fu">apply</span>(Z, <span class="dv">2</span>, sd)               <span class="co"># ~ 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Let’s <strong>standardize</strong> (z-score) every column of a matrix, the machinery behind a real analysis:</p>
+<div class="codewindow r" width="100%" name="scale.R">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a aria-label="1"></a>M   <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">100</span>, <span class="dv">2</span>, <span class="dv">200</span>), <span class="dv">2</span>, <span class="dv">2</span>)</span>
+<span id="cb75-2"><a aria-label="2"></a>mu  <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(M)            <span class="co"># mean of each column</span></span>
+<span id="cb75-3"><a aria-label="3"></a>sig <span class="ot">&lt;-</span> <span class="fu">apply</span>(M, <span class="dv">2</span>, sd)        <span class="co"># sd of each column</span></span>
+<span id="cb75-4"><a aria-label="4"></a>Z   <span class="ot">&lt;-</span> <span class="fu">sweep</span>(M, <span class="dv">2</span>, mu,  <span class="st">"-"</span>)  <span class="co"># subtract each column's mean</span></span>
+<span id="cb75-5"><a aria-label="5"></a>Z   <span class="ot">&lt;-</span> <span class="fu">sweep</span>(Z, <span class="dv">2</span>, sig, <span class="st">"/"</span>)  <span class="co"># divide each column's sd</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="callout-desc">
-<p><code>sweep(M, MARGIN, vector, FUN)</code> applies a function across one axis, here subtracting a column mean. This is the pattern <code>scale(M)</code> automates; you now see what’s underneath.</p>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a aria-label="1"></a><span class="fu">colMeans</span>(Z)                   <span class="co"># ~ 0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0 0</code></pre>
+</div>
+</div></div>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a aria-label="1"></a><span class="fu">apply</span>(Z, <span class="dv">2</span>, sd)               <span class="co"># ~ 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 1</code></pre>
+</div>
+</div></div>
+</div>
+<div class="paper-card">
+<p><code>sweep(M, MARGIN, vector, FUN)</code> applies a function across one axis, here subtracting a column mean.</p>
+<p>This is the pattern <code>scale(M)</code> automates; you now see what’s underneath.</p>
 </div>
 <div class="code-pop">
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Standardise a matrix (full example) {.inv}
 
-Let's **z-score** every column of a matrix, the machinery behind a real analysis:
+Let's **standardize** (z-score) every column of a matrix, the machinery behind a real analysis:
 
-::: {.codewindow .r width="100%"}
-Column-wise z-scoring
-```r
+::: {.codewindow .r width="100%" name="scale.R"}
+```{r}
+#| echo: true
 M   &lt;- matrix(c(1, 100, 2, 200), 2, 2)
 mu  &lt;- colMeans(M)            # mean of each column
 sig &lt;- apply(M, 2, sd)        # sd of each column
-Z   &lt;- sweep(M, 2, mu, "-")   # subtract each column's mean
+Z   &lt;- sweep(M, 2, mu,  "-")  # subtract each column's mean
 Z   &lt;- sweep(Z, 2, sig, "/")  # divide each column's sd
+```
+
+```{r}
+#| echo: true
+#| output-location: column
 colMeans(Z)                   # ~ 0
+```
+
+```{r}
+#| echo: true
+#| output-location: column
 apply(Z, 2, sd)               # ~ 1
 ```
 :::
 
-::: {.callout-desc}
-`sweep(M, MARGIN, vector, FUN)` applies a function across one axis, here subtracting a column mean. This is the pattern `scale(M)` automates; you now see what's underneath.
+::: {.paper-card}
+`sweep(M, MARGIN, vector, FUN)` applies a function across one axis, here subtracting a column mean.
+
+This is the pattern `scale(M)` automates; you now see what's underneath.
 :::
 </code></pre></div></details>
 </div>
@@ -1013,28 +1582,37 @@ Lab 2: matrices
 </section>
 <section id="why-functions" class="slide level2 inv" data-number="4.1">
 <h2><span class="header-section-number">4.1</span> Why functions?</h2>
-<p>Copy-pasting code is how bugs multiply. A <strong>function</strong> lets you: - name a block of logic so its <em>intent</em> is readable; - reuse it with different inputs; - fix a bug <strong>once</strong> instead of in every copy.</p>
+<div class="spread spread-md spread-evenly">
+<p>Copy-pasting code is how bugs multiply. A <strong>function</strong> lets you:</p>
+<ul>
+<li>name a block of logic so its <em>intent</em> is readable;</li>
+<li>reuse it with different inputs;</li>
+<li>fix a bug <strong>once</strong> instead of in every copy.</li>
+</ul>
 <p>Any analysis you do more than twice deserves a function.</p>
+</div>
 <div class="code-pop">
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Why functions? {.inv}
 
+::: {.spread .spread-md .spread-evenly}
 Copy-pasting code is how bugs multiply. A **function** lets you:
+
 - name a block of logic so its *intent* is readable;
 - reuse it with different inputs;
 - fix a bug **once** instead of in every copy.
 
 Any analysis you do more than twice deserves a function.
+:::
 </code></pre></div></details>
 </div>
 </section>
 <section id="anatomy-of-a-function" class="slide level2 inv" data-number="4.2">
 <h2><span class="header-section-number">4.2</span> Anatomy of a function</h2>
-<div class="codewindow r" width="100%">
-<p>The anatomy of a function</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a aria-label="1"></a>function_name <span class="ot">&lt;-</span> <span class="cf">function</span>(arg1, <span class="at">arg2 =</span> default) {</span>
-<span id="cb15-2"><a aria-label="2"></a>  result <span class="ot">&lt;-</span> ...      <span class="co"># body: work on the arguments</span></span>
-<span id="cb15-3"><a aria-label="3"></a>  <span class="fu">return</span>(result)     <span class="co"># hands a value back</span></span>
-<span id="cb15-4"><a aria-label="4"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="codewindow r" width="100%" name="function-anatomy.R">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb80"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a aria-label="1"></a>function_name <span class="ot">&lt;-</span> <span class="cf">function</span>(arg1, <span class="at">arg2 =</span> default) {</span>
+<span id="cb80-2"><a aria-label="2"></a>  result <span class="ot">&lt;-</span> ...      <span class="co"># body: work on the arguments</span></span>
+<span id="cb80-3"><a aria-label="3"></a>  <span class="fu">return</span>(result)     <span class="co"># hands a value back</span></span>
+<span id="cb80-4"><a aria-label="4"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="paper-card">
 <ul>
@@ -1046,8 +1624,7 @@ Any analysis you do more than twice deserves a function.
 <div class="code-pop">
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Anatomy of a function {.inv}
 
-::: {.codewindow .r width="100%"}
-The anatomy of a function
+::: {.codewindow .r width="100%" name="function-anatomy.R"}
 ```r
 function_name &lt;- function(arg1, arg2 = default) {
   result &lt;- ...      # body: work on the arguments
@@ -1067,13 +1644,17 @@ function_name &lt;- function(arg1, arg2 = default) {
 <section id="scope-what-the-body-sees" class="slide level2 inv" data-number="4.3">
 <h2><span class="header-section-number">4.3</span> Scope: what the body sees</h2>
 <p>Variables created <em>inside</em> a function live <strong>only there</strong>: they don’t leak out:</p>
-<div class="codewindow r" width="100%">
-<p>What the body sees</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a aria-label="1"></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb16-2"><a aria-label="2"></a>  internal <span class="ot">&lt;-</span> x <span class="sc">*</span> <span class="dv">2</span>    <span class="co"># exists only inside the call</span></span>
-<span id="cb16-3"><a aria-label="3"></a>  internal <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb16-4"><a aria-label="4"></a>}</span>
-<span id="cb16-5"><a aria-label="5"></a><span class="fu">g</span>(<span class="dv">5</span>)          <span class="co"># 11</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="codewindow r" width="100%" name="scope.R">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a aria-label="1"></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb81-2"><a aria-label="2"></a>  internal <span class="ot">&lt;-</span> x <span class="sc">*</span> <span class="dv">2</span>    <span class="co"># exists only inside the call</span></span>
+<span id="cb81-3"><a aria-label="3"></a>  internal <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb81-4"><a aria-label="4"></a>}</span>
+<span id="cb81-5"><a aria-label="5"></a><span class="fu">g</span>(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 11</code></pre>
+</div>
+</div>
 </div>
 <div title="Lexical scoping">
 <div class="callout callout-caution callout-titled callout-style-default">
@@ -1095,14 +1676,13 @@ function_name &lt;- function(arg1, arg2 = default) {
 
 Variables created *inside* a function live **only there**: they don't leak out:
 
-::: {.codewindow .r width="100%"}
-What the body sees
-```r
+::: {.codewindow .r width="100%" name="scope.R"}
+```{r}
 g &lt;- function(x) {
   internal &lt;- x * 2    # exists only inside the call
   internal + 1
 }
-g(5)          # 11
+g(5)
 ```
 :::
 
@@ -1115,16 +1695,27 @@ A function *can* see variables from the outside, but relying on that is fragile:
 <section id="functions-wrap-loops" class="slide level2 inv" data-number="4.4">
 <h2><span class="header-section-number">4.4</span> Functions wrap loops</h2>
 <p>The Monte-Carlo from the loops section is a loop crying out to be a function:</p>
-<div class="codewindow r" width="100%">
-<p>Turn the loop into a function</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a aria-label="1"></a>clt_sim <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">n =</span> <span class="dv">30</span>, <span class="at">R =</span> <span class="dv">5000</span>) {</span>
-<span id="cb17-2"><a aria-label="2"></a>  means <span class="ot">&lt;-</span> <span class="fu">numeric</span>(R)</span>
-<span id="cb17-3"><a aria-label="3"></a>  <span class="cf">for</span> (r <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>R) means[r] <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">rexp</span>(n))</span>
-<span id="cb17-4"><a aria-label="4"></a>  means</span>
-<span id="cb17-5"><a aria-label="5"></a>}</span>
-<span id="cb17-6"><a aria-label="6"></a><span class="fu">hist</span>(<span class="fu">clt_sim</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="codewindow r" width="100%" name="monte-carlo.R">
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a aria-label="1"></a>clt_sim <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">n =</span> <span class="dv">30</span>, <span class="at">R =</span> <span class="dv">5000</span>) {</span>
+<span id="cb83-2"><a aria-label="2"></a>  means <span class="ot">&lt;-</span> <span class="fu">numeric</span>(R)</span>
+<span id="cb83-3"><a aria-label="3"></a>  <span class="cf">for</span> (r <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>R) means[r] <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">rexp</span>(n))</span>
+<span id="cb83-4"><a aria-label="4"></a>  means</span>
+<span id="cb83-5"><a aria-label="5"></a>}</span>
+<span id="cb83-6"><a aria-label="6"></a><span class="fu">par</span>(<span class="at">bg =</span> <span class="st">"white"</span>)</span>
+<span id="cb83-7"><a aria-label="7"></a><span class="fu">hist</span>(<span class="fu">clt_sim</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="session-3_files/figure-revealjs/unnamed-chunk-42-1.png" width="960"></p>
+</figure>
 </div>
-<div class="callout-desc">
+</div>
+</div></div>
+</div>
+<div class="paper-card">
 <p><strong>The payoff.</strong> The loop from “Your turn: loops” is now a <em>named, reusable, parameterisable</em> tool: <code>clt_sim(n = 100)</code> measures the same CLT with bigger samples, no copy-paste.</p>
 </div>
 <div class="code-pop">
@@ -1132,19 +1723,20 @@ A function *can* see variables from the outside, but relying on that is fragile:
 
 The Monte-Carlo from the loops section is a loop crying out to be a function:
 
-::: {.codewindow .r width="100%"}
-Turn the loop into a function
-```r
+::: {.codewindow .r width="100%" name="monte-carlo.R"}
+```{r}
+#| output-location: column
 clt_sim &lt;- function(n = 30, R = 5000) {
   means &lt;- numeric(R)
   for (r in 1:R) means[r] &lt;- mean(rexp(n))
   means
 }
+par(bg = "white")
 hist(clt_sim())
 ```
 :::
 
-::: {.callout-desc}
+::: {.paper-card}
 **The payoff.** The loop from "Your turn: loops" is now a *named, reusable, parameterisable* tool: `clt_sim(n = 100)` measures the same CLT with bigger samples, no copy-paste.
 :::
 </code></pre></div></details>
@@ -1152,34 +1744,41 @@ hist(clt_sim())
 </section>
 <section id="vectorised-functions-defaults" class="slide level2 inv" data-number="4.5">
 <h2><span class="header-section-number">4.5</span> Vectorised functions &amp; defaults</h2>
-<p>Functions are <strong>vectorised</strong>: they work element-wise on vectors:</p>
-<div class="codewindow r" width="100%">
-<p>Vectorised with defaults</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a aria-label="1"></a><span class="fu">f_to_c</span>(<span class="fu">c</span>(<span class="dv">32</span>, <span class="dv">212</span>, <span class="fl">98.6</span>))   <span class="co"># works on the whole vector</span></span>
-<span id="cb18-2"><a aria-label="2"></a>clamp <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">lo =</span> <span class="dv">0</span>, <span class="at">hi =</span> <span class="dv">1</span>)        <span class="co"># defaults → optional args</span></span>
-<span id="cb18-3"><a aria-label="3"></a>  <span class="fu">ifelse</span>(x <span class="sc">&lt;</span> lo, lo, <span class="fu">ifelse</span>(x <span class="sc">&gt;</span> hi, hi, x))</span>
-<span id="cb18-4"><a aria-label="4"></a><span class="fu">clamp</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="fl">0.5</span>, <span class="dv">2</span>))       <span class="co"># 0.0 0.5 1.0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Most functions are <strong>vectorised</strong> when building upon vectorized functions; they work element-wise on vectors:</p>
+<div class="codewindow r" width="100%" name="vectorized-function.R">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a aria-label="1"></a>clamp <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">lo =</span> <span class="dv">0</span>, <span class="at">hi =</span> <span class="dv">1</span>) {</span>
+<span id="cb84-2"><a aria-label="2"></a>  <span class="fu">ifelse</span>(x <span class="sc">&lt;</span> lo, lo, <span class="fu">ifelse</span>(x <span class="sc">&gt;</span> hi, hi, x))</span>
+<span id="cb84-3"><a aria-label="3"></a>}</span>
+<span id="cb84-4"><a aria-label="4"></a><span class="fu">clamp</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="fl">0.5</span>, <span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.0 0.5 1.0</code></pre>
+</div>
+</div>
 </div>
 <div class="paper-card">
-<p><code>ifelse</code> in the body: the element-wise tool from earlier, and the vectorised <code>clamp</code> needs no loop at all.</p>
+<ul>
+<li><code>ifelse</code> in the body: the element-wise tool from earlier, and the vectorised <code>clamp</code> needs no loop at all;</li>
+<li>Note the use of default arguments which makes the parameters optional.</li>
+</ul>
 </div>
 <div class="code-pop">
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Vectorised functions &amp; defaults {.inv}
 
-Functions are **vectorised**: they work element-wise on vectors:
+Most functions are **vectorised** when building upon vectorized functions; they work element-wise on vectors:
 
-::: {.codewindow .r width="100%"}
-Vectorised with defaults
-```r
-f_to_c(c(32, 212, 98.6))   # works on the whole vector
-clamp &lt;- function(x, lo = 0, hi = 1)        # defaults → optional args
+::: {.codewindow .r width="100%" name="vectorized-function.R"}
+```{r}
+clamp &lt;- function(x, lo = 0, hi = 1) {
   ifelse(x &lt; lo, lo, ifelse(x &gt; hi, hi, x))
-clamp(c(-1, 0.5, 2))       # 0.0 0.5 1.0
+}
+clamp(c(-1, 0.5, 2))
 ```
 :::
 
 ::: {.paper-card}
-`ifelse` in the body: the element-wise tool from earlier, and the vectorised `clamp` needs no loop at all.
+- `ifelse` in the body: the element-wise tool from earlier, and the vectorised `clamp` needs no loop at all;
+- Note the use of default arguments which makes the parameters optional.
 :::
 </code></pre></div></details>
 </div>
@@ -1187,19 +1786,42 @@ clamp(c(-1, 0.5, 2))       # 0.0 0.5 1.0
 <section id="when-functions-arent-vectorised-vectorize-replicate" class="slide level2 inv" data-number="4.6">
 <h2><span class="header-section-number">4.6</span> When functions aren’t vectorised: <code>Vectorize()</code> &amp; <code>replicate()</code></h2>
 <p>Built-in functions are usually vectorised, but your own (or a third-party) function may only accept <strong>one scalar at a time</strong>. Two loop-free helpers:</p>
-<div class="codewindow r" width="100%">
-<p><code>Vectorize()</code> wraps a scalar function so it takes a vector; <code>replicate()</code> repeats an expression</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-label="1"></a><span class="co"># not vectorised: takes one date string</span></span>
-<span id="cb19-2"><a aria-label="2"></a>parse_it <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">strsplit</span>(x, <span class="st">"-"</span>)[[<span class="dv">1</span>]][<span class="dv">1</span>]</span>
-<span id="cb19-3"><a aria-label="3"></a><span class="fu">parse_it</span>(<span class="fu">c</span>(<span class="st">"2024-05-01"</span>, <span class="st">"2024-06-15"</span>))   <span class="co"># only the first is parsed</span></span>
-<span id="cb19-4"><a aria-label="4"></a></span>
-<span id="cb19-5"><a aria-label="5"></a>parse_all <span class="ot">&lt;-</span> <span class="fu">Vectorize</span>(parse_it)          <span class="co"># wraps it =&gt; element-wise</span></span>
-<span id="cb19-6"><a aria-label="6"></a><span class="fu">parse_all</span>(<span class="fu">c</span>(<span class="st">"2024-05-01"</span>, <span class="st">"2024-06-15"</span>))</span>
-<span id="cb19-7"><a aria-label="7"></a></span>
-<span id="cb19-8"><a aria-label="8"></a><span class="fu">set.seed</span>(<span class="dv">7</span>)</span>
-<span id="cb19-9"><a aria-label="9"></a><span class="fu">replicate</span>(<span class="dv">4</span>, <span class="fu">mean</span>(<span class="fu">rexp</span>(<span class="dv">10</span>)))              <span class="co"># repeat an expression R times</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="codewindow r" width="100%" name="vectorize.R">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb86"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a aria-label="1"></a><span class="co"># not vectorised: takes one date string</span></span>
+<span id="cb86-2"><a aria-label="2"></a>parse_it <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">strsplit</span>(x, <span class="st">"-"</span>)[[<span class="dv">1</span>]][<span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="callout-desc">
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb87"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a aria-label="1"></a><span class="co"># only the first is parsed</span></span>
+<span id="cb87-2"><a aria-label="2"></a><span class="fu">parse_it</span>(<span class="fu">c</span>(<span class="st">"2024-05-01"</span>, <span class="st">"2024-06-15"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2024"</code></pre>
+</div>
+</div></div>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb89"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a aria-label="1"></a><span class="co"># wraps it =&gt; element-wise</span></span>
+<span id="cb89-2"><a aria-label="2"></a>parse_all <span class="ot">&lt;-</span> <span class="fu">Vectorize</span>(parse_it)</span>
+<span id="cb89-3"><a aria-label="3"></a><span class="fu">parse_all</span>(<span class="fu">c</span>(<span class="st">"2024-05-01"</span>, <span class="st">"2024-06-15"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>2024-05-01 2024-06-15 
+    "2024"     "2024" </code></pre>
+</div>
+</div></div>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb91"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a aria-label="1"></a><span class="co"># repeat an expression R times</span></span>
+<span id="cb91-2"><a aria-label="2"></a><span class="fu">replicate</span>(<span class="dv">4</span>, <span class="fu">mean</span>(<span class="fu">rexp</span>(<span class="dv">10</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9542195 0.8648132 0.9167770 0.8644224</code></pre>
+</div>
+</div></div>
+</div>
+<div class="paper-card">
 <p><strong>Loops without loops.</strong> <code>Vectorize()</code> turns a scalar-only function into a vector one; <code>replicate(R, expr)</code> re-runs an expression <code>R</code> times and collects results, the function-flavoured cousin of <code>for</code>/<code>sapply</code>. Works with any expression, not just a named function.</p>
 </div>
 <div class="code-pop">
@@ -1207,22 +1829,33 @@ clamp(c(-1, 0.5, 2))       # 0.0 0.5 1.0
 
 Built-in functions are usually vectorised, but your own (or a third-party) function may only accept **one scalar at a time**. Two loop-free helpers:
 
-::: {.codewindow .r width="100%"}
-`Vectorize()` wraps a scalar function so it takes a vector; `replicate()` repeats an expression
-```r
+::: {.codewindow .r width="100%" name="vectorize.R"}
+```{r}
 # not vectorised: takes one date string
 parse_it &lt;- function(x) strsplit(x, "-")[[1]][1]
-parse_it(c("2024-05-01", "2024-06-15"))   # only the first is parsed
+```
 
-parse_all &lt;- Vectorize(parse_it)          # wraps it =&gt; element-wise
+```{r}
+#| output-location: column
+# only the first is parsed
+parse_it(c("2024-05-01", "2024-06-15"))
+```
+
+```{r}
+#| output-location: column
+# wraps it =&gt; element-wise
+parse_all &lt;- Vectorize(parse_it)
 parse_all(c("2024-05-01", "2024-06-15"))
+```
 
-set.seed(7)
-replicate(4, mean(rexp(10)))              # repeat an expression R times
+```{r}
+#| output-location: column
+# repeat an expression R times
+replicate(4, mean(rexp(10)))
 ```
 :::
 
-::: {.callout-desc}
+::: {.paper-card}
 **Loops without loops.** `Vectorize()` turns a scalar-only function into a vector one; `replicate(R, expr)` re-runs an expression `R` times and collects results, the function-flavoured cousin of `for`/`sapply`. Works with any expression, not just a named function.
 :::
 </code></pre></div></details>
@@ -1231,21 +1864,20 @@ replicate(4, mean(rexp(10)))              # repeat an expression R times
 <section id="functions-compose-into-pipelines" class="slide level2 inv" data-number="4.7">
 <h2><span class="header-section-number">4.7</span> Functions compose into pipelines</h2>
 <p>The tidyverse pipes data through functions with <code>|&gt;</code>:</p>
-<div class="codewindow r" width="100%">
-<p>Pipe into your own function</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a aria-label="1"></a>penguins <span class="sc">|&gt;</span></span>
-<span id="cb20-2"><a aria-label="2"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(body_mass_g)) <span class="sc">|&gt;</span></span>
-<span id="cb20-3"><a aria-label="3"></a>  <span class="fu">summarize</span>(<span class="at">avg_mass =</span> <span class="fu">mean</span>(body_mass_g))</span>
-<span id="cb20-4"><a aria-label="4"></a></span>
-<span id="cb20-5"><a aria-label="5"></a><span class="co"># wrap a computation in your own function and pipe right in</span></span>
-<span id="cb20-6"><a aria-label="6"></a>avg_mass_by <span class="ot">&lt;-</span> <span class="cf">function</span>(df, group) {</span>
-<span id="cb20-7"><a aria-label="7"></a>  df <span class="sc">|&gt;</span></span>
-<span id="cb20-8"><a aria-label="8"></a>    <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(body_mass_g)) <span class="sc">|&gt;</span></span>
-<span id="cb20-9"><a aria-label="9"></a>    <span class="fu">group_by</span>({{ group }}) <span class="sc">|&gt;</span></span>
-<span id="cb20-10"><a aria-label="10"></a>    <span class="fu">summarize</span>(<span class="at">avg_mass =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb20-11"><a aria-label="11"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="codewindow r" width="100%" name="pipe.R">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb93"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a aria-label="1"></a>penguins <span class="sc">|&gt;</span></span>
+<span id="cb93-2"><a aria-label="2"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(body_mass_g)) <span class="sc">|&gt;</span></span>
+<span id="cb93-3"><a aria-label="3"></a>  dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">avg_mass =</span> <span class="fu">mean</span>(body_mass_g))</span>
+<span id="cb93-4"><a aria-label="4"></a></span>
+<span id="cb93-5"><a aria-label="5"></a><span class="co"># wrap a computation in your own function and pipe right in</span></span>
+<span id="cb93-6"><a aria-label="6"></a>avg_mass_by <span class="ot">&lt;-</span> <span class="cf">function</span>(df, group) {</span>
+<span id="cb93-7"><a aria-label="7"></a>  df <span class="sc">|&gt;</span></span>
+<span id="cb93-8"><a aria-label="8"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(body_mass_g)) <span class="sc">|&gt;</span></span>
+<span id="cb93-9"><a aria-label="9"></a>    dplyr<span class="sc">::</span><span class="fu">group_by</span>({{ group }}) <span class="sc">|&gt;</span></span>
+<span id="cb93-10"><a aria-label="10"></a>    dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">avg_mass =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb93-11"><a aria-label="11"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="callout-desc">
+<div class="paper-card">
 <p><strong><code>{ var }</code></strong> is the tidyverse “embrace” shortcut that passes a bare column name into a function cleanly. We’ll rely on it, and on writing tidy functions, throughout the Reproducible Workflows course.</p>
 </div>
 <div class="code-pop">
@@ -1253,24 +1885,23 @@ replicate(4, mean(rexp(10)))              # repeat an expression R times
 
 The tidyverse pipes data through functions with `|&gt;`:
 
-::: {.codewindow .r width="100%"}
-Pipe into your own function
+::: {.codewindow .r width="100%" name="pipe.R"}
 ```r
 penguins |&gt;
-  filter(!is.na(body_mass_g)) |&gt;
-  summarize(avg_mass = mean(body_mass_g))
+  dplyr::filter(!is.na(body_mass_g)) |&gt;
+  dplyr::summarize(avg_mass = mean(body_mass_g))
 
 # wrap a computation in your own function and pipe right in
 avg_mass_by &lt;- function(df, group) {
   df |&gt;
-    filter(!is.na(body_mass_g)) |&gt;
-    group_by({{ group }}) |&gt;
-    summarize(avg_mass = mean(body_mass_g, na.rm = TRUE))
+    dplyr::filter(!is.na(body_mass_g)) |&gt;
+    dplyr::group_by({{ group }}) |&gt;
+    dplyr::summarize(avg_mass = mean(body_mass_g, na.rm = TRUE))
 }
 ```
 :::
 
-::: {.callout-desc}
+::: {.paper-card}
 **`{{ var }}`** is the tidyverse "embrace" shortcut that passes a bare column name into a function cleanly. We'll rely on it, and on writing tidy functions, throughout the Reproducible Workflows course.
 :::
 </code></pre></div></details>
@@ -1279,11 +1910,8 @@ avg_mass_by &lt;- function(df, group) {
 <section id="test-your-functions" class="slide level2 inv" data-number="4.8">
 <h2><span class="header-section-number">4.8</span> Test your functions</h2>
 <p>A good habit: check a function against a case you <em>already know the answer to</em>:</p>
-<div class="codewindow r" width="100%">
-<p>One-line assertions with <code>stopifnot</code></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a aria-label="1"></a><span class="fu">stopifnot</span>(<span class="fu">f_to_c</span>(<span class="dv">32</span>) <span class="sc">==</span> <span class="dv">0</span>)         <span class="co"># freezing</span></span>
-<span id="cb21-2"><a aria-label="2"></a><span class="fu">stopifnot</span>(<span class="fu">f_to_c</span>(<span class="dv">212</span>) <span class="sc">==</span> <span class="dv">100</span>)      <span class="co"># boiling</span></span>
-<span id="cb21-3"><a aria-label="3"></a><span class="fu">stopifnot</span>(<span class="fu">all</span>(<span class="fu">clamp</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="fl">0.5</span>, <span class="dv">2</span>)) <span class="sc">==</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.5</span>, <span class="dv">1</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="codewindow r" width="100%" name="test.R">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb94"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a aria-label="1"></a><span class="fu">stopifnot</span>(<span class="fu">all</span>(<span class="fu">clamp</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="fl">0.5</span>, <span class="dv">2</span>)) <span class="sc">==</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.5</span>, <span class="dv">1</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout-desc">
 <p><strong>Why it matters.</strong> Writing one-line <em>assertions</em> (<code>stopifnot</code>) turns “trust me” into “checked automatically”. You’ll build on this with a proper testing framework in the Reproducible Workflows course.</p>
@@ -1293,11 +1921,8 @@ avg_mass_by &lt;- function(df, group) {
 
 A good habit: check a function against a case you *already know the answer to*:
 
-::: {.codewindow .r width="100%"}
-One-line assertions with `stopifnot`
+::: {.codewindow .r width="100%" name="test.R"}
 ```r
-stopifnot(f_to_c(32) == 0)         # freezing
-stopifnot(f_to_c(212) == 100)      # boiling
 stopifnot(all(clamp(c(-1, 0.5, 2)) == c(0, 0.5, 1)))
 ```
 :::

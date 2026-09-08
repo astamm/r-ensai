@@ -308,6 +308,25 @@ const initCodewindow = function(Reveal) {
           new_content.appendChild(span);
           needsSync = true;
         });
+
+        // Reveal's fragment sort() places any element carrying a
+        // data-fragment-index (reveal stamps one at initial load, even when
+        // the author did not) BEFORE the un-indexed cw-fragment-trigger spans.
+        // A trailing takeaway fragment would therefore resolve first. Force
+        // DOM ordering for this section: drop data-fragment-index from every
+        // non-trigger sibling fragment so the post-sync() sort() puts the
+        // trigger spans before the takeaway.
+        if (triggers.length > 0) {
+          var section = content.closest("section");
+          if (section) {
+            section.querySelectorAll(".fragment").forEach(function(fr) {
+              if (fr.classList.contains("cw-fragment-trigger")) {
+                return;
+              }
+              fr.removeAttribute("data-fragment-index");
+            });
+          }
+        }
       } else {
         // Single window (original behaviour).
         var built = buildFileTab(content);

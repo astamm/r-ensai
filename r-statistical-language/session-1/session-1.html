@@ -106,7 +106,7 @@
     code span.vs { color: #abe338; } /* VerbatimString */
     code span.wa { color: #dcc6e0; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-85b76460e3d5b21f1509af2a7bf68d16.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-daf1006862dd1888ff46ad68833b8b3d.css">
   <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -1406,7 +1406,7 @@ c("Hello", "World") == "Hello"
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb85"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a aria-label="1"></a><span class="fu">rnorm</span>(<span class="dv">5</span>, <span class="at">mean =</span> mu, <span class="at">sd =</span> sigma)   <span class="co"># random — values differ each run</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 5.677232 3.314685 2.454955 2.368490 2.157221</code></pre>
+<pre><code>[1]  4.5853111 -0.8454525  4.7780552  3.8350170  3.8313354</code></pre>
 </div>
 </div>
 </div>
@@ -1844,18 +1844,18 @@ Functions like `mean` and `+` **don't work on a list**; apply them *to each elem
 <span id="cb111-2"><a aria-label="2"></a><span class="fu">lapply</span>(my_list, <span class="at">FUN =</span> mean)   <span class="co"># returns a list</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$var1
-[1] 0.1945664
+[1] -0.1962221
 
 $var2
-[1] 0.4760063
+[1] 0.619193
 
 $var3
-[1] 0.6190476</code></pre>
+[1] 0.4761905</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb113"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a aria-label="1"></a><span class="fu">sapply</span>(my_list, <span class="at">FUN =</span> mean)   <span class="co"># tries to simplify to an atomic vector</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>     var1      var2      var3 
-0.1945664 0.4760063 0.6190476 </code></pre>
+<pre><code>      var1       var2       var3 
+-0.1962221  0.6191930  0.4761905 </code></pre>
 </div>
 </div>
 </div>
@@ -2092,7 +2092,7 @@ Going further
 <p><strong>Your turn (≈15 min):</strong> work alone, then compare with a neighbour.</p>
 <ol type="1">
 <li>Build a list of three vectors of lengths 10, 20, 30. Compute the mean of each with <code>sapply()</code>, then <code>vapply()</code>.</li>
-<li>Make a list of two length-5 vectors. Use <code>lapply()</code> to double each element; store the result.</li>
+<li>Make a list of two length-5 vectors. Use <code>lapply()</code> to double each element; store the result. <em>Hint: <code>lapply()</code> needs a function to apply; a one-liner <code>\(.x) .x * 2</code> does the doubling.</em></li>
 <li>What happens if you use <code>[[</code> with an index <em>larger</em> than the list length? With a name that doesn’t exist? (<em>Try it: read the error message.</em>)</li>
 <li>Given <code>shaker</code>, what is <code>shaker[[1]][1]</code> vs <code>shaker[[1]][[1]]</code>?</li>
 <li>How do you <em>extend</em> a list?</li>
@@ -2123,7 +2123,7 @@ The real lesson
 **Your turn (≈15 min):** work alone, then compare with a neighbour.
 
 1. Build a list of three vectors of lengths 10, 20, 30. Compute the mean of each with `sapply()`, then `vapply()`.
-2. Make a list of two length-5 vectors. Use `lapply()` to double each element; store the result.
+2. Make a list of two length-5 vectors. Use `lapply()` to double each element; store the result. *Hint: `lapply()` needs a function to apply; a one-liner `\(.x) .x * 2` does the doubling.*
 3. What happens if you use `[[` with an index *larger* than the list length? With a name that doesn't exist? (*Try it: read the error message.*)
 4. Given `shaker`, what is `shaker[[1]][1]` vs `shaker[[1]][[1]]`?
 5. How do you *extend* a list?
@@ -2353,8 +2353,8 @@ A **tibble** *is* a data frame with friendlier defaults:
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb147"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb147-1"><a aria-label="1"></a>df[df<span class="sc">$</span>x <span class="sc">&gt;</span> <span class="dv">1</span>, ]      <span class="co"># rows where x &gt; 1  (z values vary each run)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  x y         z
-2 2 e 0.6163249
-3 3 f 0.4749678</code></pre>
+2 2 e 0.9175001
+3 3 f 0.8501642</code></pre>
 </div>
 </div>
 </div>
@@ -2392,10 +2392,10 @@ df[df$x &gt; 1, ]      # rows where x &gt; 1  (z values vary each run)
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb151"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb151-1"><a aria-label="1"></a>df[df<span class="sc">$</span>x <span class="sc">&gt;</span> <span class="dv">1</span>, ]    <span class="co"># rows where x &gt; 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
-      x y         z
-  &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;
-1     2 e     0.521
-2     3 f     0.507</code></pre>
+      x y          z
+  &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt;
+1     2 e     0.0740
+2     3 f     0.308 </code></pre>
 </div>
 </div>
 </div>
@@ -2495,15 +2495,79 @@ Lab 2 continues
 <h1><span class="header-section-number">7</span> Reading and writing data</h1>
 
 </section>
-<section id="read-rectangular-data" class="slide level2" data-number="7.1">
-<h2><span class="header-section-number">7.1</span> Read rectangular data</h2>
+<section id="working-directory-relative-paths" class="slide level2 inv" data-number="7.1">
+<h2><span class="header-section-number">7.1</span> Working directory &amp; relative paths</h2>
+<div class="split-2">
+<p>Every file path in R is resolved <strong>relative to your working directory</strong> (the folder R is currently “in”), unless you write an <em>absolute</em> path (<code>/Users/you/...</code>).</p>
+<div class="codewindow r" width="75%" name="working-directory.R">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb153"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb153-1"><a aria-label="1"></a><span class="fu">getwd</span>()        <span class="co"># where is R right now?</span></span>
+<span id="cb153-2"><a aria-label="2"></a><span class="fu">list.files</span>()   <span class="co"># what is in that folder?</span></span>
+<span id="cb153-3"><a aria-label="3"></a><span class="fu">setwd</span>(<span class="st">"..."</span>)   <span class="co"># move elsewhere (avoid in scripts!)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<div title="Think in terms of projects">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Think in terms of projects</strong></p>
+</div>
+<div class="callout-content">
+<p>Open your course folder as a <strong>project</strong> and work there: the working directory <em>is</em> that folder, so a relative path like <code>read_csv("data/raw/penguins.csv")</code> just works. A small, predictable layout keeps things tidy:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb154"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb154-1"><a aria-label="1"></a>my-course/</span>
+<span id="cb154-2"><a aria-label="2"></a>├── data/</span>
+<span id="cb154-3"><a aria-label="3"></a>│   ├── raw/</span>
+<span id="cb154-4"><a aria-label="4"></a>│   └── processed/</span>
+<span id="cb154-5"><a aria-label="5"></a>└── scripts/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Prefer relative paths; they let a script run on any machine with the same folder layout.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="code-pop">
+<details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Working directory &amp; relative paths {.inv}
+
+::: {.split-2}
+
+Every file path in R is resolved **relative to your working directory** (the folder R is currently "in"), unless you write an *absolute* path (`/Users/you/...`).
+
+::: {.codewindow .r width="75%" name="working-directory.R"}
+```r
+getwd()        # where is R right now?
+list.files()   # what is in that folder?
+setwd("...")   # move elsewhere (avoid in scripts!)
+```
+:::
+
+:::
+
+::: {.callout-tip title="Think in terms of projects"}
+Open your course folder as a **project** and work there: the working directory *is* that folder, so a relative path like `read_csv("data/raw/penguins.csv")` just works. A small, predictable layout keeps things tidy:
+
+```text
+my-course/
+├── data/
+│   ├── raw/
+│   └── processed/
+└── scripts/
+```
+
+Prefer relative paths; they let a script run on any machine with the same folder layout.
+:::
+</code></pre></div></details>
+</div>
+</section>
+<section id="read-rectangular-data" class="slide level2" data-number="7.2">
+<h2><span class="header-section-number">7.2</span> Read rectangular data</h2>
 <p>The <a href="https://readr.tidyverse.org/">{readr}</a> package reads flat files fast and guesses column types:</p>
 <div class="codewindow r" width="70%">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb153"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb153-1"><a aria-label="1"></a>readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"penguins.csv"</span>)     <span class="co"># comma-separated</span></span>
-<span id="cb153-2"><a aria-label="2"></a>readr<span class="sc">::</span><span class="fu">read_tsv</span>(<span class="st">"file.tsv"</span>)         <span class="co"># tab-separated</span></span>
-<span id="cb153-3"><a aria-label="3"></a>readr<span class="sc">::</span><span class="fu">read_table</span>(<span class="st">"file.txt"</span>)       <span class="co"># space-separated</span></span>
-<span id="cb153-4"><a aria-label="4"></a>readr<span class="sc">::</span><span class="fu">read_csv2</span>(<span class="st">"file.csv"</span>)        <span class="co"># European ; decimal comma</span></span>
-<span id="cb153-5"><a aria-label="5"></a>readr<span class="sc">::</span><span class="fu">read_delim</span>(<span class="st">"file.dat"</span>, <span class="at">delim =</span> <span class="st">";"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb155"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb155-1"><a aria-label="1"></a>readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"penguins.csv"</span>)     <span class="co"># comma-separated</span></span>
+<span id="cb155-2"><a aria-label="2"></a>readr<span class="sc">::</span><span class="fu">read_tsv</span>(<span class="st">"file.tsv"</span>)         <span class="co"># tab-separated</span></span>
+<span id="cb155-3"><a aria-label="3"></a>readr<span class="sc">::</span><span class="fu">read_table</span>(<span class="st">"file.txt"</span>)       <span class="co"># space-separated</span></span>
+<span id="cb155-4"><a aria-label="4"></a>readr<span class="sc">::</span><span class="fu">read_csv2</span>(<span class="st">"file.csv"</span>)        <span class="co"># European ; decimal comma</span></span>
+<span id="cb155-5"><a aria-label="5"></a>readr<span class="sc">::</span><span class="fu">read_delim</span>(<span class="st">"file.dat"</span>, <span class="at">delim =</span> <span class="st">";"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Also handy:</p>
 <ul>
@@ -2536,8 +2600,8 @@ Also handy:
 </code></pre></div></details>
 </div>
 </section>
-<section id="read-write-choosing-the-right-reader" class="slide level2 inv" data-number="7.2">
-<h2><span class="header-section-number">7.2</span> Read &amp; write: choosing the right reader</h2>
+<section id="read-write-choosing-the-right-reader" class="slide level2 inv" data-number="7.3">
+<h2><span class="header-section-number">7.3</span> Read &amp; write: choosing the right reader</h2>
 <div title="Choosing the right reader">
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
@@ -2573,9 +2637,9 @@ Also handy:
 <p><a href="https://readr.tidyverse.org/">{readr}</a>’s writes mirror its reads:</p>
 <div class="codewindow r" width="100%">
 <p>Choosing the right writer</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb154"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb154-1"><a aria-label="1"></a>readr<span class="sc">::</span><span class="fu">write_csv2</span>(penguins, <span class="st">"penguins_clean.csv"</span>) <span class="co"># European ; decimal comma</span></span>
-<span id="cb154-2"><a aria-label="2"></a>readr<span class="sc">::</span><span class="fu">write_csv</span>(penguins, <span class="st">"penguins_clean.csv"</span>)</span>
-<span id="cb154-3"><a aria-label="3"></a>readr<span class="sc">::</span><span class="fu">write_tsv</span>(penguins, <span class="st">"penguins_clean.tsv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb156"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb156-1"><a aria-label="1"></a>readr<span class="sc">::</span><span class="fu">write_csv2</span>(penguins, <span class="st">"penguins_clean.csv"</span>) <span class="co"># European ; decimal comma</span></span>
+<span id="cb156-2"><a aria-label="2"></a>readr<span class="sc">::</span><span class="fu">write_csv</span>(penguins, <span class="st">"penguins_clean.csv"</span>)</span>
+<span id="cb156-3"><a aria-label="3"></a>readr<span class="sc">::</span><span class="fu">write_tsv</span>(penguins, <span class="st">"penguins_clean.tsv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -2615,12 +2679,40 @@ readr::write_tsv(penguins, "penguins_clean.tsv")
 </code></pre></div></details>
 </div>
 </section>
-<section id="your-turn-data-cleaning" class="slide level2 paper" data-number="7.3">
-<h2><span class="header-section-number">7.3</span> Your turn: data cleaning</h2>
+<section id="first-steps-towards-data-cleaning" class="slide level2 paper" data-number="7.4">
+<h2><span class="header-section-number">7.4</span> First steps towards data cleaning</h2>
+<div class="paper-card">
+<p><strong>A first data-cleaning pass is a handful of <em>foreseeable</em> chores.</strong> We’ll put each to practice in the hands-on that follows:</p>
+<ul>
+<li><strong>Import</strong>: <em>parse</em> the file correctly (right delimiter, header, decimals) with the right reader;</li>
+<li><strong>Fix wrong guessed types</strong>: <a href="https://readr.tidyverse.org/"><code>readr</code></a> guesses column types, and numeric data arriving as character, or <code>NA</code> where numbers belong, are the usual failures;</li>
+<li><strong>Decode missing values</strong>: real files encode “no data” many ways (<code>NA</code>, empty cells, <code>""</code>, <code>999</code>, <code>-</code>, <code>?</code>), and R must be told which values count as missing;</li>
+<li><strong>Tame non-syntactic names</strong>: column names with spaces or accents (e.g.&nbsp;<code>body mass g</code>) are awkward to type; you rename them once, up front.</li>
+</ul>
+<p>Each is small and knowable. Knowing they exist <em>before</em> hitting them is half the exercise.</p>
+</div>
+<div class="code-pop">
+<details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## First steps towards data cleaning {.paper}
+
+::: {.paper-card}
+**A first data-cleaning pass is a handful of *foreseeable* chores.** We'll put each to practice in the hands-on that follows:
+
+- **Import**: *parse* the file correctly (right delimiter, header, decimals) with the right reader;
+- **Fix wrong guessed types**: [`readr`](https://readr.tidyverse.org/) guesses column types, and numeric data arriving as character, or `NA` where numbers belong, are the usual failures;
+- **Decode missing values**: real files encode "no data" many ways (`NA`, empty cells, `""`, `999`, `-`, `?`), and R must be told which values count as missing;
+- **Tame non-syntactic names**: column names with spaces or accents (e.g. `body mass g`) are awkward to type; you rename them once, up front.
+
+Each is small and knowable. Knowing they exist *before* hitting them is half the exercise.
+:::
+</code></pre></div></details>
+</div>
+</section>
+<section id="your-turn-data-cleaning" class="slide level2 paper" data-number="7.5">
+<h2><span class="header-section-number">7.5</span> Your turn: data cleaning</h2>
 <div class="paper-card">
 <p><strong>Your turn (≈30 min), pair up:</strong> this is the course’s first <strong>data-cleaning</strong> exercise. Work in pairs, alternating who types.</p>
 <ol type="1">
-<li>Download <a href="penguins_messy.txt"><code>penguins_messy.txt</code></a> (in the <code>common/</code> folder).</li>
+<li>Download <a href="https://astamm.github.io/r-ensai/r-statistical-language/session-1/penguins_messy.txt">penguins_messy.txt</a>.</li>
 <li><strong>Open it in a text editor.</strong> How are values separated? Is there a header? Are there missing values, and how do they appear?</li>
 <li>Read it into R, choosing the right <code>readr</code> function. Look at the column types: are any wrong?</li>
 <li>Fix the column types as needed (numeric vs character vs factor).</li>
@@ -2651,7 +2743,7 @@ Lab 2 continues
 ::: {.paper-card}
 **Your turn (≈30 min), pair up:** this is the course's first **data-cleaning** exercise. Work in pairs, alternating who types.
 
-1. Download [`penguins_messy.txt`](penguins_messy.txt) (in the `common/` folder).
+1. Download [penguins_messy.txt](https://astamm.github.io/r-ensai/r-statistical-language/session-1/penguins_messy.txt).
 2. **Open it in a text editor.** How are values separated? Is there a header? Are there missing values, and how do they appear?
 3. Read it into R, choosing the right `readr` function. Look at the column types: are any wrong?
 4. Fix the column types as needed (numeric vs character vs factor).
