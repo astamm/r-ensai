@@ -99,9 +99,10 @@ Scope and caveats:
   "resolute") on amd64, with arm64 supported on 24.04 and 26.04. It is not for
   other distributions.
 - Installing via `bspm` needs `sudo`: it writes into the system R library.
-- `renv`-based projects (used later in the Reproducible Workflows course) do
-  *not* go through `bspm`; they compile from source. So keep the build tools
-  from the fallback below even if you use r2u.
+- Project-pinned environments such as the `uvr` projects you build later in the
+  Reproducible Workflows course do *not* go through `bspm`; they manage their own
+  project-local library. So keep the build tools from the fallback below even if
+  you use r2u.
 
 Set it up (condensed from the [official guide](https://eddelbuettel.github.io/r2u/)):
 
@@ -206,26 +207,78 @@ readr, purrr, tibble, stringr, forcats.
 By the time of the Reproducible Workflows course you will additionally want:
 
 ```r
-install.packages(c("janitor", "naniar", "skimr", "renv", "knitr", "rmarkdown", "pins"))
+install.packages(c("janitor", "naniar", "skimr", "palmerpenguins", "withr", "knitr", "rmarkdown", "pins"))
 ```
 
-(`renv` is used for dependency pinning; `pins` for data pinning; `janitor`/`naniar`/`skimr` feed the
-data-cleaning and EDA labs. All of these are available as r2u binaries too, so the same plain
-`install.packages()` call above works unchanged on the r2u path.)
+(`pins` for data pinning; `withr` scopes options like
+random-number seeds so a render is reproducible; `janitor`/`naniar`/`skimr` feed the data-cleaning and
+EDA labs; `palmerpenguins` ships the penguins data used by the session-1 labs. All of these are
+available as r2u binaries too, so the same plain `install.packages()` call
+above works unchanged on the r2u path. Pinning the R *and* package versions of a project is done with
+`uvr` (section 5.1), not installed here.)
 
-## 6. Some worthy Positron extensions (optional)
+#### 5.1 A managed R and packages with `uvr`
+
+For the Reproducible Workflows course you pin a **whole project**, not just one machine: the R
+version *and* every package's version, so the project re-runs identically next year on another
+machine. That is what `uvr` does. It is a thin wrapper that lets R use `uv` (the same Rust project
+manager that drives the Python setup in sections 9–10). Install it from GitHub, then install its
+binary:
+
+```r
+pak::pak("nbafrank/uvr-r")   # the uvr companion R package
+uvr::install_uvr()           # installs the uvr binary (cross-platform)
+```
+
+Inside a project folder (`uvr::init()`), `uvr` manages a **project-local** R
+(`uvr::r_install("4.6.1")`, `uvr::r_pin("4.6.1")`) and adds packages to a manifest + lockfile with
+`uvr::add("tidyverse")`. So `uvr` is not only about which R version you run: it installs **and**
+pins every dependency behind a lockfile. That makes it the project-scoped alternative to the
+r2u / `install.packages()` / `pak::pak()` routes above. Use those to get R and packages working
+machine-wide; reach for `uvr` once you are inside a real project you need to reproduce.
+
+## 6. Version control with git
+
+The Reproducible Workflows course versions everything with **git** (added in Session 2). Install it
+first, then set your identity:
+
+```bash
+git --version                    # e.g. 2.4x.x
+```
+
+Your `git` identity should match the account you use on **GitHub**, where your repositories will be
+hosted. If you do not have one yet, create a free account at <https://github.com>. Then set the same
+name and email you used there as your global `git` identity:
+
+```bash
+git config --global user.name "Your Name"
+git config --global user.email "you@example.com"
+```
+
+If you are already working in R, `usethis::use_git_config()` walks you through setting these same
+values; `usethis` is a handy companion for all the Session 2/3 git work (see
+<https://happygitwithr.com/hello-git>). You will connect your GitHub account to your machine in
+Session 2 (an SSH key or a credential helper). Nothing more to install.
+
+## 7. Publishing with Posit Connect
+
+Session 3 reports are published to **Posit Connect**, the server that puts your work live at a URL.
+There is nothing to install, but you do need an **account** on the server: set one up in advance, as
+a free-tier account is sufficient for this course. The instructor will hand out the sign-up URL in
+Session 3. Then you publish from inside Quarto with `quarto publish connect`.
+
+## 8. Some worthy Positron extensions (optional)
 
 - **Air**: A Visual Studio Code extension for [Air](https://posit-dev.github.io/air/), an R formatter and language server, written in Rust.
 - **Jarl**: A Visual Studio Code extension for [Jarl](https://jarl.etiennebacher.com), a fast R linter.
 - **Posit Assistant**: An AI assistant for Positron. It uses functionality that is available only in Positron, so it will not work with other VS Code forks, like Cursor or Windsurf.
 - **Pyrefly**: The Pyrefly extension uses Pyrefly to provide language server features for Python in VS Code. Please see <https://pyrefly.org> for more information.
 - **Quarto**: A Visual Studio Code extension for the [Quarto](https://quarto.org) scientific and technical publishing system.
-- **Quarto Wizard**: A Visual Studio Code extension that helps you manage your Quarto projects. It allows you to easily install Quarto extensions from the Quarto Extensions registry, GitHub repositories, URLs, or local paths.
 - **Shiny**: This is an extension to help launch [Shiny](https://shiny.posit.co) applications. Shiny is a package for Python and R that is designed to make it easy to build interactive web applications with the powerful data and scientific features of Python and R.
 
 Some of them are pre-installed with Positron; other require opt-in installs via the *Extensions* panel.
 
-## 7. Setup Python (optional)
+## 9. Setup Python (optional)
 
 In Positron:
 
@@ -234,7 +287,7 @@ In Positron:
 
 More at <https://opensource.posit.co/blog/2026-07-08_positron-uv/>
 
-## 8. Install Python packages (optional)
+## 10. Install Python packages (optional)
 
 [uv](https://docs.astral.sh/uv/) is an extremely fast Python package and project manager, written in Rust.
 
@@ -248,21 +301,24 @@ uv add pandas numpy
 
 More details can be found on the website.
 
-## 9. Version checks, all together
+## 11. Version checks, all together
 
-For these courses, we will use R and Quarto.
+For these courses we will use R, Quarto and git. Check all three at once.
 
-Run in the R console:
+In the R console:
 
 ```r
-R.version.string
+R.version.string            # the R version, e.g. "R version 4.6.1"
 ```
 
 and in a terminal:
 
 ```bash
-quarto --version
+quarto --version            # e.g. 1.10.x
+git --version               # e.g. 2.4x.x
 ```
 
-If both report a version, you are ready. Ask the instructor for help if any
+(If you also set up Python with `uv` in sections 9–10, `uv --version` confirms that too.)
+
+If everything reports a version, you are ready. Ask the instructor for help if any
 step errors; resolve these at the start so the labs run smoothly.

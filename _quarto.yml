@@ -1,9 +1,8 @@
 project:
   type: website
-  # TEMPORARY (2026-09): only setup + the base-R course are published for now.
-  # The reproducible-workflows course is whitelisted but not yet public; restore
-  # its index.qmd + three session-N.qmd entries here (and the navbar/homepage
-  # sections, see below) when it is ready to go live.
+  # Both courses (The R Statistical Language, Reproducible Workflows) are live:
+  # all six decks, both course home pages, the site homepage and the setup
+  # guide are built and published.
   render:
     - index.qmd
     - setup.qmd
@@ -11,14 +10,15 @@ project:
     - r-statistical-language/session-1/session-1.qmd
     - r-statistical-language/session-2/session-2.qmd
     - r-statistical-language/session-3/session-3.qmd
-    # - reproducible-workflows/index.qmd
-    # - reproducible-workflows/session-1/session-1.qmd
-    # - reproducible-workflows/session-2/session-2.qmd
-    # - reproducible-workflows/session-3/session-3.qmd
-  # Copy the base-R lab scripts (and the data files they read) into the site
-  # so students can grab them without cloning the GitHub repo. Copied verbatim,
+    - reproducible-workflows/index.qmd
+    - reproducible-workflows/session-1/session-1.qmd
+    - reproducible-workflows/session-2/session-2.qmd
+    - reproducible-workflows/session-3/session-3.qmd
+  # Copy the lab sources (and the data files they read) into the site so
+  # students can grab them without cloning the GitHub repo. Copied verbatim,
   # not rendered. Paths are project-root-relative.
   resources:
+    # The R Statistical Language
     - r-statistical-language/session-1/lab-1-vectors.R
     - r-statistical-language/session-1/lab-2-dataframes.R
     - r-statistical-language/session-1/penguins_messy.txt
@@ -29,6 +29,16 @@ project:
     - r-statistical-language/session-3/lab-2-matrices.R
     - r-statistical-language/session-3/lab-3-functions.R
     - r-statistical-language/session-3/penguins.csv
+    # Reproducible Workflows: lab `.qmd` sources, the penguins data, and the
+    # portfolio-book starter (a zip of the student-facing scaffold under
+    # common/portfolio-book/, rebuilt whenever that scaffold changes).
+    - reproducible-workflows/session-1/lab-1-first-doc.qmd
+    - reproducible-workflows/session-1/lab-2-structured-report.qmd
+    - reproducible-workflows/session-2/lab-1-eda-datagouv.qmd
+    - reproducible-workflows/session-2/lab-2-portfolio-book.qmd
+    - reproducible-workflows/session-3/lab-1-versioning.qmd
+    - reproducible-workflows/session-3/lab-2-publish.qmd
+    - reproducible-workflows/common/portfolio-book.zip
 
 # Freeze computed output: R code runs locally and the results are committed to
 # _freeze/. The GitHub Pages publish action then renders from frozen output with
@@ -60,17 +70,16 @@ website:
             text: "Session 2 · Tidyverse & EDA"
           - href: r-statistical-language/session-3/session-3.qmd
             text: "Session 3 · Loops & functions"
-      # TEMPORARY (2026-09): RR course hidden from navbar until it goes live.
-      # - text: "Reproducible Workflows"
-      #   menu:
-      #     - href: reproducible-workflows/index.qmd
-      #       text: "Course home"
-      #     - href: reproducible-workflows/session-1/session-1.qmd
-      #       text: "Session 1 · What is reproducibility?"
-      #     - href: reproducible-workflows/session-2/session-2.qmd
-      #       text: "Session 2 · Data & the book"
-      #     - href: reproducible-workflows/session-3/session-3.qmd
-      #       text: "Session 3 · Version, pin, publish"
+      - text: "Reproducible Workflows"
+        menu:
+          - href: reproducible-workflows/index.qmd
+            text: "Course home"
+          - href: reproducible-workflows/session-1/session-1.qmd
+            text: "Session 1 · What is reproducibility?"
+          - href: reproducible-workflows/session-2/session-2.qmd
+            text: "Session 2 · Data & the book"
+          - href: reproducible-workflows/session-3/session-3.qmd
+            text: "Session 3 · Version, pin, publish"
 
 # ---- Factorized common metadata + format (2026-09) ----------------------------
 # The six decks share author, affiliation, and every revealjs option except the

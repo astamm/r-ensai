@@ -28,14 +28,11 @@ the slides per session, the hands-on labs and the learning outcomes.
 
 ## Reproducible Workflows {#course-rr}
 
-<!-- TEMPORARY (2026-09): RR course not yet published; hidden from the homepage
-     until it goes live. The deck files remain in the repo. -->
-
-::: {.callout-note}
-**Going back to a course page from a slide deck.** While you are following a
-deck, you can return to its course home page at any time by clicking the
-logo in the top-left corner of any slide.
-:::
+A course on **reproducible workflows**: writing Quarto documents and books,
+sourcing and cleaning open data (including *data.gouv.fr*), and versioning,
+pinning and publishing analyses so they can be re-run by anyone, anywhere. The
+[course home page](reproducible-workflows/index.qmd) gathers the synopsis,
+the slide decks per session, the hands-on labs and the downloadable materials.
 
 ## Why a website? {#why-a-website}
 

@@ -689,6 +689,113 @@ $colors: (
   white-space: pre-wrap;
 }
 
+/* ---------------- Rendered qmd-report cards ---------------------------- */
+/* Slide 4.2 of RR session 1 shows a real rendered report (the output of
+   quarto render on report.qmd) beside its source, each on a `.qmd-render`
+   cream "printed page" card. The executed cell inside arrives wrapped in
+   Quarto's .cell with reveal chrome and, like an executed codewindow, it
+   defaults to reveal's light-on-dark executed-code palette. Restyle it as a
+   small cream document card with the printed output in the console hue. */
+.reveal .qmd-render {
+  background: #FDFBF4;            /* warm cream, like a printed page */
+  border: 1px solid rgba($ink-dark, 0.18);
+  border-radius: 8px;
+  padding: 0.5em 0.9em 0.6em;
+  color: $ink-dark;
+}
+.reveal .qmd-render > :first-child { margin-top: 0; }
+.reveal .qmd-render > :last-child  { margin-bottom: 0; }
+/* The rendered report shows its document title as an h1; scale it down so it
+   reads as a page heading on the card instead of a giant reveal heading. */
+.reveal .qmd-render h1.title,
+.reveal .qmd-render h1 {
+  font-size: 1.35em;
+  line-height: 1.2;
+  margin: 0 0 0.5em;
+  color: $ink-dark;
+  text-align: left;
+}
+.reveal .qmd-render .cell,
+.reveal .qmd-render .cell .code-copy-outer-scaffold {
+  margin: 0.4em 0 0;
+  padding: 0;
+}
+.reveal .qmd-render .cell .sourceCode {
+  margin: 0;
+  padding: 0;
+  background: transparent !important;
+  border: 0 !important;
+}
+.reveal .qmd-render pre,
+.reveal .qmd-render pre code,
+.reveal .qmd-render code.sourceCode {
+  box-shadow: none;
+  padding: 0;
+  background: transparent !important;
+}
+/* reveal/Quarto style executed code light-on-dark (designed for the dark
+   codewindow): on this cream card that renders as near-invisible light text.
+   Set ink text and match the codewindow monospace size so the cell reads like
+   code on a printed page. */
+.reveal .qmd-render pre code,
+.reveal .qmd-render code.sourceCode {
+  font-size: 16px !important;
+  line-height: 1.35;
+  color: $ink-dark;
+}
+.reveal .qmd-render pre.numberSource {
+  margin-left: 0;
+  border-left: 0;
+  padding-left: 0;
+}
+.reveal .qmd-render .cell pre.numberSource code > span {
+  left: 0;
+}
+.reveal .qmd-render .cell pre.numberSource code > span > a:first-child::before {
+  display: none;
+}
+.reveal .qmd-render .cell .code-copy-button {
+  display: none !important;
+}
+.reveal .qmd-render .cell .cell-output {
+  margin: 0 0 0 1.1em;
+}
+.reveal .qmd-render .cell .cell-output pre {
+  margin: 0;
+  padding: 0;
+  background: transparent !important;
+  border: 0 !important;
+  color: $review;
+  white-space: pre-wrap;
+}
+/* The executed cell's syntax tokens keep quarto's dark-theme palette (light
+   salmon/cyan/green tuned for a dark background); on cream those vanish. Map
+   the tokens this demo uses (and common ones) to a readable ink-on-cream set. */
+.reveal .qmd-render code span {
+  color: $ink-dark;             /* bare identifiers & punctuation */
+}
+.reveal .qmd-render code span.fu { color: #3360ad; }   /* functions */
+.reveal .qmd-render code span.ot { color: $ink-dark; font-weight: 600; } /* operators */
+.reveal .qmd-render code span.dv,
+.reveal .qmd-render code span.fl,
+.reveal .qmd-render code span.bn { color: #8a4baf; }   /* numbers */
+.reveal .qmd-render code span.st,
+.reveal .qmd-render code span.ch,
+.reveal .qmd-render code span.ss { color: #1f7a3d; }   /* strings */
+.reveal .qmd-render code span.kw,
+.reveal .qmd-render code span.cf,
+.reveal .qmd-render code span.dt { color: #a04b2c; }   /* keywords */
+.reveal .qmd-render code span.co { color: #767c85; font-style: italic; } /* comments */
+/* Mock Quarto's default HTML rendering: code cells sit on a light grey block
+   distinct from the cream card. Marked with .htmlmock on the sourceCode div;
+   this must beat the transparent rule above on source order at equal
+   specificity. */
+.reveal .qmd-render .cell .sourceCode.htmlmock {
+  background: #ECECEC !important;
+  border-radius: 4px !important;
+  padding: 0.3em 0.6em !important;
+}
+
 /* ---------------- Colored-tile data-shape animations ------------------ */
 /* The two "data-shape" demos (2.8 group_by + summarise, 2.10 pivot_longer /
    pivot_wider) illustrate a dplyr/tidyr verb by reshaping toy tables built

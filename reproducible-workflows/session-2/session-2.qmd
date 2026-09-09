@@ -1,0 +1,710 @@
+---
+title: "Accessing data & building the book"
+subtitle: "Reproducible Workflows · Session 2"
+format:
+  revealjs:
+    footer: A. Stamm <aymeric.stamm@cnrs.fr> · Reproducible Workflows · Session 2
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(tidyverse)
+library(janitor)
+library(naniar)
+library(skimr)
+penguins <- palmerpenguins::penguins   # penguins sourced from CRAN, not a local CSV
+```
+
+# Recap: Session 1 → Session 2
+
+## Where we are {.inv}
+
+Last session you learned the document mechanics; today we fill them with real work.
+
+::: {.incremental}
+- Session 1: **write**, Quarto documents, structured reports, transparency.
+- Session 2 (today): **source**, get a real dataset, clean it, **version it with git**, land your analysis inside the **portfolio book**, and pick your Chapter-1 dataset.
+- Session 3: **publish**, pin the environment (uvr), deepen git (PRs, review), put it at a URL, and finish Chapter 1.
+:::
+
+::: {.callout-desc}
+Today's payoff: Chapter 1 (the EDA project) of your portfolio book becomes real. Let's trace the *reproducible* data journey end to end.
+:::
+
+# The EDA loop & cleaning decisions
+
+## What EDA is for {.paper}
+
+::: {.paper-card}
+**Exploratory data analysis (EDA)** is the back-and-forth loop where you learn what the data can tell you:
+
+1. **Get a quick sense**: shapes, types, missingness, ranges.
+2. **Look for problems**: wrong types, missing values, inconsistent names/labels, outliers.
+3. **Ask & plot**: small targeted plots to answer questions and surface surprises.
+4. **Record decisions**: every cleaning choice documented, because a *defensible* choice is a feature.
+
+EDA is *iterative*: you circle through 1–3 several times before any formal modelling. The output that survives into a report is the cleaned data **plus the story of your decisions**.
+:::
+
+## The environment at a glance {.inv}
+
+Your IDE is part of the reproducible loop. In Positron:
+
+::: {.incremental}
+- **Data pane / variable explorer**: inspect loaded tables and objects without typing.
+- **Inline plots**: plots render in the IDE as you iterate.
+- But: the *IDE* is for exploring; the *document* is the record. Anything you discover by clicking must end up as **code in a `.qmd`** to be reproducible.
+:::
+
+::: {.callout-desc}
+Rule: **explore by clicking, report by code.** The click is fast; the code is what makes it reproducible.
+:::
+
+## One-line summaries: `skimr::skim()` {.inv}
+
+A whole data set summarized in one call, the fastest honest "first look":
+
+```{r}
+#| label: skim
+#| message: false
+skim(penguins) |> summary()
+```
+
+::: {.callout-desc}
+`skim()` shows type, `n_missing`, and mini-distributions per column in one go (here compacted with `|> summary()`). When someone asks "what's in this data?", `skim()` first.
+:::
+
+## Cleaning names & counting: `{janitor}` {.inv}
+
+Real-world data arrives with messy names and labels. `{janitor}` tidies them:
+
+```{r} 
+#| label: janitor-clean
+#| message: false
+penguins |>
+  clean_names() |>        # lower-case, underscores, no spaces
+  names() |>
+  head(8)
+```
+
+```{r} 
+#| label: janitor-tabyl
+#| message: false
+penguins |>
+  tabyl(species)          # a nicer table() for one variable
+```
+
+::: {.callout-desc}
+`clean_names()` makes column names *syntactic* (safe to reference); `tabyl()` gives counts with percentages. Both make downstream code far more readable.
+:::
+
+## Seeing missingness: `{naniar}` {.inv}
+
+Missing data is not an afterthought: it's often the most important thing about a data set. `{naniar}` makes it visible:
+
+```{r}
+#| label: vis-miss
+#| fig-cap: "Where is the penguins data missing, and how much?"
+#| fig-width: 8
+#| fig-height: 5
+vis_miss(penguins)
+```
+
+::: {.callout-desc}
+`vis_miss()` draws the whole data set as a grid, missing cells in dark. `gg_miss_var()` plots missingness *per column*. Use them to decide *why* data is missing, and whether your analysis needs to care.
+:::
+
+## Tying it to Session 1 {.inv}
+
+This is the same cleaning conversation you started in the base-R course with `penguins_messy.txt`:
+
+::: {.incremental}
+- There you fixed wrong **types** (`readr` guessing), separators, and missing values by hand.
+- Today the **decisions** are the point: `janitor`, `naniar`, `skimr` don't *make* them for you; they *surface* them faster so you can decide well and record why.
+:::
+
+::: {.callout-desc}
+The toolkit changed; the habit didn't: **inspect → decide → document.** Every decision you can justify in a sentence is a reproducible decision.
+:::
+
+## Your turn: EDA toolkit {.paper}
+
+::: {.paper-card}
+Run this on the `penguins` data (loaded at the top), or a data frame of your own:
+
+1. `skim(penguins)`: which columns have missing values? How many?
+2. `penguins |> clean_names() |> names()`: do names need cleaning?
+3. `penguins |> tabyl(species)`: what are the group sizes?
+4. `vis_miss(penguins)`: where is the missingness concentrated?
+5. Write one sentence: **"I will handle the missingness by … because …"**, that sentence is your reproducible cleaning decision.
+:::
+
+<div class="paper-adv">
+<button type="button" class="paper-adv-btn">Going further</button>
+<div class="paper-adv-backdrop" hidden></div>
+<div class="paper-adv-modal" hidden>
+<div class="paper-adv-head"><strong>Going further</strong><button type="button" class="paper-adv-close" aria-label="Close">&times;</button></div>
+<div class="adv-body">
+<p><strong>~12 min.</strong> This is warm-up for Lab 1; stretch by adding a <code>gg_miss_var()</code> plot.</p>
+</div>
+</div>
+</div>
+
+# Sourcing open data
+
+## Open data, anywhere in the world {.inv}
+
+A reproducible analysis needs data it can **re-fetch by code**, and open-data portals everywhere provide exactly that:
+
+::: {.incremental}
+- **France**: [data.gouv.fr](https://www.data.gouv.fr), thousands of public datasets, **license-aware**.
+- **Your own country**: nearly every government runs an official open-data portal (data.gov… for the US, Canada, UK, Germany, and many more).
+- **The rule is the same wherever you look**: a dataset you can fetch *programmatically* is a dataset your analysis can re-produce.
+:::
+
+::: {.callout-desc}
+The reproducible move: don't *download* a dataset by hand; write code that *sources* it, so the analysis is re-runnable and the provenance (publisher + URL) is in the document.
+:::
+
+## `{rdatagouv}`: the French portal from R (an option) {.inv}
+
+Because we teach from l'ENSAI, **data.gouv.fr** is a natural default. `{rdatagouv}` (maintained by your instructor) wraps it:
+
+```{r}
+#| label: rdatagouv
+#| eval: false
+library(rdatagouv)
+# search the FRENCH portal for a topic
+search_datasets("population", type = "dataset")
+# get metadata + resource URLs for a dataset you found
+dataset <- get_dataset("my-dataset-slug")
+dataset$resources
+```
+
+::: {.callout-desc}
+`{rdatagouv}` is an *option, not a requirement*: use it if you pick data.gouv.fr. Any portal you can query with a URL (e.g. `download.file()`) works just as well for reproducibility.
+:::
+
+## Fetching any portal by URL {.inv}
+
+Whatever portal you choose, the reproducible core is the same: a URL your code downloads:
+
+```{r}
+#| label: fetch-url
+#| eval: false
+url <- "https://…/my-open-dataset.csv"   # any open-data portal, any country
+download.file(url, "data/my-data.csv")   # a RE-RUNNABLE line of code
+```
+
+::: {.incremental}
+- **`download.file()` is portal-agnostic**: it doesn't care whether the URL points at data.gouv.fr or your home country's portal.
+- Pair it with a **provenance sentence** (dataset, publisher, URL, license) so a reader can *find* and *trust* the source.
+- Some portals ship an R/Python client (`{rdatagouv}` here): a convenience, never a requirement.
+:::
+
+::: {.callout-desc}
+**Live block (≈10 min).** Together: `search_datasets("climat")` *and* browse one non-French portal (e.g. your home country's). Both approaches collapse to the same thing: a URL to download by code.
+:::
+
+## Contributing back {.inv}
+
+Open data isn't just a source: for many portals it's a community you can help:
+
+::: {.incremental}
+- **File issues**: wrong metadata, broken links, unclear descriptions: report them.
+- **Open PRs**: `{rdatagouv}`'s own repo (`github.com/astamm/rdatagouv`) welcomes contributions.
+- The course explicitly invites this: improving public data is part of the reproducible habit.
+:::
+
+::: {.callout-desc}
+Improving the data others (and your future self) rely on is itself a reproducibility act: finding and fixing a broken source helps everyone.
+:::
+
+## Lab 1: your dataset {.paper}
+
+::: {.paper-card}
+**Lab 1 (≈35 min):** `lab-1-eda-datagouv.qmd`.
+
+1. **Pick a dataset you actually care about**: on data.gouv.fr *or* your own country's official open-data portal (sport, transport, environment, culture…).
+2. In a Quarto doc, source it **by code** (no manual download), `{rdatagouv}` for data.gouv, `download.file()` for any portal.
+3. Run a quick EDA: `skim()`, `clean_names()`, `tabyl()`, `vis_miss()`.
+4. Write 2–3 sentences on your *cleaning decisions*.
+:::
+
+<div class="paper-adv">
+<button type="button" class="paper-adv-btn">Lab 1: your dataset</button>
+<div class="paper-adv-backdrop" hidden></div>
+<div class="paper-adv-modal" hidden>
+<div class="paper-adv-head"><strong>Lab 1: your dataset</strong><button type="button" class="paper-adv-close" aria-label="Close">&times;</button></div>
+<div class="adv-body">
+<p>This same dataset becomes <strong>Chapter 1</strong> of your portfolio in Lab 2, so choose something you'd be proud to show for the whole term.</p>
+</div>
+</div>
+</div>
+
+# Versioning your data with {pins}
+
+## The (dis)appearing data problem {.inv}
+
+Last session you met "the (dis)appearing data": a fetched file can *change* or *vanish* the moment it's off the portal:
+
+::: {.incremental}
+- A portal updates a dataset: your analysis was based on the **old version**.
+- A raw URL 404s a year later, and your "reproducible" document can't re-run.
+- Even locally, `data/my-data.csv` can be overwritten, and git alone doesn't version the *cached* copy well if you don't commit it.
+:::
+
+::: {.callout-desc}
+`{pins}` closes that gap: **version your data** the way git versions your code, so a re-render gets the *same* data a reader expects, not whatever is live today.
+:::
+
+## `{pins}`: pin data to a versioned board {.inv}
+
+`{pins}` stores a data object on a **board** and records **who wrote what, when**:
+
+```{r}
+#| label: pins-setup
+#| eval: false
+library(pins)
+
+# a folder board that KEEPS HISTORY (versioned = TRUE)
+board <- board_folder("pins/", versioned = TRUE)
+
+# fetch open data once, then pin it:
+dat <- read_csv("https://…/my-open-dataset.csv")
+pin_write(board, dat, "my-dataset")        # snapshot it, versioned & hashed
+
+# later re-reads get the PINNED copy, reproducibly:
+pin_read(board, "my-dataset")
+```
+
+::: {.callout-desc}
+`pin_write()` snapshots the data and records the **version + hash**; `pin_read()` returns that exact snapshot. Re-render → same data, every time.
+:::
+
+## Where the versioned copy lives {.inv}
+
+A board is just a folder (or a service), and it's fully inspectable:
+
+::: {.incremental}
+- `pin_list(board)`: what's been pinned.
+- `pin_versions(board, "my-dataset")`: every snapshot, with hashes and dates.
+- `pin_read(board, "my-dataset", version = "…")`: roll back to an older snapshot.
+:::
+
+::: {.callout-desc}
+The pinned `pins/` folder is committed alongside your code, so the *exact data* your analysis used is reproducible forever, independent of portal changes or broken URLs.
+:::
+
+## Fetch once, pin, analyse {.inv}
+
+A reproducible data workflow in three deliberate steps:
+
+::: {.incremental}
+1. **Fetch** the open data by URL: provenance recorded.
+2. **Pin** it with `pin_write()`: versioned & hashed on a local board.
+3. **Analyse from the pinned copy** (`pin_read()`): stable no matter what happens upstream.
+:::
+
+::: {.callout-desc}
+Pinning keeps you honest: the *data* you analysed is on record, not just the *code*. Combined with git (code), renv/uv (environment) and a URL (delivery), it completes the durable portfolio you build in Session 3.
+:::
+
+## Beyond data: version your models too {.inv}
+
+The same "pin what you made" idea extends to the *models* you fit, not just the data:
+
+::: {.incremental}
+- **[`{vetiver}`](https://rstudio.github.io/vetiver-r/)**: pins a **model** to a board, so the exact trained model is deployed or re-loaded, versioned & reproducible like your data.
+- It pairs with `pin_write()`/`pin_read()`: you already know the mechanics; vetiver just knows how to save/load a model's metadata too.
+- Same habit, new object: **data → `{pins}` · model → `{vetiver}` · code → git · environment → renv/uv**.
+:::
+
+::: {.callout-desc}
+Saving a trained model by hand usually loses which packages/versions made it. `{vetiver}` records those alongside the model, so it re-runs and re-deploys anywhere.
+:::
+
+## R and Python, side by side {.inv}
+
+Every reproducibility tool you've met has an equivalent in Python, with the same ideas and the same names:
+
+| Role | R | Python |
+|---|---|---|
+| **Environment** | [`renv`](https://rstudio.github.io/renv/) / `uv` | [`uv`](https://docs.astral.sh/uv/) / `venv` |
+| **Data & artifacts** | [`{pins}`](https://pins.rstudio.com) | [`pins`](https://rstudio.github.io/pins-python/) |
+| **Model versioning/deploy** | [`{vetiver}`](https://rstudio.github.io/vetiver-r/) | [`vetiver`](https://rstudio.github.io/vetiver-python/) |
+
+::: {.callout-desc}
+Your book is Python-compatible by design: whichever language a chapter uses, the reproducible pipeline (source → pin → version → publish) is the same.
+:::
+
+# Versioning your code with git
+
+## Git in one habit {.inv}
+
+You version your *data* with `{pins}`; you version your *code* with git, one small round at a time:
+
+::: {.term}
+<div class="prompt">$</div> git status             # your compass: where am I?
+<div class="prompt">$</div> git add <file>        # stage the changes you want to keep
+<div class="prompt">$</div> git commit -m "msg"   # snapshot with a note
+<div class="prompt">$</div> git push              # send the snapshot to GitHub
+:::
+
+::: {.incremental}
+- **`usethis::use_git()`** turns the folder into a git repo; the **Positron git pane** is the clickable version of the loop.
+- **Commit often**: small, descriptive commits beat rare mega-commits; `git status` is your compass.
+:::
+
+::: {.callout-desc}
+Version your code the way you just versioned your data. `add → commit → push` is the whole habit; everything else is dress-up.
+:::
+
+## A repo + a remote {.inv}
+
+Local history is half the story; a **remote** (GitHub) makes it durable and shareable:
+
+::: {.term}
+<div class="prompt">&gt;</div> usethis::use_git()        # make it a git repo
+<div class="prompt">&gt;</div> usethis::use_github()     # create + link the remote, push once
+:::
+
+::: {.incremental}
+- Set up a **GitHub account** first (happygitwithr walks it), then give Positron access.
+- `usethis::use_github()` creates an `origin` remote and pushes your `main` once, **properly tracked**.
+- In the Positron git pane, the **push** button sends your commits to GitHub.
+:::
+
+::: {.callout-desc}
+A pushed repo is a backup and a way to share; a local-only repo is one laptop failure from gone. Push early, push often.
+:::
+
+## .gitignore: what NOT to commit {.inv}
+
+Not everything belongs in history. Tell git to ignore machine-local noise:
+
+::: {.term}
+<div class="prompt">$</div> cat .gitignore
+:::
+
+::: {.incremental}
+- R: `.Rhistory`, `.RData`, `renv/library/`
+- Render output: `_book/`, `*_files/`
+- Editor/OS: `.DS_Store`, `.venv/`, `__pycache__/`
+:::
+
+::: {.callout-desc}
+Your `portfolio-book/.gitignore` scaffold already covers these. The rule: **commit source, not output or environment.** Source is what rebuilds everything.
+:::
+
+## Branches: keep `main` always-working {.inv}
+
+A branch is a second version of history you can work on without touching `main`:
+
+::: {.term}
+<div class="prompt">$</div> git checkout -b add-cleanup-notes   # make + switch to a branch
+<div class="prompt">$</div> git commit -m "document cleaning"       # work there
+<div class="prompt">$</div> git checkout main && git merge add-cleanup-notes   # fold it back
+:::
+
+::: {.incremental}
+- **Mirror how you actually work**: try an idea on a branch, keep it if it works.
+- **`main` stays always-working**: a broken experiment never reaches the shared history.
+- In the Positron git pane, the **branch** menu creates and switches branches.
+:::
+
+::: {.callout-desc}
+Branches are cheap and disposable: they're how you keep the *main* line always reproducible. **Never push to `main` directly**: in Session 3 you'll decide what merges via a pull request.
+:::
+
+## Connect with your instructor {.paper}
+
+::: {.paper-card}
+**Mini-lab (~10 min).** Get your book onto GitHub so you can share and get feedback during the gap week:
+
+1. `usethis::use_git()` then `usethis::use_github()` on your portfolio book.
+2. Make a real change, commit it, push it (`git add` / `git commit` / `git push`).
+3. Create a branch (`git checkout -b eda-chapter-1`) and push it too.
+:::
+
+<div class="paper-adv">
+<button type="button" class="paper-adv-btn">Going further</button>
+<div class="paper-adv-backdrop" hidden></div>
+<div class="paper-adv-modal" hidden>
+<div class="paper-adv-head"><strong>Going further</strong><button type="button" class="paper-adv-close" aria-label="Close">&times;</button></div>
+<div class="adv-body">
+<p>happygitwithr (<a href="https://happygitwithr.com">happygitwithr.com</a>) is the tutorial base: its chapters on git install, connect GitHub, and the commit-push loop cover every step with screenshots. This is how you'll share work and get feedback via GitHub between sessions.</p>
+</div>
+</div>
+</div>
+
+::: {.callout-desc}
+By the end of today, your book is versioned and remote, ready for Session 3's pull requests and review.
+:::
+
+# Quarto books
+
+## What a Quarto book is {.paper}
+
+::: {.paper-card}
+A **book** is many `.qmd` chapters bundled by one config file into a single navigable publication:
+
+- `project: type: book` marks the folder as a book.
+- `_quarto.yml` lists the **chapters** in order and the output options.
+- Each `.qmd` is a chapter; they can **cross-reference** each other and share figures/tables.
+- Render once → a whole site with sidebar navigation, TOC, bibliography.
+:::
+
+::: {.callout-desc}
+You already know the document mechanics: a book is the same thing scaled to many files, wired together in `_quarto.yml`.
+:::
+
+## Anatomy of `_quarto.yml` {.inv}
+
+The book is driven by one small file:
+
+```yaml
+project:
+  type: book
+book:
+  title: "My Data Science Portfolio"
+  author: "Your Name"
+  chapters:
+    - index.qmd
+    - chapters/01-EDA.qmd
+    - references.qmd
+bibliography: references.bib
+format:
+  html:
+    theme: cosmo
+```
+
+::: {.callout-desc}
+Add a chapter by appending its path to `chapters:`; list order is book order.
+:::
+
+## Make it yours: branding {.inv}
+
+The book's look is yours to define. Two files beside `_quarto.yml` control it:
+
+::: {.codewindow .r width="100%"}
+`_brand.yml`: colours & fonts (the zero-CSS on-ramp)
+```yaml
+color:
+  palette:
+    teal:   "#2E7D6B"   # pick your own accents
+    amber:  "#E8A33D"
+    indigo: "#4A5899"
+    ink:    "#17251F"
+    paper:  "#F1EEE6"
+  primary: teal
+  foreground: ink
+  background: paper
+```
+:::
+
+::: {.codewindow .r width="100%"}
+`styles.scss`: structural CSS beyond the palette
+```scss
+/* find selectors via Inspect, then tweak */
+.sidebar { width: 300px; }
+```
+:::
+
+::: {.paper-card}
+Edit a `"#hex"`, `quarto preview`, look. Match what *you* like, not the course decks.
+:::
+
+## Language-agnostic chapters {.inv}
+
+A Quarto book happily mixes languages, and so can your portfolio:
+
+::: {.incremental}
+- Chapter files are just `.qmd`; each chapter can run **R, Python, or both**.
+- `format: html` and cross-references work identically either way.
+- That's why your portfolio stays useful as you grow into Python in later courses.
+:::
+
+::: {.callout-desc}
+**Portfolio-first design:** the scaffold already reserves empty chapters for later instructors (`02-semester-2.qmd`, `03-semester-3.qmd`). Your book is built to grow.
+:::
+
+## Lab 2: build your book {.paper}
+
+::: {.paper-card}
+**Lab 2 (≈35 min):** `lab-2-portfolio-book.qmd`.
+
+1. **Copy** `common/portfolio-book/` to your own folder (`cp -r … ~/my-portfolio/`).
+2. **Render** it: confirm the starter book builds.
+3. **Drop your Lab-1 EDA in as Chapter 1** (`chapters/01-EDA.qmd`).
+4. Re-render the whole book; check the sidebar and cross-references.
+:::
+
+<div class="paper-adv">
+<button type="button" class="paper-adv-btn">Lab 2: your book</button>
+<div class="paper-adv-backdrop" hidden></div>
+<div class="paper-adv-modal" hidden>
+<div class="paper-adv-head"><strong>Lab 2: your book</strong><button type="button" class="paper-adv-close" aria-label="Close">&times;</button></div>
+<div class="adv-body">
+<p>By the end of this lab you hold the seed of your portfolio, a <em>book</em>, not just a report. Session 3 puts it under version control and publishes it.</p>
+</div>
+</div>
+</div>
+
+# Finding a great dataset
+
+## Beyond data.gouv.fr: OpenData R packages {.inv}
+
+Pick the portal (or package) that gets you to a dataset you *care* about; the reproducibility rule never changes:
+
+::: {.incremental}
+- **France**: [data.gouv.fr](https://www.data.gouv.fr) via `{rdatagouv}`.
+- **Your country**: nearly every government runs an official portal (data.gov for the US, Canada, UK, Germany…), fetched by URL.
+- **R-friendly datasets**: `{tidycensus}` (US Census), `{opendatatoronto}`, `#TidyTuesday` data on GitHub; Kaggle datasets too.
+:::
+
+::: {.callout-desc}
+Whatever the source, the bar is the same: you can fetch it **by code** and record its provenance (dataset, publisher, URL, license). If you can download it with one line of code, it's fair game for Chapter 1.
+:::
+
+## Choose your dataset before you leave {.paper}
+
+::: {.paper-card}
+**Final task of the session (~10 min).** Leave today having chosen your Chapter-1 dataset so Session 3's work block starts fast:
+
+1. **Pick a dataset you actually care about** on data.gouv.fr, your country's portal, or an R-friendly source above.
+2. Record its **source by code** (a URL / a package call) and its provenance (publisher, URL, license).
+3. Write **one line: the question you want to answer** with it. That question is your IMRAD seed for Chapter 1.
+:::
+
+<div class="paper-adv">
+<button type="button" class="paper-adv-btn">Going further</button>
+<div class="paper-adv-backdrop" hidden></div>
+<div class="paper-adv-modal" hidden>
+<div class="paper-adv-head"><strong>Going further</strong><button type="button" class="paper-adv-close" aria-label="Close">&times;</button></div>
+<div class="adv-body">
+<p>Between now and Session 3 there is a week. If you don't finish, keep refining your dataset and question, and commit it to the <code>eda-chapter-1</code> branch you made earlier today; your instructor can already comment on it there.</p>
+</div>
+</div>
+</div>
+
+# Writing for an audience
+
+## A report is read, not just rendered {.inv}
+
+Your EDA will be read by other humans, instructors, classmates, future employers. Write to *them*:
+
+::: {.incremental}
+1. **Structure signals intent**: question, data, cleaning, results, findings.
+2. **Captions do the explaining**: a reader should grasp a figure from its caption before reading your prose.
+3. **Say what you found *and* what you didn't**: honest limits are credibility.
+4. **Keep code in service of the story**: the code shows *how*; the prose says *why it matters*.
+:::
+
+::: {.callout-desc}
+The reproducibility narrative: because everything is code and captioned, a stranger re-rendering your `.qmd` both **trusts** and **reproduces** your work. That's the product.
+:::
+
+## Preparing work others will extend {.inv}
+
+Your chapters are slots other courses will fill. Make that easy:
+
+::: {.incremental}
+- Use the **same structure** every time (the 5-section recipe).
+- Give **descriptive labels** to figures/tables (`fig-cap` everywhere).
+- Keep **setup in one chunk** so new chapters start from a known environment.
+- Leave placeholder chapters **in place**: they're the roadmap.
+:::
+
+::: {.callout-desc}
+Think of the book as a shared, growing artefact, not a one-off. Every convention you follow today lowers the friction for the next instructor who appends a chapter.
+:::
+
+## Recap: the full loop {.inv}
+
+From data to a readable, reproducible chapter, the whole course in one picture:
+
+::: {.incremental}
+1. **Source** open data by code (portal of your choice): provenance recorded.
+2. **Explore & clean** (`skimr`/`janitor`/`naniar`): decisions documented.
+3. **Report** in a structured chapter: captions, cross-refs, findings.
+4. **Assemble** into the book: one navigable portfolio.
+5. **Version** your work on git: committed, branched, pushed to GitHub (today).
+6. *(Session 3)* **Pin & publish**: uvr/uv (`{pins}` for data), Posit Connect.
+:::
+
+::: {.callout-desc}
+Today you've done steps 1–5: your book is sourced, cleaned, assembled, and under version control. Step 6 (Session 3) pins the environment, reviews through a PR, and turns the local book into a shared, durable URL.
+:::
+
+## Three moves, one book {.dark auto-animate=true background-color="#17251F"}
+
+::: {.big-title data-id="title" style="left:88px; top:150px; width:720px; font-size:72px;"}
+Source,
+clean,
+build.
+:::
+
+::: {.panel data-id="draft"   style="left:840px; top:150px; width:150px; height:360px;"}
+:::
+::: {.panel data-id="review"  style="left:1006px; top:150px; width:150px; height:170px;"}
+:::
+::: {.panel data-id="release" style="left:1006px; top:340px; width:150px; height:170px;"}
+:::
+
+## Source, clean, build {.light auto-animate=true background-color="#F1EEE6"}
+
+::: {.big-title data-id="title" style="left:92px; top:104px; width:1100px; font-size:44px;"}
+Today your book gained its first real chapter.
+:::
+
+::: {.panel .card data-id="draft" style="left:96px; top:220px; width:340px; height:360px;"}
+[Source by code]{.h}
+
+[Open data fetched by code (any portal) and **pinned** with `{pins}`: provenance (publisher + URL) recorded.]{.p}
+:::
+::: {.panel .card data-id="review" style="left:470px; top:220px; width:340px; height:360px;"}
+[Clean with evidence]{.h}
+
+[`skimr`/`janitor`/`naniar`: decisions documented as *why*, not just *what*, so a stranger can trust them.]{.p}
+:::
+::: {.panel .card data-id="release" style="left:844px; top:220px; width:340px; height:360px;"}
+[Build Chapter 1]{.h}
+
+[Your EDA assembled into the book: captioned, cross-referenced, written for a reader.]{.p}
+:::
+
+## Your Chapter 1, committed {.light auto-animate=true background-color="#F1EEE6"}
+
+::: {.big-title data-id="title" style="left:92px; top:104px; width:1100px; font-size:44px;"}
+From a local chapter to a durable, shareable book.
+:::
+
+::: {.panel .card data-id="release" style="left:96px; top:200px; width:800px; height:400px;"}
+[Build Chapter 1: make it durable next]{.h}
+
+[Everything today lives in `01-EDA.qmd` inside your book, **versioned on git** and pushed to GitHub. In Session 3 that chapter becomes published: **uvr/uv** pins its environment and R version (and today's `{pins}` board versions its data), it's reviewed through a **pull request**, then **Posit Connect** gives it a URL. Same book, suddenly a published, reproducible portfolio.]{.p style="font-size:24px; line-height:1.6;"}
+:::
+
+::: {.panel .marker data-id="draft"  style="left:944px; top:230px;"}
+:::
+::: {.panel .marker data-id="review" style="left:944px; top:290px;"}
+:::
+
+## Next time {.dark .finale auto-animate=true background-color="#17251F"}
+
+::: {.big-title data-id="title" style="left:200px; top:300px; width:880px; font-size:56px; text-align:center;"}
+Session 3: version it, pin it, publish it.
+:::
+
+::: {.panel data-id="draft" style="left:470px; top:150px; width:110px; height:110px;"}
+:::
+::: {.panel data-id="review" style="left:590px; top:150px; width:110px; height:110px;"}
+:::
+::: {.panel data-id="release" style="left:710px; top:150px; width:110px; height:110px;"}
+:::
+
+::: {style="position:absolute; left:96px; top:600px; width:1024px; font-size:17px; color:rgba(241,238,230,0.62);"}
+Between sessions: finish `lab-2-portfolio-book.qmd` so your book builds, commit it to GitHub on your `eda-chapter-1` branch, and refine your **Chapter 1** dataset and question. Your instructor can already comment on it there; bring it ready to publish next session.
+:::
