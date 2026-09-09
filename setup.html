@@ -161,6 +161,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
     </ul>
   </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-reproducible-workflows" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Reproducible Workflows</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-reproducible-workflows">    
+        <li>
+    <a class="dropdown-item" href="./reproducible-workflows/index.html">
+ <span class="dropdown-text">Course home</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./reproducible-workflows/session-1/session-1.html">
+ <span class="dropdown-text">Session 1 · What is reproducibility?</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./reproducible-workflows/session-2/session-2.html">
+ <span class="dropdown-text">Session 2 · Data &amp; the book</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./reproducible-workflows/session-3/session-3.html">
+ <span class="dropdown-text">Session 3 · Version, pin, publish</span></a>
+  </li>  
+    </ul>
+  </li>
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -259,7 +282,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>It targets Ubuntu LTS releases (22.04 “jammy”, 24.04 “noble”, 26.04 “resolute”) on amd64, with arm64 supported on 24.04 and 26.04. It is not for other distributions.</li>
 <li>Installing via <code>bspm</code> needs <code>sudo</code>: it writes into the system R library.</li>
-<li><code>renv</code>-based projects (used later in the Reproducible Workflows course) do <em>not</em> go through <code>bspm</code>; they compile from source. So keep the build tools from the fallback below even if you use r2u.</li>
+<li>Project-pinned environments such as the <code>uvr</code> projects you build later in the Reproducible Workflows course do <em>not</em> go through <code>bspm</code>; they manage their own project-local library. So keep the build tools from the fallback below even if you use r2u.</li>
 </ul>
 <p>Set it up (condensed from the <a href="https://eddelbuettel.github.io/r2u/">official guide</a>):</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. fetch the signing key</span></span>
@@ -316,24 +339,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You should see the package startup message listing dplyr, tidyr, ggplot2, readr, purrr, tibble, stringr, forcats.</p>
 <p>By the time of the Reproducible Workflows course you will additionally want:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"janitor"</span>, <span class="st">"naniar"</span>, <span class="st">"skimr"</span>, <span class="st">"renv"</span>, <span class="st">"knitr"</span>, <span class="st">"rmarkdown"</span>, <span class="st">"pins"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>(<code>renv</code> is used for dependency pinning; <code>pins</code> for data pinning; <code>janitor</code>/<code>naniar</code>/<code>skimr</code> feed the data-cleaning and EDA labs. All of these are available as r2u binaries too, so the same plain <code>install.packages()</code> call above works unchanged on the r2u path.)</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"janitor"</span>, <span class="st">"naniar"</span>, <span class="st">"skimr"</span>, <span class="st">"palmerpenguins"</span>, <span class="st">"withr"</span>, <span class="st">"knitr"</span>, <span class="st">"rmarkdown"</span>, <span class="st">"pins"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>(<code>pins</code> for data pinning; <code>withr</code> scopes options like random-number seeds so a render is reproducible; <code>janitor</code>/<code>naniar</code>/<code>skimr</code> feed the data-cleaning and EDA labs; <code>palmerpenguins</code> ships the penguins data used by the session-1 labs. All of these are available as r2u binaries too, so the same plain <code>install.packages()</code> call above works unchanged on the r2u path. Pinning the R <em>and</em> package versions of a project is done with <code>uvr</code> (section 5.1), not installed here.)</p>
+<section id="a-managed-r-and-packages-with-uvr" class="level4">
+<h4 class="anchored" data-anchor-id="a-managed-r-and-packages-with-uvr">5.1 A managed R and packages with <code>uvr</code></h4>
+<p>For the Reproducible Workflows course you pin a <strong>whole project</strong>, not just one machine: the R version <em>and</em> every package’s version, so the project re-runs identically next year on another machine. That is what <code>uvr</code> does. It is a thin wrapper that lets R use <code>uv</code> (the same Rust project manager that drives the Python setup in sections 9–10). Install it from GitHub, then install its binary:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pak</span>(<span class="st">"nbafrank/uvr-r"</span>)   <span class="co"># the uvr companion R package</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>uvr<span class="sc">::</span><span class="fu">install_uvr</span>()           <span class="co"># installs the uvr binary (cross-platform)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Inside a project folder (<code>uvr::init()</code>), <code>uvr</code> manages a <strong>project-local</strong> R (<code>uvr::r_install("4.6.1")</code>, <code>uvr::r_pin("4.6.1")</code>) and adds packages to a manifest + lockfile with <code>uvr::add("tidyverse")</code>. So <code>uvr</code> is not only about which R version you run: it installs <strong>and</strong> pins every dependency behind a lockfile. That makes it the project-scoped alternative to the r2u / <code>install.packages()</code> / <code>pak::pak()</code> routes above. Use those to get R and packages working machine-wide; reach for <code>uvr</code> once you are inside a real project you need to reproduce.</p>
+</section>
+</section>
+<section id="version-control-with-git" class="level2">
+<h2 class="anchored" data-anchor-id="version-control-with-git">6. Version control with git</h2>
+<p>The Reproducible Workflows course versions everything with <strong>git</strong> (added in Session 2). Install it first, then set your identity:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> <span class="at">--version</span>                    <span class="co"># e.g. 2.4x.x</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Your <code>git</code> identity should match the account you use on <strong>GitHub</strong>, where your repositories will be hosted. If you do not have one yet, create a free account at <a href="https://github.com" class="uri">https://github.com</a>. Then set the same name and email you used there as your global <code>git</code> identity:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"Your Name"</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"you@example.com"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If you are already working in R, <code>usethis::use_git_config()</code> walks you through setting these same values; <code>usethis</code> is a handy companion for all the Session 2/3 git work (see <a href="https://happygitwithr.com/hello-git" class="uri">https://happygitwithr.com/hello-git</a>). You will connect your GitHub account to your machine in Session 2 (an SSH key or a credential helper). Nothing more to install.</p>
+</section>
+<section id="publishing-with-posit-connect" class="level2">
+<h2 class="anchored" data-anchor-id="publishing-with-posit-connect">7. Publishing with Posit Connect</h2>
+<p>Session 3 reports are published to <strong>Posit Connect</strong>, the server that puts your work live at a URL. There is nothing to install, but you do need an <strong>account</strong> on the server: set one up in advance, as a free-tier account is sufficient for this course. The instructor will hand out the sign-up URL in Session 3. Then you publish from inside Quarto with <code>quarto publish connect</code>.</p>
 </section>
 <section id="some-worthy-positron-extensions-optional" class="level2">
-<h2 class="anchored" data-anchor-id="some-worthy-positron-extensions-optional">6. Some worthy Positron extensions (optional)</h2>
+<h2 class="anchored" data-anchor-id="some-worthy-positron-extensions-optional">8. Some worthy Positron extensions (optional)</h2>
 <ul>
 <li><strong>Air</strong>: A Visual Studio Code extension for <a href="https://posit-dev.github.io/air/">Air</a>, an R formatter and language server, written in Rust.</li>
 <li><strong>Jarl</strong>: A Visual Studio Code extension for <a href="https://jarl.etiennebacher.com">Jarl</a>, a fast R linter.</li>
 <li><strong>Posit Assistant</strong>: An AI assistant for Positron. It uses functionality that is available only in Positron, so it will not work with other VS Code forks, like Cursor or Windsurf.</li>
 <li><strong>Pyrefly</strong>: The Pyrefly extension uses Pyrefly to provide language server features for Python in VS Code. Please see <a href="https://pyrefly.org" class="uri">https://pyrefly.org</a> for more information.</li>
 <li><strong>Quarto</strong>: A Visual Studio Code extension for the <a href="https://quarto.org">Quarto</a> scientific and technical publishing system.</li>
-<li><strong>Quarto Wizard</strong>: A Visual Studio Code extension that helps you manage your Quarto projects. It allows you to easily install Quarto extensions from the Quarto Extensions registry, GitHub repositories, URLs, or local paths.</li>
 <li><strong>Shiny</strong>: This is an extension to help launch <a href="https://shiny.posit.co">Shiny</a> applications. Shiny is a package for Python and R that is designed to make it easy to build interactive web applications with the powerful data and scientific features of Python and R.</li>
 </ul>
 <p>Some of them are pre-installed with Positron; other require opt-in installs via the <em>Extensions</em> panel.</p>
 </section>
 <section id="setup-python-optional" class="level2">
-<h2 class="anchored" data-anchor-id="setup-python-optional">7. Setup Python (optional)</h2>
+<h2 class="anchored" data-anchor-id="setup-python-optional">9. Setup Python (optional)</h2>
 <p>In Positron:</p>
 <ul>
 <li>Open the palette with the keyboard shortcut <code>CMD + SHIFT + P</code>;</li>
@@ -342,22 +384,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>More at <a href="https://opensource.posit.co/blog/2026-07-08_positron-uv/" class="uri">https://opensource.posit.co/blog/2026-07-08_positron-uv/</a></p>
 </section>
 <section id="install-python-packages-optional" class="level2">
-<h2 class="anchored" data-anchor-id="install-python-packages-optional">8. Install Python packages (optional)</h2>
+<h2 class="anchored" data-anchor-id="install-python-packages-optional">10. Install Python packages (optional)</h2>
 <p><a href="https://docs.astral.sh/uv/">uv</a> is an extremely fast Python package and project manager, written in Rust.</p>
 <p>You can easily install Python packages in dedicated virtual environments with <code>uv</code>. For example, to install the <code>pandas</code> and <code>numpy</code> packages, run in the Positron-integrated terminal:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> init example</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialized project `example` at `/home/user/example`</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> add pandas numpy</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> init example</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialized project `example` at `/home/user/example`</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> add pandas numpy</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>More details can be found on the website.</p>
 </section>
 <section id="version-checks-all-together" class="level2">
-<h2 class="anchored" data-anchor-id="version-checks-all-together">9. Version checks, all together</h2>
-<p>For these courses, we will use R and Quarto.</p>
-<p>Run in the R console:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>R.version.string</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<h2 class="anchored" data-anchor-id="version-checks-all-together">11. Version checks, all together</h2>
+<p>For these courses we will use R, Quarto and git. Check all three at once.</p>
+<p>In the R console:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>R.version.string            <span class="co"># the R version, e.g. "R version 4.6.1"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>and in a terminal:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> <span class="at">--version</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>If both report a version, you are ready. Ask the instructor for help if any step errors; resolve these at the start so the labs run smoothly.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> <span class="at">--version</span>            <span class="co"># e.g. 1.10.x</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> <span class="at">--version</span>               <span class="co"># e.g. 2.4x.x</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>(If you also set up Python with <code>uv</code> in sections 9–10, <code>uv --version</code> confirms that too.)</p>
+<p>If everything reports a version, you are ready. Ask the instructor for help if any step errors; resolve these at the start so the labs run smoothly.</p>
 
 
 </section>

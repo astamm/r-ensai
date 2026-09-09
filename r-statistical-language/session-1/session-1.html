@@ -106,7 +106,7 @@
     code span.vs { color: #abe338; } /* VerbatimString */
     code span.wa { color: #dcc6e0; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-daf1006862dd1888ff46ad68833b8b3d.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-434d7d2f728797b5df0c9d5bddde670f.css">
   <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -1406,7 +1406,7 @@ c("Hello", "World") == "Hello"
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb85"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a aria-label="1"></a><span class="fu">rnorm</span>(<span class="dv">5</span>, <span class="at">mean =</span> mu, <span class="at">sd =</span> sigma)   <span class="co"># random — values differ each run</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1]  4.5853111 -0.8454525  4.7780552  3.8350170  3.8313354</code></pre>
+<pre><code>[1] 2.978844 4.108082 1.773639 6.634199 4.357477</code></pre>
 </div>
 </div>
 </div>
@@ -1844,18 +1844,18 @@ Functions like `mean` and `+` **don't work on a list**; apply them *to each elem
 <span id="cb111-2"><a aria-label="2"></a><span class="fu">lapply</span>(my_list, <span class="at">FUN =</span> mean)   <span class="co"># returns a list</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$var1
-[1] -0.1962221
+[1] 0.06836996
 
 $var2
-[1] 0.619193
+[1] 0.3685767
 
 $var3
-[1] 0.4761905</code></pre>
+[1] 0.452381</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb113"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a aria-label="1"></a><span class="fu">sapply</span>(my_list, <span class="at">FUN =</span> mean)   <span class="co"># tries to simplify to an atomic vector</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      var1       var2       var3 
--0.1962221  0.6191930  0.4761905 </code></pre>
+0.06836996 0.36857672 0.45238095 </code></pre>
 </div>
 </div>
 </div>
@@ -2353,8 +2353,8 @@ A **tibble** *is* a data frame with friendlier defaults:
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb147"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb147-1"><a aria-label="1"></a>df[df<span class="sc">$</span>x <span class="sc">&gt;</span> <span class="dv">1</span>, ]      <span class="co"># rows where x &gt; 1  (z values vary each run)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  x y         z
-2 2 e 0.9175001
-3 3 f 0.8501642</code></pre>
+2 2 e 0.3599995
+3 3 f 0.8094811</code></pre>
 </div>
 </div>
 </div>
@@ -2392,10 +2392,10 @@ df[df$x &gt; 1, ]      # rows where x &gt; 1  (z values vary each run)
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb151"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb151-1"><a aria-label="1"></a>df[df<span class="sc">$</span>x <span class="sc">&gt;</span> <span class="dv">1</span>, ]    <span class="co"># rows where x &gt; 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
-      x y          z
-  &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt;
-1     2 e     0.0740
-2     3 f     0.308 </code></pre>
+      x y         z
+  &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;
+1     2 e     0.343
+2     3 f     0.462</code></pre>
 </div>
 </div>
 </div>
