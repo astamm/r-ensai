@@ -207,12 +207,12 @@ readr, purrr, tibble, stringr, forcats.
 By the time of the Reproducible Workflows course you will additionally want:
 
 ```r
-install.packages(c("janitor", "naniar", "skimr", "gt", "palmerpenguins", "withr", "knitr", "rmarkdown", "pins"))
+install.packages(c("janitor", "naniar", "skimr", "gt", "palmerpenguins", "withr", "knitr", "rmarkdown", "pins", "usethis", "gitcreds"))
 ```
 
 (`pins` for data pinning; `withr` scopes options like
 random-number seeds so a render is reproducible; `janitor`/`naniar`/`skimr` feed the data-cleaning and
-EDA labs; `gt` formats report tables; `palmerpenguins` ships the penguins data used by the session-1 labs. All of these are
+EDA labs; `gt` formats report tables; `palmerpenguins` ships the penguins data used by the session-1 labs; `usethis` and `gitcreds` drive the Session 2/3 git work, including the GitHub personal-access-token setup in section 6. All of these are
 available as r2u binaries too, so the same plain `install.packages()` call
 above works unchanged on the r2u path. Pinning the R *and* package versions of a project is done with
 `uvr` (section 5.1), not installed here.)
@@ -255,10 +255,14 @@ git config --global user.name "Your Name"
 git config --global user.email "you@example.com"
 ```
 
-If you are already working in R, `usethis::use_git_config()` walks you through setting these same
-values; `usethis` is a handy companion for all the Session 2/3 git work (see
-<https://happygitwithr.com/hello-git>). You will connect your GitHub account to your machine in
-Session 2 (an SSH key or a credential helper). Nothing more to install.
+If you are already working in R, [`usethis::use_git_config()`](https://usethis.r-lib.org) walks you
+through setting these same values; [`usethis`](https://usethis.r-lib.org) and `gitcreds` are handy
+companions for all the Session 2/3 git work (see <https://happygitwithr.com/hello-git>).
+
+One more step before pushing to GitHub in Session 2: give your machine a **personal access token (PAT)**.
+From the R console, run `usethis::create_github_token()` (opens GitHub's token page; copy the token),
+then `gitcreds::gitcreds_set()` (pastes it into your credentials store). `git push` and
+`usethis::use_github()` then authenticate automatically.
 
 ## 7. Publishing with Posit Connect
 

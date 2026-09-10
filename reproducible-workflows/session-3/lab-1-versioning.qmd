@@ -11,7 +11,10 @@ editor: source
 > up yet, follow [happygitwithr](https://happygitwithr.com) first; this lab
 > assumes `git` works and you have a GitHub account.
 >
-> **Tools in this lab:** git and GitHub (version control).
+> **Tools in this lab:** git and GitHub (version control), driven by [`usethis`](https://usethis.r-lib.org) and `gitcreds`.
+>
+> If you haven't yet, create and store a **PAT** first: `usethis::create_github_token()`
+> then `gitcreds::gitcreds_set()` (see the setup guide, section 6). `git push` needs it to authenticate.
 
 ## Step 0: a reminder before you start
 

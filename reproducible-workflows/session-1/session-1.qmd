@@ -152,7 +152,7 @@ Check <https://astamm.github.io/r-ensai/setup.html>
 
 **[{gt}]{.amber}**: turns a data frame into a *captioned, styled report table* inside your Quarto documents.
 
-**[git + GitHub]{.indigo}**: version control; we add this in Session 2.
+**[git + GitHub]{.indigo}**: version control, driven by [`usethis`](https://usethis.r-lib.org) and `gitcreds`; we add this in Session 2.
 
 **[uvr/uv]{.indigo}**: pins the Python (and R) dependencies behind a project, so it re-runs next year on another machine.
 

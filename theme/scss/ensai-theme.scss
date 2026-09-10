@@ -413,6 +413,19 @@ $colors: (
 .reveal .callout-desc > :last-child { margin-bottom: 0; }
 .reveal .callout-desc > p { margin: 0.25em 0; }
 .reveal .callout-desc strong { color: lighten($draft, 25%); }
+/* A .callout-desc nested *inside* a paper-card sits on the cream card, not the
+   dark slide, so flip it to the card's ink-dark colors and clear it from the
+   text above (the base rule's light-on-light styling would vanish here). */
+.reveal section.paper .paper-card .callout-desc {
+  color: $ink-dark;
+  background-color: rgba($ink-dark, 0.06);
+  border: 1px solid rgba($ink-dark, 0.18);
+  border-left-width: 6px;
+  border-left-color: $draft;
+  box-shadow: none;
+  margin-top: 1em;
+}
+.reveal section.paper .paper-card .callout-desc strong { color: $draft; }
 
 /* Hands-on {.paper} slides: the .paper-card is absolute (out of flow), so a
    trailing .callout-desc collapses to the top and overlaps the card. Pin it

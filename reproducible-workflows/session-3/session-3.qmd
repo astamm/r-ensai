@@ -49,11 +49,13 @@ Git is the time-machine around your analysis; today we make the habit rigorous e
 
 You built these reflexes in Session 2; today we sharpen them:
 
-::: {.term}
-<div class="prompt">$</div> git status                    # your compass: where am I?
-<div class="prompt">$</div> git add <file>                 # stage what you want to keep
-<div class="prompt">$</div> git commit -m "message"        # snapshot with a note
-<div class="prompt">$</div> git checkout -b <branch-name>  # never work on main
+::: {.codewindow .terminal}
+```bash
+git status                   # your compass: where am I?
+git add <file>               # stage what you want to keep
+git commit -m "message"      # snapshot with a note
+git checkout -b <branch-name>   # never work on main
+```
 :::
 
 ::: {.incremental}
@@ -62,19 +64,21 @@ You built these reflexes in Session 2; today we sharpen them:
 :::
 
 ::: {.callout-desc}
-`usethis::use_git()` and the Positron source-control pane do all of this with clicks.
+[`usethis::use_git()`](https://usethis.r-lib.org) and the Positron source-control pane do all of this with clicks.
 :::
 
 ## Keep a branch aligned with main {.inv}
 
 Before you touch a branch, fold in whatever `main` gained, so you never diverge silently:
 
-::: {.term}
-<div class="prompt">$</div> git checkout main
-<div class="prompt">$</div> git fetch --all --prune     # see remote changes
-<div class="prompt">$</div> git pull                    # bring main up to date
-<div class="prompt">$</div> git checkout <branch-name>
-<div class="prompt">$</div> git merge main              # fold main into your branch
+::: {.codewindow .terminal}
+```bash
+git checkout main
+git fetch --all --prune     # see remote changes
+git pull                    # bring main up to date
+git checkout <branch-name>
+git merge main              # fold main into your branch
+```
 :::
 
 ::: {.callout-desc}
