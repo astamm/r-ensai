@@ -106,7 +106,7 @@
     code span.vs { color: #abe338; } /* VerbatimString */
     code span.wa { color: #dcc6e0; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-1f8d87702c986ee1ebac1fd8baa48ae1.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-c8e7bbe5ff523347979294f9c7dbe7c1.css">
   <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -497,7 +497,7 @@ Over three sessions we climb from "it works on my machine" to "it's published an
 <p><strong><span class="green">Positron</span></strong>: the IDE for both R <em>and</em> Python in this course.</p>
 <p><strong><span class="amber">Quarto</span></strong>: renders R <em>or</em> Python into documents, reports, slides and books: the heart of everything we do.</p>
 <p><strong><span class="amber">{gt}</span></strong>: turns a data frame into a <em>captioned, styled report table</em> inside your Quarto documents.</p>
-<p><strong><span class="indigo">git + GitHub</span></strong>: version control; we add this in Session 2.</p>
+<p><strong><span class="indigo">git + GitHub</span></strong>: version control, driven by <a href="https://usethis.r-lib.org"><code>usethis</code></a> and <code>gitcreds</code>; we add this in Session 2.</p>
 <p><strong><span class="indigo">uvr/uv</span></strong>: pins the Python (and R) dependencies behind a project, so it re-runs next year on another machine.</p>
 <p><strong><span class="indigo">Posit Connect</span></strong>: where your published report goes live at a URL (Session 3).</p>
 </div>
@@ -515,7 +515,7 @@ Check &lt;https://astamm.github.io/r-ensai/setup.html&gt;
 
 **[{gt}]{.amber}**: turns a data frame into a *captioned, styled report table* inside your Quarto documents.
 
-**[git + GitHub]{.indigo}**: version control; we add this in Session 2.
+**[git + GitHub]{.indigo}**: version control, driven by [`usethis`](https://usethis.r-lib.org) and `gitcreds`; we add this in Session 2.
 
 **[uvr/uv]{.indigo}**: pins the Python (and R) dependencies behind a project, so it re-runs next year on another machine.
 
@@ -1130,23 +1130,23 @@ Table&nbsp;1: Mean bill length (mm) by penguin species.
 </figcaption>
 <div aria-describedby="tbl-penguins-summary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="oxfvekwzmg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#oxfvekwzmg table {
+<div id="zsxjtnfupf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#zsxjtnfupf table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#oxfvekwzmg thead, #oxfvekwzmg tbody, #oxfvekwzmg tfoot, #oxfvekwzmg tr, #oxfvekwzmg td, #oxfvekwzmg th {
+#zsxjtnfupf thead, #zsxjtnfupf tbody, #zsxjtnfupf tfoot, #zsxjtnfupf tr, #zsxjtnfupf td, #zsxjtnfupf th {
   border-style: none;
 }
 
-#oxfvekwzmg p {
+#zsxjtnfupf p {
   margin: 0;
   padding: 0;
 }
 
-#oxfvekwzmg .gt_table {
+#zsxjtnfupf .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1172,12 +1172,12 @@ Table&nbsp;1: Mean bill length (mm) by penguin species.
   border-left-color: #D5D5D5;
 }
 
-#oxfvekwzmg .gt_caption {
+#zsxjtnfupf .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#oxfvekwzmg .gt_title {
+#zsxjtnfupf .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1189,7 +1189,7 @@ Table&nbsp;1: Mean bill length (mm) by penguin species.
   border-bottom-width: 0;
 }
 
-#oxfvekwzmg .gt_subtitle {
+#zsxjtnfupf .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1201,7 +1201,7 @@ Table&nbsp;1: Mean bill length (mm) by penguin species.
   border-top-width: 0;
 }
 
-#oxfvekwzmg .gt_heading {
+#zsxjtnfupf .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1213,13 +1213,13 @@ Table&nbsp;1: Mean bill length (mm) by penguin species.
   border-right-color: #D3D3D3;
 }
 
-#oxfvekwzmg .gt_bottom_border {
+#zsxjtnfupf .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D5D5D5;
 }
 
-#oxfvekwzmg .gt_col_headings {
+#zsxjtnfupf .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D5D5D5;
@@ -1234,7 +1234,7 @@ Table&nbsp;1: Mean bill length (mm) by penguin species.
   border-right-color: #D3D3D3;
 }
 
-#oxfvekwzmg .gt_col_heading {
+#zsxjtnfupf .gt_col_heading {
   color: #FFFFFF;
   background-color: #0076BA;
   font-size: 100%;
@@ -1254,7 +1254,7 @@ Table&nbsp;1: Mean bill length (mm) by penguin species.
   overflow-x: hidden;
 }
 
-#oxfvekwzmg .gt_column_spanner_outer {
+#zsxjtnfupf .gt_column_spanner_outer {
   color: #FFFFFF;
   background-color: #0076BA;
   font-size: 100%;
@@ -1266,15 +1266,15 @@ Table&nbsp;1: Mean bill length (mm) by penguin species.
   padding-right: 4px;
 }
 
-#oxfvekwzmg .gt_column_spanner_outer:first-child {
+#zsxjtnfupf .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#oxfvekwzmg .gt_column_spanner_outer:last-child {
+#zsxjtnfupf .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#oxfvekwzmg .gt_column_spanner {
+#zsxjtnfupf .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D5D5D5;
@@ -1286,11 +1286,11 @@ Table&nbsp;1: Mean bill length (mm) by penguin species.
   width: 100%;
 }
 
-#oxfvekwzmg .gt_spanner_row {
+#zsxjtnfupf .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#oxfvekwzmg .gt_group_heading {
+#zsxjtnfupf .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1316,7 +1316,7 @@ Table&nbsp;1: Mean bill length (mm) by penguin species.
   text-align: left;
 }
 
-#oxfvekwzmg .gt_empty_group_heading {
+#zsxjtnfupf .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1331,15 +1331,15 @@ Table&nbsp;1: Mean bill length (mm) by penguin species.
   vertical-align: middle;
 }
 
-#oxfvekwzmg .gt_from_md > :first-child {
+#zsxjtnfupf .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#oxfvekwzmg .gt_from_md > :last-child {
+#zsxjtnfupf .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#oxfvekwzmg .gt_row {
+#zsxjtnfupf .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1358,7 +1358,7 @@ Table&nbsp;1: Mean bill length (mm) by penguin species.
   overflow-x: hidden;
 }
 
-#oxfvekwzmg .gt_stub {
+#zsxjtnfupf .gt_stub {
   color: #FFFFFF;
   background-color: #929292;
   font-size: 100%;
@@ -1371,7 +1371,7 @@ Table&nbsp;1: Mean bill length (mm) by penguin species.
   padding-right: 5px;
 }
 
-#oxfvekwzmg .gt_stub_row_group {
+#zsxjtnfupf .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1385,15 +1385,15 @@ Table&nbsp;1: Mean bill length (mm) by penguin species.
   vertical-align: top;
 }
 
-#oxfvekwzmg .gt_row_group_first td {
+#zsxjtnfupf .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#oxfvekwzmg .gt_row_group_first th {
+#zsxjtnfupf .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#oxfvekwzmg .gt_summary_row {
+#zsxjtnfupf .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1403,16 +1403,16 @@ Table&nbsp;1: Mean bill length (mm) by penguin species.
   padding-right: 5px;
 }
 
-#oxfvekwzmg .gt_first_summary_row {
+#zsxjtnfupf .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D5D5D5;
 }
 
-#oxfvekwzmg .gt_first_summary_row.thick {
+#zsxjtnfupf .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#oxfvekwzmg .gt_last_summary_row {
+#zsxjtnfupf .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1422,7 +1422,7 @@ Table&nbsp;1: Mean bill length (mm) by penguin species.
   border-bottom-color: #D5D5D5;
 }
 
-#oxfvekwzmg .gt_grand_summary_row {
+#zsxjtnfupf .gt_grand_summary_row {
   color: #FFFFFF;
   background-color: #0076BA;
   text-transform: inherit;
@@ -1432,7 +1432,7 @@ Table&nbsp;1: Mean bill length (mm) by penguin species.
   padding-right: 5px;
 }
 
-#oxfvekwzmg .gt_first_grand_summary_row {
+#zsxjtnfupf .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1442,7 +1442,7 @@ Table&nbsp;1: Mean bill length (mm) by penguin species.
   border-top-color: #D5D5D5;
 }
 
-#oxfvekwzmg .gt_last_grand_summary_row_top {
+#zsxjtnfupf .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1452,11 +1452,11 @@ Table&nbsp;1: Mean bill length (mm) by penguin species.
   border-bottom-color: #D5D5D5;
 }
 
-#oxfvekwzmg .gt_striped {
+#zsxjtnfupf .gt_striped {
   background-color: #F4F4F4;
 }
 
-#oxfvekwzmg .gt_table_body {
+#zsxjtnfupf .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D5D5D5;
@@ -1465,7 +1465,7 @@ Table&nbsp;1: Mean bill length (mm) by penguin species.
   border-bottom-color: #D5D5D5;
 }
 
-#oxfvekwzmg .gt_footnotes {
+#zsxjtnfupf .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1479,7 +1479,7 @@ Table&nbsp;1: Mean bill length (mm) by penguin species.
   border-right-color: #D3D3D3;
 }
 
-#oxfvekwzmg .gt_footnote {
+#zsxjtnfupf .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1488,7 +1488,7 @@ Table&nbsp;1: Mean bill length (mm) by penguin species.
   padding-right: 5px;
 }
 
-#oxfvekwzmg .gt_sourcenotes {
+#zsxjtnfupf .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1502,7 +1502,7 @@ Table&nbsp;1: Mean bill length (mm) by penguin species.
   border-right-color: #D3D3D3;
 }
 
-#oxfvekwzmg .gt_sourcenote {
+#zsxjtnfupf .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1510,72 +1510,72 @@ Table&nbsp;1: Mean bill length (mm) by penguin species.
   padding-right: 5px;
 }
 
-#oxfvekwzmg .gt_left {
+#zsxjtnfupf .gt_left {
   text-align: left;
 }
 
-#oxfvekwzmg .gt_center {
+#zsxjtnfupf .gt_center {
   text-align: center;
 }
 
-#oxfvekwzmg .gt_right {
+#zsxjtnfupf .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#oxfvekwzmg .gt_font_normal {
+#zsxjtnfupf .gt_font_normal {
   font-weight: normal;
 }
 
-#oxfvekwzmg .gt_font_bold {
+#zsxjtnfupf .gt_font_bold {
   font-weight: bold;
 }
 
-#oxfvekwzmg .gt_font_italic {
+#zsxjtnfupf .gt_font_italic {
   font-style: italic;
 }
 
-#oxfvekwzmg .gt_super {
+#zsxjtnfupf .gt_super {
   font-size: 65%;
 }
 
-#oxfvekwzmg .gt_footnote_marks {
+#zsxjtnfupf .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#oxfvekwzmg .gt_asterisk {
+#zsxjtnfupf .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#oxfvekwzmg .gt_indent_1 {
+#zsxjtnfupf .gt_indent_1 {
   text-indent: 5px;
 }
 
-#oxfvekwzmg .gt_indent_2 {
+#zsxjtnfupf .gt_indent_2 {
   text-indent: 10px;
 }
 
-#oxfvekwzmg .gt_indent_3 {
+#zsxjtnfupf .gt_indent_3 {
   text-indent: 15px;
 }
 
-#oxfvekwzmg .gt_indent_4 {
+#zsxjtnfupf .gt_indent_4 {
   text-indent: 20px;
 }
 
-#oxfvekwzmg .gt_indent_5 {
+#zsxjtnfupf .gt_indent_5 {
   text-indent: 25px;
 }
 
-#oxfvekwzmg .katex-display {
+#zsxjtnfupf .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#oxfvekwzmg div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#zsxjtnfupf div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
