@@ -22,13 +22,13 @@ penguins <- palmerpenguins::penguins   # penguins sourced from CRAN, not a local
 
 Last session you learned the document mechanics; today we fill them with real work.
 
-::: {.incremental}
+::: {.incremental .highlight-last}
 - Session 1: **write**, Quarto documents, structured reports, transparency.
 - Session 2 (today): **source**, get a real dataset, clean it, **version it with git**, land your analysis inside the **portfolio book**, and pick your Chapter-1 dataset.
 - Session 3: **publish**, pin the environment (uvr), deepen git (PRs, review), put it at a URL, and finish Chapter 1.
 :::
 
-::: {.callout-desc}
+::: {.callout-desc .fragment}
 Today's payoff: Chapter 1 (the EDA project) of your portfolio book becomes real. Let's trace the *reproducible* data journey end to end.
 :::
 
@@ -51,13 +51,13 @@ EDA is *iterative*: you circle through 1–3 several times before any formal mod
 
 Your IDE is part of the reproducible loop. In Positron:
 
-::: {.incremental}
+::: {.incremental .highlight-last}
 - **Data pane / variable explorer**: inspect loaded tables and objects without typing.
 - **Inline plots**: plots render in the IDE as you iterate.
 - But: the *IDE* is for exploring; the *document* is the record. Anything you discover by clicking must end up as **code in a `.qmd`** to be reproducible.
 :::
 
-::: {.callout-desc}
+::: {.callout-desc .fragment}
 Rule: **explore by clicking, report by code.** The click is fast; the code is what makes it reproducible.
 :::
 
@@ -65,66 +65,134 @@ Rule: **explore by clicking, report by code.** The click is fast; the code is wh
 
 A whole data set summarized in one call, the fastest honest "first look":
 
+::: {.codewindow .r name="skim.R"}
+
 ```{r}
 #| label: skim
 #| message: false
-skim(penguins) |> summary()
+#| echo: true
+#| output-location: column
+penguins |> 
+  skimr::skim() |> 
+  summary()
 ```
+
+:::
 
 ::: {.callout-desc}
 `skim()` shows type, `n_missing`, and mini-distributions per column in one go (here compacted with `|> summary()`). When someone asks "what's in this data?", `skim()` first.
 :::
 
+<div class="paper-adv">
+<button type="button" class="paper-adv-btn">See the full `skim()` output</button>
+<div class="paper-adv-backdrop" hidden></div>
+<div class="paper-adv-modal" hidden>
+<div class="paper-adv-head"><strong>Full `skim()` output</strong><button type="button" class="paper-adv-close" aria-label="Close">&times;</button></div>
+<div class="adv-body">
+<p>The unabridged per-column summary, in its usual wide form:</p>
+```{r}
+#| label: skim-full
+#| message: false
+#| echo: false
+penguins |> 
+  skimr::skim()
+```
+</div>
+</div>
+</div>
+
 ## Cleaning names & counting: `{janitor}` {.inv}
 
 Real-world data arrives with messy names and labels. `{janitor}` tidies them:
 
-```{r} 
+::: {.codewindow}
+
+::: {.editor .r name="janitor-clean.R"}
+```r
+penguins |>
+  janitor::clean_names() |>        # lower-case, underscores, no spaces
+  dplyr::slice(1:3) |> 
+  gt::gt() |> 
+  gt::opt_stylize(style = 4)
+```
+:::
+
+::: {.editor .r .fragment name="janitor-tabyl.R"}
+```r
+penguins |>
+  janitor::tabyl(species) |>          # a nicer table() for one variable
+  gt::gt() |> 
+  gt::opt_stylize(style = 4)
+```
+:::
+
+:::
+
+<div class="paper-adv">
+<button type="button" class="paper-adv-btn">See the rendered `{janitor}` tables</button>
+<div class="paper-adv-backdrop" hidden></div>
+<div class="paper-adv-modal" hidden>
+<div class="paper-adv-head"><strong>Rendered `{janitor}` tables</strong><button type="button" class="paper-adv-close" aria-label="Close">&times;</button></div>
+<div class="adv-body">
+```{r}
 #| label: janitor-clean
 #| message: false
+#| echo: false
 penguins |>
-  clean_names() |>        # lower-case, underscores, no spaces
-  names() |>
-  head(8)
+  janitor::clean_names() |>        # lower-case, underscores, no spaces
+  dplyr::slice(1:3) |> 
+  gt::gt() |> 
+  gt::opt_stylize(style = 4)
 ```
 
-```{r} 
+```{r}
 #| label: janitor-tabyl
 #| message: false
+#| echo: false
 penguins |>
-  tabyl(species)          # a nicer table() for one variable
+  janitor::tabyl(species) |>          # a nicer table() for one variable
+  gt::gt() |> 
+  gt::opt_stylize(style = 4)
 ```
+</div>
+</div>
+</div>
 
-::: {.callout-desc}
+::: {.callout-desc .fragment}
 `clean_names()` makes column names *syntactic* (safe to reference); `tabyl()` gives counts with percentages. Both make downstream code far more readable.
 :::
 
 ## Seeing missingness: `{naniar}` {.inv}
 
-Missing data is not an afterthought: it's often the most important thing about a data set. `{naniar}` makes it visible:
+Missing data is not an afterthought: it's often the most important thing about a data set. `{naniar}` makes it visible as in @fig-vis-miss:
 
+::: {.codewindow .r name="naniar.R"}
 ```{r}
-#| label: vis-miss
+#| label: fig-vis-miss
 #| fig-cap: "Where is the penguins data missing, and how much?"
 #| fig-width: 8
-#| fig-height: 5
-vis_miss(penguins)
+#| fig-height: 3.5
+#| echo: true
+#| output-location: column
+#| lightbox: true
+naniar::vis_miss(penguins)
 ```
+:::
 
 ::: {.callout-desc}
-`vis_miss()` draws the whole data set as a grid, missing cells in dark. `gg_miss_var()` plots missingness *per column*. Use them to decide *why* data is missing, and whether your analysis needs to care.
+`vis_miss()` grids the data set, missing cells in dark; `gg_miss_var()` plots missingness *per column*.
 :::
 
 ## Tying it to Session 1 {.inv}
 
 This is the same cleaning conversation you started in the base-R course with `penguins_messy.txt`:
 
-::: {.incremental}
+::: {.incremental .highlight-last}
 - There you fixed wrong **types** (`readr` guessing), separators, and missing values by hand.
 - Today the **decisions** are the point: `janitor`, `naniar`, `skimr` don't *make* them for you; they *surface* them faster so you can decide well and record why.
 :::
 
-::: {.callout-desc}
+::: {.callout-desc .fragment}
 The toolkit changed; the habit didn't: **inspect → decide → document.** Every decision you can justify in a sentence is a reproducible decision.
 :::
 
@@ -136,8 +204,9 @@ Run this on the `penguins` data (loaded at the top), or a data frame of your own
 1. `skim(penguins)`: which columns have missing values? How many?
 2. `penguins |> clean_names() |> names()`: do names need cleaning?
 3. `penguins |> tabyl(species)`: what are the group sizes?
-4. `vis_miss(penguins)`: where is the missingness concentrated?
-5. Write one sentence: **"I will handle the missingness by … because …"**, that sentence is your reproducible cleaning decision.
+4. `penguins |> tabyl(species) |> gt::gt() |> gt::opt_stylize(style = 4)`: present those counts as a styled table (the `{gt}` you met in Session 1).
+5. `vis_miss(penguins)`: where is the missingness concentrated?
+6. Write one sentence: **"I will handle the missingness by … because …"**, that sentence is your reproducible cleaning decision.
 :::
 
 <div class="paper-adv">
@@ -157,19 +226,19 @@ Run this on the `penguins` data (loaded at the top), or a data frame of your own
 
 A reproducible analysis needs data it can **re-fetch by code**, and open-data portals everywhere provide exactly that:
 
-::: {.incremental}
+::: {.incremental .highlight-last}
 - **France**: [data.gouv.fr](https://www.data.gouv.fr), thousands of public datasets, **license-aware**.
 - **Your own country**: nearly every government runs an official open-data portal (data.gov… for the US, Canada, UK, Germany, and many more).
 - **The rule is the same wherever you look**: a dataset you can fetch *programmatically* is a dataset your analysis can re-produce.
 :::
 
-::: {.callout-desc}
+::: {.callout-desc .fragment}
 The reproducible move: don't *download* a dataset by hand; write code that *sources* it, so the analysis is re-runnable and the provenance (publisher + URL) is in the document.
 :::
 
-## `{rdatagouv}`: the French portal from R (an option) {.inv}
+## [{rdatagouv}](https://astamm.github.io/rdatagouv/): the French portal from R (an option) {.inv}
 
-Because we teach from l'ENSAI, **data.gouv.fr** is a natural default. `{rdatagouv}` (maintained by your instructor) wraps it:
+Because we teach from l'ENSAI, **data.gouv.fr** is a natural default. [{rdatagouv}](https://astamm.github.io/rdatagouv/) (maintained by your instructor) wraps it:
 
 ```{r}
 #| label: rdatagouv
@@ -183,7 +252,7 @@ dataset$resources
 ```
 
 ::: {.callout-desc}
-`{rdatagouv}` is an *option, not a requirement*: use it if you pick data.gouv.fr. Any portal you can query with a URL (e.g. `download.file()`) works just as well for reproducibility.
+[{rdatagouv}](https://astamm.github.io/rdatagouv/) is an *option, not a requirement*: use it if you pick data.gouv.fr. Any portal you can query with a URL (e.g. `download.file()`) works just as well for reproducibility.
 :::
 
 ## Fetching any portal by URL {.inv}
@@ -197,14 +266,14 @@ url <- "https://…/my-open-dataset.csv"   # any open-data portal, any country
 download.file(url, "data/my-data.csv")   # a RE-RUNNABLE line of code
 ```
 
-::: {.incremental}
+::: {.incremental .highlight-last}
 - **`download.file()` is portal-agnostic**: it doesn't care whether the URL points at data.gouv.fr or your home country's portal.
 - Pair it with a **provenance sentence** (dataset, publisher, URL, license) so a reader can *find* and *trust* the source.
-- Some portals ship an R/Python client (`{rdatagouv}` here): a convenience, never a requirement.
+- Some portals ship an R/Python client ([{rdatagouv}](https://astamm.github.io/rdatagouv/) here): a convenience, never a requirement.
 :::
 
-::: {.callout-desc}
-**Live block (≈10 min).** Together: `search_datasets("climat")` *and* browse one non-French portal (e.g. your home country's). Both approaches collapse to the same thing: a URL to download by code.
+::: {.callout-desc .fragment}
+**Live block (≈10 min).** Together: `rdatagouv::dg_find_datasets(q = "climat", schema_only = TRUE)` *and* browse one non-French portal (e.g. your home country's). Both approaches collapse to the same thing: a URL to download by code.
 :::
 
 ## Contributing back {.inv}
@@ -243,41 +312,42 @@ Improving the data others (and your future self) rely on is itself a reproducibi
 </div>
 </div>
 
-# Versioning your data with {pins}
+# Versioning your data with [{pins}](https://pins.rstudio.com)
 
 ## The (dis)appearing data problem {.inv}
 
 Last session you met "the (dis)appearing data": a fetched file can *change* or *vanish* the moment it's off the portal:
 
-::: {.incremental}
+::: {.incremental .highlight-last}
 - A portal updates a dataset: your analysis was based on the **old version**.
 - A raw URL 404s a year later, and your "reproducible" document can't re-run.
 - Even locally, `data/my-data.csv` can be overwritten, and git alone doesn't version the *cached* copy well if you don't commit it.
 :::
 
-::: {.callout-desc}
-`{pins}` closes that gap: **version your data** the way git versions your code, so a re-render gets the *same* data a reader expects, not whatever is live today.
+::: {.callout-desc .fragment}
+[{pins}](https://pins.rstudio.com) closes that gap: **version your data** the way git versions your code, so a re-render gets the *same* data a reader expects, not whatever is live today.
 :::
 
-## `{pins}`: pin data to a versioned board {.inv}
+## [{pins}](https://pins.rstudio.com): pin data to a versioned board {.inv}
 
-`{pins}` stores a data object on a **board** and records **who wrote what, when**:
+[{pins}](https://pins.rstudio.com) stores a data object on a **board** and records **who wrote what, when**:
 
+::: {.codewindow .r name="pins.R"}
 ```{r}
 #| label: pins-setup
 #| eval: false
-library(pins)
-
+#| echo: true
 # a folder board that KEEPS HISTORY (versioned = TRUE)
-board <- board_folder("pins/", versioned = TRUE)
+bd <- pins::board_folder(path = "pins/", versioned = TRUE)
 
 # fetch open data once, then pin it:
-dat <- read_csv("https://…/my-open-dataset.csv")
-pin_write(board, dat, "my-dataset")        # snapshot it, versioned & hashed
+dat <- readr::read_csv("https://…/my-open-dataset.csv")
+pins::pin_write(board = bd, x = dat, name = "my-dataset")        # snapshot it, versioned & hashed
 
 # later re-reads get the PINNED copy, reproducibly:
-pin_read(board, "my-dataset")
+pins::pin_read(board = bd, name = "my-dataset")
 ```
+:::
 
 ::: {.callout-desc}
 `pin_write()` snapshots the data and records the **version + hash**; `pin_read()` returns that exact snapshot. Re-render → same data, every time.
@@ -287,13 +357,13 @@ pin_read(board, "my-dataset")
 
 A board is just a folder (or a service), and it's fully inspectable:
 
-::: {.incremental}
+::: {.incremental .spread}
 - `pin_list(board)`: what's been pinned.
 - `pin_versions(board, "my-dataset")`: every snapshot, with hashes and dates.
 - `pin_read(board, "my-dataset", version = "…")`: roll back to an older snapshot.
 :::
 
-::: {.callout-desc}
+::: {.callout-desc .fragment}
 The pinned `pins/` folder is committed alongside your code, so the *exact data* your analysis used is reproducible forever, independent of portal changes or broken URLs.
 :::
 
@@ -301,13 +371,13 @@ The pinned `pins/` folder is committed alongside your code, so the *exact data* 
 
 A reproducible data workflow in three deliberate steps:
 
-::: {.incremental}
+::: {.incremental .spread}
 1. **Fetch** the open data by URL: provenance recorded.
 2. **Pin** it with `pin_write()`: versioned & hashed on a local board.
 3. **Analyse from the pinned copy** (`pin_read()`): stable no matter what happens upstream.
 :::
 
-::: {.callout-desc}
+::: {.callout-desc .fragment}
 Pinning keeps you honest: the *data* you analysed is on record, not just the *code*. Combined with git (code), renv/uv (environment) and a URL (delivery), it completes the durable portfolio you build in Session 3.
 :::
 
@@ -316,12 +386,15 @@ Pinning keeps you honest: the *data* you analysed is on record, not just the *co
 The same "pin what you made" idea extends to the *models* you fit, not just the data:
 
 ::: {.incremental}
-- **[`{vetiver}`](https://rstudio.github.io/vetiver-r/)**: pins a **model** to a board, so the exact trained model is deployed or re-loaded, versioned & reproducible like your data.
-- It pairs with `pin_write()`/`pin_read()`: you already know the mechanics; vetiver just knows how to save/load a model's metadata too.
-- Same habit, new object: **data → `{pins}` · model → `{vetiver}` · code → git · environment → renv/uv**.
+- **[{vetiver}](https://rstudio.github.io/vetiver-r/)**: pins a **model** to a board, so the exact trained model is deployed or re-loaded, versioned & reproducible like your data.
+- It pairs with `pin_write()`/`pin_read()`: you already know the mechanics; [{vetiver}](https://rstudio.github.io/vetiver-r/) just knows how to save/load a model's metadata too.
 :::
 
-::: {.callout-desc}
+::: {.callout-tip .fragment title="Same habit, new object"}
+data → [{pins}](https://pins.rstudio.com), model → [{vetiver}](https://rstudio.github.io/vetiver-r/articles/vetiver.html), code → [GitHub](https://github.com), environment → [uv](https://docs.astral.sh/uv/) /[uvr](https://nbafrank.github.io/uvr/)
+:::
+
+::: {.callout-desc .fragment}
 Saving a trained model by hand usually loses which packages/versions made it. `{vetiver}` records those alongside the model, so it re-runs and re-deploys anywhere.
 :::
 

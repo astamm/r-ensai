@@ -30,7 +30,7 @@ synopsis <- data.frame(
     "9 hrs (ENSAI)",
     "~2–3 hrs per session: completing the `lab-*.qmd` documents and growing your personal **portfolio book** across the term.",
     "English",
-    "Quarto, R + Python (via uv / uvr), and the packages `{janitor}`, `{naniar}`, `{skimr}`, `{palmerpenguins}`, `{withr}`, `{pins}`, `{vetiver}`, `{rdatagouv}` (optional); plus git / GitHub, `uvr` (and `renv` as a baseline), Posit Connect and the *data.gouv.fr* open-data portal.",
+    "Quarto, R + Python (via uv / uvr), and the packages `{janitor}`, `{naniar}`, `{skimr}`, `{gt}`, `{palmerpenguins}`, `{withr}`, `{pins}`, `{vetiver}`, `{rdatagouv}` (optional); plus git / GitHub, `uvr` (and `renv` as a baseline), Posit Connect and the *data.gouv.fr* open-data portal.",
     "Per-session [slide decks](#subjects-covered) and matching `lab-*.qmd` documents, a starter **portfolio-book** zip, all downloadable below; the penguins data is sourced directly from the `{palmerpenguins}` package (a pinned CRAN dependency), not shipped as a file."
   )
 )
@@ -67,7 +67,7 @@ subjects <- data.frame(
   ),
   description = c(
     "The reproducibility spectrum and what breaks it; setting up R, Quarto, Positron (and Python via uv); **Quarto documents** (YAML, code cells, `qmd` vs `rmd`); structured reporting: literate programming, captions, cross-references; the portfolio-book end goal.",
-    "**EDA & cleaning** with `{skimr}`, `{janitor}`, `{naniar}`; **sourcing open data** from *data.gouv.fr* (and any portal, by code); **versioning data** with `{pins}` (and briefly models, with `{vetiver}`); **versioning code with git** (`usethis`, the commit loop, a remote, branches); **Quarto books**; writing for an audience.",
+    "**EDA & cleaning** with `{skimr}`, `{janitor}`, `{naniar}` and **report tables** with `{gt}`; **sourcing open data** from *data.gouv.fr* (and any portal, by code); **versioning data** with `{pins}` (and briefly models, with `{vetiver}`); **versioning code with git** (`usethis`, the commit loop, a remote, branches); **Quarto books**; writing for an audience.",
     "**git deepen** (branch alignment, conflicts, pull requests & review); **dependency management** with `uvr`/`uv` (and `renv` as a baseline, lockfiles); **`{withr}`** for reproducible randomness; **publishing to Posit Connect**; reproducible habit, the portfolio rubric, and a long session to finish your Chapter 1 with peer review."
   ),
   lab = c(

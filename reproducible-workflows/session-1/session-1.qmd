@@ -134,14 +134,14 @@ Over three sessions we climb from "it works on my machine" to "it's published an
 :::
 
 ::: {.callout-desc .fragment}
-**By the end you'll have a published, versioned, reproducible portfolio**: and the habit of making every future analysis reproducible by default.
+**By the end you'll have a published, versioned, reproducible portfolio**: and the habit of making every future analysis reproducible by default. Projects in other courses slot into the same book, so your portfolio grows over time.
 :::
 
 # Setting up your environment
 
 ## Your toolbox {.inv}
 
-One overarching language (R) plus a small publishing/versioning stack:
+Check <https://astamm.github.io/r-ensai/setup.html>
 
 ::: {.spread .spread-md .spread-evenly}
 **[R]{.green}**: the language. Installed from CRAN.
@@ -150,29 +150,13 @@ One overarching language (R) plus a small publishing/versioning stack:
 
 **[Quarto]{.amber}**: renders R *or* Python into documents, reports, slides and books: the heart of everything we do.
 
+**[{gt}]{.amber}**: turns a data frame into a *captioned, styled report table* inside your Quarto documents.
+
 **[git + GitHub]{.indigo}**: version control; we add this in Session 2.
 
 **[uvr/uv]{.indigo}**: pins the Python (and R) dependencies behind a project, so it re-runs next year on another machine.
 
 **[Posit Connect]{.indigo}**: where your published report goes live at a URL (Session 3).
-:::
-
-## Create a Quarto document {.inv}
-
-The simplest way in Positron: **New → New File… → Quarto document**.
-
-::: .spread-cap
-A blank `.qmd` opens. Press **Preview** (or Cmd/Ctrl+Shift+K) to render; edit a heading (a line starting with `##`) and the output updates. Most-used Markdown:
-:::
-
-- `#/##/###` headings, `**bold**`, `*italic*`, `- ` bullets, `[t](u)` links
-
-::: {.callout-desc}
-**Live block (≈15 min).** Together: create a document, render it, and open source (`.qmd`) and preview side by side. See [Markdown basics](https://quarto.org/docs/authoring/markdown-basics.html) for headings, emphasis and lists.
-:::
-
-::: {.callout-desc .fragment}
-**Your turn (lab 1, steps 0–1, ≈10 min).** Create and render your own document, then write one short prose paragraph about yourself (a heading, a bold or italic word, a bullet list). Download `lab-1-first-doc.qmd` from the course home page; steps 2–5 come later.
 :::
 
 ## Verify your install {.inv}
@@ -224,6 +208,24 @@ my-project/
 
 ::: {.callout-desc .fragment}
 Thinking in projects, not loose files, is the first reproducibility habit: it makes your work portable, and it's the container everything else (git, uvr, publishing) builds on.
+:::
+
+## Create a Quarto document {.inv}
+
+The simplest way in Positron: **New → New File… → Quarto document**.
+
+::: .spread-cap
+A blank `.qmd` opens. Press **Preview** (or Cmd/Ctrl+Shift+K) to render; edit a heading (a line starting with `##`) and the output updates. Most-used Markdown:
+:::
+
+- `#/##/###` headings, `**bold**`, `*italic*`, `- ` bullets, `[t](u)` links
+
+::: {.callout-desc}
+**Live block (≈15 min).** Together: create a document, render it, and open source (`.qmd`) and preview side by side. See [Markdown basics](https://quarto.org/docs/authoring/markdown-basics.html) for headings, emphasis and lists.
+:::
+
+::: {.callout-desc .fragment}
+**Your turn (lab 1, steps 0–1, ≈10 min).** Create and render your own document, then write one short prose paragraph about yourself (a heading, a bold or italic word, a bullet list). Download `lab-1-first-doc.qmd` from the course home page; steps 2–5 come later.
 :::
 
 # Quarto documents
@@ -388,29 +390,81 @@ A reproducible report is a *document*, not a dump of output. Structure it:
 
 ## Captions & cross-references {.inv}
 
-Quarto numbers and links your figures and tables automatically. This boxplot is a *live* captioned figure (`#| label: fig-iris` and `#| fig-cap: "..."`):
+Quarto numbers and links your figures automatically. This boxplot is a *live* captioned figure:
 
-::: {.split-2}
-
-```{r}
-#| label: fig-iris
-#| fig-cap: "Sepal length across iris species."
-ggplot(iris, aes(Species, Sepal.Length)) + geom_boxplot(fill = "#2E7D6B")
+::: {.codewindow .r name="penguins-box.R"}
+```r
+#| label: fig-penguins
+#| fig-cap: "Bill length across penguin species."
+ggplot(palmerpenguins::penguins, aes(species, bill_length_mm)) +
+  geom_boxplot(fill = "#2E7D6B")
 ```
-
-::: {}
-Now refer to it in prose with `@fig-iris`:
-
-> **@fig-iris** shows that setosa sepals are the shortest.
-
-Re-render this deck (or watch the number) and the cross-reference resolves automatically.
 :::
 
-:::
+<div class="paper-adv">
+<button type="button" class="paper-adv-btn">See the rendered figure</button>
+<div class="paper-adv-backdrop" hidden></div>
+<div class="paper-adv-modal" hidden>
+<div class="paper-adv-head"><strong>Rendered figure</strong><button type="button" class="paper-adv-close" aria-label="Close">&times;</button></div>
+<div class="adv-body">
+```{r}
+#| label: fig-penguins
+#| fig-cap: "Bill length across penguin species."
+#| echo: false
+ggplot(palmerpenguins::penguins, aes(species, bill_length_mm)) +
+  geom_boxplot(fill = "#2E7D6B")
+```
+</div>
+</div>
+</div>
+
+Refer to it in prose with `@fig-penguins`:
+
+> **@fig-penguins** shows that Adelie penguins have the shortest bills.
 
 ::: {.callout-desc}
-`@fig-…` / `@tbl-…` are **cross-references**: the number updates automatically if you move figures around. Every good report reads like a conversation with its own figures.
+`@fig-...` is a **cross-reference**: the number updates automatically if you move figures around. Every good report reads like a conversation with its own figures.
 :::
+
+## Nice tables with [{gt}](https://gt.rstudio.com) {.inv}
+
+Markdown tables are plain; [{gt}](https://gt.rstudio.com) turns a data frame into a *styled, captioned report table*:
+
+::: {.codewindow .r name="penguins-gt.R"}
+```r
+#| label: tbl-penguins-summary
+#| tbl-cap: "Mean bill length (mm) by penguin species."
+penguins |>
+  dplyr::group_by(species) |>
+  dplyr::summarise(mean_bill = mean(bill_length_mm, na.rm = TRUE)) |>
+  gt::gt() |>
+  gt::opt_stylize(style = 4)
+```
+:::
+
+<div class="paper-adv">
+<button type="button" class="paper-adv-btn">See the rendered `{gt}` table</button>
+<div class="paper-adv-backdrop" hidden></div>
+<div class="paper-adv-modal" hidden>
+<div class="paper-adv-head"><strong>Rendered `{gt}` table</strong><button type="button" class="paper-adv-close" aria-label="Close">&times;</button></div>
+<div class="adv-body">
+```{r}
+#| label: tbl-penguins-summary
+#| tbl-cap: "Mean bill length (mm) by penguin species."
+#| echo: false
+palmerpenguins::penguins |>
+  dplyr::group_by(species) |>
+  dplyr::summarise(mean_bill = mean(bill_length_mm, na.rm = TRUE)) |>
+  gt::gt() |>
+  gt::opt_stylize(style = 4)
+```
+</div>
+</div>
+</div>
+
+Refer to it in prose like any figure, with `@tbl-penguins-summary`:
+
+> **@tbl-penguins-summary** is a `gt()` table, captioned with `#| tbl-cap`.
 
 ## Your turn: finish lab 1 {.paper}
 

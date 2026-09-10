@@ -14,7 +14,7 @@ editor: source
 > something you'd be proud to show all term.
 >
 > **Tools in this lab:** an open-data portal of your choice, plus the `{dplyr}`,
-> `{ggplot2}`, `{janitor}`, `{naniar}`, `{skimr}` packages (see Step 0).
+> `{ggplot2}`, `{janitor}`, `{naniar}`, `{skimr}`, `{gt}` packages (see Step 0).
 
 ## Step 0: know the packages
 
@@ -26,6 +26,7 @@ library(ggplot2)     # plots
 library(janitor)     # clean_names(), tabyl()
 library(naniar)      # vis_miss(), gg_miss_var()
 library(skimr)       # skim()
+library(gt)          # report tables
 ```
 
 The **only portal-specific bit** is how you *fetch* the data. Two options;

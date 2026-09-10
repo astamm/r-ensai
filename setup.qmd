@@ -207,12 +207,12 @@ readr, purrr, tibble, stringr, forcats.
 By the time of the Reproducible Workflows course you will additionally want:
 
 ```r
-install.packages(c("janitor", "naniar", "skimr", "palmerpenguins", "withr", "knitr", "rmarkdown", "pins"))
+install.packages(c("janitor", "naniar", "skimr", "gt", "palmerpenguins", "withr", "knitr", "rmarkdown", "pins"))
 ```
 
 (`pins` for data pinning; `withr` scopes options like
 random-number seeds so a render is reproducible; `janitor`/`naniar`/`skimr` feed the data-cleaning and
-EDA labs; `palmerpenguins` ships the penguins data used by the session-1 labs. All of these are
+EDA labs; `gt` formats report tables; `palmerpenguins` ships the penguins data used by the session-1 labs. All of these are
 available as r2u binaries too, so the same plain `install.packages()` call
 above works unchanged on the r2u path. Pinning the R *and* package versions of a project is done with
 `uvr` (section 5.1), not installed here.)
