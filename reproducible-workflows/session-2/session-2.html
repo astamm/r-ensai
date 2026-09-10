@@ -11,7 +11,10 @@
 <script src="../../site_libs/quarto-contrib/roughnotation-init-1.0.0/rough.js"></script>
 <link href="../../site_libs/quarto-contrib/roughnotation-init-1.0.0/rough.css" rel="stylesheet">
 <script src="../../site_libs/quarto-contrib/roughnotation-flourish-bridge-1.0.0/flourish-bridge.js"></script>
-<script src="../../site_libs/quarto-contrib/revealjs-zoom-vp-0.2.0/zoom-vp.js"></script><meta charset="utf-8">
+<script src="../../site_libs/quarto-contrib/revealjs-zoom-vp-0.2.0/zoom-vp.js"></script>
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="A. Stamm">
@@ -106,7 +109,7 @@
     code span.vs { color: #abe338; } /* VerbatimString */
     code span.wa { color: #dcc6e0; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-434d7d2f728797b5df0c9d5bddde670f.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-1f8d87702c986ee1ebac1fd8baa48ae1.css">
   <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -230,12 +233,14 @@ A. Stamm <a href="https://orcid.org/0000-0002-8725-3654" class="quarto-title-aut
 <section id="where-we-are" class="slide level2 inv" data-number="1.1">
 <h2><span class="header-section-number">1.1</span> Where we are</h2>
 <p>Last session you learned the document mechanics; today we fill them with real work.</p>
+<div class="highlight-last">
 <ul>
 <li class="fragment">Session 1: <strong>write</strong>, Quarto documents, structured reports, transparency.</li>
 <li class="fragment">Session 2 (today): <strong>source</strong>, get a real dataset, clean it, <strong>version it with git</strong>, land your analysis inside the <strong>portfolio book</strong>, and pick your Chapter-1 dataset.</li>
 <li class="fragment">Session 3: <strong>publish</strong>, pin the environment (uvr), deepen git (PRs, review), put it at a URL, and finish Chapter 1.</li>
 </ul>
-<div class="callout-desc">
+</div>
+<div class="callout-desc fragment">
 <p>Today’s payoff: Chapter 1 (the EDA project) of your portfolio book becomes real. Let’s trace the <em>reproducible</em> data journey end to end.</p>
 </div>
 <div class="code-pop">
@@ -243,13 +248,13 @@ A. Stamm <a href="https://orcid.org/0000-0002-8725-3654" class="quarto-title-aut
 
 Last session you learned the document mechanics; today we fill them with real work.
 
-::: {.incremental}
+::: {.incremental .highlight-last}
 - Session 1: **write**, Quarto documents, structured reports, transparency.
 - Session 2 (today): **source**, get a real dataset, clean it, **version it with git**, land your analysis inside the **portfolio book**, and pick your Chapter-1 dataset.
 - Session 3: **publish**, pin the environment (uvr), deepen git (PRs, review), put it at a URL, and finish Chapter 1.
 :::
 
-::: {.callout-desc}
+::: {.callout-desc .fragment}
 Today's payoff: Chapter 1 (the EDA project) of your portfolio book becomes real. Let's trace the *reproducible* data journey end to end.
 :::
 </code></pre></div></details>
@@ -291,12 +296,14 @@ EDA is *iterative*: you circle through 1–3 several times before any formal mod
 <section id="the-environment-at-a-glance" class="slide level2 inv" data-number="2.2">
 <h2><span class="header-section-number">2.2</span> The environment at a glance</h2>
 <p>Your IDE is part of the reproducible loop. In Positron:</p>
+<div class="highlight-last">
 <ul>
 <li class="fragment"><strong>Data pane / variable explorer</strong>: inspect loaded tables and objects without typing.</li>
 <li class="fragment"><strong>Inline plots</strong>: plots render in the IDE as you iterate.</li>
 <li class="fragment">But: the <em>IDE</em> is for exploring; the <em>document</em> is the record. Anything you discover by clicking must end up as <strong>code in a <code>.qmd</code></strong> to be reproducible.</li>
 </ul>
-<div class="callout-desc">
+</div>
+<div class="callout-desc fragment">
 <p>Rule: <strong>explore by clicking, report by code.</strong> The click is fast; the code is what makes it reproducible.</p>
 </div>
 <div class="code-pop">
@@ -304,13 +311,13 @@ EDA is *iterative*: you circle through 1–3 several times before any formal mod
 
 Your IDE is part of the reproducible loop. In Positron:
 
-::: {.incremental}
+::: {.incremental .highlight-last}
 - **Data pane / variable explorer**: inspect loaded tables and objects without typing.
 - **Inline plots**: plots render in the IDE as you iterate.
 - But: the *IDE* is for exploring; the *document* is the record. Anything you discover by clicking must end up as **code in a `.qmd`** to be reproducible.
 :::
 
-::: {.callout-desc}
+::: {.callout-desc .fragment}
 Rule: **explore by clicking, report by code.** The click is fast; the code is what makes it reproducible.
 :::
 </code></pre></div></details>
@@ -319,7 +326,13 @@ Rule: **explore by clicking, report by code.** The click is fast; the code is wh
 <section id="one-line-summaries-skimrskim" class="slide level2 inv" data-number="2.3">
 <h2><span class="header-section-number">2.3</span> One-line summaries: <code>skimr::skim()</code></h2>
 <p>A whole data set summarized in one call, the fastest honest “first look”:</p>
-<div class="cell">
+<div class="codewindow r" name="skim.R">
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb1-2"><a aria-label="2"></a>  skimr<span class="sc">::</span><span class="fu">skim</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb1-3"><a aria-label="3"></a>  <span class="fu">summary</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
 <div class="cell-output-display">
 <table class="caption-top">
 <caption>Data summary</caption>
@@ -363,46 +376,1280 @@ Rule: **explore by clicking, report by code.** The click is fast; the code is wh
 </tbody>
 </table>
 </div>
+</div></div>
 </div>
 <div class="callout-desc">
 <p><code>skim()</code> shows type, <code>n_missing</code>, and mini-distributions per column in one go (here compacted with <code>|&gt; summary()</code>). When someone asks “what’s in this data?”, <code>skim()</code> first.</p>
+</div>
+<div class="paper-adv">
+<button type="button" class="paper-adv-btn">
+See the full <code>skim()</code> output
+</button>
+<div class="paper-adv-backdrop" hidden="">
+
+</div>
+<div class="paper-adv-modal" hidden="">
+<div class="paper-adv-head">
+<strong>Full <code>skim()</code> output</strong><button type="button" class="paper-adv-close" aria-label="Close">×</button>
+</div>
+<div class="adv-body">
+<p>
+The unabridged per-column summary, in its usual wide form:
+</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top">
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">penguins</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Number of rows</td>
+<td style="text-align: left;">344</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Number of columns</td>
+<td style="text-align: left;">8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">_______________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Column type frequency:</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">factor</td>
+<td style="text-align: left;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">________________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Group variables</td>
+<td style="text-align: left;">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: factor</strong></p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 12%">
+<col style="width: 16%">
+<col style="width: 9%">
+<col style="width: 10%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: left;">ordered</th>
+<th style="text-align: right;">n_unique</th>
+<th style="text-align: left;">top_counts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">species</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">Ade: 152, Gen: 124, Chi: 68</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">island</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">Bis: 168, Dre: 124, Tor: 52</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sex</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">0.97</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">mal: 168, fem: 165</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table class="caption-top" style="width:100%;">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 9%">
+<col style="width: 13%">
+<col style="width: 7%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 5%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">p0</th>
+<th style="text-align: right;">p25</th>
+<th style="text-align: right;">p50</th>
+<th style="text-align: right;">p75</th>
+<th style="text-align: right;">p100</th>
+<th style="text-align: left;">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">bill_length_mm</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.99</td>
+<td style="text-align: right;">43.92</td>
+<td style="text-align: right;">5.46</td>
+<td style="text-align: right;">32.1</td>
+<td style="text-align: right;">39.23</td>
+<td style="text-align: right;">44.45</td>
+<td style="text-align: right;">48.5</td>
+<td style="text-align: right;">59.6</td>
+<td style="text-align: left;">▃▇▇▆▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">bill_depth_mm</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.99</td>
+<td style="text-align: right;">17.15</td>
+<td style="text-align: right;">1.97</td>
+<td style="text-align: right;">13.1</td>
+<td style="text-align: right;">15.60</td>
+<td style="text-align: right;">17.30</td>
+<td style="text-align: right;">18.7</td>
+<td style="text-align: right;">21.5</td>
+<td style="text-align: left;">▅▅▇▇▂</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">flipper_length_mm</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.99</td>
+<td style="text-align: right;">200.92</td>
+<td style="text-align: right;">14.06</td>
+<td style="text-align: right;">172.0</td>
+<td style="text-align: right;">190.00</td>
+<td style="text-align: right;">197.00</td>
+<td style="text-align: right;">213.0</td>
+<td style="text-align: right;">231.0</td>
+<td style="text-align: left;">▂▇▃▅▂</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">body_mass_g</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.99</td>
+<td style="text-align: right;">4201.75</td>
+<td style="text-align: right;">801.95</td>
+<td style="text-align: right;">2700.0</td>
+<td style="text-align: right;">3550.00</td>
+<td style="text-align: right;">4050.00</td>
+<td style="text-align: right;">4750.0</td>
+<td style="text-align: right;">6300.0</td>
+<td style="text-align: left;">▃▇▆▃▂</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">year</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">2008.03</td>
+<td style="text-align: right;">0.82</td>
+<td style="text-align: right;">2007.0</td>
+<td style="text-align: right;">2007.00</td>
+<td style="text-align: right;">2008.00</td>
+<td style="text-align: right;">2009.0</td>
+<td style="text-align: right;">2009.0</td>
+<td style="text-align: left;">▇▁▇▁▇</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div class="code-pop">
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## One-line summaries: `skimr::skim()` {.inv}
 
 A whole data set summarized in one call, the fastest honest "first look":
 
+::: {.codewindow .r name="skim.R"}
+
 ```{r}
 #| label: skim
 #| message: false
-skim(penguins) |&gt; summary()
+#| echo: true
+#| output-location: column
+penguins |&gt; 
+  skimr::skim() |&gt; 
+  summary()
 ```
+
+:::
 
 ::: {.callout-desc}
 `skim()` shows type, `n_missing`, and mini-distributions per column in one go (here compacted with `|&gt; summary()`). When someone asks "what's in this data?", `skim()` first.
 :::
+
+&lt;div class="paper-adv"&gt;
+&lt;button type="button" class="paper-adv-btn"&gt;See the full `skim()` output&lt;/button&gt;
+&lt;div class="paper-adv-backdrop" hidden&gt;&lt;/div&gt;
+&lt;div class="paper-adv-modal" hidden&gt;
+&lt;div class="paper-adv-head"&gt;&lt;strong&gt;Full `skim()` output&lt;/strong&gt;&lt;button type="button" class="paper-adv-close" aria-label="Close"&gt;&amp;times;&lt;/button&gt;&lt;/div&gt;
+&lt;div class="adv-body"&gt;
+&lt;p&gt;The unabridged per-column summary, in its usual wide form:&lt;/p&gt;
+```{r}
+#| label: skim-full
+#| message: false
+#| echo: false
+penguins |&gt; 
+  skimr::skim()
+```
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 </code></pre></div></details>
 </div>
 </section>
 <section id="cleaning-names-counting-janitor" class="slide level2 inv" data-number="2.4">
 <h2><span class="header-section-number">2.4</span> Cleaning names &amp; counting: <code>{janitor}</code></h2>
 <p>Real-world data arrives with messy names and labels. <code>{janitor}</code> tidies them:</p>
+<div class="codewindow">
+<div class="editor r" name="janitor-clean.R">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-label="1"></a>penguins <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a aria-label="2"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>() <span class="sc">|&gt;</span>        <span class="co"># lower-case, underscores, no spaces</span></span>
+<span id="cb2-3"><a aria-label="3"></a>  dplyr<span class="sc">::</span><span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb2-4"><a aria-label="4"></a>  gt<span class="sc">::</span><span class="fu">gt</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb2-5"><a aria-label="5"></a>  gt<span class="sc">::</span><span class="fu">opt_stylize</span>(<span class="at">style =</span> <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="editor r fragment" name="janitor-tabyl.R">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a>penguins <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a aria-label="2"></a>  janitor<span class="sc">::</span><span class="fu">tabyl</span>(species) <span class="sc">|&gt;</span>          <span class="co"># a nicer table() for one variable</span></span>
+<span id="cb3-3"><a aria-label="3"></a>  gt<span class="sc">::</span><span class="fu">gt</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb3-4"><a aria-label="4"></a>  gt<span class="sc">::</span><span class="fu">opt_stylize</span>(<span class="at">style =</span> <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<div class="paper-adv">
+<button type="button" class="paper-adv-btn">
+See the rendered <code>{janitor}</code> tables
+</button>
+<div class="paper-adv-backdrop" hidden="">
+
+</div>
+<div class="paper-adv-modal" hidden="">
+<div class="paper-adv-head">
+<strong>Rendered <code>{janitor}</code> tables</strong><button type="button" class="paper-adv-close" aria-label="Close">×</button>
+</div>
+<div class="adv-body">
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "species"           "island"            "bill_length_mm"   
-[4] "bill_depth_mm"     "flipper_length_mm" "body_mass_g"      
-[7] "sex"               "year"             </code></pre>
+<div class="cell-output-display">
+<div id="leisqrofmx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#leisqrofmx table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#leisqrofmx thead, #leisqrofmx tbody, #leisqrofmx tfoot, #leisqrofmx tr, #leisqrofmx td, #leisqrofmx th {
+  border-style: none;
+}
+
+#leisqrofmx p {
+  margin: 0;
+  padding: 0;
+}
+
+#leisqrofmx .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 3px;
+  border-top-color: #D5D5D5;
+  border-right-style: solid;
+  border-right-width: 3px;
+  border-right-color: #D5D5D5;
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: #D5D5D5;
+  border-left-style: solid;
+  border-left-width: 3px;
+  border-left-color: #D5D5D5;
+}
+
+#leisqrofmx .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#leisqrofmx .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#leisqrofmx .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#leisqrofmx .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#leisqrofmx .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D5D5D5;
+}
+
+#leisqrofmx .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D5D5D5;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D5D5D5;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#leisqrofmx .gt_col_heading {
+  color: #FFFFFF;
+  background-color: #0076BA;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#leisqrofmx .gt_column_spanner_outer {
+  color: #FFFFFF;
+  background-color: #0076BA;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#leisqrofmx .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#leisqrofmx .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#leisqrofmx .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D5D5D5;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#leisqrofmx .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#leisqrofmx .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D5D5D5;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D5D5D5;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#leisqrofmx .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D5D5D5;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D5D5D5;
+  vertical-align: middle;
+}
+
+#leisqrofmx .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#leisqrofmx .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#leisqrofmx .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: dashed;
+  border-top-width: 1px;
+  border-top-color: #D5D5D5;
+  border-left-style: dashed;
+  border-left-width: 1px;
+  border-left-color: #D5D5D5;
+  border-right-style: dashed;
+  border-right-width: 1px;
+  border-right-color: #D5D5D5;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#leisqrofmx .gt_stub {
+  color: #FFFFFF;
+  background-color: #929292;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: dashed;
+  border-right-width: 2px;
+  border-right-color: #D5D5D5;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#leisqrofmx .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#leisqrofmx .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#leisqrofmx .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#leisqrofmx .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#leisqrofmx .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D5D5D5;
+}
+
+#leisqrofmx .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#leisqrofmx .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D5D5D5;
+}
+
+#leisqrofmx .gt_grand_summary_row {
+  color: #FFFFFF;
+  background-color: #0076BA;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#leisqrofmx .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D5D5D5;
+}
+
+#leisqrofmx .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D5D5D5;
+}
+
+#leisqrofmx .gt_striped {
+  background-color: #F4F4F4;
+}
+
+#leisqrofmx .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D5D5D5;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D5D5D5;
+}
+
+#leisqrofmx .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#leisqrofmx .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#leisqrofmx .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#leisqrofmx .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#leisqrofmx .gt_left {
+  text-align: left;
+}
+
+#leisqrofmx .gt_center {
+  text-align: center;
+}
+
+#leisqrofmx .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#leisqrofmx .gt_font_normal {
+  font-weight: normal;
+}
+
+#leisqrofmx .gt_font_bold {
+  font-weight: bold;
+}
+
+#leisqrofmx .gt_font_italic {
+  font-style: italic;
+}
+
+#leisqrofmx .gt_super {
+  font-size: 65%;
+}
+
+#leisqrofmx .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#leisqrofmx .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#leisqrofmx .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#leisqrofmx .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#leisqrofmx .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#leisqrofmx .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#leisqrofmx .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#leisqrofmx .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#leisqrofmx div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_col_headings header">
+<th id="species" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">species</th>
+<th id="island" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">island</th>
+<th id="bill_length_mm" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">bill_length_mm</th>
+<th id="bill_depth_mm" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">bill_depth_mm</th>
+<th id="flipper_length_mm" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">flipper_length_mm</th>
+<th id="body_mass_g" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">body_mass_g</th>
+<th id="sex" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">sex</th>
+<th id="year" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">year</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_center" headers="species">Adelie</td>
+<td class="gt_row gt_center" headers="island">Torgersen</td>
+<td class="gt_row gt_right" headers="bill_length_mm">39.1</td>
+<td class="gt_row gt_right" headers="bill_depth_mm">18.7</td>
+<td class="gt_row gt_right" headers="flipper_length_mm">181</td>
+<td class="gt_row gt_right" headers="body_mass_g">3750</td>
+<td class="gt_row gt_center" headers="sex">male</td>
+<td class="gt_row gt_right" headers="year">2007</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_center gt_striped" headers="species">Adelie</td>
+<td class="gt_row gt_center gt_striped" headers="island">Torgersen</td>
+<td class="gt_row gt_right gt_striped" headers="bill_length_mm">39.5</td>
+<td class="gt_row gt_right gt_striped" headers="bill_depth_mm">17.4</td>
+<td class="gt_row gt_right gt_striped" headers="flipper_length_mm">186</td>
+<td class="gt_row gt_right gt_striped" headers="body_mass_g">3800</td>
+<td class="gt_row gt_center gt_striped" headers="sex">female</td>
+<td class="gt_row gt_right gt_striped" headers="year">2007</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_center" headers="species">Adelie</td>
+<td class="gt_row gt_center" headers="island">Torgersen</td>
+<td class="gt_row gt_right" headers="bill_length_mm">40.3</td>
+<td class="gt_row gt_right" headers="bill_depth_mm">18.0</td>
+<td class="gt_row gt_right" headers="flipper_length_mm">195</td>
+<td class="gt_row gt_right" headers="body_mass_g">3250</td>
+<td class="gt_row gt_center" headers="sex">female</td>
+<td class="gt_row gt_right" headers="year">2007</td>
+</tr>
+</tbody>
+</table>
+
+</div>
 </div>
 </div>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>   species   n   percent
-    Adelie 152 0.4418605
- Chinstrap  68 0.1976744
-    Gentoo 124 0.3604651</code></pre>
+<div class="cell-output-display">
+<div id="dcygatlqoq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#dcygatlqoq table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#dcygatlqoq thead, #dcygatlqoq tbody, #dcygatlqoq tfoot, #dcygatlqoq tr, #dcygatlqoq td, #dcygatlqoq th {
+  border-style: none;
+}
+
+#dcygatlqoq p {
+  margin: 0;
+  padding: 0;
+}
+
+#dcygatlqoq .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 3px;
+  border-top-color: #D5D5D5;
+  border-right-style: solid;
+  border-right-width: 3px;
+  border-right-color: #D5D5D5;
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: #D5D5D5;
+  border-left-style: solid;
+  border-left-width: 3px;
+  border-left-color: #D5D5D5;
+}
+
+#dcygatlqoq .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#dcygatlqoq .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#dcygatlqoq .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#dcygatlqoq .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#dcygatlqoq .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D5D5D5;
+}
+
+#dcygatlqoq .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D5D5D5;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D5D5D5;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#dcygatlqoq .gt_col_heading {
+  color: #FFFFFF;
+  background-color: #0076BA;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#dcygatlqoq .gt_column_spanner_outer {
+  color: #FFFFFF;
+  background-color: #0076BA;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#dcygatlqoq .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#dcygatlqoq .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#dcygatlqoq .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D5D5D5;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#dcygatlqoq .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#dcygatlqoq .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D5D5D5;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D5D5D5;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#dcygatlqoq .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D5D5D5;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D5D5D5;
+  vertical-align: middle;
+}
+
+#dcygatlqoq .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#dcygatlqoq .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#dcygatlqoq .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: dashed;
+  border-top-width: 1px;
+  border-top-color: #D5D5D5;
+  border-left-style: dashed;
+  border-left-width: 1px;
+  border-left-color: #D5D5D5;
+  border-right-style: dashed;
+  border-right-width: 1px;
+  border-right-color: #D5D5D5;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#dcygatlqoq .gt_stub {
+  color: #FFFFFF;
+  background-color: #929292;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: dashed;
+  border-right-width: 2px;
+  border-right-color: #D5D5D5;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dcygatlqoq .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#dcygatlqoq .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#dcygatlqoq .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#dcygatlqoq .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dcygatlqoq .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D5D5D5;
+}
+
+#dcygatlqoq .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#dcygatlqoq .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D5D5D5;
+}
+
+#dcygatlqoq .gt_grand_summary_row {
+  color: #FFFFFF;
+  background-color: #0076BA;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dcygatlqoq .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D5D5D5;
+}
+
+#dcygatlqoq .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D5D5D5;
+}
+
+#dcygatlqoq .gt_striped {
+  background-color: #F4F4F4;
+}
+
+#dcygatlqoq .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D5D5D5;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D5D5D5;
+}
+
+#dcygatlqoq .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#dcygatlqoq .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dcygatlqoq .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#dcygatlqoq .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dcygatlqoq .gt_left {
+  text-align: left;
+}
+
+#dcygatlqoq .gt_center {
+  text-align: center;
+}
+
+#dcygatlqoq .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#dcygatlqoq .gt_font_normal {
+  font-weight: normal;
+}
+
+#dcygatlqoq .gt_font_bold {
+  font-weight: bold;
+}
+
+#dcygatlqoq .gt_font_italic {
+  font-style: italic;
+}
+
+#dcygatlqoq .gt_super {
+  font-size: 65%;
+}
+
+#dcygatlqoq .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#dcygatlqoq .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#dcygatlqoq .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#dcygatlqoq .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#dcygatlqoq .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#dcygatlqoq .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#dcygatlqoq .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#dcygatlqoq .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#dcygatlqoq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_col_headings header">
+<th id="species" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">species</th>
+<th id="n" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">n</th>
+<th id="percent" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">percent</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_center" headers="species">Adelie</td>
+<td class="gt_row gt_right" headers="n">152</td>
+<td class="gt_row gt_right" headers="percent">0.4418605</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_center gt_striped" headers="species">Chinstrap</td>
+<td class="gt_row gt_right gt_striped" headers="n">68</td>
+<td class="gt_row gt_right gt_striped" headers="percent">0.1976744</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_center" headers="species">Gentoo</td>
+<td class="gt_row gt_right" headers="n">124</td>
+<td class="gt_row gt_right" headers="percent">0.3604651</td>
+</tr>
+</tbody>
+</table>
+
 </div>
 </div>
-<div class="callout-desc">
+</div>
+</div>
+</div>
+</div>
+<div class="callout-desc fragment">
 <p><code>clean_names()</code> makes column names <em>syntactic</em> (safe to reference); <code>tabyl()</code> gives counts with percentages. Both make downstream code far more readable.</p>
 </div>
 <div class="code-pop">
@@ -410,23 +1657,60 @@ skim(penguins) |&gt; summary()
 
 Real-world data arrives with messy names and labels. `{janitor}` tidies them:
 
-```{r} 
+::: {.codewindow}
+
+::: {.editor .r name="janitor-clean.R"}
+```r
+penguins |&gt;
+  janitor::clean_names() |&gt;        # lower-case, underscores, no spaces
+  dplyr::slice(1:3) |&gt; 
+  gt::gt() |&gt; 
+  gt::opt_stylize(style = 4)
+```
+:::
+
+::: {.editor .r .fragment name="janitor-tabyl.R"}
+```r
+penguins |&gt;
+  janitor::tabyl(species) |&gt;          # a nicer table() for one variable
+  gt::gt() |&gt; 
+  gt::opt_stylize(style = 4)
+```
+:::
+
+:::
+
+&lt;div class="paper-adv"&gt;
+&lt;button type="button" class="paper-adv-btn"&gt;See the rendered `{janitor}` tables&lt;/button&gt;
+&lt;div class="paper-adv-backdrop" hidden&gt;&lt;/div&gt;
+&lt;div class="paper-adv-modal" hidden&gt;
+&lt;div class="paper-adv-head"&gt;&lt;strong&gt;Rendered `{janitor}` tables&lt;/strong&gt;&lt;button type="button" class="paper-adv-close" aria-label="Close"&gt;&amp;times;&lt;/button&gt;&lt;/div&gt;
+&lt;div class="adv-body"&gt;
+```{r}
 #| label: janitor-clean
 #| message: false
+#| echo: false
 penguins |&gt;
-  clean_names() |&gt;        # lower-case, underscores, no spaces
-  names() |&gt;
-  head(8)
+  janitor::clean_names() |&gt;        # lower-case, underscores, no spaces
+  dplyr::slice(1:3) |&gt; 
+  gt::gt() |&gt; 
+  gt::opt_stylize(style = 4)
 ```
 
-```{r} 
+```{r}
 #| label: janitor-tabyl
 #| message: false
+#| echo: false
 penguins |&gt;
-  tabyl(species)          # a nicer table() for one variable
+  janitor::tabyl(species) |&gt;          # a nicer table() for one variable
+  gt::gt() |&gt; 
+  gt::opt_stylize(style = 4)
 ```
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 
-::: {.callout-desc}
+::: {.callout-desc .fragment}
 `clean_names()` makes column names *syntactic* (safe to reference); `tabyl()` gives counts with percentages. Both make downstream code far more readable.
 :::
 </code></pre></div></details>
@@ -434,26 +1718,49 @@ penguins |&gt;
 </section>
 <section id="seeing-missingness-naniar" class="slide level2 inv" data-number="2.5">
 <h2><span class="header-section-number">2.5</span> Seeing missingness: <code>{naniar}</code></h2>
-<p>Missing data is not an afterthought: it’s often the most important thing about a data set. <code>{naniar}</code> makes it visible:</p>
-
-<img data-src="session-2_files/figure-revealjs/vis-miss-1.png" width="768" class="r-stretch quarto-figure-center"><p class="caption">Where is the penguins data missing, and how much?</p><div class="callout-desc">
-<p><code>vis_miss()</code> draws the whole data set as a grid, missing cells in dark. <code>gg_miss_var()</code> plots missingness <em>per column</em>. Use them to decide <em>why</em> data is missing, and whether your analysis needs to care.</p>
+<p>Missing data is not an afterthought: it’s often the most important thing about a data set. <code>{naniar}</code> makes it visible as in <a href="#/fig-vis-miss" class="quarto-xref">Figure&nbsp;1</a>:</p>
+<div class="codewindow r" name="naniar.R">
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-label="1"></a>naniar<span class="sc">::</span><span class="fu">vis_miss</span>(penguins)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div id="fig-vis-miss" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-vis-miss-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="session-2_files/figure-revealjs/fig-vis-miss-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: Where is the penguins data missing, and how much?"><img data-src="session-2_files/figure-revealjs/fig-vis-miss-1.png" width="768"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-vis-miss-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Where is the penguins data missing, and how much?
+</figcaption>
+</figure>
+</div>
+</div>
+</div></div>
+</div>
+<div class="callout-desc">
+<p><code>vis_miss()</code> grids the data set, missing cells in dark; <code>gg_miss_var()</code> plots missingness <em>per column</em>.</p>
 </div>
 <div class="code-pop">
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Seeing missingness: `{naniar}` {.inv}
 
-Missing data is not an afterthought: it's often the most important thing about a data set. `{naniar}` makes it visible:
+Missing data is not an afterthought: it's often the most important thing about a data set. `{naniar}` makes it visible as in @fig-vis-miss:
 
+::: {.codewindow .r name="naniar.R"}
 ```{r}
-#| label: vis-miss
+#| label: fig-vis-miss
 #| fig-cap: "Where is the penguins data missing, and how much?"
 #| fig-width: 8
-#| fig-height: 5
-vis_miss(penguins)
+#| fig-height: 3.5
+#| echo: true
+#| output-location: column
+#| lightbox: true
+naniar::vis_miss(penguins)
 ```
+:::
 
 ::: {.callout-desc}
-`vis_miss()` draws the whole data set as a grid, missing cells in dark. `gg_miss_var()` plots missingness *per column*. Use them to decide *why* data is missing, and whether your analysis needs to care.
+`vis_miss()` grids the data set, missing cells in dark; `gg_miss_var()` plots missingness *per column*.
 :::
 </code></pre></div></details>
 </div>
@@ -461,11 +1768,13 @@ vis_miss(penguins)
 <section id="tying-it-to-session-1" class="slide level2 inv" data-number="2.6">
 <h2><span class="header-section-number">2.6</span> Tying it to Session 1</h2>
 <p>This is the same cleaning conversation you started in the base-R course with <code>penguins_messy.txt</code>:</p>
+<div class="highlight-last">
 <ul>
 <li class="fragment">There you fixed wrong <strong>types</strong> (<code>readr</code> guessing), separators, and missing values by hand.</li>
 <li class="fragment">Today the <strong>decisions</strong> are the point: <code>janitor</code>, <code>naniar</code>, <code>skimr</code> don’t <em>make</em> them for you; they <em>surface</em> them faster so you can decide well and record why.</li>
 </ul>
-<div class="callout-desc">
+</div>
+<div class="callout-desc fragment">
 <p>The toolkit changed; the habit didn’t: <strong>inspect → decide → document.</strong> Every decision you can justify in a sentence is a reproducible decision.</p>
 </div>
 <div class="code-pop">
@@ -473,12 +1782,12 @@ vis_miss(penguins)
 
 This is the same cleaning conversation you started in the base-R course with `penguins_messy.txt`:
 
-::: {.incremental}
+::: {.incremental .highlight-last}
 - There you fixed wrong **types** (`readr` guessing), separators, and missing values by hand.
 - Today the **decisions** are the point: `janitor`, `naniar`, `skimr` don't *make* them for you; they *surface* them faster so you can decide well and record why.
 :::
 
-::: {.callout-desc}
+::: {.callout-desc .fragment}
 The toolkit changed; the habit didn't: **inspect → decide → document.** Every decision you can justify in a sentence is a reproducible decision.
 :::
 </code></pre></div></details>
@@ -492,6 +1801,7 @@ The toolkit changed; the habit didn't: **inspect → decide → document.** Ever
 <li><code>skim(penguins)</code>: which columns have missing values? How many?</li>
 <li><code>penguins |&gt; clean_names() |&gt; names()</code>: do names need cleaning?</li>
 <li><code>penguins |&gt; tabyl(species)</code>: what are the group sizes?</li>
+<li><code>penguins |&gt; tabyl(species) |&gt; gt::gt() |&gt; gt::opt_stylize(style = 4)</code>: present those counts as a styled table (the <code>{gt}</code> you met in Session 1).</li>
 <li><code>vis_miss(penguins)</code>: where is the missingness concentrated?</li>
 <li>Write one sentence: <strong>“I will handle the missingness by … because …”</strong>, that sentence is your reproducible cleaning decision.</li>
 </ol>
@@ -523,8 +1833,9 @@ Run this on the `penguins` data (loaded at the top), or a data frame of your own
 1. `skim(penguins)`: which columns have missing values? How many?
 2. `penguins |&gt; clean_names() |&gt; names()`: do names need cleaning?
 3. `penguins |&gt; tabyl(species)`: what are the group sizes?
-4. `vis_miss(penguins)`: where is the missingness concentrated?
-5. Write one sentence: **"I will handle the missingness by … because …"**, that sentence is your reproducible cleaning decision.
+4. `penguins |&gt; tabyl(species) |&gt; gt::gt() |&gt; gt::opt_stylize(style = 4)`: present those counts as a styled table (the `{gt}` you met in Session 1).
+5. `vis_miss(penguins)`: where is the missingness concentrated?
+6. Write one sentence: **"I will handle the missingness by … because …"**, that sentence is your reproducible cleaning decision.
 :::
 
 &lt;div class="paper-adv"&gt;
@@ -548,12 +1859,14 @@ Run this on the `penguins` data (loaded at the top), or a data frame of your own
 <section id="open-data-anywhere-in-the-world" class="slide level2 inv" data-number="3.1">
 <h2><span class="header-section-number">3.1</span> Open data, anywhere in the world</h2>
 <p>A reproducible analysis needs data it can <strong>re-fetch by code</strong>, and open-data portals everywhere provide exactly that:</p>
+<div class="highlight-last">
 <ul>
 <li class="fragment"><strong>France</strong>: <a href="https://www.data.gouv.fr">data.gouv.fr</a>, thousands of public datasets, <strong>license-aware</strong>.</li>
 <li class="fragment"><strong>Your own country</strong>: nearly every government runs an official open-data portal (data.gov… for the US, Canada, UK, Germany, and many more).</li>
 <li class="fragment"><strong>The rule is the same wherever you look</strong>: a dataset you can fetch <em>programmatically</em> is a dataset your analysis can re-produce.</li>
 </ul>
-<div class="callout-desc">
+</div>
+<div class="callout-desc fragment">
 <p>The reproducible move: don’t <em>download</em> a dataset by hand; write code that <em>sources</em> it, so the analysis is re-runnable and the provenance (publisher + URL) is in the document.</p>
 </div>
 <div class="code-pop">
@@ -561,28 +1874,28 @@ Run this on the `penguins` data (loaded at the top), or a data frame of your own
 
 A reproducible analysis needs data it can **re-fetch by code**, and open-data portals everywhere provide exactly that:
 
-::: {.incremental}
+::: {.incremental .highlight-last}
 - **France**: [data.gouv.fr](https://www.data.gouv.fr), thousands of public datasets, **license-aware**.
 - **Your own country**: nearly every government runs an official open-data portal (data.gov… for the US, Canada, UK, Germany, and many more).
 - **The rule is the same wherever you look**: a dataset you can fetch *programmatically* is a dataset your analysis can re-produce.
 :::
 
-::: {.callout-desc}
+::: {.callout-desc .fragment}
 The reproducible move: don't *download* a dataset by hand; write code that *sources* it, so the analysis is re-runnable and the provenance (publisher + URL) is in the document.
 :::
 </code></pre></div></details>
 </div>
 </section>
 <section id="rdatagouv-the-french-portal-from-r-an-option" class="slide level2 inv" data-number="3.2">
-<h2><span class="header-section-number">3.2</span> <code>{rdatagouv}</code>: the French portal from R (an option)</h2>
-<p>Because we teach from l’ENSAI, <strong>data.gouv.fr</strong> is a natural default. <code>{rdatagouv}</code> (maintained by your instructor) wraps it:</p>
+<h2><span class="header-section-number">3.2</span> <a href="https://astamm.github.io/rdatagouv/">{rdatagouv}</a>: the French portal from R (an option)</h2>
+<p>Because we teach from l’ENSAI, <strong>data.gouv.fr</strong> is a natural default. <a href="https://astamm.github.io/rdatagouv/">{rdatagouv}</a> (maintained by your instructor) wraps it:</p>
 <div class="callout-desc">
-<p><code>{rdatagouv}</code> is an <em>option, not a requirement</em>: use it if you pick data.gouv.fr. Any portal you can query with a URL (e.g.&nbsp;<code>download.file()</code>) works just as well for reproducibility.</p>
+<p><a href="https://astamm.github.io/rdatagouv/">{rdatagouv}</a> is an <em>option, not a requirement</em>: use it if you pick data.gouv.fr. Any portal you can query with a URL (e.g.&nbsp;<code>download.file()</code>) works just as well for reproducibility.</p>
 </div>
 <div class="code-pop">
-<details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## `{rdatagouv}`: the French portal from R (an option) {.inv}
+<details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## [{rdatagouv}](https://astamm.github.io/rdatagouv/): the French portal from R (an option) {.inv}
 
-Because we teach from l'ENSAI, **data.gouv.fr** is a natural default. `{rdatagouv}` (maintained by your instructor) wraps it:
+Because we teach from l'ENSAI, **data.gouv.fr** is a natural default. [{rdatagouv}](https://astamm.github.io/rdatagouv/) (maintained by your instructor) wraps it:
 
 ```{r}
 #| label: rdatagouv
@@ -596,7 +1909,7 @@ dataset$resources
 ```
 
 ::: {.callout-desc}
-`{rdatagouv}` is an *option, not a requirement*: use it if you pick data.gouv.fr. Any portal you can query with a URL (e.g. `download.file()`) works just as well for reproducibility.
+[{rdatagouv}](https://astamm.github.io/rdatagouv/) is an *option, not a requirement*: use it if you pick data.gouv.fr. Any portal you can query with a URL (e.g. `download.file()`) works just as well for reproducibility.
 :::
 </code></pre></div></details>
 </div>
@@ -604,13 +1917,15 @@ dataset$resources
 <section id="fetching-any-portal-by-url" class="slide level2 inv" data-number="3.3">
 <h2><span class="header-section-number">3.3</span> Fetching any portal by URL</h2>
 <p>Whatever portal you choose, the reproducible core is the same: a URL your code downloads:</p>
+<div class="highlight-last">
 <ul>
 <li class="fragment"><strong><code>download.file()</code> is portal-agnostic</strong>: it doesn’t care whether the URL points at data.gouv.fr or your home country’s portal.</li>
 <li class="fragment">Pair it with a <strong>provenance sentence</strong> (dataset, publisher, URL, license) so a reader can <em>find</em> and <em>trust</em> the source.</li>
-<li class="fragment">Some portals ship an R/Python client (<code>{rdatagouv}</code> here): a convenience, never a requirement.</li>
+<li class="fragment">Some portals ship an R/Python client (<a href="https://astamm.github.io/rdatagouv/">{rdatagouv}</a> here): a convenience, never a requirement.</li>
 </ul>
-<div class="callout-desc">
-<p><strong>Live block (≈10 min).</strong> Together: <code>search_datasets("climat")</code> <em>and</em> browse one non-French portal (e.g.&nbsp;your home country’s). Both approaches collapse to the same thing: a URL to download by code.</p>
+</div>
+<div class="callout-desc fragment">
+<p><strong>Live block (≈10 min).</strong> Together: <code>rdatagouv::dg_find_datasets(q = "climat", schema_only = TRUE)</code> <em>and</em> browse one non-French portal (e.g.&nbsp;your home country’s). Both approaches collapse to the same thing: a URL to download by code.</p>
 </div>
 <div class="code-pop">
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## Fetching any portal by URL {.inv}
@@ -624,14 +1939,14 @@ url &lt;- "https://…/my-open-dataset.csv"   # any open-data portal, any countr
 download.file(url, "data/my-data.csv")   # a RE-RUNNABLE line of code
 ```
 
-::: {.incremental}
+::: {.incremental .highlight-last}
 - **`download.file()` is portal-agnostic**: it doesn't care whether the URL points at data.gouv.fr or your home country's portal.
 - Pair it with a **provenance sentence** (dataset, publisher, URL, license) so a reader can *find* and *trust* the source.
-- Some portals ship an R/Python client (`{rdatagouv}` here): a convenience, never a requirement.
+- Some portals ship an R/Python client ([{rdatagouv}](https://astamm.github.io/rdatagouv/) here): a convenience, never a requirement.
 :::
 
-::: {.callout-desc}
-**Live block (≈10 min).** Together: `search_datasets("climat")` *and* browse one non-French portal (e.g. your home country's). Both approaches collapse to the same thing: a URL to download by code.
+::: {.callout-desc .fragment}
+**Live block (≈10 min).** Together: `rdatagouv::dg_find_datasets(q = "climat", schema_only = TRUE)` *and* browse one non-French portal (e.g. your home country's). Both approaches collapse to the same thing: a URL to download by code.
 :::
 </code></pre></div></details>
 </div>
@@ -720,63 +2035,79 @@ This same dataset becomes <strong>Chapter 1</strong> of your portfolio in Lab 2,
 </section></section>
 <section>
 <section id="versioning-your-data-with-pins" class="title-slide slide level1 center" data-number="4">
-<h1><span class="header-section-number">4</span> Versioning your data with {pins}</h1>
+<h1><span class="header-section-number">4</span> Versioning your data with <a href="https://pins.rstudio.com">{pins}</a></h1>
 
 </section>
 <section id="the-disappearing-data-problem" class="slide level2 inv" data-number="4.1">
 <h2><span class="header-section-number">4.1</span> The (dis)appearing data problem</h2>
 <p>Last session you met “the (dis)appearing data”: a fetched file can <em>change</em> or <em>vanish</em> the moment it’s off the portal:</p>
+<div class="highlight-last">
 <ul>
 <li class="fragment">A portal updates a dataset: your analysis was based on the <strong>old version</strong>.</li>
 <li class="fragment">A raw URL 404s a year later, and your “reproducible” document can’t re-run.</li>
 <li class="fragment">Even locally, <code>data/my-data.csv</code> can be overwritten, and git alone doesn’t version the <em>cached</em> copy well if you don’t commit it.</li>
 </ul>
-<div class="callout-desc">
-<p><code>{pins}</code> closes that gap: <strong>version your data</strong> the way git versions your code, so a re-render gets the <em>same</em> data a reader expects, not whatever is live today.</p>
+</div>
+<div class="callout-desc fragment">
+<p><a href="https://pins.rstudio.com">{pins}</a> closes that gap: <strong>version your data</strong> the way git versions your code, so a re-render gets the <em>same</em> data a reader expects, not whatever is live today.</p>
 </div>
 <div class="code-pop">
 <details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## The (dis)appearing data problem {.inv}
 
 Last session you met "the (dis)appearing data": a fetched file can *change* or *vanish* the moment it's off the portal:
 
-::: {.incremental}
+::: {.incremental .highlight-last}
 - A portal updates a dataset: your analysis was based on the **old version**.
 - A raw URL 404s a year later, and your "reproducible" document can't re-run.
 - Even locally, `data/my-data.csv` can be overwritten, and git alone doesn't version the *cached* copy well if you don't commit it.
 :::
 
-::: {.callout-desc}
-`{pins}` closes that gap: **version your data** the way git versions your code, so a re-render gets the *same* data a reader expects, not whatever is live today.
+::: {.callout-desc .fragment}
+[{pins}](https://pins.rstudio.com) closes that gap: **version your data** the way git versions your code, so a re-render gets the *same* data a reader expects, not whatever is live today.
 :::
 </code></pre></div></details>
 </div>
 </section>
 <section id="pins-pin-data-to-a-versioned-board" class="slide level2 inv" data-number="4.2">
-<h2><span class="header-section-number">4.2</span> <code>{pins}</code>: pin data to a versioned board</h2>
-<p><code>{pins}</code> stores a data object on a <strong>board</strong> and records <strong>who wrote what, when</strong>:</p>
+<h2><span class="header-section-number">4.2</span> <a href="https://pins.rstudio.com">{pins}</a>: pin data to a versioned board</h2>
+<p><a href="https://pins.rstudio.com">{pins}</a> stores a data object on a <strong>board</strong> and records <strong>who wrote what, when</strong>:</p>
+<div class="codewindow r" name="pins.R">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a><span class="co"># a folder board that KEEPS HISTORY (versioned = TRUE)</span></span>
+<span id="cb5-2"><a aria-label="2"></a>bd <span class="ot">&lt;-</span> pins<span class="sc">::</span><span class="fu">board_folder</span>(<span class="at">path =</span> <span class="st">"pins/"</span>, <span class="at">versioned =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb5-3"><a aria-label="3"></a></span>
+<span id="cb5-4"><a aria-label="4"></a><span class="co"># fetch open data once, then pin it:</span></span>
+<span id="cb5-5"><a aria-label="5"></a>dat <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"https://…/my-open-dataset.csv"</span>)</span>
+<span id="cb5-6"><a aria-label="6"></a>pins<span class="sc">::</span><span class="fu">pin_write</span>(<span class="at">board =</span> bd, <span class="at">x =</span> dat, <span class="at">name =</span> <span class="st">"my-dataset"</span>)        <span class="co"># snapshot it, versioned &amp; hashed</span></span>
+<span id="cb5-7"><a aria-label="7"></a></span>
+<span id="cb5-8"><a aria-label="8"></a><span class="co"># later re-reads get the PINNED copy, reproducibly:</span></span>
+<span id="cb5-9"><a aria-label="9"></a>pins<span class="sc">::</span><span class="fu">pin_read</span>(<span class="at">board =</span> bd, <span class="at">name =</span> <span class="st">"my-dataset"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
 <div class="callout-desc">
 <p><code>pin_write()</code> snapshots the data and records the <strong>version + hash</strong>; <code>pin_read()</code> returns that exact snapshot. Re-render → same data, every time.</p>
 </div>
 <div class="code-pop">
-<details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## `{pins}`: pin data to a versioned board {.inv}
+<details><summary class="code-pop-slot" aria-hidden="true"></summary><div class="code-pop-card" role="dialog" aria-label="Source markdown de cette diapositive" aria-live="polite"><div class="code-pop-toolbar"><span class="code-pop-lang">markdown</span><button type="button" class="code-pop-copy" aria-label="Copier le code source"><svg viewbox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></div><pre><code class="language-markdown">## [{pins}](https://pins.rstudio.com): pin data to a versioned board {.inv}
 
-`{pins}` stores a data object on a **board** and records **who wrote what, when**:
+[{pins}](https://pins.rstudio.com) stores a data object on a **board** and records **who wrote what, when**:
 
+::: {.codewindow .r name="pins.R"}
 ```{r}
 #| label: pins-setup
 #| eval: false
-library(pins)
-
+#| echo: true
 # a folder board that KEEPS HISTORY (versioned = TRUE)
-board &lt;- board_folder("pins/", versioned = TRUE)
+bd &lt;- pins::board_folder(path = "pins/", versioned = TRUE)
 
 # fetch open data once, then pin it:
-dat &lt;- read_csv("https://…/my-open-dataset.csv")
-pin_write(board, dat, "my-dataset")        # snapshot it, versioned &amp; hashed
+dat &lt;- readr::read_csv("https://…/my-open-dataset.csv")
+pins::pin_write(board = bd, x = dat, name = "my-dataset")        # snapshot it, versioned &amp; hashed
 
 # later re-reads get the PINNED copy, reproducibly:
-pin_read(board, "my-dataset")
+pins::pin_read(board = bd, name = "my-dataset")
 ```
+:::
 
 ::: {.callout-desc}
 `pin_write()` snapshots the data and records the **version + hash**; `pin_read()` returns that exact snapshot. Re-render → same data, every time.
@@ -787,12 +2118,14 @@ pin_read(board, "my-dataset")
 <section id="where-the-versioned-copy-lives" class="slide level2 inv" data-number="4.3">
 <h2><span class="header-section-number">4.3</span> Where the versioned copy lives</h2>
 <p>A board is just a folder (or a service), and it’s fully inspectable:</p>
+<div class="spread">
 <ul>
 <li class="fragment"><code>pin_list(board)</code>: what’s been pinned.</li>
 <li class="fragment"><code>pin_versions(board, "my-dataset")</code>: every snapshot, with hashes and dates.</li>
 <li class="fragment"><code>pin_read(board, "my-dataset", version = "…")</code>: roll back to an older snapshot.</li>
 </ul>
-<div class="callout-desc">
+</div>
+<div class="callout-desc fragment">
 <p>The pinned <code>pins/</code> folder is committed alongside your code, so the <em>exact data</em> your analysis used is reproducible forever, independent of portal changes or broken URLs.</p>
 </div>
 <div class="code-pop">
@@ -800,13 +2133,13 @@ pin_read(board, "my-dataset")
 
 A board is just a folder (or a service), and it's fully inspectable:
 
-::: {.incremental}
+::: {.incremental .spread}
 - `pin_list(board)`: what's been pinned.
 - `pin_versions(board, "my-dataset")`: every snapshot, with hashes and dates.
 - `pin_read(board, "my-dataset", version = "…")`: roll back to an older snapshot.
 :::
 
-::: {.callout-desc}
+::: {.callout-desc .fragment}
 The pinned `pins/` folder is committed alongside your code, so the *exact data* your analysis used is reproducible forever, independent of portal changes or broken URLs.
 :::
 </code></pre></div></details>
@@ -815,12 +2148,14 @@ The pinned `pins/` folder is committed alongside your code, so the *exact data* 
 <section id="fetch-once-pin-analyse" class="slide level2 inv" data-number="4.4">
 <h2><span class="header-section-number">4.4</span> Fetch once, pin, analyse</h2>
 <p>A reproducible data workflow in three deliberate steps:</p>
+<div class="spread">
 <ol type="1">
 <li class="fragment"><strong>Fetch</strong> the open data by URL: provenance recorded.</li>
 <li class="fragment"><strong>Pin</strong> it with <code>pin_write()</code>: versioned &amp; hashed on a local board.</li>
 <li class="fragment"><strong>Analyse from the pinned copy</strong> (<code>pin_read()</code>): stable no matter what happens upstream.</li>
 </ol>
-<div class="callout-desc">
+</div>
+<div class="callout-desc fragment">
 <p>Pinning keeps you honest: the <em>data</em> you analysed is on record, not just the <em>code</em>. Combined with git (code), renv/uv (environment) and a URL (delivery), it completes the durable portfolio you build in Session 3.</p>
 </div>
 <div class="code-pop">
@@ -828,13 +2163,13 @@ The pinned `pins/` folder is committed alongside your code, so the *exact data* 
 
 A reproducible data workflow in three deliberate steps:
 
-::: {.incremental}
+::: {.incremental .spread}
 1. **Fetch** the open data by URL: provenance recorded.
 2. **Pin** it with `pin_write()`: versioned &amp; hashed on a local board.
 3. **Analyse from the pinned copy** (`pin_read()`): stable no matter what happens upstream.
 :::
 
-::: {.callout-desc}
+::: {.callout-desc .fragment}
 Pinning keeps you honest: the *data* you analysed is on record, not just the *code*. Combined with git (code), renv/uv (environment) and a URL (delivery), it completes the durable portfolio you build in Session 3.
 :::
 </code></pre></div></details>
@@ -844,11 +2179,25 @@ Pinning keeps you honest: the *data* you analysed is on record, not just the *co
 <h2><span class="header-section-number">4.5</span> Beyond data: version your models too</h2>
 <p>The same “pin what you made” idea extends to the <em>models</em> you fit, not just the data:</p>
 <ul>
-<li class="fragment"><strong><a href="https://rstudio.github.io/vetiver-r/"><code>{vetiver}</code></a></strong>: pins a <strong>model</strong> to a board, so the exact trained model is deployed or re-loaded, versioned &amp; reproducible like your data.</li>
-<li class="fragment">It pairs with <code>pin_write()</code>/<code>pin_read()</code>: you already know the mechanics; vetiver just knows how to save/load a model’s metadata too.</li>
-<li class="fragment">Same habit, new object: <strong>data → <code>{pins}</code> · model → <code>{vetiver}</code> · code → git · environment → renv/uv</strong>.</li>
+<li class="fragment"><strong><a href="https://rstudio.github.io/vetiver-r/">{vetiver}</a></strong>: pins a <strong>model</strong> to a board, so the exact trained model is deployed or re-loaded, versioned &amp; reproducible like your data.</li>
+<li class="fragment">It pairs with <code>pin_write()</code>/<code>pin_read()</code>: you already know the mechanics; <a href="https://rstudio.github.io/vetiver-r/">{vetiver}</a> just knows how to save/load a model’s metadata too.</li>
 </ul>
-<div class="callout-desc">
+<div class="fragment" title="Same habit, new object">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Same habit, new object</strong></p>
+</div>
+<div class="callout-content">
+<p>data → <a href="https://pins.rstudio.com">{pins}</a>, model → <a href="https://rstudio.github.io/vetiver-r/articles/vetiver.html">{vetiver}</a>, code → <a href="https://github.com">GitHub</a>, environment → <a href="https://docs.astral.sh/uv/">uv</a> /<a href="https://nbafrank.github.io/uvr/">uvr</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="callout-desc fragment">
 <p>Saving a trained model by hand usually loses which packages/versions made it. <code>{vetiver}</code> records those alongside the model, so it re-runs and re-deploys anywhere.</p>
 </div>
 <div class="code-pop">
@@ -857,12 +2206,15 @@ Pinning keeps you honest: the *data* you analysed is on record, not just the *co
 The same "pin what you made" idea extends to the *models* you fit, not just the data:
 
 ::: {.incremental}
-- **[`{vetiver}`](https://rstudio.github.io/vetiver-r/)**: pins a **model** to a board, so the exact trained model is deployed or re-loaded, versioned &amp; reproducible like your data.
-- It pairs with `pin_write()`/`pin_read()`: you already know the mechanics; vetiver just knows how to save/load a model's metadata too.
-- Same habit, new object: **data → `{pins}` · model → `{vetiver}` · code → git · environment → renv/uv**.
+- **[{vetiver}](https://rstudio.github.io/vetiver-r/)**: pins a **model** to a board, so the exact trained model is deployed or re-loaded, versioned &amp; reproducible like your data.
+- It pairs with `pin_write()`/`pin_read()`: you already know the mechanics; [{vetiver}](https://rstudio.github.io/vetiver-r/) just knows how to save/load a model's metadata too.
 :::
 
-::: {.callout-desc}
+::: {.callout-tip .fragment title="Same habit, new object"}
+data → [{pins}](https://pins.rstudio.com), model → [{vetiver}](https://rstudio.github.io/vetiver-r/articles/vetiver.html), code → [GitHub](https://github.com), environment → [uv](https://docs.astral.sh/uv/) /[uvr](https://nbafrank.github.io/uvr/)
+:::
+
+::: {.callout-desc .fragment}
 Saving a trained model by hand usually loses which packages/versions made it. `{vetiver}` records those alongside the model, so it re-runs and re-deploys anywhere.
 :::
 </code></pre></div></details>
@@ -1192,19 +2544,19 @@ You already know the document mechanics: a book is the same thing scaled to many
 <section id="anatomy-of-_quarto.yml" class="slide level2 inv" data-number="6.2">
 <h2><span class="header-section-number">6.2</span> Anatomy of <code>_quarto.yml</code></h2>
 <p>The book is driven by one small file:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><a aria-label="1"></a><span class="fu">project</span><span class="kw">:</span></span>
-<span id="cb3-2"><a aria-label="2"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> book</span></span>
-<span id="cb3-3"><a aria-label="3"></a><span class="fu">book</span><span class="kw">:</span></span>
-<span id="cb3-4"><a aria-label="4"></a><span class="at">  </span><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"My Data Science Portfolio"</span></span>
-<span id="cb3-5"><a aria-label="5"></a><span class="at">  </span><span class="fu">author</span><span class="kw">:</span><span class="at"> </span><span class="st">"Your Name"</span></span>
-<span id="cb3-6"><a aria-label="6"></a><span class="at">  </span><span class="fu">chapters</span><span class="kw">:</span></span>
-<span id="cb3-7"><a aria-label="7"></a><span class="at">    </span><span class="kw">-</span><span class="at"> index.qmd</span></span>
-<span id="cb3-8"><a aria-label="8"></a><span class="at">    </span><span class="kw">-</span><span class="at"> chapters/01-EDA.qmd</span></span>
-<span id="cb3-9"><a aria-label="9"></a><span class="at">    </span><span class="kw">-</span><span class="at"> references.qmd</span></span>
-<span id="cb3-10"><a aria-label="10"></a><span class="fu">bibliography</span><span class="kw">:</span><span class="at"> references.bib</span></span>
-<span id="cb3-11"><a aria-label="11"></a><span class="fu">format</span><span class="kw">:</span></span>
-<span id="cb3-12"><a aria-label="12"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
-<span id="cb3-13"><a aria-label="13"></a><span class="at">    </span><span class="fu">theme</span><span class="kw">:</span><span class="at"> cosmo</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb6-1"><a aria-label="1"></a><span class="fu">project</span><span class="kw">:</span></span>
+<span id="cb6-2"><a aria-label="2"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> book</span></span>
+<span id="cb6-3"><a aria-label="3"></a><span class="fu">book</span><span class="kw">:</span></span>
+<span id="cb6-4"><a aria-label="4"></a><span class="at">  </span><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"My Data Science Portfolio"</span></span>
+<span id="cb6-5"><a aria-label="5"></a><span class="at">  </span><span class="fu">author</span><span class="kw">:</span><span class="at"> </span><span class="st">"Your Name"</span></span>
+<span id="cb6-6"><a aria-label="6"></a><span class="at">  </span><span class="fu">chapters</span><span class="kw">:</span></span>
+<span id="cb6-7"><a aria-label="7"></a><span class="at">    </span><span class="kw">-</span><span class="at"> index.qmd</span></span>
+<span id="cb6-8"><a aria-label="8"></a><span class="at">    </span><span class="kw">-</span><span class="at"> chapters/01-EDA.qmd</span></span>
+<span id="cb6-9"><a aria-label="9"></a><span class="at">    </span><span class="kw">-</span><span class="at"> references.qmd</span></span>
+<span id="cb6-10"><a aria-label="10"></a><span class="fu">bibliography</span><span class="kw">:</span><span class="at"> references.bib</span></span>
+<span id="cb6-11"><a aria-label="11"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb6-12"><a aria-label="12"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
+<span id="cb6-13"><a aria-label="13"></a><span class="at">    </span><span class="fu">theme</span><span class="kw">:</span><span class="at"> cosmo</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout-desc">
 <p>Add a chapter by appending its path to <code>chapters:</code>; list order is book order.</p>
 </div>
@@ -1240,21 +2592,21 @@ Add a chapter by appending its path to `chapters:`; list order is book order.
 <p>The book’s look is yours to define. Two files beside <code>_quarto.yml</code> control it:</p>
 <div class="codewindow r" width="100%">
 <p><code>_brand.yml</code>: colours &amp; fonts (the zero-CSS on-ramp)</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb4-1"><a aria-label="1"></a><span class="fu">color</span><span class="kw">:</span></span>
-<span id="cb4-2"><a aria-label="2"></a><span class="at">  </span><span class="fu">palette</span><span class="kw">:</span></span>
-<span id="cb4-3"><a aria-label="3"></a><span class="at">    </span><span class="fu">teal</span><span class="kw">:</span><span class="at">   </span><span class="st">"#2E7D6B"</span><span class="co">   # pick your own accents</span></span>
-<span id="cb4-4"><a aria-label="4"></a><span class="at">    </span><span class="fu">amber</span><span class="kw">:</span><span class="at">  </span><span class="st">"#E8A33D"</span></span>
-<span id="cb4-5"><a aria-label="5"></a><span class="at">    </span><span class="fu">indigo</span><span class="kw">:</span><span class="at"> </span><span class="st">"#4A5899"</span></span>
-<span id="cb4-6"><a aria-label="6"></a><span class="at">    </span><span class="fu">ink</span><span class="kw">:</span><span class="at">    </span><span class="st">"#17251F"</span></span>
-<span id="cb4-7"><a aria-label="7"></a><span class="at">    </span><span class="fu">paper</span><span class="kw">:</span><span class="at">  </span><span class="st">"#F1EEE6"</span></span>
-<span id="cb4-8"><a aria-label="8"></a><span class="at">  </span><span class="fu">primary</span><span class="kw">:</span><span class="at"> teal</span></span>
-<span id="cb4-9"><a aria-label="9"></a><span class="at">  </span><span class="fu">foreground</span><span class="kw">:</span><span class="at"> ink</span></span>
-<span id="cb4-10"><a aria-label="10"></a><span class="at">  </span><span class="fu">background</span><span class="kw">:</span><span class="at"> paper</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb7-1"><a aria-label="1"></a><span class="fu">color</span><span class="kw">:</span></span>
+<span id="cb7-2"><a aria-label="2"></a><span class="at">  </span><span class="fu">palette</span><span class="kw">:</span></span>
+<span id="cb7-3"><a aria-label="3"></a><span class="at">    </span><span class="fu">teal</span><span class="kw">:</span><span class="at">   </span><span class="st">"#2E7D6B"</span><span class="co">   # pick your own accents</span></span>
+<span id="cb7-4"><a aria-label="4"></a><span class="at">    </span><span class="fu">amber</span><span class="kw">:</span><span class="at">  </span><span class="st">"#E8A33D"</span></span>
+<span id="cb7-5"><a aria-label="5"></a><span class="at">    </span><span class="fu">indigo</span><span class="kw">:</span><span class="at"> </span><span class="st">"#4A5899"</span></span>
+<span id="cb7-6"><a aria-label="6"></a><span class="at">    </span><span class="fu">ink</span><span class="kw">:</span><span class="at">    </span><span class="st">"#17251F"</span></span>
+<span id="cb7-7"><a aria-label="7"></a><span class="at">    </span><span class="fu">paper</span><span class="kw">:</span><span class="at">  </span><span class="st">"#F1EEE6"</span></span>
+<span id="cb7-8"><a aria-label="8"></a><span class="at">  </span><span class="fu">primary</span><span class="kw">:</span><span class="at"> teal</span></span>
+<span id="cb7-9"><a aria-label="9"></a><span class="at">  </span><span class="fu">foreground</span><span class="kw">:</span><span class="at"> ink</span></span>
+<span id="cb7-10"><a aria-label="10"></a><span class="at">  </span><span class="fu">background</span><span class="kw">:</span><span class="at"> paper</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="codewindow r" width="100%">
 <p><code>styles.scss</code>: structural CSS beyond the palette</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource scss number-lines code-with-copy"><code class="sourceCode scss"><span id="cb5-1"><a aria-label="1"></a><span class="co">/* find selectors via Inspect, then tweak */</span></span>
-<span id="cb5-2"><a aria-label="2"></a><span class="fu">.sidebar</span> { <span class="kw">width</span>: <span class="dv">300</span><span class="dt">px</span><span class="op">;</span> }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource scss number-lines code-with-copy"><code class="sourceCode scss"><span id="cb8-1"><a aria-label="1"></a><span class="co">/* find selectors via Inspect, then tweak */</span></span>
+<span id="cb8-2"><a aria-label="2"></a><span class="fu">.sidebar</span> { <span class="kw">width</span>: <span class="dv">300</span><span class="dt">px</span><span class="op">;</span> }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="paper-card">
 <p>Edit a <code>"#hex"</code>, <code>quarto preview</code>, look. Match what <em>you</em> like, not the course decks.</p>
@@ -2755,6 +4107,38 @@ Between sessions: finish `lab-2-portfolio-book.qmd` so your book builds, commit 
         }
       });
       </script>
+    <script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+    (function() {
+      let previousOnload = window.onload;
+      window.onload = () => {
+        if (previousOnload) {
+          previousOnload();
+        }
+        lightboxQuarto.on('slide_before_load', (data) => {
+          const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+          const href = trigger.getAttribute('href');
+          if (href !== null) {
+            const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+            if (imgEl !== null) {
+              const srcAttr = imgEl.getAttribute("src");
+              if (srcAttr && srcAttr.startsWith("data:")) {
+                slideConfig.href = srcAttr;
+              }
+            }
+          } 
+        });
+      
+        lightboxQuarto.on('slide_after_load', (data) => {
+          const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(slideNode);
+          }
+        });
+      
+      };
+      
+    })();
+              </script>
     
 
 </body></html>
