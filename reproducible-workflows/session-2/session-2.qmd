@@ -652,7 +652,7 @@ A Quarto book happily mixes languages, and so can your portfolio:
 ::: {.paper-card}
 **Lab 2 (≈35 min):** `lab-2-portfolio-book.qmd`.
 
-1. **Download the starter book**: grab `portfolio-book.zip` from the course materials page (<https://astamm.github.io/r-ensai/reproducible-workflows/#materials>) and unzip it, or `cp -r common/portfolio-book/ …` from your clone.
+1. **Download the starter book**: grab `portfolio-book.zip` from the course materials page (<https://astamm.github.io/r-ensai/reproducible-workflows/#materials>) and unzip it.
 2. **Render** it: confirm the starter book builds.
 3. **Drop your Lab-1 EDA in as Chapter 1** (`chapters/01-EDA.qmd`).
 4. Re-render the whole book; check the sidebar and cross-references.
