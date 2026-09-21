@@ -24,7 +24,7 @@ You have a working, versioned **portfolio book**; today we make it durable and s
 - Session 3 (today): **deepen git** (PRs, review), **pin the environment** (uvr), **fix randomness** (`{withr}`), **publish** (Posit Connect), and **finish Chapter 1**.
 :::
 
-::: {.callout-desc}
+::: {.callout-desc .fragment}
 Trade "it works on my machine" for: versioned, pinned (version + packages), published at a URL anyone can open.
 :::
 
@@ -41,7 +41,7 @@ Your smallest reproducible unit is not a file: it's the *history of changes* to 
 - **A backup that lives off-machine**: your laptop dying stops being a catastrophe.
 :::
 
-::: {.callout-desc}
+::: {.callout-desc .fragment}
 Git is the time-machine around your analysis; today we make the habit rigorous enough to share and review.
 :::
 
@@ -49,7 +49,7 @@ Git is the time-machine around your analysis; today we make the habit rigorous e
 
 You built these reflexes in Session 2; today we sharpen them:
 
-::: {.codewindow .terminal}
+::: {.codewindow .bash}
 ```bash
 git status                   # your compass: where am I?
 git add <file>               # stage what you want to keep
@@ -63,7 +63,7 @@ git checkout -b <branch-name>   # never work on main
 - **Never push to `main`**: a PR is how a change reaches the shared history.
 :::
 
-::: {.callout-desc}
+::: {.callout-desc .fragment}
 [`usethis::use_git()`](https://usethis.r-lib.org) and the Positron source-control pane do all of this with clicks.
 :::
 
@@ -71,7 +71,7 @@ git checkout -b <branch-name>   # never work on main
 
 Before you touch a branch, fold in whatever `main` gained, so you never diverge silently:
 
-::: {.codewindow .terminal}
+::: {.codewindow .bash}
 ```bash
 git checkout main
 git fetch --all --prune     # see remote changes
@@ -90,9 +90,9 @@ Do this **before** changing a branch, and your branch tracks `main`: conflicts l
 Two people change the same line, git can't choose: it marks the file for you.
 
 ::: {.split-2}
-::: {.term}
-<span style="color:rgba(241,238,230,0.45);"># my-analysis.R (merge conflict)</span>
-```{r, eval=FALSE}
+::: {.codewindow .r name="my-analysis.R"}
+```{r, eval=FALSE, echo=TRUE}
+# my-analysis.R (merge conflict)
 <<<<<<< upstream
 penguins_clean <- janitor::clean_names(penguins)
 =======
@@ -102,9 +102,9 @@ penguins_clean <- readr::read_csv("raw.csv") |>
 ```
 :::
 
-::: {.term}
-<span style="color:rgba(241,238,230,0.45);"># a genuine .csv conflict also shows this</span>
-```{r, eval=FALSE}
+::: {.codewindow name="raw.csv"}
+```{r, eval=FALSE, echo=TRUE}
+# a genuine .csv conflict also shows this
 <<<<<<< upstream
 394,Adelie,2027
 =======
@@ -119,8 +119,8 @@ penguins_clean <- readr::read_csv("raw.csv") |>
 - In Positron: use the **inline merge editor** (Source Control → merge) to pick upstream / incoming / both.
 :::
 
-::: {.callout-desc}
-A conflict just means two edits touched the same place: resolve deliberately, commit, move on.
+::: {.callout-desc .fragment}
+A conflict just means two edits hit the same place: resolve it, commit, move on.
 :::
 
 ## Pull requests {.inv}
@@ -133,7 +133,7 @@ A PR is "please merge my branch into `main`", reviewed before it lands:
 - A PR is the *reviewable unit*: it's where your Chapter 1 gets feedback.
 :::
 
-::: {.callout-desc}
+::: {.callout-desc .fragment}
 Merge to `main` **only via a PR**; `main` stays an always-working, always-reproducible line.
 :::
 
@@ -148,7 +148,7 @@ A PR is a conversation, not just a merge button:
 - Works the same in Positron (GitHub extension) and on the GitHub web site.
 :::
 
-::: {.callout-desc}
+::: {.callout-desc .fragment}
 Review is how your work becomes reproducible to another human; you'll use this on Chapter 1.
 :::
 
@@ -172,7 +172,7 @@ Reserve a branch per idea (e.g. `eda-chapter-1`), push it, and open a **draft PR
 </div>
 </div>
 
-# Pin your environment: `uvr` (and `renv`)
+# Pin your environment: `uvr`
 
 ## The moving-environment problem {.inv}
 
@@ -184,27 +184,21 @@ Your analysis depended on package *versions*, which silently change:
 - "Works on my machine" becomes "worked on *that* machine, that day".
 :::
 
-::: {.callout-desc}
-The fix: **pin** the versions your project needs, committed with the code. `renv` pins packages; `uvr` also pins the **R version**.
+::: {.callout-desc .fragment}
+The fix: **pin** the versions your project needs, committed with the code. `uvr` pins the packages **and** the R version.
 :::
 
-## renv: the state of the art {.inv}
+## A widely used alternative: renv {.inv}
 
-`renv` gives each project its own library and a lockfile of versions:
-
-::: {.term}
-<div class="prompt">$</div> renv::init()       # project-private library + renv.lock
-<div class="prompt">$</div> renv::snapshot()   # record current versions
-<div class="prompt">$</div> renv::restore()    # rebuild the library FROM the lockfile
-:::
+`renv` gives each project its own library and locks package versions with a `renv.lock` file. Widely used and proven, but it does **not** version the language: the R version is left floating.
 
 ::: {.incremental}
-- **Commit `renv.lock`**: a machine-readable list of every version.
-- **`.gitignore` `renv/library/`**: the cache stays out of git.
+- `uvr` pins packages **and** the R version, so a fresh clone rebuilds exactly.
+- That one addition is what makes the whole environment reproducible, not just the packages.
 :::
 
-::: {.callout-desc}
-`renv` is the solid, established tool: it pins packages. `uvr` also pins the R version, so that's our focus.
+::: {.callout-desc .fragment}
+Use what fits: `renv` for packages only, or `uvr` to also pin R itself. This deck follows `uvr`.
 :::
 
 ## uvr: pin R itself, not just packages {.inv}
@@ -218,7 +212,7 @@ The fix: **pin** the versions your project needs, committed with the code. `renv
 - **`uvr::add("tidyverse")`** adds to the manifest, regenerates the lockfile, and installs, all in one call.
 :::
 
-::: {.callout-desc}
+::: {.callout-desc .fragment}
 `r_list()` shows versions; `r_use()` picks one for the session, `r_pin()` records it in the project (that's what survives a fresh clone).
 :::
 
@@ -226,9 +220,11 @@ The fix: **pin** the versions your project needs, committed with the code. `renv
 
 The companion R package from GitHub, then the `uvr` binary:
 
-::: {.term}
-<div class="prompt">&gt;</div> pak::pak("nbafrank/uvr-r")   # the uvr R package, from GitHub
-<div class="prompt">&gt;</div> uvr::install_uvr()           # installs the uvr binary (cross-platform)
+::: {.codewindow .r name="install-uvr.R"}
+```{r, eval=FALSE, echo=TRUE}
+pak::pak("nbafrank/uvr-r")   # the uvr R package, from GitHub
+uvr::install_uvr()           # installs the uvr binary (cross-platform)
+```
 :::
 
 ::: {.incremental}
@@ -236,37 +232,29 @@ The companion R package from GitHub, then the `uvr` binary:
 - It relies on `uv`, the same tool that manages Python later in your book.
 :::
 
-::: {.callout-desc}
+::: {.callout-desc .fragment}
 Installing the R package first, then the binary, keeps the whole `uvr` workflow runnable from R functions inside your project.
 :::
 
 ## What a lockfile actually pins {.inv}
 
-Both lockfiles are plain text, and that's the point. Open one and it reads like a shopping list:
-
 ::: {.callout-desc}
-`uv.lock` (via uvr) records each R/Python package with **exact version + hashes**; `renv.lock` records each R package + version + source. Neither stores the packages, only the recipe to rebuild them; `uvr` adds the **pinned R version** on top.
+`uv.lock` (via uvr) records each R/Python package with **exact version + hashes**, and pins the **R version** too. It stores only the recipe to rebuild them, not the packages themselves.
 :::
 
-::: {.split-2}
-::: {.term}
-<span style="color:rgba(241,238,230,0.45);"># uvr / uv.lock (excerpt)</span>
+::: {.codewindow name="uv.lock"}
+```yaml
+[r]
+version = "4.6.1"
+
 [[package]]
-name = "dplyr"
-version = "1.1.4"
-hash = "sha256:2f3a9..."
-
-<span style="color:rgba(241,238,230,0.45);"># and R itself is pinned too</span>
-requires-python = ">=4.6.1"
-:::
-
-::: {.term}
-<span style="color:rgba(241,238,230,0.45);"># renv.lock (excerpt)</span>
-"dplyr": {
-  "Version": "1.1.4",
-  "Source": "CRAN"
-}
-:::
+name = "DBI"
+version = "1.3.0"
+source = "cran"
+raw_version = "1.3.0"
+url = "https://cran.r-project.org/src/contrib/DBI_1.3.0.tar.gz"
+checksum = "md5:ce5e3153cc7395a2aac452db1099d003"
+```
 :::
 
 ::: {.callout-desc}
@@ -279,7 +267,7 @@ Every reproducibility tool you've met has an equivalent in Python, with the same
 
 | Role | R | Python |
 |---|---|---|
-| **Environment** | [`uvr`](https://nbafrank.github.io/uvr/) / [`renv`](https://rstudio.github.io/renv/) | [`uv`](https://docs.astral.sh/uv/) |
+| **Environment** | [`uvr`](https://nbafrank.github.io/uvr/) | [`uv`](https://docs.astral.sh/uv/) |
 | **Data & artifacts** | [`{pins}`](https://pins.rstudio.com) | [`pins`](https://rstudio.github.io/pins-python/) |
 | **Model versioning/deploy** | [`{vetiver}`](https://rstudio.github.io/vetiver-r/) | [`vetiver`](https://rstudio.github.io/vetiver-python/) |
 
@@ -299,7 +287,7 @@ Any code that uses randomness gives a different answer on every run, unless told
 - Result: the same `.qmd` renders "differently", so a reader can't reproduce your exact figure.
 :::
 
-::: {.callout-desc}
+::: {.callout-desc .fragment}
 A document whose figure changes every render isn't reproducible. Fix the seed **where the randomness happens**, not globally.
 :::
 
@@ -309,6 +297,8 @@ A document whose figure changes every render isn't reproducible. Fix the seed **
 
 ::: {.codewindow .r width="100%" name="reproducible-figure.qmd"}
 ```{r}
+#| echo: true
+#| output-location: column
 withr::with_seed(2026, {
   # anything random here, for this block only
   sample(penguins$species, 5)
@@ -324,7 +314,7 @@ withr::with_seed(2026, {
 - Fix the figure *inside the cell that draws it*; every render then matches.
 :::
 
-::: {.callout-desc}
+::: {.callout-desc .fragment}
 Make randomness intentional and local; your Chapter 1's figures become exactly reproducible without leaking a seed into the session.
 :::
 
@@ -340,7 +330,7 @@ A published analysis is one anyone can *open at a URL*, with no local environmen
 - This is the "anywhere" end of the spectrum: reachable, shareable, current.
 :::
 
-::: {.callout-desc}
+::: {.callout-desc .fragment}
 A URL is the end state of the loop: data → analysis → report → versioned → **published**.
 :::
 
@@ -348,9 +338,11 @@ A URL is the end state of the loop: data → analysis → report → versioned �
 
 Rendering is local and reproducible; *publishing* is a one-step deploy:
 
-::: {.term}
-<div class="prompt">$</div> quarto render          # build the book (local, reproducible)
-<div class="prompt">$</div> quarto publish connect # push to Posit Connect
+::: {.codewindow .bash}
+```bash
+quarto render          # build the book (local, reproducible)
+quarto publish connect # push to Posit Connect
+```
 :::
 
 ::: {.incremental}
@@ -358,7 +350,7 @@ Rendering is local and reproducible; *publishing* is a one-step deploy:
 - Every later publish updates the same URL: your portfolio stays current.
 :::
 
-::: {.callout-desc}
+::: {.callout-desc .fragment}
 The URL shares work *outside* the notebook: an employer, a teammate, or your future self all see the same, current, reproducible book.
 :::
 
@@ -366,10 +358,12 @@ The URL shares work *outside* the notebook: an employer, a teammate, or your fut
 
 The real test of everything this course taught: hand someone the *recipe* and see if the book reappears:
 
-::: {.term}
-<div class="prompt">$</div> git clone <your-url>              # 1. get the source + history
-<div class="prompt">$</div> uvr::restore() (or renv::restore) # 2. rebuild env + R version
-<div class="prompt">$</div> quarto render                    # 3. rebuild the book
+::: {.codewindow .bash}
+```bash
+git clone <your-url>        # 1. get the source + history
+uvr::sync()                 # 2. rebuild env + R version
+quarto render               # 3. rebuild the book
+```
 :::
 
 ::: {.incremental}
@@ -377,8 +371,8 @@ The real test of everything this course taught: hand someone the *recipe* and se
 - If this *doesn't* work on a fresh clone, you've found a reproducibility gap to fix.
 :::
 
-::: {.callout-desc}
-Publishing gives a URL to *send*; `clone + restore + render` proves the loop closed.
+::: {.callout-desc .fragment}
+Publishing gives a URL to *send*; `clone + sync + render` proves the loop closed.
 :::
 
 ## The full loop, closed {.inv}
@@ -394,7 +388,7 @@ Everything this course taught, in one connected picture:
 6. **Publish** to a URL: reachable and shareable.
 :::
 
-::: {.callout-desc}
+::: {.callout-desc .fragment}
 Miss any link and the chain weakens. Keep all six and your analysis is reproducible by anyone, anywhere, at any time.
 :::
 
@@ -410,7 +404,7 @@ Your Chapter 1 was the seed: now it's part of a living artefact:
 - By term's end: a multi-chapter, multi-language, published portfolio.
 :::
 
-::: {.callout-desc}
+::: {.callout-desc .fragment}
 The conventions you followed make it easy for other instructors to build *on your work*.
 :::
 
@@ -469,10 +463,10 @@ Your portfolio may grow models and extra languages: same reproducible pipeline, 
 ::: {.incremental}
 - **[`{vetiver}`](https://rstudio.github.io/vetiver-r/)** pins a trained **model** + the versions that built it, right beside your data on the same board.
 - Where a later chapter ships a model, `{vetiver}` gives it a version to deploy, not just `saveRDS()` and hope.
-- **Python twins** for everything: [`uvr`](https://nbafrank.github.io/uvr/) / [`renv`](https://rstudio.github.io/renv/)↔[`uv`](https://docs.astral.sh/uv/), [`{pins}`](https://pins.rstudio.com)↔[`pins`](https://rstudio.github.io/pins-python/), [`{vetiver}`](https://rstudio.github.io/vetiver-r/)↔[`vetiver`](https://rstudio.github.io/vetiver-python/).
+- **Python twins** for everything: [`uvr`](https://nbafrank.github.io/uvr/)↔[`uv`](https://docs.astral.sh/uv/), [`{pins}`](https://pins.rstudio.com)↔[`pins`](https://rstudio.github.io/pins-python/), [`{vetiver}`](https://rstudio.github.io/vetiver-r/)↔[`vetiver`](https://rstudio.github.io/vetiver-python/).
 :::
 
-::: {.callout-desc}
+::: {.callout-desc .fragment}
 The rubric's criteria scale to any language: source by code, pin data *and* models, version, publish. A `{vetiver}` model re-deploys anywhere.
 :::
 
