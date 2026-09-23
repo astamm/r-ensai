@@ -109,7 +109,7 @@
     code span.vs { color: #abe338; } /* VerbatimString */
     code span.wa { color: #dcc6e0; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-c8e7bbe5ff523347979294f9c7dbe7c1.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-4238ccea85fa43f08f6987e43fce7d74.css">
   <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -233,11 +233,11 @@ A. Stamm <a href="https://orcid.org/0000-0002-8725-3654" class="quarto-title-aut
 <section id="where-we-are" class="slide level2 inv" data-number="1.1">
 <h2><span class="header-section-number">1.1</span> Where we are</h2>
 <p>Last session you learned the document mechanics; today we fill them with real work.</p>
-<div class="highlight-last">
+<div>
 <ul>
-<li class="fragment">Session 1: <strong>write</strong>, Quarto documents, structured reports, transparency.</li>
-<li class="fragment">Session 2 (today): <strong>source</strong>, get a real dataset, clean it, <strong>version it with git</strong>, land your analysis inside the <strong>portfolio book</strong>, and pick your Chapter-1 dataset.</li>
-<li class="fragment">Session 3: <strong>publish</strong>, pin the environment (uvr), deepen git (PRs, review), put it at a URL, and finish Chapter 1.</li>
+<li>Session 1: <strong>write</strong>, Quarto documents, structured reports, transparency.</li>
+<li>Session 2 (today): <strong>source</strong>, get a real dataset, clean it, <strong>version it with git</strong>, land your analysis inside the <strong>portfolio book</strong>, and pick your Chapter-1 dataset.</li>
+<li>Session 3: <strong>publish</strong>, pin the environment (uvr), deepen git (PRs, review), put it at a URL, and finish Chapter 1.</li>
 </ul>
 </div>
 <div class="callout-desc fragment">
@@ -248,7 +248,8 @@ A. Stamm <a href="https://orcid.org/0000-0002-8725-3654" class="quarto-title-aut
 
 Last session you learned the document mechanics; today we fill them with real work.
 
-::: {.incremental .highlight-last}
+::: {}
+
 - Session 1: **write**, Quarto documents, structured reports, transparency.
 - Session 2 (today): **source**, get a real dataset, clean it, **version it with git**, land your analysis inside the **portfolio book**, and pick your Chapter-1 dataset.
 - Session 3: **publish**, pin the environment (uvr), deepen git (PRs, review), put it at a URL, and finish Chapter 1.
@@ -296,11 +297,11 @@ EDA is *iterative*: you circle through 1–3 several times before any formal mod
 <section id="the-environment-at-a-glance" class="slide level2 inv" data-number="2.2">
 <h2><span class="header-section-number">2.2</span> The environment at a glance</h2>
 <p>Your IDE is part of the reproducible loop. In Positron:</p>
-<div class="highlight-last">
+<div>
 <ul>
-<li class="fragment"><strong>Data pane / variable explorer</strong>: inspect loaded tables and objects without typing.</li>
-<li class="fragment"><strong>Inline plots</strong>: plots render in the IDE as you iterate.</li>
-<li class="fragment">But: the <em>IDE</em> is for exploring; the <em>document</em> is the record. Anything you discover by clicking must end up as <strong>code in a <code>.qmd</code></strong> to be reproducible.</li>
+<li><strong>Data pane / variable explorer</strong>: inspect loaded tables and objects without typing.</li>
+<li><strong>Inline plots</strong>: plots render in the IDE as you iterate.</li>
+<li>But: the <em>IDE</em> is for exploring; the <em>document</em> is the record. Anything you discover by clicking must end up as <strong>code in a <code>.qmd</code></strong> to be reproducible.</li>
 </ul>
 </div>
 <div class="callout-desc fragment">
@@ -311,7 +312,8 @@ EDA is *iterative*: you circle through 1–3 several times before any formal mod
 
 Your IDE is part of the reproducible loop. In Positron:
 
-::: {.incremental .highlight-last}
+::: {}
+
 - **Data pane / variable explorer**: inspect loaded tables and objects without typing.
 - **Inline plots**: plots render in the IDE as you iterate.
 - But: the *IDE* is for exploring; the *document* is the record. Anything you discover by clicking must end up as **code in a `.qmd`** to be reproducible.
@@ -664,23 +666,23 @@ See the rendered <code>{janitor}</code> tables
 <div class="adv-body">
 <div class="cell">
 <div class="cell-output-display">
-<div id="pxkpnbhgxe" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#pxkpnbhgxe table {
+<div id="hmrdfonigf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#hmrdfonigf table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#pxkpnbhgxe thead, #pxkpnbhgxe tbody, #pxkpnbhgxe tfoot, #pxkpnbhgxe tr, #pxkpnbhgxe td, #pxkpnbhgxe th {
+#hmrdfonigf thead, #hmrdfonigf tbody, #hmrdfonigf tfoot, #hmrdfonigf tr, #hmrdfonigf td, #hmrdfonigf th {
   border-style: none;
 }
 
-#pxkpnbhgxe p {
+#hmrdfonigf p {
   margin: 0;
   padding: 0;
 }
 
-#pxkpnbhgxe .gt_table {
+#hmrdfonigf .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -706,12 +708,12 @@ See the rendered <code>{janitor}</code> tables
   border-left-color: #D5D5D5;
 }
 
-#pxkpnbhgxe .gt_caption {
+#hmrdfonigf .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#pxkpnbhgxe .gt_title {
+#hmrdfonigf .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -723,7 +725,7 @@ See the rendered <code>{janitor}</code> tables
   border-bottom-width: 0;
 }
 
-#pxkpnbhgxe .gt_subtitle {
+#hmrdfonigf .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -735,7 +737,7 @@ See the rendered <code>{janitor}</code> tables
   border-top-width: 0;
 }
 
-#pxkpnbhgxe .gt_heading {
+#hmrdfonigf .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -747,13 +749,13 @@ See the rendered <code>{janitor}</code> tables
   border-right-color: #D3D3D3;
 }
 
-#pxkpnbhgxe .gt_bottom_border {
+#hmrdfonigf .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D5D5D5;
 }
 
-#pxkpnbhgxe .gt_col_headings {
+#hmrdfonigf .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D5D5D5;
@@ -768,7 +770,7 @@ See the rendered <code>{janitor}</code> tables
   border-right-color: #D3D3D3;
 }
 
-#pxkpnbhgxe .gt_col_heading {
+#hmrdfonigf .gt_col_heading {
   color: #FFFFFF;
   background-color: #0076BA;
   font-size: 100%;
@@ -788,7 +790,7 @@ See the rendered <code>{janitor}</code> tables
   overflow-x: hidden;
 }
 
-#pxkpnbhgxe .gt_column_spanner_outer {
+#hmrdfonigf .gt_column_spanner_outer {
   color: #FFFFFF;
   background-color: #0076BA;
   font-size: 100%;
@@ -800,15 +802,15 @@ See the rendered <code>{janitor}</code> tables
   padding-right: 4px;
 }
 
-#pxkpnbhgxe .gt_column_spanner_outer:first-child {
+#hmrdfonigf .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#pxkpnbhgxe .gt_column_spanner_outer:last-child {
+#hmrdfonigf .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#pxkpnbhgxe .gt_column_spanner {
+#hmrdfonigf .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D5D5D5;
@@ -820,11 +822,11 @@ See the rendered <code>{janitor}</code> tables
   width: 100%;
 }
 
-#pxkpnbhgxe .gt_spanner_row {
+#hmrdfonigf .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#pxkpnbhgxe .gt_group_heading {
+#hmrdfonigf .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -850,7 +852,7 @@ See the rendered <code>{janitor}</code> tables
   text-align: left;
 }
 
-#pxkpnbhgxe .gt_empty_group_heading {
+#hmrdfonigf .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -865,15 +867,15 @@ See the rendered <code>{janitor}</code> tables
   vertical-align: middle;
 }
 
-#pxkpnbhgxe .gt_from_md > :first-child {
+#hmrdfonigf .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#pxkpnbhgxe .gt_from_md > :last-child {
+#hmrdfonigf .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#pxkpnbhgxe .gt_row {
+#hmrdfonigf .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -892,7 +894,7 @@ See the rendered <code>{janitor}</code> tables
   overflow-x: hidden;
 }
 
-#pxkpnbhgxe .gt_stub {
+#hmrdfonigf .gt_stub {
   color: #FFFFFF;
   background-color: #929292;
   font-size: 100%;
@@ -905,7 +907,7 @@ See the rendered <code>{janitor}</code> tables
   padding-right: 5px;
 }
 
-#pxkpnbhgxe .gt_stub_row_group {
+#hmrdfonigf .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -919,15 +921,15 @@ See the rendered <code>{janitor}</code> tables
   vertical-align: top;
 }
 
-#pxkpnbhgxe .gt_row_group_first td {
+#hmrdfonigf .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#pxkpnbhgxe .gt_row_group_first th {
+#hmrdfonigf .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#pxkpnbhgxe .gt_summary_row {
+#hmrdfonigf .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -937,16 +939,16 @@ See the rendered <code>{janitor}</code> tables
   padding-right: 5px;
 }
 
-#pxkpnbhgxe .gt_first_summary_row {
+#hmrdfonigf .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D5D5D5;
 }
 
-#pxkpnbhgxe .gt_first_summary_row.thick {
+#hmrdfonigf .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#pxkpnbhgxe .gt_last_summary_row {
+#hmrdfonigf .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -956,7 +958,7 @@ See the rendered <code>{janitor}</code> tables
   border-bottom-color: #D5D5D5;
 }
 
-#pxkpnbhgxe .gt_grand_summary_row {
+#hmrdfonigf .gt_grand_summary_row {
   color: #FFFFFF;
   background-color: #0076BA;
   text-transform: inherit;
@@ -966,7 +968,7 @@ See the rendered <code>{janitor}</code> tables
   padding-right: 5px;
 }
 
-#pxkpnbhgxe .gt_first_grand_summary_row {
+#hmrdfonigf .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -976,7 +978,7 @@ See the rendered <code>{janitor}</code> tables
   border-top-color: #D5D5D5;
 }
 
-#pxkpnbhgxe .gt_last_grand_summary_row_top {
+#hmrdfonigf .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -986,11 +988,11 @@ See the rendered <code>{janitor}</code> tables
   border-bottom-color: #D5D5D5;
 }
 
-#pxkpnbhgxe .gt_striped {
+#hmrdfonigf .gt_striped {
   background-color: #F4F4F4;
 }
 
-#pxkpnbhgxe .gt_table_body {
+#hmrdfonigf .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D5D5D5;
@@ -999,7 +1001,7 @@ See the rendered <code>{janitor}</code> tables
   border-bottom-color: #D5D5D5;
 }
 
-#pxkpnbhgxe .gt_footnotes {
+#hmrdfonigf .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1013,7 +1015,7 @@ See the rendered <code>{janitor}</code> tables
   border-right-color: #D3D3D3;
 }
 
-#pxkpnbhgxe .gt_footnote {
+#hmrdfonigf .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1022,7 +1024,7 @@ See the rendered <code>{janitor}</code> tables
   padding-right: 5px;
 }
 
-#pxkpnbhgxe .gt_sourcenotes {
+#hmrdfonigf .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1036,7 +1038,7 @@ See the rendered <code>{janitor}</code> tables
   border-right-color: #D3D3D3;
 }
 
-#pxkpnbhgxe .gt_sourcenote {
+#hmrdfonigf .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1044,72 +1046,72 @@ See the rendered <code>{janitor}</code> tables
   padding-right: 5px;
 }
 
-#pxkpnbhgxe .gt_left {
+#hmrdfonigf .gt_left {
   text-align: left;
 }
 
-#pxkpnbhgxe .gt_center {
+#hmrdfonigf .gt_center {
   text-align: center;
 }
 
-#pxkpnbhgxe .gt_right {
+#hmrdfonigf .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#pxkpnbhgxe .gt_font_normal {
+#hmrdfonigf .gt_font_normal {
   font-weight: normal;
 }
 
-#pxkpnbhgxe .gt_font_bold {
+#hmrdfonigf .gt_font_bold {
   font-weight: bold;
 }
 
-#pxkpnbhgxe .gt_font_italic {
+#hmrdfonigf .gt_font_italic {
   font-style: italic;
 }
 
-#pxkpnbhgxe .gt_super {
+#hmrdfonigf .gt_super {
   font-size: 65%;
 }
 
-#pxkpnbhgxe .gt_footnote_marks {
+#hmrdfonigf .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#pxkpnbhgxe .gt_asterisk {
+#hmrdfonigf .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#pxkpnbhgxe .gt_indent_1 {
+#hmrdfonigf .gt_indent_1 {
   text-indent: 5px;
 }
 
-#pxkpnbhgxe .gt_indent_2 {
+#hmrdfonigf .gt_indent_2 {
   text-indent: 10px;
 }
 
-#pxkpnbhgxe .gt_indent_3 {
+#hmrdfonigf .gt_indent_3 {
   text-indent: 15px;
 }
 
-#pxkpnbhgxe .gt_indent_4 {
+#hmrdfonigf .gt_indent_4 {
   text-indent: 20px;
 }
 
-#pxkpnbhgxe .gt_indent_5 {
+#hmrdfonigf .gt_indent_5 {
   text-indent: 25px;
 }
 
-#pxkpnbhgxe .katex-display {
+#hmrdfonigf .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#pxkpnbhgxe div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#hmrdfonigf div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1166,23 +1168,23 @@ See the rendered <code>{janitor}</code> tables
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div id="xfagjdsvud" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#xfagjdsvud table {
+<div id="hbwqauruwu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#hbwqauruwu table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#xfagjdsvud thead, #xfagjdsvud tbody, #xfagjdsvud tfoot, #xfagjdsvud tr, #xfagjdsvud td, #xfagjdsvud th {
+#hbwqauruwu thead, #hbwqauruwu tbody, #hbwqauruwu tfoot, #hbwqauruwu tr, #hbwqauruwu td, #hbwqauruwu th {
   border-style: none;
 }
 
-#xfagjdsvud p {
+#hbwqauruwu p {
   margin: 0;
   padding: 0;
 }
 
-#xfagjdsvud .gt_table {
+#hbwqauruwu .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1208,12 +1210,12 @@ See the rendered <code>{janitor}</code> tables
   border-left-color: #D5D5D5;
 }
 
-#xfagjdsvud .gt_caption {
+#hbwqauruwu .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#xfagjdsvud .gt_title {
+#hbwqauruwu .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1225,7 +1227,7 @@ See the rendered <code>{janitor}</code> tables
   border-bottom-width: 0;
 }
 
-#xfagjdsvud .gt_subtitle {
+#hbwqauruwu .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1237,7 +1239,7 @@ See the rendered <code>{janitor}</code> tables
   border-top-width: 0;
 }
 
-#xfagjdsvud .gt_heading {
+#hbwqauruwu .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1249,13 +1251,13 @@ See the rendered <code>{janitor}</code> tables
   border-right-color: #D3D3D3;
 }
 
-#xfagjdsvud .gt_bottom_border {
+#hbwqauruwu .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D5D5D5;
 }
 
-#xfagjdsvud .gt_col_headings {
+#hbwqauruwu .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D5D5D5;
@@ -1270,7 +1272,7 @@ See the rendered <code>{janitor}</code> tables
   border-right-color: #D3D3D3;
 }
 
-#xfagjdsvud .gt_col_heading {
+#hbwqauruwu .gt_col_heading {
   color: #FFFFFF;
   background-color: #0076BA;
   font-size: 100%;
@@ -1290,7 +1292,7 @@ See the rendered <code>{janitor}</code> tables
   overflow-x: hidden;
 }
 
-#xfagjdsvud .gt_column_spanner_outer {
+#hbwqauruwu .gt_column_spanner_outer {
   color: #FFFFFF;
   background-color: #0076BA;
   font-size: 100%;
@@ -1302,15 +1304,15 @@ See the rendered <code>{janitor}</code> tables
   padding-right: 4px;
 }
 
-#xfagjdsvud .gt_column_spanner_outer:first-child {
+#hbwqauruwu .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#xfagjdsvud .gt_column_spanner_outer:last-child {
+#hbwqauruwu .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#xfagjdsvud .gt_column_spanner {
+#hbwqauruwu .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D5D5D5;
@@ -1322,11 +1324,11 @@ See the rendered <code>{janitor}</code> tables
   width: 100%;
 }
 
-#xfagjdsvud .gt_spanner_row {
+#hbwqauruwu .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#xfagjdsvud .gt_group_heading {
+#hbwqauruwu .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1352,7 +1354,7 @@ See the rendered <code>{janitor}</code> tables
   text-align: left;
 }
 
-#xfagjdsvud .gt_empty_group_heading {
+#hbwqauruwu .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1367,15 +1369,15 @@ See the rendered <code>{janitor}</code> tables
   vertical-align: middle;
 }
 
-#xfagjdsvud .gt_from_md > :first-child {
+#hbwqauruwu .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#xfagjdsvud .gt_from_md > :last-child {
+#hbwqauruwu .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#xfagjdsvud .gt_row {
+#hbwqauruwu .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1394,7 +1396,7 @@ See the rendered <code>{janitor}</code> tables
   overflow-x: hidden;
 }
 
-#xfagjdsvud .gt_stub {
+#hbwqauruwu .gt_stub {
   color: #FFFFFF;
   background-color: #929292;
   font-size: 100%;
@@ -1407,7 +1409,7 @@ See the rendered <code>{janitor}</code> tables
   padding-right: 5px;
 }
 
-#xfagjdsvud .gt_stub_row_group {
+#hbwqauruwu .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1421,15 +1423,15 @@ See the rendered <code>{janitor}</code> tables
   vertical-align: top;
 }
 
-#xfagjdsvud .gt_row_group_first td {
+#hbwqauruwu .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#xfagjdsvud .gt_row_group_first th {
+#hbwqauruwu .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#xfagjdsvud .gt_summary_row {
+#hbwqauruwu .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1439,16 +1441,16 @@ See the rendered <code>{janitor}</code> tables
   padding-right: 5px;
 }
 
-#xfagjdsvud .gt_first_summary_row {
+#hbwqauruwu .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D5D5D5;
 }
 
-#xfagjdsvud .gt_first_summary_row.thick {
+#hbwqauruwu .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#xfagjdsvud .gt_last_summary_row {
+#hbwqauruwu .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1458,7 +1460,7 @@ See the rendered <code>{janitor}</code> tables
   border-bottom-color: #D5D5D5;
 }
 
-#xfagjdsvud .gt_grand_summary_row {
+#hbwqauruwu .gt_grand_summary_row {
   color: #FFFFFF;
   background-color: #0076BA;
   text-transform: inherit;
@@ -1468,7 +1470,7 @@ See the rendered <code>{janitor}</code> tables
   padding-right: 5px;
 }
 
-#xfagjdsvud .gt_first_grand_summary_row {
+#hbwqauruwu .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1478,7 +1480,7 @@ See the rendered <code>{janitor}</code> tables
   border-top-color: #D5D5D5;
 }
 
-#xfagjdsvud .gt_last_grand_summary_row_top {
+#hbwqauruwu .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1488,11 +1490,11 @@ See the rendered <code>{janitor}</code> tables
   border-bottom-color: #D5D5D5;
 }
 
-#xfagjdsvud .gt_striped {
+#hbwqauruwu .gt_striped {
   background-color: #F4F4F4;
 }
 
-#xfagjdsvud .gt_table_body {
+#hbwqauruwu .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D5D5D5;
@@ -1501,7 +1503,7 @@ See the rendered <code>{janitor}</code> tables
   border-bottom-color: #D5D5D5;
 }
 
-#xfagjdsvud .gt_footnotes {
+#hbwqauruwu .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1515,7 +1517,7 @@ See the rendered <code>{janitor}</code> tables
   border-right-color: #D3D3D3;
 }
 
-#xfagjdsvud .gt_footnote {
+#hbwqauruwu .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1524,7 +1526,7 @@ See the rendered <code>{janitor}</code> tables
   padding-right: 5px;
 }
 
-#xfagjdsvud .gt_sourcenotes {
+#hbwqauruwu .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1538,7 +1540,7 @@ See the rendered <code>{janitor}</code> tables
   border-right-color: #D3D3D3;
 }
 
-#xfagjdsvud .gt_sourcenote {
+#hbwqauruwu .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1546,72 +1548,72 @@ See the rendered <code>{janitor}</code> tables
   padding-right: 5px;
 }
 
-#xfagjdsvud .gt_left {
+#hbwqauruwu .gt_left {
   text-align: left;
 }
 
-#xfagjdsvud .gt_center {
+#hbwqauruwu .gt_center {
   text-align: center;
 }
 
-#xfagjdsvud .gt_right {
+#hbwqauruwu .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#xfagjdsvud .gt_font_normal {
+#hbwqauruwu .gt_font_normal {
   font-weight: normal;
 }
 
-#xfagjdsvud .gt_font_bold {
+#hbwqauruwu .gt_font_bold {
   font-weight: bold;
 }
 
-#xfagjdsvud .gt_font_italic {
+#hbwqauruwu .gt_font_italic {
   font-style: italic;
 }
 
-#xfagjdsvud .gt_super {
+#hbwqauruwu .gt_super {
   font-size: 65%;
 }
 
-#xfagjdsvud .gt_footnote_marks {
+#hbwqauruwu .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#xfagjdsvud .gt_asterisk {
+#hbwqauruwu .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#xfagjdsvud .gt_indent_1 {
+#hbwqauruwu .gt_indent_1 {
   text-indent: 5px;
 }
 
-#xfagjdsvud .gt_indent_2 {
+#hbwqauruwu .gt_indent_2 {
   text-indent: 10px;
 }
 
-#xfagjdsvud .gt_indent_3 {
+#hbwqauruwu .gt_indent_3 {
   text-indent: 15px;
 }
 
-#xfagjdsvud .gt_indent_4 {
+#hbwqauruwu .gt_indent_4 {
   text-indent: 20px;
 }
 
-#xfagjdsvud .gt_indent_5 {
+#hbwqauruwu .gt_indent_5 {
   text-indent: 25px;
 }
 
-#xfagjdsvud .katex-display {
+#hbwqauruwu .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#xfagjdsvud div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#hbwqauruwu div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1770,9 +1772,9 @@ naniar::gg_miss_var(penguins)
 <p>Once you’ve diagnosed it, decide how to handle it. Three honest strategies; each is a <em>documented decision</em>, not a default:</p>
 <div class="spread">
 <ol type="1">
-<li class="fragment"><strong>Drop</strong> with <code>tidyr::drop_na()</code>: simplest, but you may lose whole <strong>columns</strong> or many <strong>rows</strong>; only acceptable when the missing cases are few and not systematically different.</li>
-<li class="fragment"><strong>Impute</strong> (fill in a plausible value): keeps all cases, but imputed values are <em>estimated</em>, not observed. The <a href="https://cran.r-project.org/web/views/MissingData.html">MissingData CRAN Task View</a> is the curated map of R’s methods.</li>
-<li class="fragment"><strong>Keep and use <code>na.rm = TRUE</code></strong>: let functions skip <code>NA</code> where they support it; cheapest when missingness is sparse and local.</li>
+<li><strong>Drop</strong> with <code>tidyr::drop_na()</code>: simplest, but you may lose whole <strong>columns</strong> or many <strong>rows</strong>; only acceptable when the missing cases are few and not systematically different.</li>
+<li><strong>Impute</strong> (fill in a plausible value): keeps all cases, but imputed values are <em>estimated</em>, not observed. The <a href="https://cran.r-project.org/web/views/MissingData.html">MissingData CRAN Task View</a> is the curated map of R’s methods.</li>
+<li><strong>Keep and use <code>na.rm = TRUE</code></strong>: let functions skip <code>NA</code> where they support it; cheapest when missingness is sparse and local.</li>
 </ol>
 </div>
 <div class="callout-desc fragment">
@@ -1783,7 +1785,7 @@ naniar::gg_miss_var(penguins)
 
 Once you've diagnosed it, decide how to handle it. Three honest strategies; each is a *documented decision*, not a default:
 
-::: {.incremental .spread}
+::: {.spread}
 1. **Drop** with `tidyr::drop_na()`: simplest, but you may lose whole **columns** or many **rows**; only acceptable when the missing cases are few and not systematically different.
 2. **Impute** (fill in a plausible value): keeps all cases, but imputed values are *estimated*, not observed. The [MissingData CRAN Task View](https://cran.r-project.org/web/views/MissingData.html) is the curated map of R's methods.
 3. **Keep and use `na.rm = TRUE`**: let functions skip `NA` where they support it; cheapest when missingness is sparse and local.
@@ -1798,10 +1800,10 @@ No free lunch: dropping loses information, imputing adds an assumption, `na.rm =
 <section id="tying-it-to-session-1" class="slide level2 inv" data-number="2.7">
 <h2><span class="header-section-number">2.7</span> Tying it to Session 1</h2>
 <p>This is the same cleaning conversation you started in the base-R course with <code>penguins_messy.txt</code>:</p>
-<div class="highlight-last">
+<div>
 <ul>
-<li class="fragment">There you fixed wrong <strong>types</strong> (<code>readr</code> guessing), separators, and missing values by hand.</li>
-<li class="fragment">Today the <strong>decisions</strong> are the point: <code>janitor</code>, <code>naniar</code>, <code>skimr</code> don’t <em>make</em> them for you; they <em>surface</em> them faster so you can decide well and record why.</li>
+<li>There you fixed wrong <strong>types</strong> (<code>readr</code> guessing), separators, and missing values by hand.</li>
+<li>Today the <strong>decisions</strong> are the point: <code>janitor</code>, <code>naniar</code>, <code>skimr</code> don’t <em>make</em> them for you; they <em>surface</em> them faster so you can decide well and record why.</li>
 </ul>
 </div>
 <div class="callout-desc fragment">
@@ -1812,7 +1814,8 @@ No free lunch: dropping loses information, imputing adds an assumption, `na.rm =
 
 This is the same cleaning conversation you started in the base-R course with `penguins_messy.txt`:
 
-::: {.incremental .highlight-last}
+::: {}
+
 - There you fixed wrong **types** (`readr` guessing), separators, and missing values by hand.
 - Today the **decisions** are the point: `janitor`, `naniar`, `skimr` don't *make* them for you; they *surface* them faster so you can decide well and record why.
 :::
@@ -1889,11 +1892,11 @@ Run this on the `penguins` data (loaded at the top), or a data frame of your own
 <section id="open-data-anywhere-in-the-world" class="slide level2 inv" data-number="3.1">
 <h2><span class="header-section-number">3.1</span> Open data, anywhere in the world</h2>
 <p>A reproducible analysis needs data it can <strong>re-fetch by code</strong>, and open-data portals everywhere provide exactly that:</p>
-<div class="highlight-last">
+<div>
 <ul>
-<li class="fragment"><strong>France</strong>: <a href="https://www.data.gouv.fr">data.gouv.fr</a>, thousands of public datasets, <strong>license-aware</strong>.</li>
-<li class="fragment"><strong>Your own country</strong>: nearly every government runs an official open-data portal (data.gov… for the US, Canada, UK, Germany, and many more).</li>
-<li class="fragment"><strong>The rule is the same wherever you look</strong>: a dataset you can fetch <em>programmatically</em> is a dataset your analysis can re-produce.</li>
+<li><strong>France</strong>: <a href="https://www.data.gouv.fr">data.gouv.fr</a>, thousands of public datasets, <strong>license-aware</strong>.</li>
+<li><strong>Your own country</strong>: nearly every government runs an official open-data portal (data.gov… for the US, Canada, UK, Germany, and many more).</li>
+<li><strong>The rule is the same wherever you look</strong>: a dataset you can fetch <em>programmatically</em> is a dataset your analysis can re-produce.</li>
 </ul>
 </div>
 <div class="callout-desc fragment">
@@ -1904,7 +1907,8 @@ Run this on the `penguins` data (loaded at the top), or a data frame of your own
 
 A reproducible analysis needs data it can **re-fetch by code**, and open-data portals everywhere provide exactly that:
 
-::: {.incremental .highlight-last}
+::: {}
+
 - **France**: [data.gouv.fr](https://www.data.gouv.fr), thousands of public datasets, **license-aware**.
 - **Your own country**: nearly every government runs an official open-data portal (data.gov… for the US, Canada, UK, Germany, and many more).
 - **The rule is the same wherever you look**: a dataset you can fetch *programmatically* is a dataset your analysis can re-produce.
@@ -1947,11 +1951,11 @@ Why a natural pick: pick a **topic you care about** that a future recruiter woul
 <section id="fetching-any-portal-by-url" class="slide level2 inv" data-number="3.3">
 <h2><span class="header-section-number">3.3</span> Fetching any portal by URL</h2>
 <p>Whatever portal you choose, the reproducible core is the same: a URL your code downloads:</p>
-<div class="highlight-last">
+<div>
 <ul>
-<li class="fragment"><strong><code>download.file()</code> is portal-agnostic</strong>: it doesn’t care whether the URL points at data.gouv.fr or your home country’s portal.</li>
-<li class="fragment">Pair it with a <strong>provenance sentence</strong> (dataset, publisher, URL, license) so a reader can <em>find</em> and <em>trust</em> the source.</li>
-<li class="fragment">Some portals ship an R/Python client (<a href="https://astamm.github.io/rdatagouv/">{rdatagouv}</a> here): a convenience, never a requirement.</li>
+<li><strong><code>download.file()</code> is portal-agnostic</strong>: it doesn’t care whether the URL points at data.gouv.fr or your home country’s portal.</li>
+<li>Pair it with a <strong>provenance sentence</strong> (dataset, publisher, URL, license) so a reader can <em>find</em> and <em>trust</em> the source.</li>
+<li>Some portals ship an R/Python client (<a href="https://astamm.github.io/rdatagouv/">{rdatagouv}</a> here): a convenience, never a requirement.</li>
 </ul>
 </div>
 <div class="callout-desc fragment">
@@ -1969,7 +1973,8 @@ url &lt;- "https://…/my-open-dataset.csv"   # any open-data portal, any countr
 download.file(url, "data/my-data.csv")   # a RE-RUNNABLE line of code
 ```
 
-::: {.incremental .highlight-last}
+::: {}
+
 - **`download.file()` is portal-agnostic**: it doesn't care whether the URL points at data.gouv.fr or your home country's portal.
 - Pair it with a **provenance sentence** (dataset, publisher, URL, license) so a reader can *find* and *trust* the source.
 - Some portals ship an R/Python client ([{rdatagouv}](https://astamm.github.io/rdatagouv/) here): a convenience, never a requirement.
@@ -1984,11 +1989,11 @@ download.file(url, "data/my-data.csv")   # a RE-RUNNABLE line of code
 <section id="data-that-ships-as-an-r-package" class="slide level2 inv" data-number="3.4">
 <h2><span class="header-section-number">3.4</span> Data that ships as an R package</h2>
 <p>Not every dataset needs a portal: many ship <em>inside</em> an R (or Python) package, and that’s reproducible too. You’ve used one already, <code>palmerpenguins::penguins</code>.</p>
-<div class="highlight-last">
+<div>
 <ul>
-<li class="fragment">A <strong>versioned package</strong> is reproducible data: the package is properly released and versioned on CRAN (or PyPI), and its docs and provenance ship with it.</li>
-<li class="fragment">Because it’s a package, your <strong>environment manager</strong> (<code>uvr</code>/<code>uv</code>) can lock its exact version, so a re-render gets the same data today and next year.</li>
-<li class="fragment">Good examples: <code>{gapminder}</code>, <code>{nycflights13}</code>, <code>{babynames}</code>, <code>{Lahman}</code> (baseball), <code>{tidycensus}</code>, <code>{rdatagouv}</code>’s returned data.</li>
+<li>A <strong>versioned package</strong> is reproducible data: the package is properly released and versioned on CRAN (or PyPI), and its docs and provenance ship with it.</li>
+<li>Because it’s a package, your <strong>environment manager</strong> (<code>uvr</code>/<code>uv</code>) can lock its exact version, so a re-render gets the same data today and next year.</li>
+<li>Good examples: <code>{gapminder}</code>, <code>{nycflights13}</code>, <code>{babynames}</code>, <code>{Lahman}</code> (baseball), <code>{tidycensus}</code>, <code>{rdatagouv}</code>’s returned data.</li>
 </ul>
 </div>
 <div class="callout-desc fragment">
@@ -1999,7 +2004,8 @@ download.file(url, "data/my-data.csv")   # a RE-RUNNABLE line of code
 
 Not every dataset needs a portal: many ship *inside* an R (or Python) package, and that's reproducible too. You've used one already, `palmerpenguins::penguins`.
 
-::: {.incremental .highlight-last}
+::: {}
+
 - A **versioned package** is reproducible data: the package is properly released and versioned on CRAN (or PyPI), and its docs and provenance ship with it.
 - Because it's a package, your **environment manager** (`uvr`/`uv`) can lock its exact version, so a re-render gets the same data today and next year.
 - Good examples: `{gapminder}`, `{nycflights13}`, `{babynames}`, `{Lahman}` (baseball), `{tidycensus}`, `{rdatagouv}`'s returned data.
@@ -2014,10 +2020,12 @@ A packaged dataset is the ultimate reproducible source: **one line to load, an i
 <section id="finding-data-by-code-catalogues-portal-apis" class="slide level2 inv" data-number="3.5">
 <h2><span class="header-section-number">3.5</span> Finding data by code: catalogues &amp; portal APIs</h2>
 <p>Beyond your default portal, two more reproducible ways to <em>find</em> a dataset by code:</p>
+<div>
 <ul>
-<li class="fragment"><strong>Curated catalogues of packaged data</strong>: the <a href="https://vincentarelbundock.github.io/Rdatasets/datasets.html">Rdatasets list</a> indexes hundreds of datasets shipping in CRAN packages, each loadable in one line; browse the <a href="https://cran.r-project.org/web/packages/">CRAN package list</a> and search by name.</li>
-<li class="fragment"><strong>Portal-API packages</strong>, one wrapper per portal, same convenience as <code>{rdatagouv}</code>: <code>{ausOpenData}</code>, <code>{opendatatoronto}</code>, <code>{SeattleOpenData}</code>, <code>{sfOpenData}</code>, <code>{laOpenData}</code>, <code>{chiOpenData}</code>, <code>{nycOpenData}</code>, <code>{nysOpenData}</code>, <code>{nolaOpenData}</code>, <code>{mtaOpenData}</code>, <code>{cincinattiOpenData}</code>, <code>{ColOpenData}</code>, <code>{ctOpenData}</code>, <code>{deOpenData}</code>, <code>{istat}</code>, <code>{istatR}</code>, <code>{COVID19}</code>.</li>
+<li><strong>Curated catalogues of packaged data</strong>: the <a href="https://vincentarelbundock.github.io/Rdatasets/datasets.html">Rdatasets list</a> indexes hundreds of datasets shipping in CRAN packages, each loadable in one line; browse the <a href="https://cran.r-project.org/web/packages/">CRAN package list</a> and search by name.</li>
+<li><strong>Portal-API packages</strong>, one wrapper per portal, same convenience as <code>{rdatagouv}</code>: <code>{ausOpenData}</code>, <code>{opendatatoronto}</code>, <code>{SeattleOpenData}</code>, <code>{sfOpenData}</code>, <code>{laOpenData}</code>, <code>{chiOpenData}</code>, <code>{nycOpenData}</code>, <code>{nysOpenData}</code>, <code>{nolaOpenData}</code>, <code>{mtaOpenData}</code>, <code>{cincinattiOpenData}</code>, <code>{ColOpenData}</code>, <code>{ctOpenData}</code>, <code>{deOpenData}</code>, <code>{istat}</code>, <code>{istatR}</code>, <code>{COVID19}</code>.</li>
 </ul>
+</div>
 <div class="callout-desc fragment">
 <p>Every route collapses to the same reproducible core: a <strong>packaged</strong> dataset (versioned with its package) or a <strong>portal</strong> you query by code, both with provenance you can record. The portal is optional; the <em>code you can re-run</em> is not.</p>
 </div>
@@ -2026,7 +2034,7 @@ A packaged dataset is the ultimate reproducible source: **one line to load, an i
 
 Beyond your default portal, two more reproducible ways to *find* a dataset by code:
 
-::: {.incremental}
+::: {}
 - **Curated catalogues of packaged data**: the [Rdatasets list](https://vincentarelbundock.github.io/Rdatasets/datasets.html) indexes hundreds of datasets shipping in CRAN packages, each loadable in one line; browse the [CRAN package list](https://cran.r-project.org/web/packages/) and search by name.
 - **Portal-API packages**, one wrapper per portal, same convenience as `{rdatagouv}`: `{ausOpenData}`, `{opendatatoronto}`, `{SeattleOpenData}`, `{sfOpenData}`, `{laOpenData}`, `{chiOpenData}`, `{nycOpenData}`, `{nysOpenData}`, `{nolaOpenData}`, `{mtaOpenData}`, `{cincinattiOpenData}`, `{ColOpenData}`, `{ctOpenData}`, `{deOpenData}`, `{istat}`, `{istatR}`, `{COVID19}`.
 :::
@@ -2099,11 +2107,11 @@ This same dataset becomes <strong>Chapter 1</strong> of your portfolio in Lab 2,
 <section id="the-disappearing-data-problem" class="slide level2 inv" data-number="4.1">
 <h2><span class="header-section-number">4.1</span> The (dis)appearing data problem</h2>
 <p>Last session you met “the (dis)appearing data”: a fetched file can <em>change</em> or <em>vanish</em> the moment it’s off the portal:</p>
-<div class="highlight-last">
+<div>
 <ul>
-<li class="fragment">A portal updates a dataset: your analysis was based on the <strong>old version</strong>.</li>
-<li class="fragment">A raw URL 404s a year later, and your “reproducible” document can’t re-run.</li>
-<li class="fragment">Even locally, <code>data/my-data.csv</code> can be overwritten, and git alone doesn’t version the <em>cached</em> copy well if you don’t commit it.</li>
+<li>A portal updates a dataset: your analysis was based on the <strong>old version</strong>.</li>
+<li>A raw URL 404s a year later, and your “reproducible” document can’t re-run.</li>
+<li>Even locally, <code>data/my-data.csv</code> can be overwritten, and git alone doesn’t version the <em>cached</em> copy well if you don’t commit it.</li>
 </ul>
 </div>
 <div class="callout-desc fragment">
@@ -2114,7 +2122,8 @@ This same dataset becomes <strong>Chapter 1</strong> of your portfolio in Lab 2,
 
 Last session you met "the (dis)appearing data": a fetched file can *change* or *vanish* the moment it's off the portal:
 
-::: {.incremental .highlight-last}
+::: {}
+
 - A portal updates a dataset: your analysis was based on the **old version**.
 - A raw URL 404s a year later, and your "reproducible" document can't re-run.
 - Even locally, `data/my-data.csv` can be overwritten, and git alone doesn't version the *cached* copy well if you don't commit it.
@@ -2178,9 +2187,9 @@ pins::pin_read(board = bd, name = "my-dataset")
 <p>A board is just a folder (or a service), and it’s fully inspectable:</p>
 <div class="spread">
 <ul>
-<li class="fragment"><code>pin_list(board)</code>: what’s been pinned.</li>
-<li class="fragment"><code>pin_versions(board, "my-dataset")</code>: every snapshot, with hashes and dates.</li>
-<li class="fragment"><code>pin_read(board, "my-dataset", version = "…")</code>: roll back to an older snapshot.</li>
+<li><code>pin_list(board)</code>: what’s been pinned.</li>
+<li><code>pin_versions(board, "my-dataset")</code>: every snapshot, with hashes and dates.</li>
+<li><code>pin_read(board, "my-dataset", version = "…")</code>: roll back to an older snapshot.</li>
 </ul>
 </div>
 <div class="callout-desc fragment">
@@ -2191,7 +2200,7 @@ pins::pin_read(board = bd, name = "my-dataset")
 
 A board is just a folder (or a service), and it's fully inspectable:
 
-::: {.incremental .spread}
+::: {.spread}
 - `pin_list(board)`: what's been pinned.
 - `pin_versions(board, "my-dataset")`: every snapshot, with hashes and dates.
 - `pin_read(board, "my-dataset", version = "…")`: roll back to an older snapshot.
@@ -2208,9 +2217,9 @@ The pinned `pins/` folder is committed alongside your code, so the *exact data* 
 <p>A reproducible data workflow in three deliberate steps:</p>
 <div class="spread">
 <ol type="1">
-<li class="fragment"><strong>Fetch</strong> the open data by URL: provenance recorded.</li>
-<li class="fragment"><strong>Pin</strong> it with <code>pin_write()</code>: versioned &amp; hashed on a local board.</li>
-<li class="fragment"><strong>Analyse from the pinned copy</strong> (<code>pin_read()</code>): stable no matter what happens upstream.</li>
+<li><strong>Fetch</strong> the open data by URL: provenance recorded.</li>
+<li><strong>Pin</strong> it with <code>pin_write()</code>: versioned &amp; hashed on a local board.</li>
+<li><strong>Analyse from the pinned copy</strong> (<code>pin_read()</code>): stable no matter what happens upstream.</li>
 </ol>
 </div>
 <div class="callout-desc fragment">
@@ -2221,7 +2230,7 @@ The pinned `pins/` folder is committed alongside your code, so the *exact data* 
 
 A reproducible data workflow in three deliberate steps:
 
-::: {.incremental .spread}
+::: {.spread}
 1. **Fetch** the open data by URL: provenance recorded.
 2. **Pin** it with `pin_write()`: versioned &amp; hashed on a local board.
 3. **Analyse from the pinned copy** (`pin_read()`): stable no matter what happens upstream.
@@ -2236,10 +2245,12 @@ Pinning keeps you honest: the *data* you analysed is on record, not just the *co
 <section id="beyond-data-version-your-models-too" class="slide level2 inv" data-number="4.5">
 <h2><span class="header-section-number">4.5</span> Beyond data: version your models too</h2>
 <p>The same “pin what you made” idea extends to the <em>models</em> you fit, not just the data:</p>
+<div>
 <ul>
-<li class="fragment"><strong><a href="https://rstudio.github.io/vetiver-r/">{vetiver}</a></strong>: pins a <strong>model</strong> to a board, so the exact trained model is deployed or re-loaded, versioned &amp; reproducible like your data.</li>
-<li class="fragment">It pairs with <code>pin_write()</code>/<code>pin_read()</code>: you already know the mechanics; <a href="https://rstudio.github.io/vetiver-r/">{vetiver}</a> just knows how to save/load a model’s metadata too.</li>
+<li><strong><a href="https://rstudio.github.io/vetiver-r/">{vetiver}</a></strong>: pins a <strong>model</strong> to a board, so the exact trained model is deployed or re-loaded, versioned &amp; reproducible like your data.</li>
+<li>It pairs with <code>pin_write()</code>/<code>pin_read()</code>: you already know the mechanics; <a href="https://rstudio.github.io/vetiver-r/">{vetiver}</a> just knows how to save/load a model’s metadata too.</li>
 </ul>
+</div>
 <div class="fragment" title="Same habit, new object">
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
@@ -2263,7 +2274,7 @@ Pinning keeps you honest: the *data* you analysed is on record, not just the *co
 
 The same "pin what you made" idea extends to the *models* you fit, not just the data:
 
-::: {.incremental}
+::: {}
 - **[{vetiver}](https://rstudio.github.io/vetiver-r/)**: pins a **model** to a board, so the exact trained model is deployed or re-loaded, versioned &amp; reproducible like your data.
 - It pairs with `pin_write()`/`pin_read()`: you already know the mechanics; [{vetiver}](https://rstudio.github.io/vetiver-r/) just knows how to save/load a model's metadata too.
 :::
@@ -2341,10 +2352,10 @@ Your book is Python-compatible by design: whichever language a chapter uses, the
 <span id="cb6-3"><a aria-label="3"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"msg"</span>   <span class="co"># snapshot with a note</span></span>
 <span id="cb6-4"><a aria-label="4"></a><span class="fu">git</span> push              <span class="co"># send the snapshot to GitHub</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="highlight-last">
+<div>
 <ul>
-<li class="fragment"><strong><a href="https://usethis.r-lib.org"><code>usethis::use_git()</code></a></strong> turns the folder into a git repo; the <strong>Positron git pane</strong> is the clickable version of the loop.</li>
-<li class="fragment"><strong>Commit often</strong>: small, descriptive commits beat rare mega-commits; <code>git status</code> is your compass.</li>
+<li><strong><a href="https://usethis.r-lib.org"><code>usethis::use_git()</code></a></strong> turns the folder into a git repo; the <strong>Positron git pane</strong> is the clickable version of the loop.</li>
+<li><strong>Commit often</strong>: small, descriptive commits beat rare mega-commits; <code>git status</code> is your compass.</li>
 </ul>
 </div>
 <div class="callout-desc fragment">
@@ -2364,7 +2375,8 @@ git push              # send the snapshot to GitHub
 ```
 :::
 
-::: {.incremental .highlight-last}
+::: {}
+
 - **[`usethis::use_git()`](https://usethis.r-lib.org)** turns the folder into a git repo; the **Positron git pane** is the clickable version of the loop.
 - **Commit often**: small, descriptive commits beat rare mega-commits; `git status` is your compass.
 :::
@@ -2382,11 +2394,13 @@ Version your code the way you just versioned your data. `add → commit → push
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a>usethis<span class="sc">::</span><span class="fu">use_git</span>()        <span class="co"># make it a git repo</span></span>
 <span id="cb7-2"><a aria-label="2"></a>usethis<span class="sc">::</span><span class="fu">use_github</span>()     <span class="co"># create + link the remote, push once</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<div>
 <ul>
-<li class="fragment">Set up a <strong>GitHub account</strong> first, then register a <strong>PAT</strong> with <code>gitcreds::gitcreds_set()</code> (mini-lab below); without it, Positron pushes can’t authenticate.</li>
-<li class="fragment"><a href="https://usethis.r-lib.org">{usethis}</a> runs it all: <code>use_git()</code> to init, <code>use_github()</code> to link the remote and push once.</li>
-<li class="fragment">In the <strong>Positron git pane</strong>, the push button sends your commits to GitHub.</li>
+<li>Set up a <strong>GitHub account</strong> first, then register a <strong>PAT</strong> with <code>gitcreds::gitcreds_set()</code> (mini-lab below); without it, Positron pushes can’t authenticate.</li>
+<li><a href="https://usethis.r-lib.org">{usethis}</a> runs it all: <code>use_git()</code> to init, <code>use_github()</code> to link the remote and push once.</li>
+<li>In the <strong>Positron git pane</strong>, the push button sends your commits to GitHub.</li>
 </ul>
+</div>
 <div class="callout-desc fragment">
 <p>A pushed repo is a backup and a way to share; a local-only repo is one laptop failure from gone. Push early, push often.</p>
 </div>
@@ -2402,7 +2416,7 @@ usethis::use_github()     # create + link the remote, push once
 ```
 :::
 
-::: {.incremental}
+::: {}
 - Set up a **GitHub account** first, then register a **PAT** with `gitcreds::gitcreds_set()` (mini-lab below); without it, Positron pushes can't authenticate.
 - [{usethis}](https://usethis.r-lib.org) runs it all: `use_git()` to init, `use_github()` to link the remote and push once.
 - In the **Positron git pane**, the push button sends your commits to GitHub.
@@ -2420,11 +2434,11 @@ A pushed repo is a backup and a way to share; a local-only repo is one laptop fa
 <div class="codewindow terminal">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a aria-label="1"></a><span class="fu">cat</span> .gitignore</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="highlight-last">
+<div>
 <ul>
-<li class="fragment">R: <code>.Rhistory</code>, <code>.RData</code>, <code>renv/library/</code></li>
-<li class="fragment">Render output: <code>_book/</code>, <code>*_files/</code></li>
-<li class="fragment">Editor/OS: <code>.DS_Store</code>, <code>.venv/</code>, <code>__pycache__/</code></li>
+<li>R: <code>.Rhistory</code>, <code>.RData</code>, <code>renv/library/</code></li>
+<li>Render output: <code>_book/</code>, <code>*_files/</code></li>
+<li>Editor/OS: <code>.DS_Store</code>, <code>.venv/</code>, <code>__pycache__/</code></li>
 </ul>
 </div>
 <div class="callout-desc fragment">
@@ -2441,7 +2455,8 @@ cat .gitignore
 ```
 :::
 
-::: {.incremental .highlight-last}
+::: {}
+
 - R: `.Rhistory`, `.RData`, `renv/library/`
 - Render output: `_book/`, `*_files/`
 - Editor/OS: `.DS_Store`, `.venv/`, `__pycache__/`
@@ -2465,10 +2480,10 @@ Your `portfolio-book/.gitignore` scaffold already covers these. The rule: **comm
 <span id="cb9-6"><a aria-label="6"></a><span class="fu">git</span> checkout main <span class="kw">&amp;&amp;</span> <span class="fu">git</span> fetch <span class="at">--all</span> <span class="at">--prune</span> <span class="kw">&amp;&amp;</span> <span class="fu">git</span> pull</span>
 <span id="cb9-7"><a aria-label="7"></a><span class="fu">git</span> checkout eda-chapter-1 <span class="kw">&amp;&amp;</span> <span class="fu">git</span> merge main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="highlight-last">
+<div>
 <ul>
-<li class="fragment"><strong>Mirror how you actually work</strong>: try an idea on a branch, keep it if it works; <code>main</code> stays always-working.</li>
-<li class="fragment">In the Positron git pane, the <strong>branch</strong> menu creates and switches branches.</li>
+<li><strong>Mirror how you actually work</strong>: try an idea on a branch, keep it if it works; <code>main</code> stays always-working.</li>
+<li>In the Positron git pane, the <strong>branch</strong> menu creates and switches branches.</li>
 </ul>
 </div>
 <div class="callout-desc fragment">
@@ -2491,7 +2506,8 @@ git checkout eda-chapter-1 &amp;&amp; git merge main
 ```
 :::
 
-::: {.incremental .highlight-last}
+::: {}
+
 - **Mirror how you actually work**: try an idea on a branch, keep it if it works; `main` stays always-working.
 - In the Positron git pane, the **branch** menu creates and switches branches.
 :::
@@ -2716,11 +2732,11 @@ Edit a `"#hex"`, `quarto preview`, look. Match what *you* like, not the course d
 <section id="language-agnostic-chapters" class="slide level2 inv" data-number="6.4">
 <h2><span class="header-section-number">6.4</span> Language-agnostic chapters</h2>
 <p>A Quarto book happily mixes languages, and so can your portfolio:</p>
-<div class="highlight-last spread">
+<div class="spread">
 <ul>
-<li class="fragment">Chapter files are just <code>.qmd</code>; each chapter can run <strong>R, Python, or both</strong>.</li>
-<li class="fragment"><code>format: html</code> and cross-references work identically either way.</li>
-<li class="fragment">That’s why your portfolio stays useful as you grow into Python in later courses.</li>
+<li>Chapter files are just <code>.qmd</code>; each chapter can run <strong>R, Python, or both</strong>.</li>
+<li><code>format: html</code> and cross-references work identically either way.</li>
+<li>That’s why your portfolio stays useful as you grow into Python in later courses.</li>
 </ul>
 </div>
 <div class="callout-desc fragment">
@@ -2731,7 +2747,8 @@ Edit a `"#hex"`, `quarto preview`, look. Match what *you* like, not the course d
 
 A Quarto book happily mixes languages, and so can your portfolio:
 
-::: {.incremental .highlight-last .spread}
+::: {.spread}
+
 - Chapter files are just `.qmd`; each chapter can run **R, Python, or both**.
 - `format: html` and cross-references work identically either way.
 - That's why your portfolio stays useful as you grow into Python in later courses.
@@ -2805,11 +2822,13 @@ By the end of this lab you hold the seed of your portfolio, a <em>book</em>, not
 <section id="beyond-data.gouv.fr-opendata-r-packages" class="slide level2 inv" data-number="7.1">
 <h2><span class="header-section-number">7.1</span> Beyond data.gouv.fr: OpenData R packages</h2>
 <p>Pick the portal (or package) that gets you to a dataset you <em>care</em> about; the reproducibility rule never changes:</p>
+<div>
 <ul>
-<li class="fragment"><strong>France</strong>: <a href="https://www.data.gouv.fr">data.gouv.fr</a> via <code>{rdatagouv}</code>.</li>
-<li class="fragment"><strong>Your country</strong>: nearly every government runs an official portal (data.gov for the US, Canada, UK, Germany…), fetched by URL.</li>
-<li class="fragment"><strong>R-friendly datasets</strong>: <code>{tidycensus}</code> (US Census), <code>{opendatatoronto}</code>, <code>#TidyTuesday</code> data on GitHub; Kaggle datasets too.</li>
+<li><strong>France</strong>: <a href="https://www.data.gouv.fr">data.gouv.fr</a> via <code>{rdatagouv}</code>.</li>
+<li><strong>Your country</strong>: nearly every government runs an official portal (data.gov for the US, Canada, UK, Germany…), fetched by URL.</li>
+<li><strong>R-friendly datasets</strong>: <code>{tidycensus}</code> (US Census), <code>{opendatatoronto}</code>, <code>#TidyTuesday</code> data on GitHub; Kaggle datasets too.</li>
 </ul>
+</div>
 <div class="callout-desc fragment">
 <p>Whatever the source, the bar is the same: you can fetch it <strong>by code</strong> and record its provenance (dataset, publisher, URL, license). If you can download it with one line of code, it’s fair game for Chapter 1.</p>
 </div>
@@ -2818,7 +2837,7 @@ By the end of this lab you hold the seed of your portfolio, a <em>book</em>, not
 
 Pick the portal (or package) that gets you to a dataset you *care* about; the reproducibility rule never changes:
 
-::: {.incremental}
+::: {}
 - **France**: [data.gouv.fr](https://www.data.gouv.fr) via `{rdatagouv}`.
 - **Your country**: nearly every government runs an official portal (data.gov for the US, Canada, UK, Germany…), fetched by URL.
 - **R-friendly datasets**: `{tidycensus}` (US Census), `{opendatatoronto}`, `#TidyTuesday` data on GitHub; Kaggle datasets too.
@@ -2890,12 +2909,12 @@ Between now and Session 3 there is a week. If you don’t finish, keep refining 
 <section id="a-report-is-read-not-just-rendered" class="slide level2 inv" data-number="8.1">
 <h2><span class="header-section-number">8.1</span> A report is read, not just rendered</h2>
 <p>Your EDA will be read by other humans, instructors, classmates, future employers. Write to <em>them</em>:</p>
-<div class="highlight-last">
+<div>
 <ol type="1">
-<li class="fragment"><strong>Structure signals intent</strong>: question, data, cleaning, results, findings.</li>
-<li class="fragment"><strong>Captions do the explaining</strong>: a reader should grasp a figure from its caption before reading your prose.</li>
-<li class="fragment"><strong>Say what you found <em>and</em> what you didn’t</strong>: honest limits are credibility.</li>
-<li class="fragment"><strong>Keep code in service of the story</strong>: the code shows <em>how</em>; the prose says <em>why it matters</em>.</li>
+<li><strong>Structure signals intent</strong>: question, data, cleaning, results, findings.</li>
+<li><strong>Captions do the explaining</strong>: a reader should grasp a figure from its caption before reading your prose.</li>
+<li><strong>Say what you found <em>and</em> what you didn’t</strong>: honest limits are credibility.</li>
+<li><strong>Keep code in service of the story</strong>: the code shows <em>how</em>; the prose says <em>why it matters</em>.</li>
 </ol>
 </div>
 <div class="callout-desc fragment">
@@ -2906,7 +2925,8 @@ Between now and Session 3 there is a week. If you don’t finish, keep refining 
 
 Your EDA will be read by other humans, instructors, classmates, future employers. Write to *them*:
 
-::: {.incremental .highlight-last}
+::: {}
+
 1. **Structure signals intent**: question, data, cleaning, results, findings.
 2. **Captions do the explaining**: a reader should grasp a figure from its caption before reading your prose.
 3. **Say what you found *and* what you didn't**: honest limits are credibility.
@@ -2922,12 +2942,12 @@ The reproducibility narrative: because everything is code and captioned, a stran
 <section id="preparing-work-others-will-extend" class="slide level2 inv" data-number="8.2">
 <h2><span class="header-section-number">8.2</span> Preparing work others will extend</h2>
 <p>Your chapters are slots other courses will fill. Make that easy:</p>
-<div class="highlight-last">
+<div>
 <ul>
-<li class="fragment">Use the <strong>same structure</strong> every time (the 5-section recipe).</li>
-<li class="fragment">Give <strong>descriptive labels</strong> to figures/tables (<code>fig-cap</code> everywhere).</li>
-<li class="fragment">Keep <strong>setup in one chunk</strong> so new chapters start from a known environment.</li>
-<li class="fragment">Leave placeholder chapters <strong>in place</strong>: they’re the roadmap.</li>
+<li>Use the <strong>same structure</strong> every time (the 5-section recipe).</li>
+<li>Give <strong>descriptive labels</strong> to figures/tables (<code>fig-cap</code> everywhere).</li>
+<li>Keep <strong>setup in one chunk</strong> so new chapters start from a known environment.</li>
+<li>Leave placeholder chapters <strong>in place</strong>: they’re the roadmap.</li>
 </ul>
 </div>
 <div class="callout-desc fragment">
@@ -2938,7 +2958,8 @@ The reproducibility narrative: because everything is code and captioned, a stran
 
 Your chapters are slots other courses will fill. Make that easy:
 
-::: {.incremental .highlight-last}
+::: {}
+
 - Use the **same structure** every time (the 5-section recipe).
 - Give **descriptive labels** to figures/tables (`fig-cap` everywhere).
 - Keep **setup in one chunk** so new chapters start from a known environment.
@@ -2954,14 +2975,14 @@ Think of the book as a shared, growing artefact, not a one-off. Every convention
 <section id="recap-the-full-loop" class="slide level2 inv" data-number="8.3">
 <h2><span class="header-section-number">8.3</span> Recap: the full loop</h2>
 <p>From data to a readable, reproducible chapter, the whole course in one picture:</p>
-<div class="highlight-last">
+<div>
 <ol type="1">
-<li class="fragment"><strong>Source</strong> open data by code (portal of your choice): provenance recorded.</li>
-<li class="fragment"><strong>Explore &amp; clean</strong> ({skimr}/{janitor}/{naniar}): decisions documented.</li>
-<li class="fragment"><strong>Report</strong> in a structured chapter: captions, cross-refs, findings.</li>
-<li class="fragment"><strong>Assemble</strong> into the book: one navigable portfolio.</li>
-<li class="fragment"><strong>Version</strong> your work on git: committed, branched, pushed to GitHub (today).</li>
-<li class="fragment"><em>(Session 3)</em> <strong>Pin &amp; publish</strong>: uvr/uv ({pins} for data), Posit Connect.</li>
+<li><strong>Source</strong> open data by code (portal of your choice): provenance recorded.</li>
+<li><strong>Explore &amp; clean</strong> ({skimr}/{janitor}/{naniar}): decisions documented.</li>
+<li><strong>Report</strong> in a structured chapter: captions, cross-refs, findings.</li>
+<li><strong>Assemble</strong> into the book: one navigable portfolio.</li>
+<li><strong>Version</strong> your work on git: committed, branched, pushed to GitHub (today).</li>
+<li><em>(Session 3)</em> <strong>Pin &amp; publish</strong>: uvr/uv ({pins} for data), Posit Connect.</li>
 </ol>
 </div>
 <div class="callout-desc fragment">
@@ -2972,7 +2993,8 @@ Think of the book as a shared, growing artefact, not a one-off. Every convention
 
 From data to a readable, reproducible chapter, the whole course in one picture:
 
-::: {.incremental .highlight-last}
+::: {}
+
 1. **Source** open data by code (portal of your choice): provenance recorded.
 2. **Explore &amp; clean** ({skimr}/{janitor}/{naniar}): decisions documented.
 3. **Report** in a structured chapter: captions, cross-refs, findings.

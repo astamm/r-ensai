@@ -106,7 +106,7 @@
     code span.vs { color: #abe338; } /* VerbatimString */
     code span.wa { color: #dcc6e0; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-c8e7bbe5ff523347979294f9c7dbe7c1.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-4238ccea85fa43f08f6987e43fce7d74.css">
   <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -230,11 +230,13 @@ A. Stamm <a href="https://orcid.org/0000-0002-8725-3654" class="quarto-title-aut
 <section id="where-we-are" class="slide level2 inv" data-number="1.1">
 <h2><span class="header-section-number">1.1</span> Where we are</h2>
 <p>You have a working, versioned <strong>portfolio book</strong>; today we make it durable and shareable.</p>
+<div>
 <ul>
-<li class="fragment">Session 1: <strong>write</strong>, Quarto documents, transparency.</li>
-<li class="fragment">Session 2: <strong>source</strong>, real data, cleaned, pinned, and under git in your book’s Chapter 1.</li>
-<li class="fragment">Session 3 (today): <strong>deepen git</strong> (PRs, review), <strong>pin the environment</strong> (uvr), <strong>fix randomness</strong> (<code>{withr}</code>), <strong>publish</strong> (Posit Connect), and <strong>finish Chapter 1</strong>.</li>
+<li>Session 1: <strong>write</strong>, Quarto documents, transparency.</li>
+<li>Session 2: <strong>source</strong>, real data, cleaned, pinned, and under git in your book’s Chapter 1.</li>
+<li>Session 3 (today): <strong>deepen git</strong> (PRs, review), <strong>pin the environment</strong> (uvr), <strong>fix randomness</strong> (<code>{withr}</code>), <strong>publish</strong> (Posit Connect), and <strong>finish Chapter 1</strong>.</li>
 </ul>
+</div>
 <div class="callout-desc fragment">
 <p>Trade “it works on my machine” for: versioned, pinned (version + packages), published at a URL anyone can open.</p>
 </div>
@@ -243,7 +245,7 @@ A. Stamm <a href="https://orcid.org/0000-0002-8725-3654" class="quarto-title-aut
 
 You have a working, versioned **portfolio book**; today we make it durable and shareable.
 
-::: {.incremental}
+::: {}
 - Session 1: **write**, Quarto documents, transparency.
 - Session 2: **source**, real data, cleaned, pinned, and under git in your book's Chapter 1.
 - Session 3 (today): **deepen git** (PRs, review), **pin the environment** (uvr), **fix randomness** (`{withr}`), **publish** (Posit Connect), and **finish Chapter 1**.
@@ -263,12 +265,14 @@ Trade "it works on my machine" for: versioned, pinned (version + packages), publ
 <section id="why-version-control-recap" class="slide level2 inv" data-number="2.1">
 <h2><span class="header-section-number">2.1</span> Why version control (recap)</h2>
 <p>Your smallest reproducible unit is not a file: it’s the <em>history of changes</em> to a project.</p>
+<div>
 <ul>
-<li class="fragment"><strong>Undo anything</strong>: every state of your project is recoverable.</li>
-<li class="fragment"><strong>Answer “what changed and when?”</strong>: a full log of your analysis’s evolution.</li>
-<li class="fragment"><strong>Collaborate safely</strong>: branches, PRs, review, no clobbering.</li>
-<li class="fragment"><strong>A backup that lives off-machine</strong>: your laptop dying stops being a catastrophe.</li>
+<li><strong>Undo anything</strong>: every state of your project is recoverable.</li>
+<li><strong>Answer “what changed and when?”</strong>: a full log of your analysis’s evolution.</li>
+<li><strong>Collaborate safely</strong>: branches, PRs, review, no clobbering.</li>
+<li><strong>A backup that lives off-machine</strong>: your laptop dying stops being a catastrophe.</li>
 </ul>
+</div>
 <div class="callout-desc fragment">
 <p>Git is the time-machine around your analysis; today we make the habit rigorous enough to share and review.</p>
 </div>
@@ -277,7 +281,7 @@ Trade "it works on my machine" for: versioned, pinned (version + packages), publ
 
 Your smallest reproducible unit is not a file: it's the *history of changes* to a project.
 
-::: {.incremental}
+::: {}
 - **Undo anything**: every state of your project is recoverable.
 - **Answer "what changed and when?"**: a full log of your analysis's evolution.
 - **Collaborate safely**: branches, PRs, review, no clobbering.
@@ -299,10 +303,12 @@ Git is the time-machine around your analysis; today we make the habit rigorous e
 <span id="cb1-3"><a aria-label="3"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"message"</span>      <span class="co"># snapshot with a note</span></span>
 <span id="cb1-4"><a aria-label="4"></a><span class="fu">git</span> checkout <span class="at">-b</span> <span class="op">&lt;</span>branch-name<span class="op">&gt;</span>   <span class="co"># never work on main</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<div>
 <ul>
-<li class="fragment"><strong>Commit often</strong>: small, descriptive commits beat rare mega-commits.</li>
-<li class="fragment"><strong>Never push to <code>main</code></strong>: a PR is how a change reaches the shared history.</li>
+<li><strong>Commit often</strong>: small, descriptive commits beat rare mega-commits.</li>
+<li><strong>Never push to <code>main</code></strong>: a PR is how a change reaches the shared history.</li>
 </ul>
+</div>
 <div class="callout-desc fragment">
 <p><a href="https://usethis.r-lib.org"><code>usethis::use_git()</code></a> and the Positron source-control pane do all of this with clicks.</p>
 </div>
@@ -320,7 +326,7 @@ git checkout -b &lt;branch-name&gt;   # never work on main
 ```
 :::
 
-::: {.incremental}
+::: {}
 - **Commit often**: small, descriptive commits beat rare mega-commits.
 - **Never push to `main`**: a PR is how a change reaches the shared history.
 :::
@@ -391,10 +397,12 @@ Do this **before** changing a branch, and your branch tracks `main`: conflicts l
 </div>
 </div>
 </div>
+<div>
 <ul>
-<li class="fragment">Text between <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> and <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code> is what each side proposed; delete the markers and keep the right answer.</li>
-<li class="fragment">In Positron: use the <strong>inline merge editor</strong> (Source Control → merge) to pick upstream / incoming / both.</li>
+<li>Text between <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> and <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code> is what each side proposed; delete the markers and keep the right answer.</li>
+<li>In Positron: use the <strong>inline merge editor</strong> (Source Control → merge) to pick upstream / incoming / both.</li>
 </ul>
+</div>
 <div class="callout-desc fragment">
 <p>A conflict just means two edits hit the same place: resolve it, commit, move on.</p>
 </div>
@@ -428,7 +436,7 @@ penguins_clean &lt;- readr::read_csv("raw.csv") |&gt;
 :::
 :::
 
-::: {.incremental}
+::: {}
 - Text between `&lt;&lt;&lt;&lt;&lt;&lt;&lt;` and `&gt;&gt;&gt;&gt;&gt;&gt;&gt;` is what each side proposed; delete the markers and keep the right answer.
 - In Positron: use the **inline merge editor** (Source Control → merge) to pick upstream / incoming / both.
 :::
@@ -442,11 +450,13 @@ A conflict just means two edits hit the same place: resolve it, commit, move on.
 <section id="pull-requests" class="slide level2 inv" data-number="2.5">
 <h2><span class="header-section-number">2.5</span> Pull requests</h2>
 <p>A PR is “please merge my branch into <code>main</code>”, reviewed before it lands:</p>
+<div>
 <ul>
-<li class="fragment"><strong>Positron way</strong>: the <strong>Source Control</strong> pane → create a pull request via the GitHub extension from your pushed branch.</li>
-<li class="fragment"><strong>GitHub way</strong>: push the branch, then GitHub’s web UI offers “Compare &amp; pull request” from the repo page.</li>
-<li class="fragment">A PR is the <em>reviewable unit</em>: it’s where your Chapter 1 gets feedback.</li>
+<li><strong>Positron way</strong>: the <strong>Source Control</strong> pane → create a pull request via the GitHub extension from your pushed branch.</li>
+<li><strong>GitHub way</strong>: push the branch, then GitHub’s web UI offers “Compare &amp; pull request” from the repo page.</li>
+<li>A PR is the <em>reviewable unit</em>: it’s where your Chapter 1 gets feedback.</li>
 </ul>
+</div>
 <div class="callout-desc fragment">
 <p>Merge to <code>main</code> <strong>only via a PR</strong>; <code>main</code> stays an always-working, always-reproducible line.</p>
 </div>
@@ -455,7 +465,7 @@ A conflict just means two edits hit the same place: resolve it, commit, move on.
 
 A PR is "please merge my branch into `main`", reviewed before it lands:
 
-::: {.incremental}
+::: {}
 - **Positron way**: the **Source Control** pane → create a pull request via the GitHub extension from your pushed branch.
 - **GitHub way**: push the branch, then GitHub's web UI offers "Compare &amp; pull request" from the repo page.
 - A PR is the *reviewable unit*: it's where your Chapter 1 gets feedback.
@@ -470,12 +480,14 @@ Merge to `main` **only via a PR**; `main` stays an always-working, always-reprod
 <section id="review-comment-accept" class="slide level2 inv" data-number="2.6">
 <h2><span class="header-section-number">2.6</span> Review, comment, accept</h2>
 <p>A PR is a conversation, not just a merge button:</p>
+<div>
 <ul>
-<li class="fragment"><strong>Assign a reviewer</strong> (your instructor, a classmate) to the PR.</li>
-<li class="fragment"><strong>Comment on specific lines</strong>: both sides of the diff can leave notes.</li>
-<li class="fragment"><strong>Request changes</strong> or <strong>approve</strong>: the author updates the branch, pushes, and the PR updates.</li>
-<li class="fragment">Works the same in Positron (GitHub extension) and on the GitHub web site.</li>
+<li><strong>Assign a reviewer</strong> (your instructor, a classmate) to the PR.</li>
+<li><strong>Comment on specific lines</strong>: both sides of the diff can leave notes.</li>
+<li><strong>Request changes</strong> or <strong>approve</strong>: the author updates the branch, pushes, and the PR updates.</li>
+<li>Works the same in Positron (GitHub extension) and on the GitHub web site.</li>
 </ul>
+</div>
 <div class="callout-desc fragment">
 <p>Review is how your work becomes reproducible to another human; you’ll use this on Chapter 1.</p>
 </div>
@@ -484,7 +496,7 @@ Merge to `main` **only via a PR**; `main` stays an always-working, always-reprod
 
 A PR is a conversation, not just a merge button:
 
-::: {.incremental}
+::: {}
 - **Assign a reviewer** (your instructor, a classmate) to the PR.
 - **Comment on specific lines**: both sides of the diff can leave notes.
 - **Request changes** or **approve**: the author updates the branch, pushes, and the PR updates.
@@ -555,11 +567,13 @@ Reserve a branch per idea (e.g. `eda-chapter-1`), push it, and open a **draft PR
 <section id="the-moving-environment-problem" class="slide level2 inv" data-number="3.1">
 <h2><span class="header-section-number">3.1</span> The moving-environment problem</h2>
 <p>Your analysis depended on package <em>versions</em>, which silently change:</p>
+<div>
 <ul>
-<li class="fragment"><code>install.packages()</code> updates packages <strong>globally</strong>, and today’s tidyverse may differ from last month’s.</li>
-<li class="fragment">The <strong>R version itself</strong> also moves: a book may render today and break next year on a newer R.</li>
-<li class="fragment">“Works on my machine” becomes “worked on <em>that</em> machine, that day”.</li>
+<li><code>install.packages()</code> updates packages <strong>globally</strong>, and today’s tidyverse may differ from last month’s.</li>
+<li>The <strong>R version itself</strong> also moves: a book may render today and break next year on a newer R.</li>
+<li>“Works on my machine” becomes “worked on <em>that</em> machine, that day”.</li>
 </ul>
+</div>
 <div class="callout-desc fragment">
 <p>The fix: <strong>pin</strong> the versions your project needs, committed with the code. <code>uvr</code> pins the packages <strong>and</strong> the R version.</p>
 </div>
@@ -568,7 +582,7 @@ Reserve a branch per idea (e.g. `eda-chapter-1`), push it, and open a **draft PR
 
 Your analysis depended on package *versions*, which silently change:
 
-::: {.incremental}
+::: {}
 - `install.packages()` updates packages **globally**, and today's tidyverse may differ from last month's.
 - The **R version itself** also moves: a book may render today and break next year on a newer R.
 - "Works on my machine" becomes "worked on *that* machine, that day".
@@ -583,10 +597,12 @@ The fix: **pin** the versions your project needs, committed with the code. `uvr`
 <section id="a-widely-used-alternative-renv" class="slide level2 inv" data-number="3.2">
 <h2><span class="header-section-number">3.2</span> A widely used alternative: renv</h2>
 <p><code>renv</code> gives each project its own library and locks package versions with a <code>renv.lock</code> file. Widely used and proven, but it does <strong>not</strong> version the language: the R version is left floating.</p>
+<div>
 <ul>
-<li class="fragment"><code>uvr</code> pins packages <strong>and</strong> the R version, so a fresh clone rebuilds exactly.</li>
-<li class="fragment">That one addition is what makes the whole environment reproducible, not just the packages.</li>
+<li><code>uvr</code> pins packages <strong>and</strong> the R version, so a fresh clone rebuilds exactly.</li>
+<li>That one addition is what makes the whole environment reproducible, not just the packages.</li>
 </ul>
+</div>
 <div class="callout-desc fragment">
 <p>Use what fits: <code>renv</code> for packages only, or <code>uvr</code> to also pin R itself. This deck follows <code>uvr</code>.</p>
 </div>
@@ -595,7 +611,7 @@ The fix: **pin** the versions your project needs, committed with the code. `uvr`
 
 `renv` gives each project its own library and locks package versions with a `renv.lock` file. Widely used and proven, but it does **not** version the language: the R version is left floating.
 
-::: {.incremental}
+::: {}
 - `uvr` pins packages **and** the R version, so a fresh clone rebuilds exactly.
 - That one addition is what makes the whole environment reproducible, not just the packages.
 :::
@@ -609,12 +625,14 @@ Use what fits: `renv` for packages only, or `uvr` to also pin R itself. This dec
 <section id="uvr-pin-r-itself-not-just-packages" class="slide level2 inv" data-number="3.3">
 <h2><span class="header-section-number">3.3</span> uvr: pin R itself, not just packages</h2>
 <p><code>uvr</code> wraps <code>uv</code> (the Python manager) so R gets the same “one engine, both languages” discipline:</p>
+<div>
 <ul>
-<li class="fragment"><strong><code>uvr::init()</code></strong> sets up a project manifest + lockfile (a <code>uv</code> project).</li>
-<li class="fragment"><strong><code>uvr::r_install("4.6.1")</code></strong> installs a project-managed R version.</li>
-<li class="fragment"><strong><code>uvr::r_pin("4.6.1")</code></strong> records that version in the manifest, so it’s <strong>committed and reproducible</strong>.</li>
-<li class="fragment"><strong><code>uvr::add("tidyverse")</code></strong> adds to the manifest, regenerates the lockfile, and installs, all in one call.</li>
+<li><strong><code>uvr::init()</code></strong> sets up a project manifest + lockfile (a <code>uv</code> project).</li>
+<li><strong><code>uvr::r_install("4.6.1")</code></strong> installs a project-managed R version.</li>
+<li><strong><code>uvr::r_pin("4.6.1")</code></strong> records that version in the manifest, so it’s <strong>committed and reproducible</strong>.</li>
+<li><strong><code>uvr::add("tidyverse")</code></strong> adds to the manifest, regenerates the lockfile, and installs, all in one call.</li>
 </ul>
+</div>
 <div class="callout-desc fragment">
 <p><code>r_list()</code> shows versions; <code>r_use()</code> picks one for the session, <code>r_pin()</code> records it in the project (that’s what survives a fresh clone).</p>
 </div>
@@ -623,7 +641,7 @@ Use what fits: `renv` for packages only, or `uvr` to also pin R itself. This dec
 
 `uvr` wraps `uv` (the Python manager) so R gets the same "one engine, both languages" discipline:
 
-::: {.incremental}
+::: {}
 - **`uvr::init()`** sets up a project manifest + lockfile (a `uv` project).
 - **`uvr::r_install("4.6.1")`** installs a project-managed R version.
 - **`uvr::r_pin("4.6.1")`** records that version in the manifest, so it's **committed and reproducible**.
@@ -645,10 +663,12 @@ Use what fits: `renv` for packages only, or `uvr` to also pin R itself. This dec
 <span id="cb5-2"><a aria-label="2"></a>uvr<span class="sc">::</span><span class="fu">install_uvr</span>()           <span class="co"># installs the uvr binary (cross-platform)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
+<div>
 <ul>
-<li class="fragment">One-time setup: the R package is the interface; <code>install_uvr()</code> puts the engine on your machine.</li>
-<li class="fragment">It relies on <code>uv</code>, the same tool that manages Python later in your book.</li>
+<li>One-time setup: the R package is the interface; <code>install_uvr()</code> puts the engine on your machine.</li>
+<li>It relies on <code>uv</code>, the same tool that manages Python later in your book.</li>
 </ul>
+</div>
 <div class="callout-desc fragment">
 <p>Installing the R package first, then the binary, keeps the whole <code>uvr</code> workflow runnable from R functions inside your project.</p>
 </div>
@@ -664,7 +684,7 @@ uvr::install_uvr()           # installs the uvr binary (cross-platform)
 ```
 :::
 
-::: {.incremental}
+::: {}
 - One-time setup: the R package is the interface; `install_uvr()` puts the engine on your machine.
 - It relies on `uv`, the same tool that manages Python later in your book.
 :::
@@ -780,11 +800,13 @@ Every reproducibility tool you've met has an equivalent in Python, with the same
 <section id="random-numbers-break-reproducibility" class="slide level2 inv" data-number="4.1">
 <h2><span class="header-section-number">4.1</span> Random numbers break reproducibility</h2>
 <p>Any code that uses randomness gives a different answer on every run, unless told otherwise:</p>
+<div>
 <ul>
-<li class="fragment">Sampling, simulations, plot jitter, cross-validation splits: all change a figure or number each render.</li>
-<li class="fragment">A bare <code>set.seed()</code> at the top of a document leaks into the whole session and never restores it.</li>
-<li class="fragment">Result: the same <code>.qmd</code> renders “differently”, so a reader can’t reproduce your exact figure.</li>
+<li>Sampling, simulations, plot jitter, cross-validation splits: all change a figure or number each render.</li>
+<li>A bare <code>set.seed()</code> at the top of a document leaks into the whole session and never restores it.</li>
+<li>Result: the same <code>.qmd</code> renders “differently”, so a reader can’t reproduce your exact figure.</li>
 </ul>
+</div>
 <div class="callout-desc fragment">
 <p>A document whose figure changes every render isn’t reproducible. Fix the seed <strong>where the randomness happens</strong>, not globally.</p>
 </div>
@@ -793,7 +815,7 @@ Every reproducibility tool you've met has an equivalent in Python, with the same
 
 Any code that uses randomness gives a different answer on every run, unless told otherwise:
 
-::: {.incremental}
+::: {}
 - Sampling, simulations, plot jitter, cross-validation splits: all change a figure or number each render.
 - A bare `set.seed()` at the top of a document leaks into the whole session and never restores it.
 - Result: the same `.qmd` renders "differently", so a reader can't reproduce your exact figure.
@@ -823,11 +845,13 @@ Levels: Adelie Chinstrap Gentoo</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-label="1"></a><span class="co"># outside the block, the previous seed state is restored</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div></div>
 </div>
+<div>
 <ul>
-<li class="fragment"><code>withr::with_seed(seed, { ... })</code>: set the seed for exactly that expression.</li>
-<li class="fragment"><code>withr::local_seed(seed)</code> inside a chunk: same idea, restored when the chunk ends.</li>
-<li class="fragment">Fix the figure <em>inside the cell that draws it</em>; every render then matches.</li>
+<li><code>withr::with_seed(seed, { ... })</code>: set the seed for exactly that expression.</li>
+<li><code>withr::local_seed(seed)</code> inside a chunk: same idea, restored when the chunk ends.</li>
+<li>Fix the figure <em>inside the cell that draws it</em>; every render then matches.</li>
 </ul>
+</div>
 <div class="callout-desc fragment">
 <p>Make randomness intentional and local; your Chapter 1’s figures become exactly reproducible without leaking a seed into the session.</p>
 </div>
@@ -849,7 +873,7 @@ withr::with_seed(2026, {
 ```
 :::
 
-::: {.incremental}
+::: {}
 - `withr::with_seed(seed, { ... })`: set the seed for exactly that expression.
 - `withr::local_seed(seed)` inside a chunk: same idea, restored when the chunk ends.
 - Fix the figure *inside the cell that draws it*; every render then matches.
@@ -869,11 +893,13 @@ Make randomness intentional and local; your Chapter 1's figures become exactly r
 <section id="what-posit-connect-is" class="slide level2 inv" data-number="5.1">
 <h2><span class="header-section-number">5.1</span> What Posit Connect is</h2>
 <p>A published analysis is one anyone can <em>open at a URL</em>, with no local environment required:</p>
+<div>
 <ul>
-<li class="fragment"><strong>Posit Connect</strong> hosts R and Python content (books, reports, apps, dashboards) behind a stable URL.</li>
-<li class="fragment">Publishing pushes your <strong>rendered</strong> book to the server; readers just open the link.</li>
-<li class="fragment">This is the “anywhere” end of the spectrum: reachable, shareable, current.</li>
+<li><strong>Posit Connect</strong> hosts R and Python content (books, reports, apps, dashboards) behind a stable URL.</li>
+<li>Publishing pushes your <strong>rendered</strong> book to the server; readers just open the link.</li>
+<li>This is the “anywhere” end of the spectrum: reachable, shareable, current.</li>
 </ul>
+</div>
 <div class="callout-desc fragment">
 <p>A URL is the end state of the loop: data → analysis → report → versioned → <strong>published</strong>.</p>
 </div>
@@ -882,7 +908,7 @@ Make randomness intentional and local; your Chapter 1's figures become exactly r
 
 A published analysis is one anyone can *open at a URL*, with no local environment required:
 
-::: {.incremental}
+::: {}
 - **Posit Connect** hosts R and Python content (books, reports, apps, dashboards) behind a stable URL.
 - Publishing pushes your **rendered** book to the server; readers just open the link.
 - This is the "anywhere" end of the spectrum: reachable, shareable, current.
@@ -901,10 +927,12 @@ A URL is the end state of the loop: data → analysis → report → versioned �
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a aria-label="1"></a><span class="ex">quarto</span> render          <span class="co"># build the book (local, reproducible)</span></span>
 <span id="cb10-2"><a aria-label="2"></a><span class="ex">quarto</span> publish connect <span class="co"># push to Posit Connect</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<div>
 <ul>
-<li class="fragment">First publish asks you to log in / configure the server once.</li>
-<li class="fragment">Every later publish updates the same URL: your portfolio stays current.</li>
+<li>First publish asks you to log in / configure the server once.</li>
+<li>Every later publish updates the same URL: your portfolio stays current.</li>
 </ul>
+</div>
 <div class="callout-desc fragment">
 <p>The URL shares work <em>outside</em> the notebook: an employer, a teammate, or your future self all see the same, current, reproducible book.</p>
 </div>
@@ -920,7 +948,7 @@ quarto publish connect # push to Posit Connect
 ```
 :::
 
-::: {.incremental}
+::: {}
 - First publish asks you to log in / configure the server once.
 - Every later publish updates the same URL: your portfolio stays current.
 :::
@@ -939,10 +967,12 @@ The URL shares work *outside* the notebook: an employer, a teammate, or your fut
 <span id="cb11-2"><a aria-label="2"></a><span class="fu">uvr::sync()</span>                 <span class="co"># 2. rebuild env + R version</span></span>
 <span id="cb11-3"><a aria-label="3"></a><span class="ex">quarto</span> render               <span class="co"># 3. rebuild the book</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<div>
 <ul>
-<li class="fragment"><strong>Three commands, no “works on my machine”</strong>: a second person (or your future self) rebuilds your exact book.</li>
-<li class="fragment">If this <em>doesn’t</em> work on a fresh clone, you’ve found a reproducibility gap to fix.</li>
+<li><strong>Three commands, no “works on my machine”</strong>: a second person (or your future self) rebuilds your exact book.</li>
+<li>If this <em>doesn’t</em> work on a fresh clone, you’ve found a reproducibility gap to fix.</li>
 </ul>
+</div>
 <div class="callout-desc fragment">
 <p>Publishing gives a URL to <em>send</em>; <code>clone + sync + render</code> proves the loop closed.</p>
 </div>
@@ -959,7 +989,7 @@ quarto render               # 3. rebuild the book
 ```
 :::
 
-::: {.incremental}
+::: {}
 - **Three commands, no "works on my machine"**: a second person (or your future self) rebuilds your exact book.
 - If this *doesn't* work on a fresh clone, you've found a reproducibility gap to fix.
 :::
@@ -973,14 +1003,16 @@ Publishing gives a URL to *send*; `clone + sync + render` proves the loop closed
 <section id="the-full-loop-closed" class="slide level2 inv" data-number="5.4">
 <h2><span class="header-section-number">5.4</span> The full loop, closed</h2>
 <p>Everything this course taught, in one connected picture:</p>
+<div>
 <ol type="1">
-<li class="fragment"><strong>Write</strong> the analysis in Quarto: source <em>is</em> the report.</li>
-<li class="fragment"><strong>Source</strong> the data by code: <code>{pins}</code> versions the fetched copy.</li>
-<li class="fragment"><strong>Version</strong> with git: every step reversible, reviewed via PRs.</li>
-<li class="fragment"><strong>Pin</strong> your environment with <code>uvr</code>/<code>uv</code>.</li>
-<li class="fragment"><strong>Deploy</strong> your model with <code>{vetiver}</code>, pinned like your data.</li>
-<li class="fragment"><strong>Publish</strong> to a URL: reachable and shareable.</li>
+<li><strong>Write</strong> the analysis in Quarto: source <em>is</em> the report.</li>
+<li><strong>Source</strong> the data by code: <code>{pins}</code> versions the fetched copy.</li>
+<li><strong>Version</strong> with git: every step reversible, reviewed via PRs.</li>
+<li><strong>Pin</strong> your environment with <code>uvr</code>/<code>uv</code>.</li>
+<li><strong>Deploy</strong> your model with <code>{vetiver}</code>, pinned like your data.</li>
+<li><strong>Publish</strong> to a URL: reachable and shareable.</li>
 </ol>
+</div>
 <div class="callout-desc fragment">
 <p>Miss any link and the chain weakens. Keep all six and your analysis is reproducible by anyone, anywhere, at any time.</p>
 </div>
@@ -989,7 +1021,7 @@ Publishing gives a URL to *send*; `clone + sync + render` proves the loop closed
 
 Everything this course taught, in one connected picture:
 
-::: {.incremental}
+::: {}
 1. **Write** the analysis in Quarto: source *is* the report.
 2. **Source** the data by code: `{pins}` versions the fetched copy.
 3. **Version** with git: every step reversible, reviewed via PRs.
@@ -1012,11 +1044,13 @@ Miss any link and the chain weakens. Keep all six and your analysis is reproduci
 <section id="how-your-book-keeps-growing" class="slide level2 inv" data-number="6.1">
 <h2><span class="header-section-number">6.1</span> How your book keeps growing</h2>
 <p>Your Chapter 1 was the seed: now it’s part of a living artefact:</p>
+<div>
 <ul>
-<li class="fragment">Later courses <strong>append chapters</strong> to your book (<code>02-semester-2.qmd</code>, <code>03-semester-3.qmd</code>): the placeholders you kept are the roadmap.</li>
-<li class="fragment">Because everything is versioned, pinned, and published, those additions are themselves reproducible.</li>
-<li class="fragment">By term’s end: a multi-chapter, multi-language, published portfolio.</li>
+<li>Later courses <strong>append chapters</strong> to your book (<code>02-semester-2.qmd</code>, <code>03-semester-3.qmd</code>): the placeholders you kept are the roadmap.</li>
+<li>Because everything is versioned, pinned, and published, those additions are themselves reproducible.</li>
+<li>By term’s end: a multi-chapter, multi-language, published portfolio.</li>
 </ul>
+</div>
 <div class="callout-desc fragment">
 <p>The conventions you followed make it easy for other instructors to build <em>on your work</em>.</p>
 </div>
@@ -1025,7 +1059,7 @@ Miss any link and the chain weakens. Keep all six and your analysis is reproduci
 
 Your Chapter 1 was the seed: now it's part of a living artefact:
 
-::: {.incremental}
+::: {}
 - Later courses **append chapters** to your book (`02-semester-2.qmd`, `03-semester-3.qmd`): the placeholders you kept are the roadmap.
 - Because everything is versioned, pinned, and published, those additions are themselves reproducible.
 - By term's end: a multi-chapter, multi-language, published portfolio.
@@ -1184,11 +1218,13 @@ This is the moment everything this course taught comes together: source by code,
 <section id="models-and-the-python-side" class="slide level2 inv" data-number="6.4">
 <h2><span class="header-section-number">6.4</span> Models and the Python side</h2>
 <p>Your portfolio may grow models and extra languages: same reproducible pipeline, meeting them at the door:</p>
+<div>
 <ul>
-<li class="fragment"><strong><a href="https://rstudio.github.io/vetiver-r/"><code>{vetiver}</code></a></strong> pins a trained <strong>model</strong> + the versions that built it, right beside your data on the same board.</li>
-<li class="fragment">Where a later chapter ships a model, <code>{vetiver}</code> gives it a version to deploy, not just <code>saveRDS()</code> and hope.</li>
-<li class="fragment"><strong>Python twins</strong> for everything: <a href="https://nbafrank.github.io/uvr/"><code>uvr</code></a>↔︎<a href="https://docs.astral.sh/uv/"><code>uv</code></a>, <a href="https://pins.rstudio.com"><code>{pins}</code></a>↔︎<a href="https://rstudio.github.io/pins-python/"><code>pins</code></a>, <a href="https://rstudio.github.io/vetiver-r/"><code>{vetiver}</code></a>↔︎<a href="https://rstudio.github.io/vetiver-python/"><code>vetiver</code></a>.</li>
+<li><strong><a href="https://rstudio.github.io/vetiver-r/"><code>{vetiver}</code></a></strong> pins a trained <strong>model</strong> + the versions that built it, right beside your data on the same board.</li>
+<li>Where a later chapter ships a model, <code>{vetiver}</code> gives it a version to deploy, not just <code>saveRDS()</code> and hope.</li>
+<li><strong>Python twins</strong> for everything: <a href="https://nbafrank.github.io/uvr/"><code>uvr</code></a>↔︎<a href="https://docs.astral.sh/uv/"><code>uv</code></a>, <a href="https://pins.rstudio.com"><code>{pins}</code></a>↔︎<a href="https://rstudio.github.io/pins-python/"><code>pins</code></a>, <a href="https://rstudio.github.io/vetiver-r/"><code>{vetiver}</code></a>↔︎<a href="https://rstudio.github.io/vetiver-python/"><code>vetiver</code></a>.</li>
 </ul>
+</div>
 <div class="callout-desc fragment">
 <p>The rubric’s criteria scale to any language: source by code, pin data <em>and</em> models, version, publish. A <code>{vetiver}</code> model re-deploys anywhere.</p>
 </div>
@@ -1197,7 +1233,7 @@ This is the moment everything this course taught comes together: source by code,
 
 Your portfolio may grow models and extra languages: same reproducible pipeline, meeting them at the door:
 
-::: {.incremental}
+::: {}
 - **[`{vetiver}`](https://rstudio.github.io/vetiver-r/)** pins a trained **model** + the versions that built it, right beside your data on the same board.
 - Where a later chapter ships a model, `{vetiver}` gives it a version to deploy, not just `saveRDS()` and hope.
 - **Python twins** for everything: [`uvr`](https://nbafrank.github.io/uvr/)↔[`uv`](https://docs.astral.sh/uv/), [`{pins}`](https://pins.rstudio.com)↔[`pins`](https://rstudio.github.io/pins-python/), [`{vetiver}`](https://rstudio.github.io/vetiver-r/)↔[`vetiver`](https://rstudio.github.io/vetiver-python/).
