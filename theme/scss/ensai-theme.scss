@@ -1132,3 +1132,82 @@ $colors: (
   margin-top: 0.25em;
 }
 
+/* ---------- Data science cycle (RW session-1 "Research, by code") ------- */
+/* A two-part build-up mirroring the R for Data Science intro figure: a
+   research ring (Hypothesis → Experiment → Data → Conclusions) above a code
+   loop that ends in Communicate. Revealed stepwise with .fragment. */
+.ds-row {
+  display: flex;
+  align-items: stretch;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.55em 0.5em;
+  margin-top: 0.8em;
+}
+.ds-node {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45em;
+  min-width: 6.2em;
+  padding: 0.42em 0.75em;
+  border-radius: 9px;
+  border: 1.5px solid rgba($ink-light, 0.35);
+  color: $ink-light;
+  font-weight: 600;
+  font-size: 0.6em;
+  line-height: 1.25;
+  text-align: center;
+}
+.ds-node .n {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5em;
+  height: 1.5em;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  font-size: 0.88em;
+  background: rgba($ink-dark, 0.30);
+  color: $ink-light;
+}
+.ds-node .lbl { display: inline-flex; flex-direction: column; }
+.ds-node .en { opacity: 0.55; font-size: 0.82em; font-weight: 500; }
+.ds-arrow {
+  align-self: center;
+  color: rgba($ink-light, 0.5);
+  font-weight: 700;
+  font-size: 0.85em;
+}
+.ds-node.green { border-color: theme-color("green");  color: theme-color("green"); }
+.ds-node.amber { border-color: $review;               color: $review; }
+.ds-node.indigo{ border-color: theme-color("indigo"); color: theme-color("indigo"); }
+.ds-node.green  .n { background: rgba(theme-color("green"),  0.18); color: $ink-light; }
+.ds-node.amber  .n { background: rgba($review,              0.18); color: $ink-light; }
+.ds-node.indigo .n { background: rgba(theme-color("indigo"), 0.20); color: $ink-light; }
+.ds-ring {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.4em 0.5em;
+  margin-top: 0.2em;
+  padding: 0.5em 1em;
+  border: 1.5px dashed rgba($ink-light, 0.32);
+  border-radius: 12px;
+  background: rgba($ink-light, 0.06);
+}
+.ds-ring .ds-node {
+  min-width: 0;
+  border: 1.5px solid rgba($ink-light, 0.4);
+  background: rgba($ink-light, 0.10);
+  font-weight: 600;
+  font-size: 0.56em;
+}
+.ds-ring .ds-note {
+  color: rgba($ink-light, 0.7);
+  font-size: 0.56em;
+  margin-left: 0.5em;
+  font-style: italic;
+}
+

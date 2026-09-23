@@ -18,7 +18,7 @@ library(tidyverse)
 
 You have a working, versioned **portfolio book**; today we make it durable and shareable.
 
-::: {.incremental}
+::: {}
 - Session 1: **write**, Quarto documents, transparency.
 - Session 2: **source**, real data, cleaned, pinned, and under git in your book's Chapter 1.
 - Session 3 (today): **deepen git** (PRs, review), **pin the environment** (uvr), **fix randomness** (`{withr}`), **publish** (Posit Connect), and **finish Chapter 1**.
@@ -34,7 +34,7 @@ Trade "it works on my machine" for: versioned, pinned (version + packages), publ
 
 Your smallest reproducible unit is not a file: it's the *history of changes* to a project.
 
-::: {.incremental}
+::: {}
 - **Undo anything**: every state of your project is recoverable.
 - **Answer "what changed and when?"**: a full log of your analysis's evolution.
 - **Collaborate safely**: branches, PRs, review, no clobbering.
@@ -58,7 +58,7 @@ git checkout -b <branch-name>   # never work on main
 ```
 :::
 
-::: {.incremental}
+::: {}
 - **Commit often**: small, descriptive commits beat rare mega-commits.
 - **Never push to `main`**: a PR is how a change reaches the shared history.
 :::
@@ -114,7 +114,7 @@ penguins_clean <- readr::read_csv("raw.csv") |>
 :::
 :::
 
-::: {.incremental}
+::: {}
 - Text between `<<<<<<<` and `>>>>>>>` is what each side proposed; delete the markers and keep the right answer.
 - In Positron: use the **inline merge editor** (Source Control → merge) to pick upstream / incoming / both.
 :::
@@ -127,7 +127,7 @@ A conflict just means two edits hit the same place: resolve it, commit, move on.
 
 A PR is "please merge my branch into `main`", reviewed before it lands:
 
-::: {.incremental}
+::: {}
 - **Positron way**: the **Source Control** pane → create a pull request via the GitHub extension from your pushed branch.
 - **GitHub way**: push the branch, then GitHub's web UI offers "Compare & pull request" from the repo page.
 - A PR is the *reviewable unit*: it's where your Chapter 1 gets feedback.
@@ -141,7 +141,7 @@ Merge to `main` **only via a PR**; `main` stays an always-working, always-reprod
 
 A PR is a conversation, not just a merge button:
 
-::: {.incremental}
+::: {}
 - **Assign a reviewer** (your instructor, a classmate) to the PR.
 - **Comment on specific lines**: both sides of the diff can leave notes.
 - **Request changes** or **approve**: the author updates the branch, pushes, and the PR updates.
@@ -178,7 +178,7 @@ Reserve a branch per idea (e.g. `eda-chapter-1`), push it, and open a **draft PR
 
 Your analysis depended on package *versions*, which silently change:
 
-::: {.incremental}
+::: {}
 - `install.packages()` updates packages **globally**, and today's tidyverse may differ from last month's.
 - The **R version itself** also moves: a book may render today and break next year on a newer R.
 - "Works on my machine" becomes "worked on *that* machine, that day".
@@ -192,7 +192,7 @@ The fix: **pin** the versions your project needs, committed with the code. `uvr`
 
 `renv` gives each project its own library and locks package versions with a `renv.lock` file. Widely used and proven, but it does **not** version the language: the R version is left floating.
 
-::: {.incremental}
+::: {}
 - `uvr` pins packages **and** the R version, so a fresh clone rebuilds exactly.
 - That one addition is what makes the whole environment reproducible, not just the packages.
 :::
@@ -205,7 +205,7 @@ Use what fits: `renv` for packages only, or `uvr` to also pin R itself. This dec
 
 `uvr` wraps `uv` (the Python manager) so R gets the same "one engine, both languages" discipline:
 
-::: {.incremental}
+::: {}
 - **`uvr::init()`** sets up a project manifest + lockfile (a `uv` project).
 - **`uvr::r_install("4.6.1")`** installs a project-managed R version.
 - **`uvr::r_pin("4.6.1")`** records that version in the manifest, so it's **committed and reproducible**.
@@ -227,7 +227,7 @@ uvr::install_uvr()           # installs the uvr binary (cross-platform)
 ```
 :::
 
-::: {.incremental}
+::: {}
 - One-time setup: the R package is the interface; `install_uvr()` puts the engine on your machine.
 - It relies on `uv`, the same tool that manages Python later in your book.
 :::
@@ -281,7 +281,7 @@ Every reproducibility tool you've met has an equivalent in Python, with the same
 
 Any code that uses randomness gives a different answer on every run, unless told otherwise:
 
-::: {.incremental}
+::: {}
 - Sampling, simulations, plot jitter, cross-validation splits: all change a figure or number each render.
 - A bare `set.seed()` at the top of a document leaks into the whole session and never restores it.
 - Result: the same `.qmd` renders "differently", so a reader can't reproduce your exact figure.
@@ -308,7 +308,7 @@ withr::with_seed(2026, {
 ```
 :::
 
-::: {.incremental}
+::: {}
 - `withr::with_seed(seed, { ... })`: set the seed for exactly that expression.
 - `withr::local_seed(seed)` inside a chunk: same idea, restored when the chunk ends.
 - Fix the figure *inside the cell that draws it*; every render then matches.
@@ -324,7 +324,7 @@ Make randomness intentional and local; your Chapter 1's figures become exactly r
 
 A published analysis is one anyone can *open at a URL*, with no local environment required:
 
-::: {.incremental}
+::: {}
 - **Posit Connect** hosts R and Python content (books, reports, apps, dashboards) behind a stable URL.
 - Publishing pushes your **rendered** book to the server; readers just open the link.
 - This is the "anywhere" end of the spectrum: reachable, shareable, current.
@@ -345,7 +345,7 @@ quarto publish connect # push to Posit Connect
 ```
 :::
 
-::: {.incremental}
+::: {}
 - First publish asks you to log in / configure the server once.
 - Every later publish updates the same URL: your portfolio stays current.
 :::
@@ -366,7 +366,7 @@ quarto render               # 3. rebuild the book
 ```
 :::
 
-::: {.incremental}
+::: {}
 - **Three commands, no "works on my machine"**: a second person (or your future self) rebuilds your exact book.
 - If this *doesn't* work on a fresh clone, you've found a reproducibility gap to fix.
 :::
@@ -379,7 +379,7 @@ Publishing gives a URL to *send*; `clone + sync + render` proves the loop closed
 
 Everything this course taught, in one connected picture:
 
-::: {.incremental}
+::: {}
 1. **Write** the analysis in Quarto: source *is* the report.
 2. **Source** the data by code: `{pins}` versions the fetched copy.
 3. **Version** with git: every step reversible, reviewed via PRs.
@@ -398,7 +398,7 @@ Miss any link and the chain weakens. Keep all six and your analysis is reproduci
 
 Your Chapter 1 was the seed: now it's part of a living artefact:
 
-::: {.incremental}
+::: {}
 - Later courses **append chapters** to your book (`02-semester-2.qmd`, `03-semester-3.qmd`): the placeholders you kept are the roadmap.
 - Because everything is versioned, pinned, and published, those additions are themselves reproducible.
 - By term's end: a multi-chapter, multi-language, published portfolio.
@@ -460,7 +460,7 @@ The conventions you followed make it easy for other instructors to build *on you
 
 Your portfolio may grow models and extra languages: same reproducible pipeline, meeting them at the door:
 
-::: {.incremental}
+::: {}
 - **[`{vetiver}`](https://rstudio.github.io/vetiver-r/)** pins a trained **model** + the versions that built it, right beside your data on the same board.
 - Where a later chapter ships a model, `{vetiver}` gives it a version to deploy, not just `saveRDS()` and hope.
 - **Python twins** for everything: [`uvr`](https://nbafrank.github.io/uvr/)↔[`uv`](https://docs.astral.sh/uv/), [`{pins}`](https://pins.rstudio.com)↔[`pins`](https://rstudio.github.io/pins-python/), [`{vetiver}`](https://rstudio.github.io/vetiver-r/)↔[`vetiver`](https://rstudio.github.io/vetiver-python/).

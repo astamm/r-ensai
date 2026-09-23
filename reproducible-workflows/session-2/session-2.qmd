@@ -22,7 +22,8 @@ penguins <- palmerpenguins::penguins   # penguins sourced from CRAN, not a local
 
 Last session you learned the document mechanics; today we fill them with real work.
 
-::: {.incremental .highlight-last}
+::: {}
+
 - Session 1: **write**, Quarto documents, structured reports, transparency.
 - Session 2 (today): **source**, get a real dataset, clean it, **version it with git**, land your analysis inside the **portfolio book**, and pick your Chapter-1 dataset.
 - Session 3: **publish**, pin the environment (uvr), deepen git (PRs, review), put it at a URL, and finish Chapter 1.
@@ -51,7 +52,8 @@ EDA is *iterative*: you circle through 1–3 several times before any formal mod
 
 Your IDE is part of the reproducible loop. In Positron:
 
-::: {.incremental .highlight-last}
+::: {}
+
 - **Data pane / variable explorer**: inspect loaded tables and objects without typing.
 - **Inline plots**: plots render in the IDE as you iterate.
 - But: the *IDE* is for exploring; the *document* is the record. Anything you discover by clicking must end up as **code in a `.qmd`** to be reproducible.
@@ -187,7 +189,7 @@ naniar::gg_miss_var(penguins)
 
 Once you've diagnosed it, decide how to handle it. Three honest strategies; each is a *documented decision*, not a default:
 
-::: {.incremental .spread}
+::: {.spread}
 1. **Drop** with `tidyr::drop_na()`: simplest, but you may lose whole **columns** or many **rows**; only acceptable when the missing cases are few and not systematically different.
 2. **Impute** (fill in a plausible value): keeps all cases, but imputed values are *estimated*, not observed. The [MissingData CRAN Task View](https://cran.r-project.org/web/views/MissingData.html) is the curated map of R's methods.
 3. **Keep and use `na.rm = TRUE`**: let functions skip `NA` where they support it; cheapest when missingness is sparse and local.
@@ -201,7 +203,8 @@ No free lunch: dropping loses information, imputing adds an assumption, `na.rm =
 
 This is the same cleaning conversation you started in the base-R course with `penguins_messy.txt`:
 
-::: {.incremental .highlight-last}
+::: {}
+
 - There you fixed wrong **types** (`readr` guessing), separators, and missing values by hand.
 - Today the **decisions** are the point: `janitor`, `naniar`, `skimr` don't *make* them for you; they *surface* them faster so you can decide well and record why.
 :::
@@ -240,7 +243,8 @@ Run this on the `penguins` data (loaded at the top), or a data frame of your own
 
 A reproducible analysis needs data it can **re-fetch by code**, and open-data portals everywhere provide exactly that:
 
-::: {.incremental .highlight-last}
+::: {}
+
 - **France**: [data.gouv.fr](https://www.data.gouv.fr), thousands of public datasets, **license-aware**.
 - **Your own country**: nearly every government runs an official open-data portal (data.gov… for the US, Canada, UK, Germany, and many more).
 - **The rule is the same wherever you look**: a dataset you can fetch *programmatically* is a dataset your analysis can re-produce.
@@ -280,7 +284,8 @@ url <- "https://…/my-open-dataset.csv"   # any open-data portal, any country
 download.file(url, "data/my-data.csv")   # a RE-RUNNABLE line of code
 ```
 
-::: {.incremental .highlight-last}
+::: {}
+
 - **`download.file()` is portal-agnostic**: it doesn't care whether the URL points at data.gouv.fr or your home country's portal.
 - Pair it with a **provenance sentence** (dataset, publisher, URL, license) so a reader can *find* and *trust* the source.
 - Some portals ship an R/Python client ([{rdatagouv}](https://astamm.github.io/rdatagouv/) here): a convenience, never a requirement.
@@ -294,7 +299,8 @@ download.file(url, "data/my-data.csv")   # a RE-RUNNABLE line of code
 
 Not every dataset needs a portal: many ship *inside* an R (or Python) package, and that's reproducible too. You've used one already, `palmerpenguins::penguins`.
 
-::: {.incremental .highlight-last}
+::: {}
+
 - A **versioned package** is reproducible data: the package is properly released and versioned on CRAN (or PyPI), and its docs and provenance ship with it.
 - Because it's a package, your **environment manager** (`uvr`/`uv`) can lock its exact version, so a re-render gets the same data today and next year.
 - Good examples: `{gapminder}`, `{nycflights13}`, `{babynames}`, `{Lahman}` (baseball), `{tidycensus}`, `{rdatagouv}`'s returned data.
@@ -308,7 +314,7 @@ A packaged dataset is the ultimate reproducible source: **one line to load, an i
 
 Beyond your default portal, two more reproducible ways to *find* a dataset by code:
 
-::: {.incremental}
+::: {}
 - **Curated catalogues of packaged data**: the [Rdatasets list](https://vincentarelbundock.github.io/Rdatasets/datasets.html) indexes hundreds of datasets shipping in CRAN packages, each loadable in one line; browse the [CRAN package list](https://cran.r-project.org/web/packages/) and search by name.
 - **Portal-API packages**, one wrapper per portal, same convenience as `{rdatagouv}`: `{ausOpenData}`, `{opendatatoronto}`, `{SeattleOpenData}`, `{sfOpenData}`, `{laOpenData}`, `{chiOpenData}`, `{nycOpenData}`, `{nysOpenData}`, `{nolaOpenData}`, `{mtaOpenData}`, `{cincinattiOpenData}`, `{ColOpenData}`, `{ctOpenData}`, `{deOpenData}`, `{istat}`, `{istatR}`, `{COVID19}`.
 :::
@@ -345,7 +351,8 @@ Every route collapses to the same reproducible core: a **packaged** dataset (ver
 
 Last session you met "the (dis)appearing data": a fetched file can *change* or *vanish* the moment it's off the portal:
 
-::: {.incremental .highlight-last}
+::: {}
+
 - A portal updates a dataset: your analysis was based on the **old version**.
 - A raw URL 404s a year later, and your "reproducible" document can't re-run.
 - Even locally, `data/my-data.csv` can be overwritten, and git alone doesn't version the *cached* copy well if you don't commit it.
@@ -384,7 +391,7 @@ pins::pin_read(board = bd, name = "my-dataset")
 
 A board is just a folder (or a service), and it's fully inspectable:
 
-::: {.incremental .spread}
+::: {.spread}
 - `pin_list(board)`: what's been pinned.
 - `pin_versions(board, "my-dataset")`: every snapshot, with hashes and dates.
 - `pin_read(board, "my-dataset", version = "…")`: roll back to an older snapshot.
@@ -398,7 +405,7 @@ The pinned `pins/` folder is committed alongside your code, so the *exact data* 
 
 A reproducible data workflow in three deliberate steps:
 
-::: {.incremental .spread}
+::: {.spread}
 1. **Fetch** the open data by URL: provenance recorded.
 2. **Pin** it with `pin_write()`: versioned & hashed on a local board.
 3. **Analyse from the pinned copy** (`pin_read()`): stable no matter what happens upstream.
@@ -412,7 +419,7 @@ Pinning keeps you honest: the *data* you analysed is on record, not just the *co
 
 The same "pin what you made" idea extends to the *models* you fit, not just the data:
 
-::: {.incremental}
+::: {}
 - **[{vetiver}](https://rstudio.github.io/vetiver-r/)**: pins a **model** to a board, so the exact trained model is deployed or re-loaded, versioned & reproducible like your data.
 - It pairs with `pin_write()`/`pin_read()`: you already know the mechanics; [{vetiver}](https://rstudio.github.io/vetiver-r/) just knows how to save/load a model's metadata too.
 :::
@@ -454,7 +461,8 @@ git push              # send the snapshot to GitHub
 ```
 :::
 
-::: {.incremental .highlight-last}
+::: {}
+
 - **[`usethis::use_git()`](https://usethis.r-lib.org)** turns the folder into a git repo; the **Positron git pane** is the clickable version of the loop.
 - **Commit often**: small, descriptive commits beat rare mega-commits; `git status` is your compass.
 :::
@@ -474,7 +482,7 @@ usethis::use_github()     # create + link the remote, push once
 ```
 :::
 
-::: {.incremental}
+::: {}
 - Set up a **GitHub account** first, then register a **PAT** with `gitcreds::gitcreds_set()` (mini-lab below); without it, Positron pushes can't authenticate.
 - [{usethis}](https://usethis.r-lib.org) runs it all: `use_git()` to init, `use_github()` to link the remote and push once.
 - In the **Positron git pane**, the push button sends your commits to GitHub.
@@ -494,7 +502,8 @@ cat .gitignore
 ```
 :::
 
-::: {.incremental .highlight-last}
+::: {}
+
 - R: `.Rhistory`, `.RData`, `renv/library/`
 - Render output: `_book/`, `*_files/`
 - Editor/OS: `.DS_Store`, `.venv/`, `__pycache__/`
@@ -520,7 +529,8 @@ git checkout eda-chapter-1 && git merge main
 ```
 :::
 
-::: {.incremental .highlight-last}
+::: {}
+
 - **Mirror how you actually work**: try an idea on a branch, keep it if it works; `main` stays always-working.
 - In the Positron git pane, the **branch** menu creates and switches branches.
 :::
@@ -637,7 +647,8 @@ Edit a `"#hex"`, `quarto preview`, look. Match what *you* like, not the course d
 
 A Quarto book happily mixes languages, and so can your portfolio:
 
-::: {.incremental .highlight-last .spread}
+::: {.spread}
+
 - Chapter files are just `.qmd`; each chapter can run **R, Python, or both**.
 - `format: html` and cross-references work identically either way.
 - That's why your portfolio stays useful as you grow into Python in later courses.
@@ -675,7 +686,7 @@ A Quarto book happily mixes languages, and so can your portfolio:
 
 Pick the portal (or package) that gets you to a dataset you *care* about; the reproducibility rule never changes:
 
-::: {.incremental}
+::: {}
 - **France**: [data.gouv.fr](https://www.data.gouv.fr) via `{rdatagouv}`.
 - **Your country**: nearly every government runs an official portal (data.gov for the US, Canada, UK, Germany…), fetched by URL.
 - **R-friendly datasets**: `{tidycensus}` (US Census), `{opendatatoronto}`, `#TidyTuesday` data on GitHub; Kaggle datasets too.
@@ -712,7 +723,8 @@ Whatever the source, the bar is the same: you can fetch it **by code** and recor
 
 Your EDA will be read by other humans, instructors, classmates, future employers. Write to *them*:
 
-::: {.incremental .highlight-last}
+::: {}
+
 1. **Structure signals intent**: question, data, cleaning, results, findings.
 2. **Captions do the explaining**: a reader should grasp a figure from its caption before reading your prose.
 3. **Say what you found *and* what you didn't**: honest limits are credibility.
@@ -727,7 +739,8 @@ The reproducibility narrative: because everything is code and captioned, a stran
 
 Your chapters are slots other courses will fill. Make that easy:
 
-::: {.incremental .highlight-last}
+::: {}
+
 - Use the **same structure** every time (the 5-section recipe).
 - Give **descriptive labels** to figures/tables (`fig-cap` everywhere).
 - Keep **setup in one chunk** so new chapters start from a known environment.
@@ -742,7 +755,8 @@ Think of the book as a shared, growing artefact, not a one-off. Every convention
 
 From data to a readable, reproducible chapter, the whole course in one picture:
 
-::: {.incremental .highlight-last}
+::: {}
+
 1. **Source** open data by code (portal of your choice): provenance recorded.
 2. **Explore & clean** ({skimr}/{janitor}/{naniar}): decisions documented.
 3. **Report** in a structured chapter: captions, cross-refs, findings.

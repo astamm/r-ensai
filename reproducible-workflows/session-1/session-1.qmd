@@ -37,27 +37,12 @@ We'll collect your answers on the board, group them, and the session builds from
 </div>
 </div>
 
-## The reproducibility spectrum {.inv}
-
-Your answers cluster along a spectrum: where do your examples sit?
-
-::: {.incremental .highlight-last}
-- **Scratch notes**: ideas in a notebook or a chat window; useful in the moment, impossible to re-run.
-- **Scripts**: code that *runs* and *re-runs*… on your machine, today.
-- **Reports**: prose *and* code together, with results woven into the narrative.
-- **Versioned analyses**: code under git, dependencies pinned, so it re-runs next year on another machine.
-- **Published analyses**: a report at a reachable URL that **anyone** can open and trust.
-:::
-
-::: {.callout-desc .fragment}
-The aim of this course is to move every analysis you produce to the right-hand end: **an analysis that lives in a Quarto document, is versioned in git, has its dependencies pinned, and is published at a URL.**
-:::
-
-## What reproducible research is: IMRAD {.inv}
+## What research is: the IMRAD structure {.inv}
 
 Research, distilled, is a short chain of steps:
 
-::: {.incremental .highlight-last}
+::: {}
+
 1. A **question** worth asking.
 2. An **experiment** (or study) that collects **data** to answer it.
 3. **Analysis** methods, explained *and* applied to that data.
@@ -65,17 +50,68 @@ Research, distilled, is a short chain of steps:
 5. A **discussion** that puts the results and the original question into perspective.
 :::
 
+**That is, in essence, what data science does every day**: it turns step 2's data into step 4's results by doing step 3 (analysis) with code, statistics and visualization.
+
 ::: {.callout-desc .fragment}
 That structure is often called **IMRAD**: introduction, methods, results and discussion. Reproducibility means shipping the *implementation details* of every one of these steps, so a reader can rebuild them from scratch.
 :::
 
+## Research, by code: the data science cycle {.inv}
+
+This is the same IMRAD loop, run with code, the classic *R for Data Science*^[Wickham, H., & Grolemund, G. (2017). R for data science (Vol. 2). Sebastopol: O'Reilly.] figure.
+
+<div class="ds-ring">
+  <span class="ds-node"><span class="lbl">Hypothesis</span></span><span class="ds-arrow">→</span>
+  <span class="ds-node"><span class="lbl">Experiment</span></span><span class="ds-arrow">→</span>
+  <span class="ds-node"><span class="lbl">Data</span></span><span class="ds-arrow">→</span>
+  <span class="ds-node"><span class="lbl">Conclusions</span></span>
+  <span class="ds-note">every analysis starts from a question and ends by answering it.</span>
+</div>
+
+<div class="ds-row">
+  <span class="ds-node green fragment"><span class="n">1</span><span class="lbl">Import</span></span>
+  <span class="ds-arrow fragment">→</span>
+  <span class="ds-node green fragment"><span class="n">2</span><span class="lbl">Tidy</span></span>
+  <span class="ds-arrow fragment">→</span>
+  <span class="ds-node amber fragment"><span class="n">3</span><span class="lbl">Transform</span></span>
+  <span class="ds-arrow fragment">→</span>
+  <span class="ds-node amber fragment"><span class="n">4</span><span class="lbl">Visualize</span></span>
+  <span class="ds-arrow fragment">→</span>
+  <span class="ds-node amber fragment"><span class="n">5</span><span class="lbl">Model</span></span>
+  <span class="ds-arrow fragment">→</span>
+  <span class="ds-node indigo fragment"><span class="n">6</span><span class="lbl">Communicate</span></span>
+</div>
+
+<div style="margin-top: 30px;"></div>
+
+<div class="callout-desc fragment">
+  **That is IMRAD, by code.** Import + Tidy reproduce your *methods*; Transform + Model + Visualize are the *analysis*; Communicate is the *results*. Every step runs on **programming**, the layer that makes the whole loop re-runnable — which is reproducibility.
+</div>
+
 # What is reproducibility?
+
+## The reproducibility crisis {.inv}
+
+John Ioannidis's [2005
+paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC1182327/pdf/pmed.0020124.pdf), *Why Most Published Research Findings Are False*, used a mathematical model to show that most claimed findings are false positives: the spark of the modern reproducibility crisis.
+
+::: {.callout-tip title="Core concepts of the crisis"}
+- The 2005 paper: small samples, tiny effects, high bias, flexible designs make claimed findings statistically likely to be wrong.
+- Impact across fields: from medicine and biomedicine into psychology, the social sciences and the life sciences.
+:::
+
+::: {.callout-warning title="Key causes"}
+- "Publish or perish" culture: novelty rewarded over truth.
+- P-hacking: adjusting analysis until a result becomes significant.
+- Publication bias: positive results favored over negative or null findings.
+- Nothing shared: no data, code or protocol.
+:::
 
 ## "Works here" vs "works anywhere" {.inv}
 
 The test is simple. Take an analysis you did last month and ask three questions:
 
-::: {.incremental .spread}
+::: {.spread}
 1. **[Will it re-run?]{.green}**: does the code execute from source, with no hidden clicks or hand-fixes?
 
 2. **[Will it re-run *here*?]{.amber}**: does it reproduce on *your* machine tomorrow, when packages have updated?
@@ -91,7 +127,7 @@ Everything in this course is in service of making each "will it re-run?" an uneq
 
 The enemies we'll learn to fight, one per later session:
 
-::: {.incremental}
+::: {}
 - **[The human memory gap]{.green}**: "I clicked through the setup", "I cleaned it by hand in Excel". Code that lives nowhere but the analyst's head.
 
 - **[The moving environment]{.amber}**: `install.packages()` happily updates *globally*, so your analysis breaks when a dependency version silently changes.
@@ -109,7 +145,8 @@ The *reproducibility habit* answers all four at once: **document your code, pin 
 
 Here is the shape of every analysis we build this course:
 
-::: {.incremental .highlight-last}
+::: {}
+
 1. **Data** is **sourced** by code (a documented package, an open-data portal), never by manual download.
 2. The **analysis lives in a document** (Quarto) that mixes prose and code, so *seeing* the result shows *how* it was made.
 3. **Dependencies are pinned** (`uvr`/`uv`, or `renv`), so the document re-runs tomorrow.
@@ -125,7 +162,7 @@ You already learned the R side: vectors, data frames, plotting. This course wrap
 
 Over three sessions we climb from "it works on my machine" to "it's published and reproducible":
 
-::: {.incremental}
+::: {}
 - **[Session 1 · Write]{.green}**: your first Quarto documents: prose + code + results, transparent from source.
 
 - **[Session 2 · Source]{.amber}**: source an open-data set (e.g. data.gouv.fr), *pin* it, **version it with git**, and start your **portfolio book**.
@@ -200,7 +237,8 @@ my-project/
 :::
 :::
 
-::: {.incremental .highlight-last}
+::: {}
+
 - In Positron, open the folder as a project (File → Open Folder); a relative path like `read_csv("data/raw/penguins.csv")` then just works.
 - **Prefer relative paths**: they let a script run on any machine with the same folder layout.
 - Projects are the unit you'll version, pin and publish in Sessions 2–3.
@@ -300,7 +338,8 @@ format: html
 ---
 ```
 
-::: {.incremental .highlight-last}
+::: {}
+
 - `title`, `author`: metadata shown at the top of the page.
 - `format`: what to build, `html`, `pdf`, `docx`, `revealjs` (these slides are a `revealjs`), or a whole **book** (Session 2).
 - Many more **options**: themes, table of contents, captions…
@@ -331,7 +370,8 @@ By default a cell shows **code + output**; each `#|` option changes that. The fu
 
 Quarto is **language-agnostic**: the same `.qmd` renders R, Python, or both.
 
-::: {.incremental .highlight-last}
+::: {}
+
 - An R cell and a Python cell sit side by side in one document, each with the same options.
 - Which language to use is a property of each **cell**, not of the document.
 - R and Python dominate in data science, but Quarto also speaks [**Julia and Observable JS**](https://quarto.org/docs/faq/#what-programming-languages-are-supported-in-quarto), plus more via Jupyter.
@@ -362,7 +402,8 @@ The loop, **edit source → render → see output**, is the whole of Quarto. Eve
 
 The idea at the heart of Quarto (**prose *and* code woven together**) has a name:
 
-::: {.incremental .highlight-last}
+::: {}
+
 - **Literate programming** (Knuth, 1984): an analysis document is written primarily for *humans to read*, with the *code embedded* so the results it discusses appear in place.
 - The reader follows your *thinking*; the machine follows your *instructions*.
 - The document is **self-documenting**: the evidence sits beside the claim it supports.
@@ -376,7 +417,8 @@ Contrast with the *output-first* habit: a completed PDF with no source is only h
 
 A reproducible report is a *document*, not a dump of output. Structure it:
 
-::: {.incremental .highlight-last}
+::: {}
+
 1. **Question first**: what are you asking, in one sentence?
 2. **Data**: where it came from, how it was sourced (the code shows this).
 3. **Cleaning decisions**: what you renamed, recoded, dropped, and *why*.
@@ -481,7 +523,7 @@ Refer to it in prose like any figure, with `@tbl-penguins-summary`:
 
 Because source *is* the analysis, any reader can ask **"how did you make that?"** and get a real answer.
 
-::: {.incremental}
+::: {}
 - This deck ships with a **code popover**: press `c` on any slide to see the source behind it.
 - That's the *habit* we want you to internalize for your own work: the analysis answers its own "how".
 - When someone asks "where does this number come from?", the answer is **"render the document"**, not "from my head".
@@ -513,7 +555,8 @@ The scaffold is on the [course home page](index.html#materials) as a downloadabl
 
 Here's how your book fills up over the term:
 
-::: {.incremental .highlight-last}
+::: {}
+
 1. **Session 1 (today)**: you learn the document mechanics; the book scaffold renders.
 2. **Session 2**: you source a dataset by code (any open-data portal, data.gouv.fr or your own country's), clean it, and drop your EDA into **Chapter 1**.
 3. **Session 3**: you put the book under **git**, pin it with **renv/uv**, and **publish** it.
